@@ -107,7 +107,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
 
   List<List<CheckBoxState>> twoDList = [];
 
-  submitFunction() async {
+  Future<bool> submitFunction() async {
     String? token = tokenFromLogin?.token;
     SurveyTargetPoint surveyTargetPoint = SurveyTargetPoint();
     List<Map<String, dynamic>> updateDisease = [];
@@ -145,6 +145,12 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
     });
 
     // print("---- update disease -----");
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => LoadingWidget(message: "Submiting...",),
+    );
     // print(updateDisease);
     int statusCodeDisease =
         await surveyTargetPoint.updateSurveyTargetPointDisease(
@@ -156,15 +162,17 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
         await surveyTargetPoint.updateSurveyTargetPointPestPhase(
             token.toString(), widget.point, widget.number, updatePest);
 
+
+
     // print(
     //     " statusCode : ${statusCodeDisease} ${statusCodeNatural} ${statusCodePest}");
-    if (statusCodeDisease == 200 &&
-        statusCodeNatural == 200 &&
-        statusCodePest == 200)
-      // Navigator.of(context).push(MaterialPageRoute(
-      //     builder: (BuildContext context) =>
-      //         BaseSurveySubPointEnemy(widget.survey, widget.point)));
-      Navigator.pop(context, true);
+    if (statusCodeDisease == 200 &&   statusCodeNatural == 200 &&     statusCodePest == 200){
+      Navigator.pop(context);
+      return true ;
+    }
+
+
+    return false ;
   }
 
   @override
@@ -651,7 +659,19 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                                   sizeHeight(18, context)),
                             ),
                             mini: true,
-                            onPressed: () => {submitFunction()},
+                            onPressed: ()  async {
+
+                              await submitFunction().then((value) {
+
+                                if(value){
+                                  if (mounted) {
+                                      Navigator.of(context, rootNavigator: true).pop();
+                                   }
+                                }
+
+                              });
+
+                            },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
