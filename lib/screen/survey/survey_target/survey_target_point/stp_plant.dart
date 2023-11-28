@@ -149,7 +149,9 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => LoadingWidget(message: "Submiting...",),
+      builder: (context) => LoadingWidget(
+        message: "Submiting...",
+      ),
     );
     // print(updateDisease);
     int statusCodeDisease =
@@ -162,17 +164,16 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
         await surveyTargetPoint.updateSurveyTargetPointPestPhase(
             token.toString(), widget.point, widget.number, updatePest);
 
-
-
     // print(
     //     " statusCode : ${statusCodeDisease} ${statusCodeNatural} ${statusCodePest}");
-    if (statusCodeDisease == 200 &&   statusCodeNatural == 200 &&     statusCodePest == 200){
+    if (statusCodeDisease == 200 &&
+        statusCodeNatural == 200 &&
+        statusCodePest == 200) {
       Navigator.pop(context);
-      return true ;
+      return true;
     }
 
-
-    return false ;
+    return false;
   }
 
   @override
@@ -508,18 +509,25 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                                                         padding:
                                                             const EdgeInsets
                                                                 .only(top: 15),
-                                                        child:!isLoading?
-                                                            _buildListViewDisease(
-                                                                stpDisease):SizedBox(
-                        height: SizeConfig.screenHeight! * 0.7,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: CircularProgressIndicator(
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(theme_color),
-                          ),
-                        ),
-                      ),
+                                                        child: !isLoading
+                                                            ? _buildListViewDisease(
+                                                                stpDisease)
+                                                            : SizedBox(
+                                                                height: SizeConfig
+                                                                        .screenHeight! *
+                                                                    0.7,
+                                                                child: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child:
+                                                                      CircularProgressIndicator(
+                                                                    valueColor:
+                                                                        AlwaysStoppedAnimation<Color>(
+                                                                            theme_color),
+                                                                  ),
+                                                                ),
+                                                              ),
                                                       ),
                                                     ),
                                                   ],
@@ -538,18 +546,25 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                                                         padding:
                                                             const EdgeInsets
                                                                 .only(top: 15),
-                                                        child:!isLoading?
-                                                            _buildListViewNaturalAndPest(
-                                                                stpNatural):SizedBox(
-                        height: SizeConfig.screenHeight! * 0.7,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: CircularProgressIndicator(
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(theme_color),
-                          ),
-                        ),
-                      ),
+                                                        child: !isLoading
+                                                            ? _buildListViewNaturalAndPest(
+                                                                stpNatural)
+                                                            : SizedBox(
+                                                                height: SizeConfig
+                                                                        .screenHeight! *
+                                                                    0.7,
+                                                                child: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child:
+                                                                      CircularProgressIndicator(
+                                                                    valueColor:
+                                                                        AlwaysStoppedAnimation<Color>(
+                                                                            theme_color),
+                                                                  ),
+                                                                ),
+                                                              ),
                                                       ),
                                                     ),
                                                   ],
@@ -568,18 +583,25 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                                                         padding:
                                                             const EdgeInsets
                                                                 .only(top: 15),
-                                                        child:!isLoading?
-                                                            _buildListViewNaturalAndPest(
-                                                                stpPest):SizedBox(
-                        height: SizeConfig.screenHeight! * 0.7,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: CircularProgressIndicator(
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(theme_color),
-                          ),
-                        ),
-                      ),
+                                                        child: !isLoading
+                                                            ? _buildListViewNaturalAndPest(
+                                                                stpPest)
+                                                            : SizedBox(
+                                                                height: SizeConfig
+                                                                        .screenHeight! *
+                                                                    0.7,
+                                                                child: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child:
+                                                                      CircularProgressIndicator(
+                                                                    valueColor:
+                                                                        AlwaysStoppedAnimation<Color>(
+                                                                            theme_color),
+                                                                  ),
+                                                                ),
+                                                              ),
                                                       ),
                                                     ),
                                                   ],
@@ -611,110 +633,110 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
             //     style: TextStyle(fontSize: 18),
             //   ),
             // ),
-           floatingActionButton: !isLoading? Row(
-                //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox(
-                    width: sizeWidth(32, context),
-                  ),
-                  _tabIndex > 0
-                      ? SizedBox(
-                          width: sizeWidth(170, context),
-                          height: sizeHeight(50, context),
-                          child: FloatingActionButton(
-                            backgroundColor: theme_color2,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  sizeHeight(18, context)),
-                            ),
-                            mini: true,
-                            onPressed: () => {_toggleTabBack()},
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.navigate_before),
-                                Text(
-                                  "previous-label".i18n(),
-                                  style: TextStyle(
-                                      fontSize: sizeHeight(18, context)),
-                                ),
-                              ],
-                            ),
-                            heroTag: "fab2",
-                          ),
-                        )
-                      : Container(
-                          width: 0,
-                          height: 0,
+            floatingActionButton: !isLoading
+                ? Row(
+                    //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                        SizedBox(
+                          width: sizeWidth(32, context),
                         ),
-                  Spacer(),
-                  _tabIndex <= 1
-                      ? SizedBox(
-                          width: _tabIndex == 0
-                              ? sizeWidth(350, context)
-                              : sizeWidth(170, context),
-                          height: sizeHeight(50, context),
-                          child: FloatingActionButton(
-                            backgroundColor: theme_color2,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  sizeHeight(18, context)),
-                            ),
-                            mini: true,
-                            onPressed: () => {_toggleTab()},
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "next-label".i18n(),
-                                  style: TextStyle(
-                                      fontSize: sizeHeight(18, context)),
+                        _tabIndex > 0
+                            ? SizedBox(
+                                width: sizeWidth(170, context),
+                                height: sizeHeight(50, context),
+                                child: FloatingActionButton(
+                                  backgroundColor: theme_color2,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        sizeHeight(18, context)),
+                                  ),
+                                  mini: true,
+                                  onPressed: () => {_toggleTabBack()},
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.navigate_before),
+                                      Text(
+                                        "previous-label".i18n(),
+                                        style: TextStyle(
+                                            fontSize: sizeHeight(18, context)),
+                                      ),
+                                    ],
+                                  ),
+                                  heroTag: "fab2",
                                 ),
-                                Icon(Icons.navigate_next),
-                              ],
-                            ),
-                            heroTag: "fab3",
-                          ),
-                        )
-                      : SizedBox(
-                          width: sizeWidth(170, context),
-                          height: sizeHeight(50, context),
-                          child: FloatingActionButton(
-                            backgroundColor: theme_color2,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  sizeHeight(18, context)),
-                            ),
-                            mini: true,
-                            onPressed: ()  async {
-
-                              await submitFunction().then((value) {
-
-                                if(value){
-                                  if (mounted) {
-                                      Navigator.of(context, rootNavigator: true).pop();
-                                   }
-                                }
-
-                              });
-
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.check_box),
-                                Text(
-                                  "save".i18n(),
-                                  style: TextStyle(
-                                      fontSize: sizeHeight(18, context)),
+                              )
+                            : Container(
+                                width: 0,
+                                height: 0,
+                              ),
+                        Spacer(),
+                        _tabIndex <= 1
+                            ? SizedBox(
+                                width: _tabIndex == 0
+                                    ? sizeWidth(350, context)
+                                    : sizeWidth(170, context),
+                                height: sizeHeight(50, context),
+                                child: FloatingActionButton(
+                                  backgroundColor: theme_color2,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        sizeHeight(18, context)),
+                                  ),
+                                  mini: true,
+                                  onPressed: () => {_toggleTab()},
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "next-label".i18n(),
+                                        style: TextStyle(
+                                            fontSize: sizeHeight(18, context)),
+                                      ),
+                                      Icon(Icons.navigate_next),
+                                    ],
+                                  ),
+                                  heroTag: "fab3",
                                 ),
-                              ],
-                            ),
-                            heroTag: "fab3",
-                          ),
-                        ),
-                ]):Container()
-                
+                              )
+                            : SizedBox(
+                                width: sizeWidth(170, context),
+                                height: sizeHeight(50, context),
+                                child: FloatingActionButton(
+                                  backgroundColor: theme_color2,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        sizeHeight(18, context)),
+                                  ),
+                                  mini: true,
+                                  onPressed: () async {
+                                    await submitFunction().then((value) {
+                                      if (value) {
+                                        if (mounted) {
+                                          Navigator.of(context,
+                                                  rootNavigator: true)
+                                              .pop();
+                                        }
+                                      }
+                                    });
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.check_box),
+                                      Text(
+                                        "save".i18n(),
+                                        style: TextStyle(
+                                            fontSize: sizeHeight(18, context)),
+                                      ),
+                                    ],
+                                  ),
+                                  heroTag: "fab3",
+                                ),
+                              ),
+                      ])
+                : Container()
+
             //
             ),
       ),

@@ -193,28 +193,34 @@ TabController? _mainTapController;
   }
 
 
- 
+  
 
   void alert(Survey survey) {
     showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('alert'.i18n()),
-          content: Text('ไม่พบสิ่งสำรวจต้องการไปยังหน้าเพิ่มสิ่งสำรวจหรือไม่?'),
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Colors.red,
-              ),
-              child: Text('no'.i18n()),
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+            title: Text(
+              'alert'.i18n(),
+              style: TextStyle(fontSize: 15, color: Colors.black),
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
+            content: Text(
+              'survey-point-delete'.i18n(),
+              style: TextStyle(fontSize: 15, color: Colors.black),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'no'.i18n(),
+                  style: TextStyle(color: Colors.blue),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
               Navigator.push(
                context,
                   MaterialPageRoute(
@@ -230,14 +236,15 @@ TabController? _mainTapController;
                       builder: (context) => SurveyTable(_mainTapController!,widget.surveyProvider)));
             }
           });
-            
-              },
-              child: Text('yes'.i18n()),
-            ),
-          ],
-        );
-      },
-    );
+                },
+                child: Text(
+                  'yes'.i18n(),
+                  style: TextStyle(color: Colors.blue),
+                ),
+              ),
+            ],
+          );
+        });
   }
   Widget getAppBarUI() {
     return Container(
