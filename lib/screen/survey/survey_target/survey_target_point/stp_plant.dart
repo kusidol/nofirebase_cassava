@@ -508,9 +508,18 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                                                         padding:
                                                             const EdgeInsets
                                                                 .only(top: 15),
-                                                        child:
+                                                        child:!isLoading?
                                                             _buildListViewDisease(
-                                                                stpDisease),
+                                                                stpDisease):SizedBox(
+                        height: SizeConfig.screenHeight! * 0.7,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(theme_color),
+                          ),
+                        ),
+                      ),
                                                       ),
                                                     ),
                                                   ],
@@ -529,9 +538,18 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                                                         padding:
                                                             const EdgeInsets
                                                                 .only(top: 15),
-                                                        child:
+                                                        child:!isLoading?
                                                             _buildListViewNaturalAndPest(
-                                                                stpNatural),
+                                                                stpNatural):SizedBox(
+                        height: SizeConfig.screenHeight! * 0.7,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(theme_color),
+                          ),
+                        ),
+                      ),
                                                       ),
                                                     ),
                                                   ],
@@ -550,9 +568,18 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                                                         padding:
                                                             const EdgeInsets
                                                                 .only(top: 15),
-                                                        child:
+                                                        child:!isLoading?
                                                             _buildListViewNaturalAndPest(
-                                                                stpPest),
+                                                                stpPest):SizedBox(
+                        height: SizeConfig.screenHeight! * 0.7,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(theme_color),
+                          ),
+                        ),
+                      ),
                                                       ),
                                                     ),
                                                   ],
@@ -584,7 +611,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
             //     style: TextStyle(fontSize: 18),
             //   ),
             // ),
-            floatingActionButton: Row(
+           floatingActionButton: !isLoading? Row(
                 //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   SizedBox(
@@ -686,7 +713,8 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                             heroTag: "fab3",
                           ),
                         ),
-                ])
+                ]):Container()
+                
             //
             ),
       ),
