@@ -147,38 +147,46 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
 
   void alert() {
     showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('alert'.i18n()),
-          content: Text('ไม่พบสิ่งสำรวจต้องการไปยังหน้าเพิ่มสิ่งสำรวจหรือไม่?'),
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Colors.red,
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+            title: Text(
+              'alert'.i18n(),
+              style: TextStyle(fontSize: 15, color: Colors.black),
+            ),
+            content: Text(
+              'survey-point-delete'.i18n(),
+              style: TextStyle(fontSize: 15, color: Colors.black),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'no'.i18n(),
+                  style: TextStyle(color: Colors.blue),
+                ),
               ),
-              child: Text('no'.i18n()),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      maintainState: false,
-                      builder: (context) =>
-                          new BaseSurveyDetailInfo(widget.survey, false)),
-                );
-              },
-              child: Text('yes'.i18n()),
-            ),
-          ],
-        );
-      },
-    );
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        maintainState: false,
+                        builder: (context) =>
+                            new BaseSurveyDetailInfo(widget.survey, false)),
+                  );
+                },
+                child: Text(
+                  'yes'.i18n(),
+                  style: TextStyle(color: Colors.blue),
+                ),
+              ),
+            ],
+          );
+        });
   }
 
   Widget _buildSurveyBtn() {

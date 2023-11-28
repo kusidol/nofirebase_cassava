@@ -393,7 +393,7 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                                       } else {
                                         status = "Editing";
 
-                                        alertAll(context, widget.surveyPoint,
+                                        alertAll2(context, widget.surveyPoint,
                                             numStart);
                                       }
                                     });
@@ -582,98 +582,115 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
     }
   }
 
-  void alertAll(BuildContext context, int surveyPoint, int numStart) {
+  void alertAll2(BuildContext context, int surveyPoint, int numStart) {
     showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('แจ้งเตือน'),
-          content: Text('ต้องการที่จะกำหนดค่าเป็นไม่พบสิ่งสำรวจทั้งหมด?'),
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Colors.red,
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+            title: Text(
+              'alert'.i18n(),
+              style: TextStyle(fontSize: 15, color: Colors.black),
+            ),
+            content: Text(
+              'survey-point-delete-all'.i18n(),
+              style: TextStyle(fontSize: 15, color: Colors.black),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'no'.i18n(),
+                  style: TextStyle(color: Colors.blue),
+                ),
               ),
-              child: Text('ไม่'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                for (int i = 0; i <= 4; i++) {
-                  resetValue(widget.surveyPoint, (numStart * 5) + i);
+              TextButton(
+                onPressed: () {
+                  for (int i = 0; i <= 4; i++) {
+                    resetValue(widget.surveyPoint, (numStart * 5) + i);
+                    setState(() {
+                      imageList[(numStart * 5) + i] = 0;
+                      isComplete[(numStart * 5) + i] = false;
+                      isCompleteAll[numStart] = false;
+                    });
+                  }
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'yes'.i18n(),
+                  style: TextStyle(color: Colors.blue),
+                ),
+              ),
+            ],
+          );
+        });
 
-                  setState(() {
-                    imageList[(numStart * 5) + i] = 0;
-                    isComplete[(numStart * 5) + i] = false;
-                    isCompleteAll[numStart] = false;
-                  });
-                }
-                Navigator.of(context).pop();
-              },
-              child: Text('ใช่'),
-            ),
-          ],
-        );
-      },
-    );
+    //
   }
 
   void alert(BuildContext context, int surveyPoint, int number, int point) {
     showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('แจ้งเตือน'),
-          content: Text('ต้องการที่จะกำหนดค่าเป็นไม่พบโรค?'),
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  isComplete[number * 5 + point] = true;
-                  isCompleteAll[number] = true;
-                });
-                Navigator.of(context).pop();
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Colors.red,
-              ),
-              child: Text('ไม่'),
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+            title: Text(
+              'alert'.i18n(),
+              style: TextStyle(fontSize: 15, color: Colors.black),
             ),
-            ElevatedButton(
-              onPressed: () {
-                resetValue(surveyPoint, number * 5 + point);
-                setState(() {
+            content: Text(
+              'survey-point-delete'.i18n(),
+              style: TextStyle(fontSize: 15, color: Colors.black),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
                   setState(() {
-                    imageList[number * 5 + point] = 0;
-                  });
-
-                  status = "Editing";
-                  isComplete[number * 5 + point] = false;
-                  bool isCompleteAllCheck = false;
-                  int countTrue = 0;
-                  for (int i = 0; i <= 4; i++) {
-                    if (isComplete[number * 5 + i] == true) {
-                      isCompleteAllCheck = true;
-                      countTrue++;
-                    }
-                  }
-
-                  if (isCompleteAllCheck) {
+                    isComplete[number * 5 + point] = true;
                     isCompleteAll[number] = true;
-                  } else {
-                    isCompleteAll[number] = false;
-                  }
-                });
-                Navigator.of(context).pop();
-              },
-              child: Text('ใช่'),
-            ),
-          ],
-        );
-      },
-    );
+                  });
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'no'.i18n(),
+                  style: TextStyle(color: Colors.blue),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  resetValue(surveyPoint, number * 5 + point);
+                  setState(() {
+                    setState(() {
+                      imageList[number * 5 + point] = 0;
+                    });
+
+                    status = "Editing";
+                    isComplete[number * 5 + point] = false;
+                    bool isCompleteAllCheck = false;
+                    int countTrue = 0;
+                    for (int i = 0; i <= 4; i++) {
+                      if (isComplete[number * 5 + i] == true) {
+                        isCompleteAllCheck = true;
+                        countTrue++;
+                      }
+                    }
+
+                    if (isCompleteAllCheck) {
+                      isCompleteAll[number] = true;
+                    } else {
+                      isCompleteAll[number] = false;
+                    }
+                  });
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'yes'.i18n(),
+                  style: TextStyle(color: Colors.blue),
+                ),
+              ),
+            ],
+          );
+        });
   }
 
   Widget surveyListTile(int number, int point) {
