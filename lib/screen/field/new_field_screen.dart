@@ -164,24 +164,24 @@ class _NewFieldScreenState extends State<NewFieldScreen>
   }
 
   showAlertDialog_Location(context) => showCupertinoDialog<void>(
-    context: context,
-    barrierDismissible: false,
-    builder: (BuildContext context) => CupertinoAlertDialog(
-      title: Text("Permission Denied"),
-      content: Text('Allow access to location'),
-      actions: <CupertinoDialogAction>[
-        CupertinoDialogAction(
-            onPressed: () {
-              Navigator.of(context).pop(false);
-            },
-            child: Text('Cancel')),
-        CupertinoDialogAction(
-            isDefaultAction: true,
-            onPressed: () => openAppSettings(),
-            child: Text('Settings')),
-      ],
-    ),
-  );
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: Text("Permission Denied"),
+          content: Text('Allow access to location'),
+          actions: <CupertinoDialogAction>[
+            CupertinoDialogAction(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+                child: Text('Cancel')),
+            CupertinoDialogAction(
+                isDefaultAction: true,
+                onPressed: () => openAppSettings(),
+                child: Text('Settings')),
+          ],
+        ),
+      );
   Future<void> _getCurrentLocation() async {
     final hasPermission = await _handleLocationPermission();
     if (!hasPermission) return;
@@ -252,7 +252,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
       _isPassValueFromPage = true;
 
       field = widget.fieldFromPassPage!;
-      print("widget.location : ${widget.location!}");
+      // print("widget.location : ${widget.location!}");
       selectedProvince_value = widget.location!.split(",").last;
       selectedDistrict_value = widget.location!.split(",").first;
       selectedSubdistrict_value = widget.location!.split(",")[1];
@@ -262,7 +262,9 @@ class _NewFieldScreenState extends State<NewFieldScreen>
 
       data_provinces = await provinceService.getAllProvince(token.toString());
       if (data_provinces.length == 0) {
-        onBackButtonPressed(context);
+        // onBackButtonPressed(context);
+        // Data Provice load not success => Show alert for exit
+        showAboutDialog(context);
       } else {
         provinces = createDropdown(data_provinces);
         selectedProvinceId = getId(selectedProvince_value, data_provinces, 1);
@@ -422,7 +424,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
       };
       print("UPDATE VALUE : ${updateData.toString()}");
       int statusUpdateField =
-      await fieldService.updateField(token.toString(), updateData);
+          await fieldService.updateField(token.toString(), updateData);
       print("NUMBER STATUS : ${statusUpdateField}");
       if (statusUpdateField == 200) {
         Navigator.pop(context);
@@ -452,7 +454,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
       FieldService fieldService = new FieldService();
       String? token = tokenFromLogin?.token;
       Field? newField =
-      await fieldService.createField(token.toString(), createData);
+          await fieldService.createField(token.toString(), createData);
       CustomLoading.dismissLoading();
       if (newField != null) {
         CustomLoading.showSuccess();
@@ -597,7 +599,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   AnimTFF(
-                        (text) => {
+                    (text) => {
                       setState(() {
                         field.code = text;
                       }),
@@ -624,7 +626,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   AnimTFF(
-                        (text) => {
+                    (text) => {
                       setState(() {
                         field.name = text;
                       }),
@@ -652,156 +654,156 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   !_isPassValueFromPage
                       ? Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: theme_color,
-                        width: sizeWidth(2, context),
-                      ),
-                    ),
-                    child: DropdownButtonFormField<String>(
-                      validator: (value) =>
-                          InputCodeValidator.validateDropdownProvider(
-                              value),
-                      value: selectedValue,
-                      onChanged: (value) {
-                        if (value == "เพิ่มเติม / เพิ่มเกษตรใหม่") {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (BuildContext context) => Provider(
-                                create: (context) => dropdownFarmer,
-                                builder: (context, child) =>
-                                    DropdownForFarmer(
-                                          (value) {
-                                        print(value);
-                                        bool duplicate = false;
-                                        List<String> temp =
-                                            dropdownFarmer.farmerString;
-                                        for (int i = 0;
-                                        i < temp.length;
-                                        i++) {
-                                          if (value['nameFarmer'] ==
-                                              temp[i]) {
-                                            duplicate = true;
-                                            break;
-                                          }
-                                        }
-                                        if (!duplicate) {
-                                          dropdownFarmer
-                                              .addItem(value['nameFarmer']);
-                                        }
-                                        setState(() {
-                                          userInFieldID = value['id'];
-                                          print(
-                                              "SELECT userInFieldID : ${userInFieldID}");
-                                          selectedValue = value['nameFarmer'];
-                                        });
-                                      },
-                                    ),
-                              ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: theme_color,
+                              width: sizeWidth(2, context),
                             ),
-                          );
-                        } else {
-                          print(value);
-                          int id = 0;
-                          for (int i = 0;
-                          i < dropdownFarmer.items.length;
-                          i++) {
-                            if (dropdownFarmer.items[i].name == value) {
-                              id = dropdownFarmer.items[i].id;
-                              break;
-                            }
-                          }
-                          setState(() {
-                            userInFieldID = id;
-                            print(
-                                "SELECT userInFieldID : ${userInFieldID}");
-                            selectedValue = value.toString();
-                          });
-                        }
-                      },
-                      hint: const Center(
-                          child: Text(
-                            'กรุณาเลือกเจ้าของแปลง',
-                            style: TextStyle(color: Colors.black),
-                          )),
-                      // Hide the default underline
-                      // underline: Container(),
-                      // set the color of the dropdown menu
-                      dropdownColor: Colors.white,
-                      icon: Padding(
-                        padding: EdgeInsets.all(sizeHeight(8, context)),
-                        child: const Icon(Icons.arrow_downward,
-                            color: Colors.black),
-                      ),
-                      isExpanded: true,
-
-                      // The list of options
-                      items: dropdownForShow
-                          .map((e) => DropdownMenuItem(
-                        value: e,
-                        child: Container(
-                          alignment: Alignment.centerLeft,
-                          child: Row(
-                            children: [
-                              Text(
-                                "ชื่อเจ้าของแปลง ",
-                                style: TextStyle(
-                                  fontSize:
-                                  sizeHeight(18, context),
-                                ),
-                              ),
-                              Expanded(
+                          ),
+                          child: DropdownButtonFormField<String>(
+                            validator: (value) =>
+                                InputCodeValidator.validateDropdownProvider(
+                                    value),
+                            value: selectedValue,
+                            onChanged: (value) {
+                              if (value == "เพิ่มเติม / เพิ่มเกษตรใหม่") {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) => Provider(
+                                      create: (context) => dropdownFarmer,
+                                      builder: (context, child) =>
+                                          DropdownForFarmer(
+                                        (value) {
+                                          print(value);
+                                          bool duplicate = false;
+                                          List<String> temp =
+                                              dropdownFarmer.farmerString;
+                                          for (int i = 0;
+                                              i < temp.length;
+                                              i++) {
+                                            if (value['nameFarmer'] ==
+                                                temp[i]) {
+                                              duplicate = true;
+                                              break;
+                                            }
+                                          }
+                                          if (!duplicate) {
+                                            dropdownFarmer
+                                                .addItem(value['nameFarmer']);
+                                          }
+                                          setState(() {
+                                            userInFieldID = value['id'];
+                                            print(
+                                                "SELECT userInFieldID : ${userInFieldID}");
+                                            selectedValue = value['nameFarmer'];
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                print(value);
+                                int id = 0;
+                                for (int i = 0;
+                                    i < dropdownFarmer.items.length;
+                                    i++) {
+                                  if (dropdownFarmer.items[i].name == value) {
+                                    id = dropdownFarmer.items[i].id;
+                                    break;
+                                  }
+                                }
+                                setState(() {
+                                  userInFieldID = id;
+                                  print(
+                                      "SELECT userInFieldID : ${userInFieldID}");
+                                  selectedValue = value.toString();
+                                });
+                              }
+                            },
+                            hint: const Center(
                                 child: Text(
-                                  e,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.fade,
-                                  softWrap: false,
-                                  style: TextStyle(
-                                      fontSize:
-                                      sizeHeight(18, context),
-                                      fontWeight: FontWeight.w700,
-                                      fontStyle:
-                                      FontStyle.italic),
-                                ),
-                              ),
-                            ],
+                              'กรุณาเลือกเจ้าของแปลง',
+                              style: TextStyle(color: Colors.black),
+                            )),
+                            // Hide the default underline
+                            // underline: Container(),
+                            // set the color of the dropdown menu
+                            dropdownColor: Colors.white,
+                            icon: Padding(
+                              padding: EdgeInsets.all(sizeHeight(8, context)),
+                              child: const Icon(Icons.arrow_downward,
+                                  color: Colors.black),
+                            ),
+                            isExpanded: true,
+
+                            // The list of options
+                            items: dropdownForShow
+                                .map((e) => DropdownMenuItem(
+                                      value: e,
+                                      child: Container(
+                                        alignment: Alignment.centerLeft,
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              "ชื่อเจ้าของแปลง ",
+                                              style: TextStyle(
+                                                fontSize:
+                                                    sizeHeight(18, context),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                e,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.fade,
+                                                softWrap: false,
+                                                style: TextStyle(
+                                                    fontSize:
+                                                        sizeHeight(18, context),
+                                                    fontWeight: FontWeight.w700,
+                                                    fontStyle:
+                                                        FontStyle.italic),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ))
+                                .toList(),
+
+                            // Customize the selected item
+                            selectedItemBuilder: (BuildContext context) =>
+                                dropdownForShow
+                                    .map((e) => Center(
+                                          child: Text(
+                                            "เจ้าของแปลง : ${e}",
+                                            style: TextStyle(
+                                                fontSize:
+                                                    sizeHeight(18, context),
+                                                color: Colors.black,
+                                                fontStyle: FontStyle.italic,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ))
+                                    .toList(),
+                          ),
+                        )
+                      : Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            widget.user!.title.toString() +
+                                " " +
+                                widget.user!.firstName.toString() +
+                                " " +
+                                widget.user!.lastName.toString(),
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'OpenSans',
+                                fontSize: sizeHeight(20, context)),
                           ),
                         ),
-                      ))
-                          .toList(),
-
-                      // Customize the selected item
-                      selectedItemBuilder: (BuildContext context) =>
-                          dropdownForShow
-                              .map((e) => Center(
-                            child: Text(
-                              "เจ้าของแปลง : ${e}",
-                              style: TextStyle(
-                                  fontSize:
-                                  sizeHeight(18, context),
-                                  color: Colors.black,
-                                  fontStyle: FontStyle.italic,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ))
-                              .toList(),
-                    ),
-                  )
-                      : Container(
-                    alignment: Alignment.center,
-                    child: Text(
-                      widget.user!.title.toString() +
-                          " " +
-                          widget.user!.firstName.toString() +
-                          " " +
-                          widget.user!.lastName.toString(),
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'OpenSans',
-                          fontSize: sizeHeight(20, context)),
-                    ),
-                  ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   Container(
                     alignment: Alignment.topLeft,
@@ -815,7 +817,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   AnimTFF(
-                        (text) => {
+                    (text) => {
                       setState(() {
                         field.address = text;
                       }),
@@ -844,7 +846,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   AnimTFF(
-                        (text) => {
+                    (text) => {
                       setState(() {
                         field.moo = text;
                       }),
@@ -852,7 +854,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                         {field.moo = save_Moo}
                     },
                     labelText:
-                    field.moo == "" ? "กรอกหมู่ที่อยู่ของแปลง" : field.moo,
+                        field.moo == "" ? "กรอกหมู่ที่อยู่ของแปลง" : field.moo,
                     successText: "",
                     inputIcon: Icon(Icons.eco_sharp),
                   ),
@@ -869,7 +871,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   AnimTFF(
-                        (text) => {
+                    (text) => {
                       setState(() {
                         field.road = text;
                       }),
@@ -877,7 +879,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                         {field.road = save_Road}
                     },
                     labelText:
-                    field.road == "" ? "กรอกถนนที่อยู่ของแปลง" : field.road,
+                        field.road == "" ? "กรอกถนนที่อยู่ของแปลง" : field.road,
                     successText: "",
                     inputIcon: Icon(Icons.eco_sharp),
                   ),
@@ -927,14 +929,14 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                     dropdownSearchDecoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderRadius:
-                        BorderRadius.circular(sizeWidth(20, context)),
+                            BorderRadius.circular(sizeWidth(20, context)),
                         borderSide: const BorderSide(
                           color: theme_color,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius:
-                        BorderRadius.circular(sizeWidth(20, context)),
+                            BorderRadius.circular(sizeWidth(20, context)),
                         borderSide: BorderSide(
                           color: theme_color,
                           width: sizeWidth(2, context),
@@ -984,59 +986,59 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   selectedProvince
                       ? DropdownSearch<String>(
-                    mode: Mode.DIALOG,
-                    showSelectedItems: true,
-                    items: districts,
-                    dropdownSearchDecoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius:
-                        BorderRadius.circular(sizeWidth(20, context)),
-                        borderSide: const BorderSide(
-                          color: theme_color,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius:
-                        BorderRadius.circular(sizeWidth(20, context)),
-                        borderSide: BorderSide(
-                          color: theme_color,
-                          width: sizeWidth(2, context),
-                        ),
-                      ),
-                      hintText: "พืชที่ปลูกก่อนหน้า",
-                    ),
-                    onChanged: (value) async {
-                      setState(() {
-                        if (value.toString() != selectedDistrict_value) {
-                          selectedSubdistrict_value = "";
-                        }
-                        selectedDistrict_value = value.toString();
-                        selectedDistrictId = getId(
-                            selectedDistrict_value, data_districts, 2);
-                        selectedDistrict = true;
-                      });
-                      await createSubistrictDropdown();
-                    },
-                    selectedItem: selectedDistrict_value == ""
-                        ? "เลือกข้อมูลอำเภอ"
-                        : selectedDistrict_value,
-                    showSearchBox: true,
-                    searchFieldProps: const TextFieldProps(
-                      cursorColor: Colors.blue,
-                      autofillHints: [AutofillHints.name],
-                      decoration: InputDecoration(
-                        hintText: 'ค้นหา',
-                      ),
-                    ),
-                    validator: (value) =>
-                        InputCodeValidator.validateDropDown(
-                            value, "เลือกข้อมูลอำเภอ"),
-                  )
+                          mode: Mode.DIALOG,
+                          showSelectedItems: true,
+                          items: districts,
+                          dropdownSearchDecoration: InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.circular(sizeWidth(20, context)),
+                              borderSide: const BorderSide(
+                                color: theme_color,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.circular(sizeWidth(20, context)),
+                              borderSide: BorderSide(
+                                color: theme_color,
+                                width: sizeWidth(2, context),
+                              ),
+                            ),
+                            hintText: "พืชที่ปลูกก่อนหน้า",
+                          ),
+                          onChanged: (value) async {
+                            setState(() {
+                              if (value.toString() != selectedDistrict_value) {
+                                selectedSubdistrict_value = "";
+                              }
+                              selectedDistrict_value = value.toString();
+                              selectedDistrictId = getId(
+                                  selectedDistrict_value, data_districts, 2);
+                              selectedDistrict = true;
+                            });
+                            await createSubistrictDropdown();
+                          },
+                          selectedItem: selectedDistrict_value == ""
+                              ? "เลือกข้อมูลอำเภอ"
+                              : selectedDistrict_value,
+                          showSearchBox: true,
+                          searchFieldProps: const TextFieldProps(
+                            cursorColor: Colors.blue,
+                            autofillHints: [AutofillHints.name],
+                            decoration: InputDecoration(
+                              hintText: 'ค้นหา',
+                            ),
+                          ),
+                          validator: (value) =>
+                              InputCodeValidator.validateDropDown(
+                                  value, "เลือกข้อมูลอำเภอ"),
+                        )
                       : Container(
-                    child: Center(
-                      child: Text("ต้องเลือกจังหวัดก่อน"),
-                    ),
-                  ),
+                          child: Center(
+                            child: Text("ต้องเลือกจังหวัดก่อน"),
+                          ),
+                        ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   Container(
                     alignment: Alignment.topLeft,
@@ -1051,56 +1053,56 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   selectedDistrict
                       ? DropdownSearch<String>(
-                    mode: Mode.DIALOG,
-                    showSelectedItems: true,
-                    items: subdistricts,
-                    dropdownSearchDecoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius:
-                        BorderRadius.circular(sizeWidth(20, context)),
-                        borderSide: const BorderSide(
-                          color: theme_color,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius:
-                        BorderRadius.circular(sizeWidth(20, context)),
-                        borderSide: BorderSide(
-                          color: theme_color,
-                          width: sizeWidth(2, context),
-                        ),
-                      ),
-                      hintText: "พืชที่ปลูกก่อนหน้า",
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        selectedSubdistrict_value = value.toString();
-                        selectedSubistrictId = getId(
-                            selectedSubdistrict_value,
-                            data_subdistricts,
-                            3);
-                      });
-                    },
-                    selectedItem: selectedSubdistrict_value == ""
-                        ? "เลือกข้อมูลตำบล"
-                        : selectedSubdistrict_value,
-                    showSearchBox: true,
-                    searchFieldProps: const TextFieldProps(
-                      cursorColor: Colors.blue,
-                      autofillHints: [AutofillHints.name],
-                      decoration: InputDecoration(
-                        hintText: 'ค้นหา',
-                      ),
-                    ),
-                    validator: (value) =>
-                        InputCodeValidator.validateDropDown(
-                            value, "เลือกข้อมูลตำบล"),
-                  )
+                          mode: Mode.DIALOG,
+                          showSelectedItems: true,
+                          items: subdistricts,
+                          dropdownSearchDecoration: InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.circular(sizeWidth(20, context)),
+                              borderSide: const BorderSide(
+                                color: theme_color,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.circular(sizeWidth(20, context)),
+                              borderSide: BorderSide(
+                                color: theme_color,
+                                width: sizeWidth(2, context),
+                              ),
+                            ),
+                            hintText: "พืชที่ปลูกก่อนหน้า",
+                          ),
+                          onChanged: (value) {
+                            setState(() {
+                              selectedSubdistrict_value = value.toString();
+                              selectedSubistrictId = getId(
+                                  selectedSubdistrict_value,
+                                  data_subdistricts,
+                                  3);
+                            });
+                          },
+                          selectedItem: selectedSubdistrict_value == ""
+                              ? "เลือกข้อมูลตำบล"
+                              : selectedSubdistrict_value,
+                          showSearchBox: true,
+                          searchFieldProps: const TextFieldProps(
+                            cursorColor: Colors.blue,
+                            autofillHints: [AutofillHints.name],
+                            decoration: InputDecoration(
+                              hintText: 'ค้นหา',
+                            ),
+                          ),
+                          validator: (value) =>
+                              InputCodeValidator.validateDropDown(
+                                  value, "เลือกข้อมูลตำบล"),
+                        )
                       : Container(
-                    child: Center(
-                      child: Text("ต้องเลือกอำเภอก่อน"),
-                    ),
-                  ),
+                          child: Center(
+                            child: Text("ต้องเลือกอำเภอก่อน"),
+                          ),
+                        ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   Container(
                     alignment: Alignment.topLeft,
@@ -1114,10 +1116,10 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   AnimTFF(
-                        (text) => {
+                    (text) => {
                       setState(() {
                         RegExp regex =
-                        new RegExp(r'(^[0-9]*)([.]{0,1})([0-9]*$)');
+                            new RegExp(r'(^[0-9]*)([.]{0,1})([0-9]*$)');
                         if (regex.hasMatch(text.toString())) {
                           try {
                             field.size = double.parse(text);
@@ -1132,7 +1134,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                     validator1: (value) => InputCodeValidator.validateFieldSize(
                         value, field.size.toString()),
                     labelText:
-                    field.size == 0.00 ? "0.00" : field.size.toString(),
+                        field.size == 0.00 ? "0.00" : field.size.toString(),
                     successText: "",
                     isOnlyNumber: true,
                     inputIcon: Icon(Icons.eco_sharp),
@@ -1150,7 +1152,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   AnimTFF(
-                        (text) => {
+                    (text) => {
                       setState(() {
                         field.landmark = text;
                       }),
@@ -1203,61 +1205,61 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   _isPassValueFromPage
                       ? TextFormField(
-                    controller: latitudeController,
-                    decoration: InputDecoration(
-                      labelStyle: TextStyle(
-                        color: Colors.black,
-                      ),
-                      labelText: "LATITUDE : ${field.latitude}",
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: theme_color2),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: theme_color2),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        RegExp regex =
-                        new RegExp(r'(^[0-9]*)([.]{0,1})([0-9]*$)');
-                        if (regex.hasMatch(value.toString())) {
-                          try {
-                            field.latitude = double.parse(value);
-                          } catch (e) {
-                            print("NUMBER FUCKING ERROR :${e}");
-                          }
-                        }
-                      });
-                    },
-                  )
+                          controller: latitudeController,
+                          decoration: InputDecoration(
+                            labelStyle: TextStyle(
+                              color: Colors.black,
+                            ),
+                            labelText: "LATITUDE : ${field.latitude}",
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: theme_color2),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: theme_color2),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          onChanged: (value) {
+                            setState(() {
+                              RegExp regex =
+                                  new RegExp(r'(^[0-9]*)([.]{0,1})([0-9]*$)');
+                              if (regex.hasMatch(value.toString())) {
+                                try {
+                                  field.latitude = double.parse(value);
+                                } catch (e) {
+                                  print("NUMBER FUCKING ERROR :${e}");
+                                }
+                              }
+                            });
+                          },
+                        )
                       : AnimTFF(
-                        (text) => {
-                      setState(() {
-                        RegExp regex =
-                        new RegExp(r'(^[0-9]*)([.]{0,1})([0-9]*$)');
-                        if (regex.hasMatch(text.toString())) {
-                          try {
-                            field.latitude = double.parse(text);
-                          } catch (e) {
-                            print("NUMBER FUCKING ERROR :${e}");
-                          }
-                        }
-                      }),
-                      if (text.isEmpty || (text == null) || (text == ""))
-                        {field.latitude = double.parse(save_Latitude)}
-                    },
-                    validator1: (value) =>
-                        InputCodeValidator.validateNumber(
-                            value, field.latitude.toString()),
-                    labelText: field.latitude == 0.00
-                        ? "0.00"
-                        : field.latitude.toString(),
-                    successText: "",
-                    isOnlyNumber: true,
-                    inputIcon: Icon(Icons.eco_sharp),
-                  ),
+                          (text) => {
+                            setState(() {
+                              RegExp regex =
+                                  new RegExp(r'(^[0-9]*)([.]{0,1})([0-9]*$)');
+                              if (regex.hasMatch(text.toString())) {
+                                try {
+                                  field.latitude = double.parse(text);
+                                } catch (e) {
+                                  print("NUMBER FUCKING ERROR :${e}");
+                                }
+                              }
+                            }),
+                            if (text.isEmpty || (text == null) || (text == ""))
+                              {field.latitude = double.parse(save_Latitude)}
+                          },
+                          validator1: (value) =>
+                              InputCodeValidator.validateNumber(
+                                  value, field.latitude.toString()),
+                          labelText: field.latitude == 0.00
+                              ? "0.00"
+                              : field.latitude.toString(),
+                          successText: "",
+                          isOnlyNumber: true,
+                          inputIcon: Icon(Icons.eco_sharp),
+                        ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   Container(
                     alignment: Alignment.topLeft,
@@ -1272,61 +1274,61 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   _isPassValueFromPage
                       ? TextFormField(
-                    controller: longtitudeController,
-                    decoration: InputDecoration(
-                      labelStyle: TextStyle(
-                        color: Colors.black,
-                      ),
-                      labelText: "LONGTITUDE : ${field.longtitude}",
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: theme_color2),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: theme_color2),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        RegExp regex =
-                        new RegExp(r'(^[0-9]*)([.]{0,1})([0-9]*$)');
-                        if (regex.hasMatch(value.toString())) {
-                          try {
-                            field.longtitude = double.parse(value);
-                          } catch (e) {
-                            print("NUMBER FUCKING ERROR :${e}");
-                          }
-                        }
-                      });
-                    },
-                  )
+                          controller: longtitudeController,
+                          decoration: InputDecoration(
+                            labelStyle: TextStyle(
+                              color: Colors.black,
+                            ),
+                            labelText: "LONGTITUDE : ${field.longtitude}",
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: theme_color2),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: theme_color2),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          onChanged: (value) {
+                            setState(() {
+                              RegExp regex =
+                                  new RegExp(r'(^[0-9]*)([.]{0,1})([0-9]*$)');
+                              if (regex.hasMatch(value.toString())) {
+                                try {
+                                  field.longtitude = double.parse(value);
+                                } catch (e) {
+                                  print("NUMBER FUCKING ERROR :${e}");
+                                }
+                              }
+                            });
+                          },
+                        )
                       : AnimTFF(
-                        (text) => {
-                      setState(() {
-                        RegExp regex =
-                        new RegExp(r'(^[0-9]*)([.]{0,1})([0-9]*$)');
-                        if (regex.hasMatch(text.toString())) {
-                          try {
-                            field.longtitude = double.parse(text);
-                          } catch (e) {
-                            print("NUMBER FUCKING ERROR :${e}");
-                          }
-                        }
-                      }),
-                      if (text.isEmpty || (text == null) || (text == ""))
-                        {field.longtitude = double.parse(save_Longtitude)}
-                    },
-                    validator1: (value) =>
-                        InputCodeValidator.validateNumber(
-                            value, field.longtitude.toString()),
-                    labelText: field.longtitude == 0.00
-                        ? "0.00"
-                        : field.longtitude.toString(),
-                    successText: "",
-                    isOnlyNumber: true,
-                    inputIcon: Icon(Icons.eco_sharp),
-                  ),
+                          (text) => {
+                            setState(() {
+                              RegExp regex =
+                                  new RegExp(r'(^[0-9]*)([.]{0,1})([0-9]*$)');
+                              if (regex.hasMatch(text.toString())) {
+                                try {
+                                  field.longtitude = double.parse(text);
+                                } catch (e) {
+                                  print("NUMBER FUCKING ERROR :${e}");
+                                }
+                              }
+                            }),
+                            if (text.isEmpty || (text == null) || (text == ""))
+                              {field.longtitude = double.parse(save_Longtitude)}
+                          },
+                          validator1: (value) =>
+                              InputCodeValidator.validateNumber(
+                                  value, field.longtitude.toString()),
+                          labelText: field.longtitude == 0.00
+                              ? "0.00"
+                              : field.longtitude.toString(),
+                          successText: "",
+                          isOnlyNumber: true,
+                          inputIcon: Icon(Icons.eco_sharp),
+                        ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   _isPassValueFromPage ? _buildUpdateGPSBtn() : Container(),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
@@ -1342,10 +1344,10 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   AnimTFF(
-                        (text) => {
+                    (text) => {
                       setState(() {
                         RegExp regex =
-                        new RegExp(r'(^[0-9]*)([.]{0,1})([0-9]*$)');
+                            new RegExp(r'(^[0-9]*)([.]{0,1})([0-9]*$)');
                         if (regex.hasMatch(text.toString())) {
                           try {
                             field.metresAboveSeaLv = double.parse(text);
@@ -1460,6 +1462,22 @@ class _NewFieldScreenState extends State<NewFieldScreen>
     );
   }
 
+  showAboutDialog(context) => showCupertinoDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: Text('internet-problem-label'.i18n()),
+          content: Text('connection-timeout-label'.i18n()),
+          actions: <CupertinoDialogAction>[
+            CupertinoDialogAction(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                child: Text('OK')),
+          ],
+        ),
+      );
   Future<bool> onBackButtonPressed(BuildContext context) async {
     bool exitApp = await showDialog(
         context: context,
@@ -1494,7 +1512,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
         }),
       ],
       child:
-      Consumer<DropdownFarmer>(builder: (context, dropdownFarmer, child) {
+          Consumer<DropdownFarmer>(builder: (context, dropdownFarmer, child) {
         return Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: PreferredSize(
@@ -1503,134 +1521,134 @@ class _NewFieldScreenState extends State<NewFieldScreen>
           ),
           body: _isLoading
               ? Center(
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(theme_color2),
-            ),
-          )
-              : data_provinces.length == 0
-              ? Container()
-              : Container(
-            padding: EdgeInsets.all(sizeHeight(12, context)),
-            child: Container(
-              height: SizeConfig.screenHeight,
-              child: Theme(
-                data: ThemeData(
-                  canvasColor: Color.fromARGB(255, 255, 255, 255),
-                  colorScheme: Theme.of(context).colorScheme.copyWith(
-                    primary: theme_color4,
-                    background: Colors.red,
-                    secondary: Colors.green,
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(theme_color2),
                   ),
-                ),
-                child: Stepper(
-                  physics: ScrollPhysics(),
-                  type: stepperType,
-                  currentStep: _currentStep,
-                  onStepTapped: (step) => tapped(step),
-                  onStepContinue: continued,
-                  onStepCancel: cancel,
-                  controlsBuilder: (context,
-                      {onStepCancel, onStepContinue}) {
-                    return Row(
-                      children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            child: Text('previous-label'.i18n()),
-                            onPressed: cancel,
+                )
+              : data_provinces.length == 0
+                  ? Container()
+                  : Container(
+                      padding: EdgeInsets.all(sizeHeight(12, context)),
+                      child: Container(
+                        height: SizeConfig.screenHeight,
+                        child: Theme(
+                          data: ThemeData(
+                            canvasColor: Color.fromARGB(255, 255, 255, 255),
+                            colorScheme: Theme.of(context).colorScheme.copyWith(
+                                  primary: theme_color4,
+                                  background: Colors.red,
+                                  secondary: Colors.green,
+                                ),
+                          ),
+                          child: Stepper(
+                            physics: ScrollPhysics(),
+                            type: stepperType,
+                            currentStep: _currentStep,
+                            onStepTapped: (step) => tapped(step),
+                            onStepContinue: continued,
+                            onStepCancel: cancel,
+                            controlsBuilder: (context,
+                                {onStepCancel, onStepContinue}) {
+                              return Row(
+                                children: [
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      child: Text('previous-label'.i18n()),
+                                      onPressed: cancel,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: sizeWidth(12, context),
+                                  ),
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      child: isFinal()
+                                          ? _isPassValueFromPage
+                                              ? Text(
+                                                  'confirm-edit-label'.i18n())
+                                              : Text('create-new-field-label'
+                                                  .i18n())
+                                          : Text('next-label'.i18n()),
+                                      onPressed: isFinal()
+                                          ? submitFunction
+                                          : continued,
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                            steps: [
+                              Step(
+                                title: GestureDetector(
+                                  child: new Text(''),
+                                  onTap: () {
+                                    setState(() {
+                                      _currentStep = 0;
+                                    });
+                                  },
+                                ),
+                                content: Column(
+                                  children: <Widget>[
+                                    _buildCreateFieldFirstPage(dropdownFarmer),
+                                    SizedBox(
+                                        height:
+                                            SizeConfig.screenHeight! * 0.025),
+                                  ],
+                                ),
+                                isActive: _currentStep >= 0,
+                                state: _currentStep >= 0
+                                    ? StepState.complete
+                                    : StepState.disabled,
+                              ),
+                              Step(
+                                title: GestureDetector(
+                                  child: new Text(''),
+                                  onTap: () {
+                                    setState(() {
+                                      _currentStep = 1;
+                                    });
+                                  },
+                                ),
+                                content: Column(
+                                  children: <Widget>[
+                                    _buildCreateFieldSecondPage(),
+                                    SizedBox(
+                                        height:
+                                            SizeConfig.screenHeight! * 0.025),
+                                  ],
+                                ),
+                                isActive: _currentStep >= 0,
+                                state: _currentStep >= 1
+                                    ? StepState.complete
+                                    : StepState.disabled,
+                              ),
+                              Step(
+                                title: GestureDetector(
+                                  child: new Text(''),
+                                  onTap: () {
+                                    setState(() {
+                                      _currentStep = 2;
+                                    });
+                                  },
+                                ),
+                                content: Column(
+                                  children: <Widget>[
+                                    _buildCreateFieldThirdPage(),
+                                    SizedBox(
+                                        height:
+                                            SizeConfig.screenHeight! * 0.025),
+                                  ],
+                                ),
+                                isActive: _currentStep >= 0,
+                                state: _currentStep >= 2
+                                    ? StepState.complete
+                                    : StepState.disabled,
+                              ),
+                            ],
                           ),
                         ),
-                        SizedBox(
-                          width: sizeWidth(12, context),
-                        ),
-                        Expanded(
-                          child: ElevatedButton(
-                            child: isFinal()
-                                ? _isPassValueFromPage
-                                ? Text(
-                                'confirm-edit-label'.i18n())
-                                : Text('create-new-field-label'
-                                .i18n())
-                                : Text('next-label'.i18n()),
-                            onPressed: isFinal()
-                                ? submitFunction
-                                : continued,
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                  steps: [
-                    Step(
-                      title: GestureDetector(
-                        child: new Text(''),
-                        onTap: () {
-                          setState(() {
-                            _currentStep = 0;
-                          });
-                        },
                       ),
-                      content: Column(
-                        children: <Widget>[
-                          _buildCreateFieldFirstPage(dropdownFarmer),
-                          SizedBox(
-                              height:
-                              SizeConfig.screenHeight! * 0.025),
-                        ],
-                      ),
-                      isActive: _currentStep >= 0,
-                      state: _currentStep >= 0
-                          ? StepState.complete
-                          : StepState.disabled,
                     ),
-                    Step(
-                      title: GestureDetector(
-                        child: new Text(''),
-                        onTap: () {
-                          setState(() {
-                            _currentStep = 1;
-                          });
-                        },
-                      ),
-                      content: Column(
-                        children: <Widget>[
-                          _buildCreateFieldSecondPage(),
-                          SizedBox(
-                              height:
-                              SizeConfig.screenHeight! * 0.025),
-                        ],
-                      ),
-                      isActive: _currentStep >= 0,
-                      state: _currentStep >= 1
-                          ? StepState.complete
-                          : StepState.disabled,
-                    ),
-                    Step(
-                      title: GestureDetector(
-                        child: new Text(''),
-                        onTap: () {
-                          setState(() {
-                            _currentStep = 2;
-                          });
-                        },
-                      ),
-                      content: Column(
-                        children: <Widget>[
-                          _buildCreateFieldThirdPage(),
-                          SizedBox(
-                              height:
-                              SizeConfig.screenHeight! * 0.025),
-                        ],
-                      ),
-                      isActive: _currentStep >= 0,
-                      state: _currentStep >= 2
-                          ? StepState.complete
-                          : StepState.disabled,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
         );
       }),
     );

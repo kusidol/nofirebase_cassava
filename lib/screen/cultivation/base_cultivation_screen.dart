@@ -1033,7 +1033,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
   @override
   Widget build(BuildContext context) {
     final plantingProvider = Provider.of<PlantingProvider>(context);
-    print("Page Base Planting Context: $context");
+    // print("Page Base Planting Context: $context");
     return Theme(
       data: HotelAppTheme.buildLightTheme(),
       child: Container(

@@ -840,7 +840,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
         CustomLoading.showSuccess();
 
         widget.plantingProvider.addPlanting(newPlanting);
-        widget.plantingProvider.notifyListeners();
+        // widget.plantingProvider.notifyListeners();
         Navigator.of(context).pop();
       } else {
         CustomLoading.showError(

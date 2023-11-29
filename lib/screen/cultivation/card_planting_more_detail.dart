@@ -110,6 +110,27 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
       } else {}
     }
 
+    showDeleteDialog(context) => showCupertinoDialog<void>(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) => CupertinoAlertDialog(
+            title: Text('confirm-deletion'.i18n()),
+            actions: <CupertinoDialogAction>[
+              CupertinoDialogAction(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('no'.i18n()),
+              ),
+              CupertinoDialogAction(
+                onPressed: () {
+                  _handleDeletion();
+                },
+                child: Text('yes'.i18n()),
+              ),
+            ],
+          ),
+        );
     void _deleteConfirmation() {
       showDialog(
         context: context,
@@ -287,7 +308,8 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
                                     ),
                                   ),
                                   onTap: () {
-                                    _deleteConfirmation();
+                                    // _deleteConfirmation();
+                                    showDeleteDialog(context);
                                   },
                                 ),
                               ],
