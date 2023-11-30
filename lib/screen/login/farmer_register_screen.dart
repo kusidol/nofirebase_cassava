@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:localization/src/localization_extension.dart';
 import 'package:mun_bot/controller/service.dart';
 import 'package:mun_bot/env.dart';
 import 'package:mun_bot/screen/login/login_screen.dart';
@@ -45,7 +47,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
     Service service = Service();
     var response = await service.doGet(
         "$LOCAL_SERVER_IP_URL/provinces/", token.toString());
-    // print(response);
+     print(response);
     if (response.statusCode == 200) {
       var responseBody = json.decode(response.data);
       if (responseBody['status'] == 200) {
@@ -167,56 +169,59 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
     }
   }
 
-  void showAlert(BuildContext context, String showMS) {
-    Color backgroundColor = showMS == "มีการใช้งาน E-mail นี้แล้ว"
-        ? Colors.red
-        : Colors.green; // Change the background color based on the condition
+ void showAlert(BuildContext context, String showMS) {
+  Color backgroundColor =
+      showMS == "มีการใช้งาน E-mail นี้แล้ว" ? Colors.red : Colors.green;
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: backgroundColor,
-          title: Text(
-            'แจ้งเตือน',
-            style: const TextStyle(
-              color: Color(0xFFFFFFFF),
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          content: Text(
-            showMS,
-            style: const TextStyle(
-              color: Color(0xFFFFFFFF),
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text(
-                'ตกลง',
-                style: const TextStyle(
-                  color: Color(0xFFFFFFFF),
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (BuildContext context) {
-                    return LoginScreen();
-                  }),
-                  (r) {
-                    return false;
-                  },
-                );
-              },
-            ),
-          ],
-        );
-      },
-    );
+  if (showMS == "มีการใช้งาน E-mail นี้แล้ว") {
+    showMS = "emailalreadyinuse".i18n();
+  } else if (showMS == "ลงทะเบียนเกษตรกรสำเร็จ") {
+    showMS = "registerfarmerdone".i18n();
   }
+
+  showCupertinoDialog<void>(
+    context: context,
+    builder: (BuildContext context) => CupertinoAlertDialog(
+      title: Text(
+         "notification-label".i18n(),
+        style: const TextStyle(
+          color: CupertinoColors.black,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+      content: Text(
+        showMS,
+        style: const TextStyle(
+          color: CupertinoColors.black,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+      actions: <CupertinoDialogAction>[
+        CupertinoDialogAction(
+          child: Text(
+            "done".i18n(),
+            style: const TextStyle(
+              color: CupertinoColors.activeBlue,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (BuildContext context) {
+                return LoginScreen();
+              }),
+              (r) {
+                return false;
+              },
+            );
+          },
+        ),
+      ],
+    ),
+  );
+}
+
 
   String prefix = "";
   bool prefixCheck = false;
@@ -256,7 +261,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                         Container(
                           margin: EdgeInsets.only(left: 16, top: 16),
                           child: Text(
-                            'คำนำหน้า',
+                            "prefix".i18n(),
                             style: const TextStyle(
                               color: Color(0xFFB8B6B6),
                               fontSize: 16,
@@ -338,7 +343,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                         Container(
                           margin: EdgeInsets.only(left: 16, top: 16),
                           child: Text(
-                            'ชื่อ',
+                            "firstname".i18n(),
                             style: const TextStyle(
                               color: Color(0xFFB8B6B6),
                               fontSize: 16,
@@ -419,7 +424,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                         Container(
                           margin: EdgeInsets.only(left: 16, top: 16),
                           child: Text(
-                            'นามสกุล',
+                              "lastname".i18n(),
                             style: const TextStyle(
                               color: Color(0xFFB8B6B6),
                               fontSize: 16,
@@ -501,7 +506,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                         Container(
                           margin: EdgeInsets.only(left: 16, top: 16),
                           child: Text(
-                            'ที่อยู่',
+                            "address".i18n(),
                             style: const TextStyle(
                               color: Color(0xFFB8B6B6),
                               fontSize: 16,
@@ -579,7 +584,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                         Container(
                           margin: EdgeInsets.only(left: 16, top: 16),
                           child: Text(
-                            'จังหวัด',
+                              "province".i18n(),
                             style: const TextStyle(
                               color: Color(0xFFB8B6B6),
                               fontSize: 16,
@@ -670,7 +675,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                                     fontSize: 16,
                                   ),
                                   hint: Text(
-                                    '  เลือกจังหวัด',
+                                   "selectprovince".i18n(),
                                     style: const TextStyle(
                                       color: Color(0xFF7696FE),
                                       fontSize: 16,
@@ -695,7 +700,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                         Container(
                           margin: EdgeInsets.only(left: 16, top: 16),
                           child: Text(
-                            'อำเภอ',
+                              "district".i18n(),
                             style: const TextStyle(
                               color: Color(0xFFB8B6B6),
                               fontSize: 16,
@@ -776,7 +781,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                                         fontSize: 16,
                                       ),
                                       hint: Text(
-                                        '  เลือกอำเภอ',
+                                        "selectdistrict".i18n(),
                                         style: const TextStyle(
                                           color: Color(0xFF7696FE),
                                           fontSize: 16,
@@ -803,7 +808,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                         Container(
                           margin: EdgeInsets.only(left: 16, top: 16),
                           child: Text(
-                            'ตำบล',
+                              "sub-district".i18n(),
                             style: const TextStyle(
                               color: Color(0xFFB8B6B6),
                               fontSize: 16,
@@ -885,7 +890,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                                         fontSize: 16,
                                       ),
                                       hint: Text(
-                                        '  เลือกตำบล',
+                                        "selectsubdistrict".i18n(),
                                         style: const TextStyle(
                                           color: Color(0xFF7696FE),
                                           fontSize: 16,
@@ -912,7 +917,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                         Container(
                           margin: EdgeInsets.only(left: 16, top: 16),
                           child: Text(
-                            'เบอร์โทรศัพท์',
+                            "phonenumber".i18n(),
                             style: const TextStyle(
                               color: Color(0xFFB8B6B6),
                               fontSize: 16,
@@ -1060,7 +1065,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                                     }
                                   : null,
                               child: Text(
-                                'เสร็จสิ้น',
+                                 "done".i18n(),
                                 style: const TextStyle(
                                   color: Color(0xFFF9FAFB),
                                   fontSize: 18,
@@ -1137,7 +1142,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                             Container(
                               margin: EdgeInsets.only(left: 50, right: 50),
                               child: Text(
-                                'ลงทะเบียนสำหรับเกษตรกร',
+                               "registerforfarmer".i18n(),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,

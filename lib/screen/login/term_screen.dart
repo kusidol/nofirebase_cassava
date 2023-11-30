@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:localization/src/localization_extension.dart';
 import 'package:mun_bot/screen/login/qrcode_scren.dart';
 
 import 'farmer_register_screen.dart';
@@ -31,15 +32,12 @@ class _TermScreen extends State<TermScreen>
   String? _codeCompanyregister;
   String? _userType;
   String? _nameCompanyregister;
-  String? _headerTerm = "การจดลิขสิทธิ์";
-  String? _headerTerm2 = "การถ่ายโอนลิขสิทธิ์";
-  String? _headerTerm3 = "ประกาศสาธารณสมบัติ";
-  String? _dataTerm =
-      "ผู้นำส่งภาพมาให้คลังข้อมูลภาพถ่ายโรคสำคัญของมันสำปะหลังจำเป็นต้องถ่ายโอนลิขสิทธิ์หรือระบุว่าข้อมูลเป็นสาธารณสมบัติ กรุณาเลือกหนึ่งในข้อความจากข้างล่าง ข้อมูลและภาพที่ท่านส่งมาให้นั้นจะถูกนำไปใช้ในกลุ่มนักวิชาการโรคพืชและนักวิชาการเกษตรผ่านคลังข้อมูลภาพถ่ายโรคสำคัญของมันสำปะหลัง ทางคลังข้อมูลภาพถ่ายโรคสำคัญของมันสำปะหลังไม่แนะนำให้ผู้ส่งข้อมูลและภาพใช้งานข้อมูลและภาพภายใต้จุดประสงค์อื่นที่ไม่ตรงกับข้อตกลงการใช้งานของคลังข้อมูลภาพถ่ายโรคสำคัญของมันสำปะหลัง ข้อตกลงนี้จะเปลี่ยนไปตามนโยบายของคลังข้อมูลภาพถ่ายโรคสำคัญของมันสำปะหลัง";
-  String? _dataTerm2 =
-      "ข้าพเจ้าขอยืนยันว่าข้าพเจ้าเป็นเจ้าของลิขสิทธิ์ข้อมูลและภาพถ่ายและด้วยเหตุนี้ข้าพเจ้าขอถ่ายโอนลิขสิทธิ์ทั้งหมดของข้อมูลและภาพให้แก่คลังข้อมูลภาพถ่ายโรคสำคัญของมันสำปะหลัง การถ่ายโอนครั้งนี้จะทำให้คลังข้อมูลภาพถ่ายโรคสำคัญของมันสำปะหลังมีอำนาจเด็ดขาดในการให้ลิขสิทธิ์ของข้อมูลและภาพให้แก่ผู้อื่น ข้าพเจ้าในฐานะเจ้าของลิขสิทธิ์ยังสามารถใช้งานภาพนี้สำหรับงานตีพิมพ์ของข้าพเจ้าได้โดยที่ไม่ต้องขออนุญาตจากคลังข้อมูลภาพถ่ายโรคสำคัญของมันสำปะหลัง ข้าพเจ้ายังขอยืนยันอีกว่างานที่ตีพิมพ์จากข้อมูลและภาพของคลังข้อมูลภาพถ่ายโรคสำคัญของมันสำปะหลังจะไม่ละเมิดลิขสิทธิ์หรือสิทธิของผู้อื่น ข้าพเจ้าทราบดีว่าคลังข้อมูลภาพถ่ายโรคสำคัญของมันสำปะหลังจะใช้คำพูดข้างต้นนี้ในการอ้างลิขสิทธิ์ของผลงาน";
-  String? _dataTerm3 =
-      "ข้าพเจ้าขอยืนยันว่าข้อมูลและภาพที่ได้เห็นจากข้างในระบบทำขึ้นโดยคลังข้อมูลภาพถ่ายโรคสำคัญของมันสำปะหลังหรือมีเหตุผลอื่นที่ทำให้ไม่สามารถจดลิขสิทธิ์ได้และตกเป็นสาธารณสมบัติ ด้วยเหตุนี้ผลงานจึงสามารถตีพิมพ์ได้อย่างอิสระ ข้าพเจ้าทราบดีว่าคลังข้อมูลภาพถ่ายโรคสำคัญของมันสำปะหลังจะใช้คำพูดข้างต้นเพื่อพิจารณาว่าผลงานไร้ลิขสิทธิ์";
+  String? _headerTerm = "copyrightregistration".i18n();
+  String? _headerTerm2 = "transferofcopyright".i18n();
+  String? _headerTerm3 = "publicdomainannouncement".i18n();
+  String? _dataTerm = "dataterm1".i18n();
+  String? _dataTerm2 = "dataterm2".i18n();
+  String? _dataTerm3 = "dataterm3".i18n();
   @override
   void initState() {
     super.initState();
@@ -75,7 +73,7 @@ class _TermScreen extends State<TermScreen>
         title: Container(
           margin: EdgeInsets.only(left: 24, right: 24),
           child: Text(
-            'ข้อกำหนดและบริการ',
+            "termandpolicy".i18n(),
             style: const TextStyle(
               color: Color(0xFF118E7D),
               fontSize: 18,
@@ -104,14 +102,16 @@ class _TermScreen extends State<TermScreen>
                     child: Column(
                       children: [
                         Padding(
-                          padding:
-                              EdgeInsets.only(top: 15.0, right: 210, bottom: 5),
-                          child: Text(
-                            "$_headerTerm",
-                            style: const TextStyle(
-                              color: Color(0xFF000000),
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
+                          padding: EdgeInsets.only(top: 15.0),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "$_headerTerm",
+                              style: const TextStyle(
+                                color: Color(0xFF000000),
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                         ),
@@ -128,14 +128,16 @@ class _TermScreen extends State<TermScreen>
                           ),
                         ),
                         Padding(
-                          padding:
-                              EdgeInsets.only(top: 15.0, right: 210, bottom: 5),
-                          child: Text(
-                            "$_headerTerm2",
-                            style: const TextStyle(
-                              color: Color(0xFF000000),
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
+                          padding: EdgeInsets.only(top: 15.0),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "$_headerTerm2",
+                              style: const TextStyle(
+                                color: Color(0xFF000000),
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                         ),
@@ -152,14 +154,16 @@ class _TermScreen extends State<TermScreen>
                           ),
                         ),
                         Padding(
-                          padding:
-                              EdgeInsets.only(top: 15.0, right: 210, bottom: 5),
-                          child: Text(
-                            "$_headerTerm3",
-                            style: const TextStyle(
-                              color: Color(0xFF000000),
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
+                          padding: EdgeInsets.only(top: 15.0),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "$_headerTerm3",
+                              style: const TextStyle(
+                                color: Color(0xFF000000),
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                         ),
@@ -207,7 +211,7 @@ class _TermScreen extends State<TermScreen>
                           padding: EdgeInsets.only(left: 10.0),
                           alignment: Alignment.center,
                           child: Text(
-                            "เลือกข้อนี้เพื่อยอมรับกับการถ่ายโอนลิขสิทธิ์ข้างต้น",
+                            "approveterm1".i18n(),
                             style: const TextStyle(
                               color: Color(0xFF25282B),
                               fontSize: 12,
@@ -244,7 +248,7 @@ class _TermScreen extends State<TermScreen>
                           padding: EdgeInsets.only(left: 10.0),
                           alignment: Alignment.center,
                           child: Text(
-                            "เลือกข้อนี้เพื่อยอมรับกับประกาศสาธารณสมบัติข้างต้น",
+                            "approveterm2".i18n(),
                             style: const TextStyle(
                               color: Color(0xFF25282B),
                               fontSize: 12,
@@ -275,7 +279,7 @@ class _TermScreen extends State<TermScreen>
                             minimumSize: Size(341, 55),
                           ),
                           child: Text(
-                            'เสร็จสิ้น',
+                            "done".i18n(),
                             style: const TextStyle(
                               color: Color(0xFFF9FAFB),
                               fontSize: 18,
