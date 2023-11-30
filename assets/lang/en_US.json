@@ -255,4 +255,8 @@
 
   "registration": "Registration",
   "register-warning-message": "This account has not been registered. Do you want to register?"
+
+  "qrcode-verification": "Code Verification",
+  "qrcode-valid": "Correct code, Do you want to register?",
+  "qrcode-invalid": "Incorrect code, caused by the code having expired or the code having been used in full. Please contact the staff."
 }
