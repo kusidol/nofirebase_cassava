@@ -115,7 +115,7 @@ class _MainScreen extends State<MainScreen>
                         size: iconTabSize,
                       ),
                       child: textTabbar("home-label".i18n()),
-                      height: SizeConfig.screenHeight! * 0.0696,
+                      height: SizeConfig.screenHeight! * 0.0715,
                     ),
                     Tab(
                       icon: Icon(
@@ -123,7 +123,7 @@ class _MainScreen extends State<MainScreen>
                         size: iconTabSize,
                       ),
                       child: textTabbar("field-label".i18n()),
-                      height: SizeConfig.screenHeight! * 0.0696,
+                      height: SizeConfig.screenHeight! * 0.0715,
                     ),
                     Tab(
                       icon: Icon(
@@ -131,7 +131,7 @@ class _MainScreen extends State<MainScreen>
                         size: iconTabSize,
                       ),
                       child: textTabbar("planting-label".i18n()),
-                      height: SizeConfig.screenHeight! * 0.0696,
+                      height: SizeConfig.screenHeight! * 0.0715,
                     ),
                     Tab(
                       icon: Icon(
@@ -139,7 +139,7 @@ class _MainScreen extends State<MainScreen>
                         size: iconTabSize,
                       ),
                       child: textTabbar("survey-label".i18n()),
-                      height: SizeConfig.screenHeight! * 0.0696,
+                      height: SizeConfig.screenHeight! * 0.0715,
                     ),
                   ],
                   //unselectedLabelColor: Colors.white,
