@@ -1,17 +1,19 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_qr_reader/flutter_qr_reader.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as Http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:localization/src/localization_extension.dart';
 import 'package:mun_bot/controller/service.dart';
 import 'package:mun_bot/entities/token.dart';
 import 'package:mun_bot/screen/login/farmer_register_screen.dart';
 import 'package:mun_bot/screen/login/login_screen.dart';
 import 'package:mun_bot/screen/login/term_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:scan/scan.dart';
+//import 'package:scan/scan.dart';
 import 'package:mun_bot/screen/login/staff_register_screen.dart';
 import 'package:mun_bot/screen/main_screen.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -36,19 +38,21 @@ class QRCodeScannerScreen extends StatefulWidget {
 class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> with WidgetsBindingObserver {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController? controller;
-  bool isCameraInitialized = false;
+  bool _permission = false;
   bool arkPermission = false ;
   String? registerCode;
   String message = "";
   String userType = "";
   String nameCompany = "";
+  final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
     super.initState();
+    _getPermission();
     WidgetsBinding.instance!.addObserver(this);
-  }
 
+  }
   @override
   void dispose() {
     controller?.dispose();
@@ -58,24 +62,112 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> with WidgetsB
     tokenFromLogin = null;
   }
 
+  void _getPermission() async {
+    final grant = await Permission.camera.request().isGranted;
+    setState(() {
+      _permission = grant;
+    });
+  }
+
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
       final granted = await Permission.camera.isGranted;
-      if (granted) {
+      if (granted && !_permission) {
+        _permission = granted ;
         Navigator.of(context).pop();
       }
     }
   }
+  Future<void> doQR(String regisCode) async {
 
-  Future<void> _getRole() async {
+    final String? token = widget.token;
+    final Service service = Service();
+
+    try {
+      final response = await service.doGet(
+          '$LOCAL_SERVER_IP_URL/register/$regisCode', token.toString());
+      final responseBody = json.decode(response.data) as Map<String, dynamic>;
+      //print(responseBody);
+
+      if(response.statusCode == 200){
+        final body = responseBody['body'] as Map<String, dynamic>;
+        showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => CupertinoAlertDialog(
+            title: Text('qrcode-verification'.i18n()),
+            content: Text('qrcode-valid'.i18n()),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                 // print("--"+Navigator.);
+                },
+                child: Text('cancle'.i18n(),
+                    style: TextStyle(color: Colors.red)),
+              ),
+              TextButton(
+                onPressed: () async {
+                  // Show a loading dialog
+
+
+                  await Future.delayed(Duration(seconds: 2));
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TermScreen(
+                        token: widget.token,
+                        codeCompanyregister: regisCode,
+                        userType: body['userType'] as String,
+                        nameCompanyregister: body['organizationName'] as String,
+                      ),
+                    ),
+                  );
+                },
+
+                child: Text(
+                  'confirm'.i18n(),
+                  style: TextStyle(color: Colors.blue),
+                ),
+              ),
+            ],
+          ),
+        );
+
+      }else if(response.statusCode == 400){
+
+        _showAlertDialog(context, "qrcode-valid".i18n());
+
+      }
+
+      //registerCode = rest;
+      //final body = responseBody['body'] as Map<String, dynamic>;
+      //message = "รหัสถูกต้อง";
+      //userType = body['userType'] as String;
+      //nameCompany = body['organizationName'] as String;
+
+    }
+    catch (error) {
+
+      //showAlert(context);
+      //return error;
+    }
+
+  }
+
+
+   Future<dynamic> _getRole() async {
     final String? token = widget.token;
     final Service service = Service();
     try {
       final response = await service.doGet(
           '$LOCAL_SERVER_IP_URL/register/$registerCode', token.toString());
       final responseBody = json.decode(response.data) as Map<String, dynamic>;
-      print(responseBody);
-      if (responseBody['status'] == 400) {
+      //print(responseBody);
+
+
+      return response ;
+      /*if (responseBody['status'] == 400) {
         String messageCheck = responseBody['message'] as String;
         if (messageCheck == "รหัสไม่ถูกต้อง") {
           message = messageCheck;
@@ -89,9 +181,11 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> with WidgetsB
         message = "รหัสถูกต้อง";
         userType = body['userType'] as String;
         nameCompany = body['organizationName'] as String;
-      }
+      }*/
     } catch (error) {
+
       showAlert(context);
+      return error;
     }
   }
 
@@ -198,6 +292,32 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> with WidgetsB
             ),
           ),
         ),
+        Positioned(
+          bottom: 20,
+          left: 20,
+          child: GestureDetector(
+            onTap: ()  {
+              setState(() {
+                controller!.pauseCamera();
+                controller!.resumeCamera();
+              });
+
+            },
+            child: Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+              ),
+              child: Icon(
+                Icons.qr_code_outlined,
+                color: Colors.black,
+                size: 30,
+              ),
+            ),
+          ),
+        )
       ],
     );
   }
@@ -237,60 +357,89 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> with WidgetsB
   );
 
   void _onQRViewCreated(QRViewController controller) {
+    print("===========create==============");
     setState(() {
       this.controller = controller;
+      //this.controller!.resumeCamera();
     });
 
-    controller.scannedDataStream.listen((scanData) async {
-      if (scanData != null) {
-        controller.pauseCamera();
-        setState(() {
-          registerCode = scanData.code;
-        });
-      }
-      await _getRole();
+    controller.scannedDataStream.listen((scanData)  {
+     // print(scanData.code);
+      //if (scanData != null) {
+        //controller.pauseCamera();
 
-      if (message == "รหัสไม่ถูกต้อง") {
-        _showAlertDialogWithScanCamera(context, 'รหัสไม่ถูกต้อง', controller);
-      } else if (message == "รูปแบบQRcodeไม่ถูกต้อง") {
-        _showAlertDialogWithScanCamera(
-            context, 'รูปแบบQRcodeไม่ถูกต้อง', controller);
-      } else if (message == "รหัสถูกใช้ครบจำนวนแล้ว") {
-        _showAlertDialogWithScanCamera(
-            context, 'รหัสถูกใช้ครบจำนวนแล้ว', controller);
-      } else if (message == "รหัสหมดอายุ") {
-        _showAlertDialogWithScanCamera(context, 'รหัสหมดอายุ', controller);
-      } else if (message == "รหัสถูกต้อง") {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TermScreen(
-              token: widget.token,
-              codeCompanyregister: registerCode,
-              userType: userType,
-              nameCompanyregister: nameCompany,
-            ),
-          ),
-        );
-        controller.resumeCamera();
-      }
-      message = "";
+        //setState(() {
+
+          //doQR(scanData.code);
+          //controller.stopCamera();
+          //return ;
+         // registerCode = scanData.code;
+        //});
+     // }
+    }).onData((data) async {
+
+      controller.stopCamera();
+
+      setState(() {
+
+        doQR(data.code);
+      });
+
+
+      //print("========================="+data.code);
     });
+
+
   }
 
+
+
 //Gallery Picker
-  Future<void> _pickQRCodeFromGallery() async {
-    QRViewController controller;
-    var pickedImageFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+  Future<bool> _pickQRCodeFromGallery() async {
+
+    XFile? pickedImageFile = null ;
+    try {
+      pickedImageFile = await _picker.pickImage(
+          source: ImageSource.gallery);
+    }catch (e) {
+      print(e);
+    }
     if (pickedImageFile != null) {
-      registerCode = await Scan.parse(pickedImageFile.path);
-      if (registerCode == null) {
+      String rest = await FlutterQrReader.imgScan(pickedImageFile.path);
+
+      doQR(rest);
+
+      /*await _getRole().then((value) {
+        final responseBody = json.decode(value.data) as Map<String, dynamic>;
+        if(value.responseCode == 200){
+
+          setState(() {
+
+            registerCode = rest;
+            final body = responseBody['body'] as Map<String, dynamic>;
+            message = "รหัสถูกต้อง";
+            userType = body['userType'] as String;
+            nameCompany = body['organizationName'] as String;
+          });
+
+        }else if (value.responseCode == 400){
+          _showAlertDialog(context, responseBody['message'] as String);
+        }else{
+
+        }
+
+      });*/
+
+      //print(rest);
+      //return true ;
+
+      /*if (registerCode == null) {
         _showAlertDialog(context, 'รูปแบบ QrCode ไม่ถูกต้อง');
-        return;
+        return false;
       } else {
         await _getRole();
       }
+
       if (message == "รหัสไม่ถูกต้อง") {
         _showAlertDialog(context, 'รหัสไม่ถูกต้อง');
       } else if (message == "รหัสถูกใช้ครบจำนวนแล้ว") {
@@ -300,20 +449,34 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> with WidgetsB
       } else if (message == "รหัสหมดอายุ") {
         _showAlertDialog(context, 'รหัสหมดอายุ');
       } else if (message == "รหัสถูกต้อง") {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TermScreen(
-              token: widget.token,
-              codeCompanyregister: registerCode,
-              userType: userType,
-              nameCompanyregister: nameCompany,
-            ),
-          ),
-        );
+        //print("---------------"+message);
+        if(mounted){
+          //Navigator.pop(context);
+
+          return true ;
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => TermScreen(
+                  token: widget.token,
+                  codeCompanyregister: registerCode,
+                  userType: userType,
+                  nameCompanyregister: nameCompany,
+                )));
+
+            /*Navigator.push(
+              context,
+
+
+            //);*/
+          //}
+        //);
+
+        }
+
         message = "";
       }
+*/
     }
+    return true;
   }
 
   void _showAlertDialog(BuildContext context, String message) {
@@ -394,6 +557,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> with WidgetsB
                 onPressed: () {
                   message = "";
                   Navigator.pop(context);
+
                   controller.resumeCamera();
                 },
               ),
