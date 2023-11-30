@@ -13,9 +13,11 @@ import 'dart:convert';
 import 'package:http/http.dart' as Http;
 
 class StaffRegisterScreen extends StatefulWidget {
+  final String? token;
   final String? codeCompanyregister;
   final String? nameCompanyregister;
   StaffRegisterScreen({
+    required this.token,
     required this.codeCompanyregister,
     required this.nameCompanyregister,
   });
@@ -27,14 +29,14 @@ class StaffRegisterScreen extends StatefulWidget {
 class _StaffRegisterScreen extends State<StaffRegisterScreen> {
   late String _codeCompanyregister;
   late String _nameCompanyregister;
-  String? token;
+  //String? token;
   @override
   void initState() {
     super.initState();
     _codeCompanyregister = widget.codeCompanyregister!;
     _nameCompanyregister = widget.nameCompanyregister!;
-    token = tokenFromLogin?.token;
-    print(token);
+    //token = tokenFromLogin?.token;
+    print(widget.token);
   }
 
   String prefix = "";
@@ -55,8 +57,8 @@ class _StaffRegisterScreen extends State<StaffRegisterScreen> {
   Future<bool> createStaff(var staffBody) async {
     Service service = Service();
     var response = await service.doPostWithFormData(
-        "$LOCAL_SERVER_IP_URL/register/staff", token.toString(), staffBody);
-    print(response);
+        "$LOCAL_SERVER_IP_URL/register/staff", widget.token.toString(), staffBody);
+    //print(response);
     var responseBody = json.decode(response.data);
     if (responseBody['status'] == 200) {
       String messageCheck = responseBody['message'] as String;
@@ -67,7 +69,7 @@ class _StaffRegisterScreen extends State<StaffRegisterScreen> {
         String showMS = "มีการใช้งาน E-mail นี้แล้ว";
         showAlert(context, showMS);
       }
-      print(responseBody['body']);
+      //print(responseBody['body']);
       return true;
     } else {
       return false;
