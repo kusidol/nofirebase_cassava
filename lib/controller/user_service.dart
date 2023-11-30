@@ -191,7 +191,7 @@ class UserService {
 
       loggedUser.token = t.body.token;
 
-      await saveUser("user", loggedUser);
+      await save("user", loggedUser);
 
       loggedUser = await readUser("user");
 
