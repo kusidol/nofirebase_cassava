@@ -20,6 +20,24 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:localization/localization.dart';
 import 'entities/token.dart';
 //import 'package:firebase_core/firebase_core.dart';
+class AppSetting{
+
+  AppSetting(this.local,this.signIn) ;
+
+  int local ;
+
+  bool signIn ;
+
+  AppSetting.fromJson(Map<String, dynamic> json)
+      : local = json['local'],
+        signIn = json['signIn'];
+
+  Map<String, dynamic> toJson() => {
+    'local': local,
+    'signIn': signIn
+  };
+
+}
 
 class MyHttpOverrides extends HttpOverrides{
 
@@ -32,8 +50,8 @@ class MyHttpOverrides extends HttpOverrides{
 //import 'package:flutter_localizations/flutter_localizations.dart';
 //import 'package:flutter_gen/gen_l10n/app_localizations.dart' ;
 // Token? tokenFromLogin;
-
-bool autoLogInStatus = false;
+AppSetting? appSetting ;
+//bool autoLogInStatus = false;
 Token? tokenFromLogin;
 
 void main() async {
@@ -77,6 +95,9 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   Locale? _locale;
   initState() {
+
+    //final myApp = context.findAncestorStateOfType<MyAppState>();
+
     // tokenFromLogin = Token("123");
     _locale = Locale('th', 'TH');
     asyncFunction();
@@ -85,6 +106,15 @@ class MyAppState extends State<MyApp> {
   }
 
   void asyncFunction() async {
+
+
+
+    appSetting = await loadSetting("app_setting");
+
+    setState(() {
+      _locale = appSetting!.local == 0 ?  Locale('th', 'TH') :  Locale('en', 'EN');
+    });
+
     WidgetsFlutterBinding.ensureInitialized();
     //await Firebase.initializeApp();
     //UserService userService = UserService();
@@ -157,6 +187,59 @@ class _SplashScreenState extends State<SplashScreen>
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
 
+
+  initSetting() async {
+
+    appSetting = await loadSetting("app_setting");
+
+    if(appSetting!.signIn){
+
+      loggedUser = await readUser("user");
+
+      tokenFromLogin = Token(loggedUser.token) ;
+
+      Map<String, dynamic> decodedToken =
+
+      JwtDecoder.decode(tokenFromLogin!.token);
+
+      DateTime expirationDate = DateTime.fromMillisecondsSinceEpoch(decodedToken['exp'] * 1000);
+
+      if(DateTime.now().isAfter(expirationDate)){
+
+        UserService userService = UserService();
+        // bool? checkRefreshtoken =
+        bool? isExpired = await userService.refreshTokentoLogin(loggedUser.refresh_token);
+
+        if(!isExpired!){
+          Navigator.of(context).pushReplacement(
+            FadeRoute1(LoginScreen()),
+          );
+          return ;
+        }
+      }
+      Navigator.of(context).pushReplacement(
+        FadeRoute1(MainScreen()),
+      );
+
+    }else{
+
+      _fadeAnimation =
+          Tween<double>(begin: 0, end: 1).animate(_animationController);
+
+      _animationController.forward();
+
+      Future.delayed(Duration(seconds: 5), () async {
+        await requestCameraPermission(); // Request camera permission
+
+        Navigator.of(context).pushReplacement(
+          FadeRoute1(LoginScreen()),
+        );
+      });
+    }
+
+  }
+
+
   @override
   void initState() {
     super.initState();
@@ -165,60 +248,9 @@ class _SplashScreenState extends State<SplashScreen>
       vsync: this,
       duration: Duration(milliseconds: 1500),
     );
+    //print("initSetting");
+    initSetting();
 
-
-
-    getAutoLogInStatusFromStorage().then((status) async {
-
-      setState(() {
-        autoLogInStatus = status ;
-      });
-
-        if(status){
-
-          loggedUser = await readUser("user");
-
-          tokenFromLogin = Token(loggedUser.token) ;
-
-          Map<String, dynamic> decodedToken =
-
-          JwtDecoder.decode(tokenFromLogin!.token);
-
-          DateTime expirationDate = DateTime.fromMillisecondsSinceEpoch(decodedToken['exp'] * 1000);
-
-          if(DateTime.now().isAfter(expirationDate)){
-
-            UserService userService = UserService();
-           // bool? checkRefreshtoken =
-            bool? isExpired = await userService.refreshTokentoLogin(loggedUser.refresh_token);
-
-            if(!isExpired!){
-              Navigator.of(context).pushReplacement(
-                FadeRoute1(LoginScreen()),
-              );
-              return ;
-            }
-          }
-          Navigator.of(context).pushReplacement(
-            FadeRoute1(MainScreen()),
-          );
-
-        }else{
-
-          _fadeAnimation =
-              Tween<double>(begin: 0, end: 1).animate(_animationController);
-
-          _animationController.forward();
-
-          Future.delayed(Duration(seconds: 5), () async {
-            await requestCameraPermission(); // Request camera permission
-
-            Navigator.of(context).pushReplacement(
-              FadeRoute1(LoginScreen()),
-            );
-          });
-        }
-    });
   }
 
   // Function to request camera permission
