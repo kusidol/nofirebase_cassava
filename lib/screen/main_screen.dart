@@ -28,6 +28,7 @@ import 'package:localization/localization.dart';
 //เพิ่มเติม
 import 'package:mun_bot/screen/survey/survey_target/survey_target_point/stp_plant.dart';
 
+import '../main.dart';
 import 'login/login_screen.dart';
 
 //
@@ -54,6 +55,7 @@ class _MainScreen extends State<MainScreen>
   void initState() {
     // TODO: implement initState
     super.initState();
+
 
     _mainTapController = new TabController(vsync: this, length: 4);
     // _mainTapController = new TabController(vsync: this, length: 5);
