@@ -136,7 +136,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> with WidgetsB
 
       }else if(response.statusCode == 400){
 
-        _showAlertDialog(context, "qrcode-valid".i18n());
+        _showAlertDialog(context, "qrcode-invalid".i18n());
 
       }
 
