@@ -219,7 +219,7 @@ class AuthPage extends StatelessWidget {
           loggedUser.token = t.body.token;
           loggedUser.refresh_token = rft.body.refreshtoken;
 
-          await saveUser("user", loggedUser);
+          await save("user", loggedUser);
 
           Navigator.of(context).pop();
 
