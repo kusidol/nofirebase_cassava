@@ -291,6 +291,7 @@ class _TermScreen extends State<TermScreen>
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               FarmerRegisterScreen(
+                                                token: widget.token,
                                             codeCompanyregister:
                                                 widget.codeCompanyregister,
                                           ),
@@ -306,6 +307,7 @@ class _TermScreen extends State<TermScreen>
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               StaffRegisterScreen(
+                                                token: widget.token,
                                             codeCompanyregister:
                                                 _codeCompanyregister,
                                             nameCompanyregister:
