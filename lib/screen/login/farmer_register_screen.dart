@@ -12,7 +12,9 @@ import 'app_styles.dart';
 
 class FarmerRegisterScreen extends StatefulWidget {
   final String? codeCompanyregister;
+  final String? token ;
   FarmerRegisterScreen({
+    required this.token,
     required this.codeCompanyregister,
   });
   @override
@@ -21,7 +23,7 @@ class FarmerRegisterScreen extends StatefulWidget {
 
 class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
   late String _codeCompanyregister;
-  String? token;
+
   List<Map<String, dynamic>> provinceItems = [];
   List<Map<String, dynamic>> districtItems = [];
   List<Map<String, dynamic>> subdistrictItems = [];
@@ -34,8 +36,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
     super.initState();
     _codeCompanyregister = widget.codeCompanyregister!;
     print(_codeCompanyregister);
-    token = tokenFromLogin?.token;
-    print(token);
+
     getAllprovic();
   }
 
@@ -44,7 +45,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
 
     Service service = Service();
     var response = await service.doGet(
-        "$LOCAL_SERVER_IP_URL/provinces/", token.toString());
+        "$LOCAL_SERVER_IP_URL/provinces/", widget.token.toString());
     // print(response);
     if (response.statusCode == 200) {
       var responseBody = json.decode(response.data);
@@ -79,7 +80,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
     print(province);
     Service service = Service();
     var response = await service.doGet(
-        "$LOCAL_SERVER_IP_URL/provinces/$province/districts", token.toString());
+        "$LOCAL_SERVER_IP_URL/provinces/$province/districts", widget.token.toString());
     // print(response);
     if (response.statusCode == 200) {
       var responseBody = json.decode(response.data);
@@ -119,7 +120,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
     Service service = Service();
     var response = await service.doGet(
         "$LOCAL_SERVER_IP_URL/districts/$district/subdistricts",
-        token.toString());
+        widget.token.toString());
     // print(response);
     if (response.statusCode == 200) {
       var responseBody = json.decode(response.data);
@@ -148,7 +149,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
   Future<bool> createFarmer(var farmerBody) async {
     Service service = Service();
     var response = await service.doPostWithFormData(
-        "$LOCAL_SERVER_IP_URL/register/farmer", token.toString(), farmerBody);
+        "$LOCAL_SERVER_IP_URL/register/farmer", widget.token.toString(), farmerBody);
     print(response);
     var responseBody = json.decode(response.data);
     if (responseBody['status'] == 200) {
