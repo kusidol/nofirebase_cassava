@@ -197,7 +197,7 @@ class _SplashScreenState extends State<SplashScreen>
       loggedUser = await readUser("user");
 
       tokenFromLogin = Token(loggedUser.token) ;
-
+   
       Map<String, dynamic> decodedToken =
 
       JwtDecoder.decode(tokenFromLogin!.token);
