@@ -134,7 +134,8 @@ class _LoginScreenState extends State<LoginScreen> {
           loggedUser.token = t.body.token;
           loggedUser.refresh_token = rft.body.refreshtoken;
 
-          await saveUser("user", loggedUser);
+          await save("user", loggedUser);
+
           loggedUser = await readUser("user");
           //print(ts);
           //await saveRefreshTokenToStorage(refreshToken.refreshtoken);
@@ -780,51 +781,25 @@ class LoadingWidget extends StatelessWidget {
   }
 }
 
-/*Future<void> saveTokenToStorage(String? token) async {
-  final prefs = await SharedPreferences.getInstance();
-  if (token != null) {
-    prefs.setString(tokenKey, token);
-  } else {
-    // Clear the stored token if it's null
-    prefs.remove(tokenKey);
-  }
-}
 
-Future<String?> getTokenFromStorage() async {
-  final prefs = await SharedPreferences.getInstance();
-  return prefs.getString(tokenKey);
-}*/
 
-/*Future<void> saveRefreshTokenToStorage(String? refreshToken) async {
-  final prefs = await SharedPreferences.getInstance();
-  if (refreshToken != null) {
-    prefs.setString(refreshtokenKey, refreshToken);
-  } else {
-    prefs.remove(refreshtokenKey);
-  }
-}
-
-Future<String?> getRefreshTokenFromStorage() async {
-  final prefs = await SharedPreferences.getInstance();
-  return prefs.getString(refreshtokenKey);
-}*/
-
-/*Future<void> saveRememberMeToStorage(bool rememberMe) async {
-  final prefs = await SharedPreferences.getInstance();
-  prefs.setBool(rememberMeKey, rememberMe);
-}
-
-Future<bool> getRememberMeFromStorage() async {
-  final prefs = await SharedPreferences.getInstance();
-  return prefs.getBool(rememberMeKey) ?? false;
-}*/
-
-saveUser(String key,value) async {
+save(String key,value) async {
   final prefs = await SharedPreferences.getInstance();
     prefs.setString(key, json.encode(value));
 }
 
-readUser (String key) async {
+loadSetting(String key) async {
+  final prefs = await SharedPreferences.getInstance();
+
+  if(prefs.getString(key) == null )
+    return AppSetting(0,false);
+
+  var js = json.decode(prefs.getString(key) as String);
+
+  return AppSetting(js["local"], js['signIn']) ;
+}
+
+readUser(String key) async {
   final prefs = await SharedPreferences.getInstance();
   var js = json.decode(prefs.getString(key) as String);
   return LoggedUser(js["email"], js['token'], js['refresh_token'], js['img_url']) ;
