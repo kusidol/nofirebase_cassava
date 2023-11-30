@@ -260,14 +260,14 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
               onPressed: () {
 
                 setState(() async {
-                  if (autoLogInStatus == false) {
-                    autoLogInStatus = true;
+                  if (appSetting!.signIn == false) {
+                    appSetting!.signIn = true;
                   } else {
-                    autoLogInStatus = false;
+                    appSetting!.signIn = false;
                   }
                   //print(autoLogInStatus.toString());
-                  saveAutoLogInStatusToStorage(autoLogInStatus);
-
+                  //saveAutoLogInStatusToStorage(autoLogInStatus);
+                  save("app_setting",appSetting);
                   values == true
                       ? autoLoginColor = Colors.green
                       : autoLoginColor = Colors.grey.shade800;
@@ -383,17 +383,18 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
               ),
               SwitchListTile(
                   activeColor: theme_color,
-                  value: autoLogInStatus,
+                  value: appSetting!.signIn,
                   onChanged: (bool values) async {
                     setState(() {
-                      autoLogInStatus = values ;
+                      appSetting!.signIn = values ;
                      /* if (autoLogInStatus == false) {
                         autoLogInStatus = true;
                       } else {
                         autoLogInStatus = false;
                       }*/
                       //print(autoLogInStatus.toString());
-                      saveAutoLogInStatusToStorage(values);
+                      //sa(values);
+                      save("app_setting",appSetting);
 
                       values == true
                           ? autoLoginColor = Colors.green
@@ -449,8 +450,9 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
                             uservice.deleteAccount(tokenFromLogin!.token).then((value) async {
 
                               if(value == true){
-
-                                saveAutoLogInStatusToStorage(false);
+                                appSetting!.signIn = false ;
+                                save("app_setting",appSetting) ;
+                                //saveAutoLogInStatusToStorage(false);
 
                                 await remove("user");
 
@@ -522,10 +524,11 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
                           );
 
                           setState(() {
-                            autoLogInStatus = false ;
+                            appSetting!.signIn = false ;
                           });
 
-                          saveAutoLogInStatusToStorage(false);
+                          await save("app_setting",appSetting);
+                          //saveAutoLogInStatusToStorage(false);
 
                           await remove("user");
 
@@ -578,19 +581,6 @@ class LoadingWidget extends StatelessWidget {
       child: CircularProgressIndicator(),
     );
   }
-}
-
-void  saveAutoLogInStatusToStorage(bool autoLogInStatus)  {
-  final prefs = SharedPreferences.getInstance().then((value)  {
-      value.setBool(autoLogInStatusKey, autoLogInStatus);
-      return true;
-  });
-
-}
-
-Future<bool> getAutoLogInStatusFromStorage() async {
-  final prefs = await SharedPreferences.getInstance();
-  return prefs.getBool(autoLogInStatusKey) ?? false;
 }
 
 Future<void> saveNotificationToStorage(bool _notiStatus) async {
