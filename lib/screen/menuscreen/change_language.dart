@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:localization/src/localization_extension.dart';
 import 'package:mun_bot/env.dart';
+import 'package:mun_bot/screen/login/login_screen.dart';
 import 'package:mun_bot/util/size_config.dart';
 
 import '../../main.dart';
@@ -10,79 +11,71 @@ class ChangeLanguage extends StatefulWidget {
   State<StatefulWidget> createState() => _ChangeLanguage();
 }
 
-List<bool> itemSelected = List<bool>.generate(2, (index) => false);
-Color colorIcon = Colors.white;
-Color colorIcon2 = Colors.black;
-String language = "th";
-
 class _ChangeLanguage extends State<ChangeLanguage> {
+
+  List colors = [Colors.white,Colors.white] ;
+  List lang = ["ไทย (Thai)","English (United States)"] ;
+
+  int selectedLanguage = 0;
+
+  @override
+  void initState() {
+
+    _selectedLanguage(appSetting!.local);
+  }
+
+  void _selectedLanguage(int k){
+    selectedLanguage = k ;
+    for(int i = 0 ; i < colors.length ; i++){
+      colors[i] = i == k ? Colors.black : Colors.white ;
+    }
+  }
+
+  List<Widget> makeLanguageList(){
+    List<Widget> list = [] ;
+
+    for(int i = 0 ; i < colors.length ; i++){
+      list.add(
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(0),
+            ),
+            child: ListTile(
+              leading: Text(
+                (i+1).toString(),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: MediaQuery.of(context).size.width * 0.05),
+              ),
+              trailing: Icon(
+                Icons.check,
+                color: colors[i],
+              ),
+              title: Text(
+                lang[i],
+                style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.05),
+              ),
+              onTap: () {
+                setState(() {
+                  _selectedLanguage(i);
+                  //colors[i] = Colors.black ;
+                });
+              },
+            ),
+          )
+      );
+    }
+    return list ;
+  }
+
   Widget _ChangeLan() {
     return Container(
         width: MediaQuery.of(context).size.width * 1,
         height: MediaQuery.of(context).size.height * 0.4,
         child: ListView(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(0),
-              ),
-              child: ListTile(
-                leading: Text(
-                  '1',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: MediaQuery.of(context).size.width * 0.05),
-                ),
-                trailing: Icon(
-                  Icons.check,
-                  color: colorIcon,
-                ),
-                title: Text(
-                  "ไทย (Thai)",
-                  style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width * 0.05),
-                ),
-                onTap: () {
-                  setState(() {
-                    colorIcon = Colors.black;
-                    colorIcon2 = Colors.white;
-                    language = "th";
-                  });
-                },
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(0),
-              ),
-              child: ListTile(
-                leading: Text(
-                  '2',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: MediaQuery.of(context).size.width * 0.05),
-                ),
-                trailing: Icon(
-                  Icons.check,
-                  color: colorIcon2,
-                ),
-                title: Text(
-                  "English (United States)",
-                  style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width * 0.05),
-                ),
-                onTap: () {
-                  setState(() {
-                    colorIcon = Colors.white;
-                    colorIcon2 = Colors.black;
-                    language = "en";
-                  });
-                },
-              ),
-            )
-          ],
+          children: makeLanguageList(),
         ));
   }
 
@@ -183,13 +176,19 @@ class _ChangeLanguage extends State<ChangeLanguage> {
       ),
       onPressed: () {
         setState(() {
-          if (language == "th") {
-            final myApp = context.findAncestorStateOfType<MyAppState>()!;
-            myApp.changeLocale(Locale('th', 'TH'));
-          } else if (language == "en") {
-            final myApp = context.findAncestorStateOfType<MyAppState>()!;
-            myApp.changeLocale(Locale('en', 'US'));
+
+          switch(selectedLanguage){
+            case 0:
+              final myApp = context.findAncestorStateOfType<MyAppState>()!;
+              myApp.changeLocale(Locale('th', 'TH'));
+              break ;
+            case 1:
+              final myApp = context.findAncestorStateOfType<MyAppState>()!;
+              myApp.changeLocale(Locale('en', 'US'));
+              break ;
           }
+          appSetting!.local = selectedLanguage ;
+          save("app_setting",appSetting);
         });
         Navigator.pop(context);
       },
