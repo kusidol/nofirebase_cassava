@@ -254,7 +254,7 @@
   "delete-account-message" : "Are u sure? All information will be deleted. That can't be undone",
 
   "registration": "Registration",
-  "register-warning-message": "This account has not been registered. Do you want to register?"
+  "register-warning-message": "This account has not been registered. Do you want to register?",
 
   "qrcode-verification": "Code Verification",
   "qrcode-valid": "Correct code, Do you want to register?",
