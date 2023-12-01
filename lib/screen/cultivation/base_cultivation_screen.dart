@@ -1315,7 +1315,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
     context: context,
     builder: (BuildContext context) => CupertinoAlertDialog(
       title: Text("notification-label".i18n()),
-      content: Text("exitapp".i18n()),
+      content: Text("exit-application".i18n()),
       actions: [
         CupertinoDialogAction(
           onPressed: () {
