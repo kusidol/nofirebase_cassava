@@ -189,12 +189,28 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> with WidgetsB
     }
   }
 
-  void showAlert(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return WillPopScope(
-          onWillPop: () async {
+void showAlert(BuildContext context) {
+  showCupertinoDialog<void>(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) => CupertinoAlertDialog(
+      title: Text(
+        "notification-label".i18n(),
+        style: const TextStyle(
+          color: theme_color4,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+      content: Text(
+        "erroroccurred".i18n(),
+        style: const TextStyle(
+          color: theme_color4,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+      actions: <CupertinoDialogAction>[
+        CupertinoDialogAction(
+          onPressed: () {
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (BuildContext context) {
@@ -204,51 +220,20 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> with WidgetsB
                 return false;
               },
             );
-            return true; // Allow AlertDialog to be dismissed
           },
-          child: AlertDialog(
-            backgroundColor: Colors.white,
-            title: Text(
-              'แจ้งเตือน',
-              style: const TextStyle(
-                color: theme_color4,
-                fontWeight: FontWeight.w400,
-              ),
+          child: Text(
+            "allow".i18n(),
+            style: const TextStyle(
+             color: CupertinoColors.activeBlue,
+              fontWeight: FontWeight.w400,
             ),
-            content: Text(
-              "เกิดข้อผิดพลาด",
-              style: const TextStyle(
-                color: theme_color4,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text(
-                  'ตกลง',
-                  style: const TextStyle(
-                    color: theme_color4,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (BuildContext context) {
-                      return LoginScreen();
-                    }),
-                    (r) {
-                      return false;
-                    },
-                  );
-                },
-              ),
-            ],
           ),
-        );
-      },
-    );
-  }
+        ),
+      ],
+    ),
+  );
+}
+
 
   Widget _buildQrView(BuildContext context) {
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
@@ -479,94 +464,81 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> with WidgetsB
     return true;
   }
 
-  void _showAlertDialog(BuildContext context, String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.red,
-          title: Text(
-            'แจ้งเตือน',
+void _showAlertDialog(BuildContext context, String message) {
+  showCupertinoDialog<void>(
+    context: context,
+    builder: (BuildContext context) => CupertinoAlertDialog(
+      title: Text(
+        "notification-label".i18n(),
+        style: const TextStyle(
+          color: CupertinoColors.black,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+      content: Text(
+        message,
+        style: const TextStyle(
+          color: CupertinoColors.black,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+      actions: <CupertinoDialogAction>[
+        CupertinoDialogAction(
+          child: Text(
+            "allow".i18n(),
             style: const TextStyle(
-              color: Color(0xFFFFFFFF),
+              color: CupertinoColors.activeBlue,
               fontWeight: FontWeight.w400,
             ),
           ),
-          content: Text(
-            message,
-            style: const TextStyle(
-              color: Color(0xFFFFFFFF),
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text(
-                'ตกลง',
-                style: const TextStyle(
-                  color: Color(0xFFFFFFFF),
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              onPressed: () {
-                message = "";
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _showAlertDialogWithScanCamera(
-      BuildContext context, String message, QRViewController controller) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return WillPopScope(
-          onWillPop: () async {
-            controller.resumeCamera();
-            return true;
+          onPressed: () {
+            message = "";
+            Navigator.pop(context);
           },
-          child: AlertDialog(
-            backgroundColor: Colors.red,
-            title: Text(
-              'แจ้งเตือน',
-              style: const TextStyle(
-                color: Color(0xFFFFFFFF),
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            content: Text(
-              message,
-              style: const TextStyle(
-                color: Color(0xFFFFFFFF),
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text(
-                  'ตกลง',
-                  style: const TextStyle(
-                    color: Color(0xFFFFFFFF),
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                onPressed: () {
-                  message = "";
-                  Navigator.pop(context);
+        ),
+      ],
+    ),
+  );
+}
 
-                  controller.resumeCamera();
-                },
-              ),
-            ],
+void _showAlertDialogWithScanCamera(
+    BuildContext context, String message, QRViewController controller) {
+  showCupertinoDialog<void>(
+    context: context,
+    builder: (BuildContext context) => CupertinoAlertDialog(
+      title: Text(
+        "notification-label".i18n(),
+        style: const TextStyle(
+          color: CupertinoColors.black,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+      content: Text(
+        message,
+        style: const TextStyle(
+          color: CupertinoColors.black,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+      actions: <CupertinoDialogAction>[
+        CupertinoDialogAction(
+          child: Text(
+            "allow".i18n(),
+            style: const TextStyle(
+              color: CupertinoColors.activeBlue,
+              fontWeight: FontWeight.w400,
+            ),
           ),
-        );
-      },
-    );
-  }
+          onPressed: () {
+            message = "";
+            Navigator.pop(context);
+            controller.resumeCamera();
+          },
+        ),
+      ],
+    ),
+  );
+}
 
 //returnbuild
   @override
@@ -595,7 +567,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> with WidgetsB
         title: Container(
           margin: EdgeInsets.only(left: 25, right: 25),
           child: Text(
-            'สแกน Qrcode',
+             "scanqrcodelabel".i18n(),
             style: const TextStyle(
               color: Color(0xFF118E7D),
               fontSize: 18,
@@ -621,7 +593,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> with WidgetsB
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'สแกน QRCode เพื่อลงทะเบียน',
+                      "scanqrcodefor".i18n(),
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
