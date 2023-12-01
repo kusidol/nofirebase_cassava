@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:flutter/cupertino.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -690,32 +690,36 @@ class _MenuScreen extends State<MenuScreen>
     );
   }
 
-  Future<bool> onBackButtonPressed(BuildContext context) async {
-    bool exitApp = await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('แจ้งเตือน'),
-            content: Text('ต้องการออกจากแอปพลิเคชั่น?'),
-            actions: [
-              ElevatedButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red,
-                ),
-                child: Text('No'),
-              ),
-              ElevatedButton(
-                onPressed: () => SystemNavigator.pop(),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.green,
-                ),
-                child: Text('Yes'),
-              ),
-            ],
-          );
-        });
+Future<bool> onBackButtonPressed(BuildContext context) async {
+  bool? exitApp = await showCupertinoDialog<bool>(
+    context: context,
+    builder: (BuildContext context) => CupertinoAlertDialog(
+      title: Text("notification-label".i18n()),
+      content: Text("exitapp".i18n()),
+      actions: [
+        CupertinoDialogAction(
+          onPressed: () {
+            Navigator.of(context).pop(false);
+          },
+          child: Text('No', style: TextStyle(
+              color: Colors.red,
+              fontWeight: FontWeight.w400,
+            ),),
+        ),
+        CupertinoDialogAction(
+          onPressed: () {
+            Navigator.of(context).pop(true);
+            SystemNavigator.pop();
+          },
+          child: Text('Yes', style: TextStyle(
+              color: Colors.blue,
+              fontWeight: FontWeight.w400,
+            ),),
+        ),
+      ],
+    ),
+  );
 
-    return exitApp;
-  }
+  return exitApp ?? false;
+}
 }
