@@ -199,18 +199,18 @@
   "adding-data": "กำลังเพิ่ม",
   "confirm-data": "ยืนยันความถูกต้องของข้อมูลสำรวจแล้ว",
   "not-confirm-data": "ไม่ยืนยันความถูกต้องของข้อมูลสำรวจ",
-  
+
   "adding-complete": "เพิ่มข้อมูลแล้ว",
-  
+
   "agencies": "หน่วยงานที่เกี่ยวข้อง",
 
   "comfirm": "ตกลง",
   "cancle": "ยกเลิก",
-  "back" : "ย้อนกลับ",
-  "comfirm-delete-title" : "ยืนยันลบข้อความ",
-  "comfirm-delete-message" : "ข้อความที่ถูกลบจะหายไป",
-  "planting-address":"ที่อยู่แปลงเพาะปลูก",
-  "field-address":"ที่อยู่แปลง",
+  "back": "ย้อนกลับ",
+  "comfirm-delete-title": "ยืนยันลบข้อความ",
+  "comfirm-delete-message": "ข้อความที่ถูกลบจะหายไป",
+  "planting-address": "ที่อยู่แปลงเพาะปลูก",
+  "field-address": "ที่อยู่แปลง",
 
   "adding-complete": "เพิ่มข้อมูลแล้ว",
 
@@ -237,14 +237,16 @@
   "user-manual": "คู่มือผู้ใช้งาน",
   "officer-label": "เจ้าหน้าที่",
   "farmer-label": "เกษตรกร",
-  "person-responsible-field" : "ผู้รับผิดชอบแปลง",
+  "person-responsible-field": "ผู้รับผิดชอบแปลง",
   "person-field-owner": "เจ้าของแปลง",
 
   "logout": "ออกจากระบบ",
   "delete": "ลบ",
-  "delete-account" : "ลบบัญชีผู้ใช้งาน",
-  "delete-account-message" : "คุณแน่ใจเหรอ? ข้อมูลทั้งหมดจะถูกลบ และไม่สามารถกู้คืนได้",
+  "delete-account": "ลบบัญชีผู้ใช้งาน",
+  "delete-account-message": "คุณแน่ใจเหรอ? ข้อมูลทั้งหมดจะถูกลบ และไม่สามารถกู้คืนได้",
 
   "registration": "การลงทะเบียน",
-  "register-warning-message": "บัญชีนีั้ยังไม่ได้ถูกลงทะเบียนเพื่อเปิดใช้งาน คุณต้องการลงทะเบียนหรือไม่?"
+  "register-warning-message": "บัญชีนีั้ยังไม่ได้ถูกลงทะเบียนเพื่อเปิดใช้งาน คุณต้องการลงทะเบียนหรือไม่?",
+  "survey-point-delete-all": "ต้องการที่จะกำหนดค่าเป็นไม่พบสิ่งสำรวจทั้งหมด?",
+  "survey-point-delete": "ต้องการที่จะกำหนดค่าเป็นไม่พบโรค?"
 }
