@@ -705,7 +705,7 @@ class _BaseHomeScreen extends State<BaseHomeScreen>
               onPageChanged: (focusedDay) async {
                 // No need to call `setState()` here
                 _focusedDay = focusedDay;
-                print("_focusedDay : ${focusedDay}");
+                // print("_focusedDay : ${focusedDay}");
                 await calendarFunction(_focusedDay);
               }),
         ],

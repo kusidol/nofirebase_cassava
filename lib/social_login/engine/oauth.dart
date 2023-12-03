@@ -132,6 +132,9 @@ class OAuth {
         case 'apple':
           var html = await controller.evaluateJavascript(
               source: "document.getElementById('dip').innerText;");
+
+          await controller!.loadUrl(urlRequest: URLRequest(url: Uri.parse("https://cpeserver.eng.kps.ku.ac.th:8443/cassava/google/callback")));
+
           //print(html);
           Map<String, dynamic> map = jsonDecode(html);
 

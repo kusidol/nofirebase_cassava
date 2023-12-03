@@ -73,14 +73,14 @@ class _FullScreenImageState extends State<FullScreenImage> {
         showDialog(
           context: context,
           builder: (BuildContext context) {
-            return AlertDialog(
+            return CupertinoAlertDialog(
               title: Text(
-                'ยืนยันการลบ',
-                style: TextStyle(fontSize: 20, color: Colors.black),
+                'confirm-delete'.i18n(),
+                style: TextStyle(fontSize: 15, color: Colors.black),
               ),
               content: Text(
-                'คุณต้องการลบภาพนี้หรือไม่?',
-                style: TextStyle(fontSize: 20, color: Colors.black),
+                'Do-you-want-to-delete-this-image'.i18n(),
+                style: TextStyle(fontSize: 15, color: Colors.black),
               ),
               actions: [
                 TextButton(
@@ -88,15 +88,15 @@ class _FullScreenImageState extends State<FullScreenImage> {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    'ยกเลิก',
-                    style: TextStyle(fontSize: 20, color: Colors.black),
+                    'cancel'.i18n(),
+                    style: TextStyle(fontSize: 15, color: Colors.black),
                   ),
                 ),
                 TextButton(
                   onPressed: () async {
                     ProgressDialog progressDialog = ProgressDialog(context);
                     progressDialog.style(
-                      message: "รอสักครู่...",
+                      message: "uploading".i18n(),
                       progressWidget: Container(
                           padding: EdgeInsets.all(12.0),
                           child: CircularProgressIndicator(
@@ -104,11 +104,11 @@ class _FullScreenImageState extends State<FullScreenImage> {
                           )),
                       maxProgress: 100.0,
                       progressTextStyle: TextStyle(
-                          fontSize: 20,
+                          fontSize: 15,
                           color: Colors.black,
                           fontWeight: FontWeight.w400),
                       messageTextStyle: TextStyle(
-                          fontSize: 20,
+                          fontSize: 15,
                           color: Colors.black,
                           fontWeight: FontWeight.w600),
                     );
@@ -137,8 +137,8 @@ class _FullScreenImageState extends State<FullScreenImage> {
                     progressDialog.hide();
                   },
                   child: Text(
-                    'ลบ',
-                    style: TextStyle(fontSize: 20, color: Colors.black),
+                    'deleted'.i18n(),
+                    style: TextStyle(fontSize: 15, color: Colors.red),
                   ),
                 ),
               ],

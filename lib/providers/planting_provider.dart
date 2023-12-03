@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:mun_bot/controller/field_service.dart';
@@ -102,7 +103,7 @@ class PlantingProvider with ChangeNotifier {
   }
 
   Future<void> fetchDataFromField() async {
-    print("LOADING PLANTING PROVIDER");
+    // print("LOADING PLANTING PROVIDER");
     List<Planting> dataPlanting = [];
     PlantingService plantingService = PlantingService();
     String? token = tokenFromLogin?.token;
@@ -151,6 +152,9 @@ class PlantingProvider with ChangeNotifier {
   }
 
   void addPlanting(Planting data) async {
+    // String jsonCultivation = jsonEncode(data);
+    // log("Debug : create Cultivation : ${jsonCultivation}");
+
     //reset();
     plantings.insert(0, data);
 

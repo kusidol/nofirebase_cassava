@@ -60,7 +60,6 @@ class CalendarService {
   Future<List<Survey>> getSurveysByCreateDate(String token, int date) async {
     List<Survey> survey = [];
     Service service = new Service();
-    log("MILLISECOND : ${date}");
     var response = await service.doGet(
         "${LOCAL_SERVER_IP_URL}/calendar/survey/createdate/${date}", token);
     if (response.statusCode == 200) {

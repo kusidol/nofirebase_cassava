@@ -99,11 +99,11 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
   }
 
   onLoad() async {
-    log("field id : ${widget.fields.fieldID}");
+    // log("field id : ${widget.fields.fieldID}");
     editable = await fieldService.getEditableFieldID(
         widget.fields.fieldID, token.toString());
     String fieldString = jsonEncode(widget.fields);
-   // await _getCurrentLocation();
+    // await _getCurrentLocation();
     int? subdistrictIDValue = await subdistrictService.getSubdistrictByUserId(
         token.toString(), widget.owner.userID);
     setState(() {

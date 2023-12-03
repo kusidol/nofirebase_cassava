@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:localization/src/localization_extension.dart';
 import 'package:mun_bot/controller/tagerpoint_image_service.dart';
 import 'package:mun_bot/screen/widget/no_data.dart';
 import 'package:mun_bot/util/size_config.dart';
@@ -87,14 +88,14 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
         final shouldUpload = await showDialog(
           context: context,
           builder: (context) {
-            return AlertDialog(
+            return CupertinoAlertDialog(
               title: Text(
-                'ยืนยันการอัปโหลด',
-                style: TextStyle(fontSize: 20, color: Colors.black),
+                'confirm-upload'.i18n(),
+                style: TextStyle(fontSize: 15, color: Colors.black),
               ),
               content: Text(
-                'คุณต้องการอัปโหลดภาพนี้หรือไม่?',
-                style: TextStyle(fontSize: 20, color: Colors.black),
+                'Do-you-want-to-upload-this-picture'.i18n(),
+                style: TextStyle(fontSize: 15, color: Colors.black),
               ),
               actions: [
                 TextButton(
@@ -102,8 +103,8 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
                     Navigator.of(context).pop(false);
                   },
                   child: Text(
-                    'ยกเลิก',
-                    style: TextStyle(fontSize: 20, color: Colors.black),
+                    'cancel'.i18n(),
+                    style: TextStyle(fontSize: 15, color: Colors.red),
                   ),
                 ),
                 TextButton(
@@ -111,8 +112,8 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
                     Navigator.of(context).pop(true);
                   },
                   child: Text(
-                    'อัปโหลด',
-                    style: TextStyle(fontSize: 20, color: Colors.black),
+                    'upload'.i18n(),
+                    style: TextStyle(fontSize: 15, color: Colors.blue),
                   ),
                 ),
               ],
@@ -123,7 +124,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
         if (shouldUpload == true) {
           ProgressDialog progressDialog = ProgressDialog(context);
           progressDialog.style(
-            message: "กำลังอัพโหลดรูปภาพ...",
+            message: "uploading".i18n(),
             progressWidget: Container(
                 padding: const EdgeInsets.all(12.0),
                 child: const CircularProgressIndicator(
@@ -131,9 +132,9 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
                 )),
             maxProgress: 100.0,
             progressTextStyle: TextStyle(
-                fontSize: 20, color: Colors.black, fontWeight: FontWeight.w400),
+                fontSize: 15, color: Colors.black, fontWeight: FontWeight.w400),
             messageTextStyle: TextStyle(
-                fontSize: 20, color: Colors.black, fontWeight: FontWeight.w600),
+                fontSize: 15, color: Colors.black, fontWeight: FontWeight.w600),
           );
           progressDialog.show();
 
@@ -186,19 +187,19 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) => CupertinoAlertDialog(
-          title: Text("Permission Denied"),
-          content: Text('Allow access to camera'),
+          title: Text("Permission-Denied".i18n()),
+          content: Text('Allow-access-to-camera'.i18n()),
           actions: <CupertinoDialogAction>[
             CupertinoDialogAction(
                 onPressed: () {
                   Navigator.of(context).pop();
 
                 },
-                child: Text('Cancel')),
+                child: Text('cancel'.i18n())),
             CupertinoDialogAction(
                 isDefaultAction: true,
                 onPressed: () => openAppSettings(),
-                child: Text('Settings')),
+                child: Text('Setting'.i18n())),
           ],
         ),
       );
@@ -207,19 +208,19 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) => CupertinoAlertDialog(
-          title: Text("Permission Denied"),
-          content: Text('Allow access to gallery and photos'),
+          title: Text("Permission-Denied".i18n()),
+          content: Text('Allow-access-to-gallery-and-photos'.i18n()),
           actions: <CupertinoDialogAction>[
             CupertinoDialogAction(
                 onPressed: () {
                   Navigator.of(context).pop();
 
                 },
-                child: Text('Cancel')),
+                child: Text('cancel'.i18n())),
             CupertinoDialogAction(
                 isDefaultAction: true,
                 onPressed: () => openAppSettings(),
-                child: Text('Settings')),
+                child: Text('Setting'.i18n())),
           ],
         ),
       );
@@ -232,11 +233,11 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Text(
-            'ยืนยันการลบ',
+            'confirm-delete'.i18n(),
             style: TextStyle(fontSize: 15, color: Colors.black),
           ),
           content: Text(
-            'คุณต้องการลบภาพนี้หรือไม่?',
+            'Do-you-want-to-delete-this-image'.i18n(),
             style: TextStyle(fontSize: 15, color: Colors.black),
           ),
           actions: [
@@ -245,7 +246,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
                 Navigator.of(context).pop();
               },
               child: Text(
-                'ยกเลิก',
+                'cancel'.i18n(),
                 style: TextStyle(fontSize: 15, color: Colors.blue),
               ),
             ),
@@ -255,7 +256,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
                 await _performDeleteImage(index, imageUrl.imageId);
               },
               child: Text(
-                'ลบ',
+                'deleted'.i18n(),
                 style: TextStyle(fontSize: 15, color: Colors.red),
               ),
             ),
@@ -269,7 +270,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
     try {
       ProgressDialog progressDialog = ProgressDialog(context);
       progressDialog.style(
-        message: "รอสักครู่...",
+        message: "waiting".i18n(),
         progressWidget: Container(
             padding: EdgeInsets.all(12.0),
             child: CircularProgressIndicator(
@@ -277,9 +278,9 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
             )),
         maxProgress: 100.0,
         progressTextStyle: TextStyle(
-            fontSize: 20, color: Colors.black, fontWeight: FontWeight.w400),
+            fontSize: 15, color: Colors.black, fontWeight: FontWeight.w400),
         messageTextStyle: TextStyle(
-            fontSize: 20, color: Colors.black, fontWeight: FontWeight.w600),
+            fontSize: 15, color: Colors.black, fontWeight: FontWeight.w600),
       );
       progressDialog.show();
 
@@ -321,14 +322,14 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
+        return CupertinoAlertDialog(
           title: Text(
-            'ยืนยันการลบทั้งหมด',
-            style: TextStyle(fontSize: 20, color: Colors.black),
+            'Confirm-deletion-of-all-data'.i18n(),
+            style: TextStyle(fontSize: 15, color: Colors.black),
           ),
           content: Text(
-            'คุณต้องการลบรูปภาพทั้งหมดหรือไม่?',
-            style: TextStyle(fontSize: 20, color: Colors.black),
+            'Do-you-want-to-delete-all-photos'.i18n(),
+            style: TextStyle(fontSize: 15, color: Colors.black),
           ),
           actions: [
             TextButton(
@@ -336,8 +337,8 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
                 Navigator.of(context).pop();
               },
               child: Text(
-                'ยกเลิก',
-                style: TextStyle(fontSize: 20, color: Colors.black),
+                'cancel'.i18n(),
+                style: TextStyle(fontSize: 15, color: Colors.black),
               ),
             ),
             TextButton(
@@ -346,8 +347,8 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
                 await _performDeleteAllImages();
               },
               child: Text(
-                'ลบทั้งหมด',
-                style: TextStyle(fontSize: 20, color: Colors.black),
+                'Delete-all'.i18n(),
+                style: TextStyle(fontSize: 15, color: Colors.red),
               ),
             ),
           ],
@@ -364,7 +365,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
     try {
       ProgressDialog progressDialog = ProgressDialog(context);
       progressDialog.style(
-        message: "รอสักครู่...",
+        message: "waiting".i18n(),
         progressWidget: Container(
             padding: EdgeInsets.all(12.0),
             child: CircularProgressIndicator(
@@ -372,9 +373,9 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
             )),
         maxProgress: 100.0,
         progressTextStyle: TextStyle(
-            fontSize: 20, color: Colors.black, fontWeight: FontWeight.w400),
+            fontSize: 15, color: Colors.black, fontWeight: FontWeight.w400),
         messageTextStyle: TextStyle(
-            fontSize: 20, color: Colors.black, fontWeight: FontWeight.w600),
+            fontSize: 15, color: Colors.black, fontWeight: FontWeight.w600),
       );
       progressDialog.show();
 
@@ -410,7 +411,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
           },
         ),
         title: Text(
-          'แกลเลอรี่',
+          'Gallery'.i18n(),
           style: TextStyle(
               fontSize: 25, fontWeight: FontWeight.w700, color: Colors.black),
         ),
@@ -527,7 +528,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
               color: Colors.white,
             ),
             backgroundColor: theme_color4,
-            label: 'แกลเลอรี่',
+            label: 'Gallery'.i18n(),
             labelStyle: TextStyle(fontSize: 20, color: Colors.black),
             onTap: () {
               _uploadImage(context, ImageSource.gallery);
@@ -536,7 +537,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
           SpeedDialChild(
             child: Icon(Icons.camera_alt, color: Colors.white),
             backgroundColor: theme_color4,
-            label: 'กล้อง',
+            label: 'Camera'.i18n(),
             labelStyle: TextStyle(fontSize: 20, color: Colors.black),
             onTap: () {
               _uploadImage(context, ImageSource.camera);
