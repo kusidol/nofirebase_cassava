@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:location/location.dart';
 import 'package:mun_bot/controller/field_service.dart';
 import 'package:mun_bot/controller/planting_service.dart';
 import 'package:mun_bot/controller/survey_service.dart';
@@ -12,15 +13,33 @@ import 'package:mun_bot/entities/user.dart';
 import 'package:mun_bot/main.dart';
 import 'package:mun_bot/screen/login/login_screen.dart';
 
+class SurveyData{
+
+  int id ;
+  String plantingName;
+  String fieldName ;
+  String substrict ;
+  String district ;
+  String province ;
+  String title ;
+  String firstName ;
+  String lastName ;
+  bool checkTarget = false;
+  Planting planting ;
+  Survey survey ;
+  SurveyData(this.id,this.plantingName,this.fieldName,this.substrict,this.district,this.province,this.title,this.firstName,this.lastName,this.checkTarget,this.planting,this.survey) ;
+}
+
+
 class SurveyProvider with ChangeNotifier {
   bool isHavePlanting = false;
-  List<Survey> surveys = [];
-  List<Planting> plantings = [];
-  List<Field> fields = [];
-  List<String> locations = [];
-  List<User> owner = [];
-  List<Map<String, dynamic>> surveyPointList = [];
-  List<SurveyTargetPoint> surveyTargetPointCount = [];
+  //List<Survey> surveys = [];
+  //List<Planting> plantings = [];
+  //List<Field> fields = [];
+  //List<String> locations = [];
+  //List<User> owner = [];
+  //List<Map<String, dynamic>> surveyPointList = [];
+  //List<SurveyTargetPoint> surveyTargetPointCount = [];
   bool isLoading = false;
   final int _value = 5;
   int _page = 1;
@@ -30,7 +49,9 @@ class SurveyProvider with ChangeNotifier {
   bool isSearch = false;
 // New Adding
 
-  List<String> list_plantingName = [];
+  List<SurveyData> surveyData = [] ;
+
+  /*List<String> list_plantingName = [];
   List<String> list_fieldName = [];
   List<String> list_substrict = [];
   List<String> list_district = [];
@@ -38,25 +59,29 @@ class SurveyProvider with ChangeNotifier {
   List<String> list_title = [];
   List<String> list_firstName = [];
   List<String> list_lastName = [];
-  List<bool> list_check_target = [];
+  List<bool> list_check_target = [];*/
   int numberAllSurveys = 0;
 
   void reset() {
     isLoading = false;
-    surveys = [];
-    plantings = [];
-    surveyTargetPointCount = [];
-    surveyPointList = [];
-    list_plantingName = [];
+    //surveys = [];
+    //plantings = [];
+    //surveyTargetPointCount = [];
+    //surveyPointList = [];
+    /*list_plantingName = [];
     list_fieldName = [];
     list_substrict = [];
     list_district = [];
     list_province = [];
     list_title = [];
     list_firstName = [];
-    list_check_target = [];
+    list_check_target = [];*/
+
+    //surveyData = [] ;
+    surveyData.clear();
+    //notifyListeners();
     _date = DateTime.now().millisecondsSinceEpoch;
-    list_lastName = [];
+    //list_lastName = [];
     _page = 1;
   }
 
@@ -64,23 +89,88 @@ class SurveyProvider with ChangeNotifier {
     plantingId = 0;
     plantingName = "";
   }
+  bool _fetch = false ;
+
+  bool isFetch(){
+    return _fetch ;
+  }
+
+  setFetch(bool fetch){
+    this._fetch = fetch ;
+    ///notifyListeners();
+  }
 
   Future<void> fetchData() async {
-    List<Survey> data = [];
+
     SurveyService surveyService = SurveyService();
     PlantingService plantingService = PlantingService();
     SurveyTargetPoint surveyTargetPointService = SurveyTargetPoint();
     String? token = tokenFromLogin?.token;
     int count = await plantingService.countPlantings(token.toString());
-    data = await surveyService.getSurvey(token.toString(), _page, _value);
+    //data = await surveyService.getSurvey(token.toString(), _page, _value);
     numberAllSurveys = await surveyService.countSurveys(token.toString());
+    //notifyListeners();
 
-    List<Map<String, dynamic>> detail =
-        await surveyService.getSurveysWithPlantingAndLocationAndOwner(
-            token.toString(), _page, _value);
+    await surveyService.getSurveysWithPlantingAndLocationAndOwner(
+        token.toString(), _page, _value).then((value) async {
 
-    for (Map<String, dynamic> data in detail) {
-      list_plantingName.add(data['plantingName']);
+          if(value != null){
+
+
+            if(numberAllSurveys == surveyData.length)
+              return ;
+
+              for (Map<String, dynamic> data in value) {
+
+
+
+                bool checkTarget = await surveyTargetPointService
+                    .checkSurveyTargetBySurveyId(token.toString(), data['surveyId']) ;
+
+                Survey survey = await surveyService.getSurveyByID(token.toString(), data['surveyId']) as Survey;
+
+                //print(data['surveyId']);
+                Planting plantingData = await plantingService.getPlantingFromSurveyID(
+                    data['surveyId'], token.toString()) as Planting;
+
+                surveyData.add(SurveyData(data['surveyId'],data['plantingName'],data['fieldName'],data['substrict'],
+                    data['district'],data['province'],data['title'],data['firstName'],data['lastName'],checkTarget,plantingData,survey));
+
+
+                /*list_plantingName.add(data['plantingName']);
+              list_fieldName.add(data['fieldName']);
+              list_substrict.add(data['substrict']);
+              list_district.add(data['district']);
+              list_province.add(data['province']);
+              list_title.add(data['title']);
+              list_firstName.add(data['firstName']);
+              list_lastName.add(data['lastName']);
+              bool checkTarget = await surveyTargetPointService
+                  .checkSurveyTargetBySurveyId(token.toString(), data['surveyId']);
+              list_check_target.add(checkTarget);*/
+
+              }
+              _page = (surveyData.length ~/ _value) + 1;
+
+              setFetch(false);
+          }
+
+    });
+    //print("${_page}    ${_value} ${detail.length}");
+    /*for (Map<String, dynamic> data in detail) {
+
+      bool checkTarget = await surveyTargetPointService
+          .checkSurveyTargetBySurveyId(token.toString(), data['surveyId']) ;
+
+      Survey survey = await surveyService.getSurveyByID(token.toString(), data['surveyId']) as Survey;
+
+      //print(data['surveyId']);
+      Planting plantingData = await plantingService.getPlantingFromSurveyID(
+          data['surveyId'], token.toString()) as Planting;
+
+      surveyData.add(SurveyData(data['surveyId'],data['plantingName'],data['fieldName'],data['substrict'],
+          data['district'],data['province'],data['title'],data['firstName'],data['lastName'],checkTarget,plantingData,survey));
+      /*list_plantingName.add(data['plantingName']);
       list_fieldName.add(data['fieldName']);
       list_substrict.add(data['substrict']);
       list_district.add(data['district']);
@@ -90,9 +180,10 @@ class SurveyProvider with ChangeNotifier {
       list_lastName.add(data['lastName']);
       bool checkTarget = await surveyTargetPointService
           .checkSurveyTargetBySurveyId(token.toString(), data['surveyId']);
-      list_check_target.add(checkTarget);
-    }
-    if (surveys.length % _value != 0) {
+      list_check_target.add(checkTarget);*/
+
+    }*/
+    /*if (surveys.length % _value != 0) {
       int x = surveys.length % _value;
       for (int i = 0; i < x; i++) {
         surveys.removeLast();
@@ -100,36 +191,39 @@ class SurveyProvider with ChangeNotifier {
       surveys = [...surveys, ...data];
     } else {
       surveys = [...surveys, ...data];
-    }
+    }*/
 
-    _page = (surveys.length ~/ _value) + 1;
-    List<Survey> data2 = this.surveys;
+    //_page = (surveyData.length ~/ _value) + 1;
+    //List<Survey> data2 = this.surveys;
 
-    for (int i = 0; i < data2.length; i++) {
-      String? token = tokenFromLogin?.token;
+    //for (int i = 0; i < data2.length; i++) {
+    /*String? token = tokenFromLogin?.token;
 
       PlantingService plantingService = new PlantingService();
       Planting? plantingData = await plantingService.getPlantingFromSurveyID(
           data2[i].surveyID, token.toString());
 
       if (plantingData != null) {
-        plantings.add(plantingData);
-      }
 
-      SurveyService surveyPoint = SurveyService();
-      List<Map<String, dynamic>> dataPoint = (await surveyPoint.getSurveyPoint(
+       // plantings.add(plantingData);
+      }*/
+
+    //SurveyService surveyPoint = SurveyService();
+    /*List<Map<String, dynamic>> dataPoint = (await surveyPoint.getSurveyPoint(
           token.toString(), data2[i].surveyID));
       // print(dataPoint);
-      surveyPointList = dataPoint;
-    }
+      surveyPointList = dataPoint;*/
+    //}
 
     if (count == 0) {
       isHavePlanting = false;
     } else {
       isHavePlanting = true;
     }
-    notifyListeners();
+
+
     isLoading = true;
+    notifyListeners();
   }
 
   Future<void> fetchDataFromPlanting() async {
@@ -144,7 +238,7 @@ class SurveyProvider with ChangeNotifier {
     numberAllSurveys = await surveyService.countSurveysByPlantingId(
         token.toString(), plantingId);
     for (Map<String, dynamic> data in detail) {
-      list_plantingName.add(data['plantingName']);
+      /*list_plantingName.add(data['plantingName']);
       list_fieldName.add(data['fieldName']);
       list_substrict.add(data['substrict']);
       list_district.add(data['district']);
@@ -154,12 +248,22 @@ class SurveyProvider with ChangeNotifier {
       list_lastName.add(data['lastName']);
       bool checkTarget = await surveyTargetPointService
           .checkSurveyTargetBySurveyId(token.toString(), data['surveyId']);
-      list_check_target.add(checkTarget);
-      Survey? survey =
-          await surveyService.getSurveyByID(token.toString(), data['surveyId']);
-      dataSurvey.add(survey!);
+      list_check_target.add(checkTarget);*/
+
+
+      bool checkTarget = await surveyTargetPointService
+          .checkSurveyTargetBySurveyId(token.toString(), data['surveyId']) ;
+
+      Survey survey = await surveyService.getSurveyByID(token.toString(), data['surveyId']) as Survey;
+
+      Planting plantingData = await plantingService.getPlantingFromSurveyID(
+          data['surveyId'], token.toString()) as Planting;
+
+
+
+
     }
-    if (surveys.length % _value != 0) {
+    /*if (surveys.length % _value != 0) {
       int x = surveys.length % _value;
       for (int i = 0; i < x; i++) {
         surveys.removeLast();
@@ -167,28 +271,28 @@ class SurveyProvider with ChangeNotifier {
       surveys = [...surveys, ...dataSurvey];
     } else {
       surveys = [...surveys, ...dataSurvey];
-    }
+    }*/
 
-    _page = (surveys.length ~/ _value) + 1;
-    List<Survey> data2 = this.surveys;
+    _page = (surveyData.length ~/ _value) + 1;
+    //List<Survey> data2 = this.surveys;
 
-    for (int i = 0; i < data2.length; i++) {
+    /*for (int i = 0; i < data2.length; i++) {
       String? token = tokenFromLogin?.token;
 
-      PlantingService plantingService = new PlantingService();
+      /*PlantingService plantingService = new PlantingService();
       Planting? plantingData = await plantingService.getPlantingFromSurveyID(
           data2[i].surveyID, token.toString());
 
       if (plantingData != null) {
         plantings.add(plantingData);
-      }
+      }*/
 
       SurveyService surveyPoint = SurveyService();
       List<Map<String, dynamic>> dataPoint = (await surveyPoint.getSurveyPoint(
           token.toString(), data2[i].surveyID));
       // print(dataPoint);
       surveyPointList = dataPoint;
-    }
+    }*/
     isLoading = true;
     if (count == 0) {
       isHavePlanting = false;
@@ -198,47 +302,104 @@ class SurveyProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void search(Map<String, dynamic> data) async {
-    reset();
+  Future<void> _doSearch(List<Survey> surveys) async {
     String? token = tokenFromLogin?.token;
     SurveyTargetPoint surveyTargetPointService = SurveyTargetPoint();
-    SurveyService surveyService = SurveyService();
-    surveys = await surveyService.searchSurveyByKey(
-        data, 1, 1000, _date, token.toString());
-    List<Survey> data2 = this.surveys;
-    bool checkTarget = false;
 
-    for (int i = 0; i < data2.length; i++) {
+    PlantingService plantingService = PlantingService();
+    FieldService fieldService = FieldService();
+    UserService userService = UserService();
+
+    for (int i = 0; i < surveys.length; i++) {
+
+      bool checkTarget = await surveyTargetPointService.checkSurveyTargetBySurveyId(
+          token.toString(), surveys[i].surveyID);
+      Planting planting = await plantingService.getPlantingFromSurveyID(
+          surveys[i].surveyID, token.toString()) as Planting;
+
+      Field field = await fieldService.getFieldByPlantingID(planting.plantingId, token.toString()) as Field;
+
+      String location = await fieldService.getLocationByFielID(field.fieldID, token.toString()) as String;
+      String subDis = "",district = "", province = "";
+      if(location != null){
+        List<String> parts =  location.split(",");
+        subDis =parts[1] ;
+        district= parts[0];
+        province = parts[2];
+      }
+
+      User user = await userService.getUserByFieldID(field.fieldID, token.toString()) as User;
+      if(user == null){
+        user = User(
+            -1,
+            "undefined",
+            "undefined",
+            "undefined",
+            "undefined",
+            "undefined",
+            UserStatus.invalid,
+            0,
+            RequestInfoStatus.No) ;
+      }
+
+      SurveyData searchData = SurveyData(surveys[i].surveyID,planting.name,field.name,subDis,district,province,user.title,user.firstName,user.lastName,checkTarget,planting,surveys[i]) ;
+      surveyData.add(searchData);
+    }
+    isLoading = true;
+    numberAllSurveys = surveyData.length;
+    notifyListeners() ;
+  }
+
+  void search(Map<String, dynamic> data) async {
+
+    reset();
+    //notifyListeners();
+    SurveyService surveyService = SurveyService();
+    String? token = tokenFromLogin?.token;
+
+    await surveyService.searchSurveyByKey(
+        data, 1, 1000, _date, token.toString()).then((surveys) async {
+
+          if(surveys != null){
+              await _doSearch(surveys) ;
+          }
+
+
+    });
+    //List<Survey> data2 = surveys;
+   /* bool checkTarget = false;
+
+    for (int i = 0; i < surveys.length; i++) {
       String? token = tokenFromLogin?.token;
 
       checkTarget = await surveyTargetPointService.checkSurveyTargetBySurveyId(
-          token.toString(), data2[i].surveyID);
-      list_check_target.add(checkTarget);
+          token.toString(), surveys[i].surveyID);
+      //list_check_target.add(checkTarget);
 
-      PlantingService plantingService = new PlantingService();
+      //PlantingService plantingService = new PlantingService();
       Planting? plantingData = await plantingService.getPlantingFromSurveyID(
-          data2[i].surveyID, token.toString());
+          surveys[i].surveyID, token.toString());
 
-      if (plantingData != null) {
-        plantings.add(plantingData);
-        list_plantingName.add(plantingData.name);
-      }
+      //if (plantingData != null) {
+      //  plantings.add(plantingData);
+      //  list_plantingName.add(plantingData.name);
+      //}
 
       Planting? planting = plantingData;
       int plantingID = planting?.plantingId ?? 0;
-      SurveyService surveyPoint = SurveyService();
-      List<Map<String, dynamic>> dataPoint = (await surveyPoint.getSurveyPoint(
-          token.toString(), data2[i].surveyID));
+      //SurveyService surveyPoint = SurveyService();
+      //List<Map<String, dynamic>> dataPoint = (await surveyPoint.getSurveyPoint(
+      //    token.toString(), surveys[i].surveyID));
 
-      surveyPointList = dataPoint;
+      //surveyPointList = dataPoint;
 
       Field? field;
-      FieldService fieldService = FieldService();
+      //FieldService fieldService = FieldService();
       field =
           await fieldService.getFieldByPlantingID(plantingID, token.toString());
       if (field != null) {
-        fields.add(field);
-        list_fieldName.add(field.name);
+        //fields.add(field);
+        //list_fieldName.add(field.name);
 
         int fieldID = field.fieldID;
 
@@ -282,19 +443,29 @@ class SurveyProvider with ChangeNotifier {
           list_lastName.add("ไม่ระบุ");
         }
       }
-    }
+    }*/
     isLoading = true;
-    numberAllSurveys = this.surveys.length;
+    numberAllSurveys = surveyData.length;
     notifyListeners();
   }
 
   void searchByKey(Map<String, dynamic> data) async {
+    //print("searchByKey");
+
     reset();
     String? token = tokenFromLogin?.token;
     SurveyTargetPoint surveyTargetPointService = SurveyTargetPoint();
     SurveyService surveyService = SurveyService();
-    surveys = await surveyService.search(data, token.toString());
-    List<Survey> data2 = surveys;
+    await surveyService.search(data, token.toString()).then((surveys) async {
+
+      if(surveys != null){
+
+        await _doSearch(surveys);
+
+      }
+
+    });
+    /*List<Survey> data2 = surveys;
     bool checkTarget = false;
 
     for (int i = 0; i < data2.length; i++) {
@@ -375,40 +546,65 @@ class SurveyProvider with ChangeNotifier {
     }
     isLoading = true;
     numberAllSurveys = this.surveys.length;
-    notifyListeners();
+    notifyListeners();*/
   }
 
   void addSurvey(Survey data) async {
+
     String? token = tokenFromLogin?.token;
-    bool checkTarget = false;
+    //bool checkTarget = false;
     SurveyTargetPoint surveyTargetPointService = SurveyTargetPoint();
     SurveyService surveyService = SurveyService();
-    checkTarget = await surveyTargetPointService.checkSurveyTargetBySurveyId(
-        token.toString(), data.surveyID);
-    list_check_target.add(checkTarget);
+    bool checkTarget = await surveyTargetPointService.checkSurveyTargetBySurveyId(token.toString(), data.surveyID);
+    //list_check_target.add(checkTarget);
 
     PlantingService plantingService = new PlantingService();
-    Planting? plantingData = await plantingService.getPlantingFromSurveyID(
-        data.surveyID, token.toString());
+    Planting? plantingData = await plantingService.getPlantingFromSurveyID(data.surveyID, token.toString());
 
-    if (plantingData != null) {
+
+
+    /*if (plantingData != null) {
       plantings.insert(0, plantingData);
       list_plantingName.insert(0, plantingData.name);
+    }*/
+
+    //Field? field;
+    FieldService fieldService = FieldService();
+    Field field =  await fieldService.getFieldByPlantingID(plantingData!.plantingId, token.toString()) as Field;
+
+    String location = await fieldService.getLocationByFielID(field.fieldID, token.toString()) as String;
+
+    List<String> parts =   location.split(",");
+    UserService userService = UserService();
+    User user = await userService.getUserByFieldID(field.fieldID, token.toString()) as User ;
+
+    if(user == null){
+      user = User(
+          -1,
+          "undefined",
+          "undefined",
+          "undefined",
+          "undefined",
+          "undefined",
+          UserStatus.invalid,
+          0,
+          RequestInfoStatus.No) ;
     }
 
-    Planting? planting = plantingData;
+    SurveyData newSurveyData = SurveyData(data.surveyID,plantingData.name,field.name,parts[1],parts[0],parts[2],user.title,user.firstName,user.lastName,checkTarget,plantingData,data) ;
+
+    surveyData.insert(0,newSurveyData);
+
+    /*Planting? planting = plantingData;
     int plantingID = planting?.plantingId ?? 0;
 
     SurveyService surveyPoint = SurveyService();
     List<Map<String, dynamic>> dataPoint =
         (await surveyPoint.getSurveyPoint(token.toString(), data.surveyID));
 
-    surveyPointList = dataPoint;
+    //surveyPointList = dataPoint;
 
-    Field? field;
-    FieldService fieldService = FieldService();
-    field =
-        await fieldService.getFieldByPlantingID(plantingID, token.toString());
+
 
     if (field != null) {
       fields.insert(0, field);
@@ -458,23 +654,25 @@ class SurveyProvider with ChangeNotifier {
     }
 
     // Add the survey to the surveys list
-    surveys.insert(0, data);
+    surveys.insert(0, data);*/
 
     notifyListeners();
   }
 
-  Future<int> deleteSurvey(Survey survey) async {
+  Future<bool> deleteSurvey(Survey survey) async {
     SurveyService surveyervice = SurveyService();
     String? token = tokenFromLogin?.token;
     int statusCode = await surveyervice.deleteSurvey(token.toString(), survey);
 
-    for (int i = 0; i < plantings.length; i++) {
-      if (survey.surveyID == surveys[i].surveyID) {
-        surveys.removeAt(i);
-        break;
+    if(statusCode == 200){
+      for (int i = 0; i < surveyData.length; i++) {
+        if (survey.surveyID == surveyData[i].id) {
+          surveyData.removeAt(i);
+          notifyListeners();
+          return true ;
+        }
       }
     }
-    notifyListeners();
-    return statusCode;
+    return false;
   }
 }
