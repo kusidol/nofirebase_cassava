@@ -219,6 +219,8 @@ class SurveyService {
     List<Map<String, dynamic>> datas = [];
     Service service = new Service();
     int millisecondDate = DateTime.now().millisecondsSinceEpoch;
+
+    //print("${millisecondDate}");
     var response = await service.doGet(
         "${LOCAL_SERVER_IP_URL}/survey/index/page/${page}/value/${value}/date/${millisecondDate}",
         token);
