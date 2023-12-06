@@ -52,6 +52,7 @@ class Service {
   }
 
   Future<dynamic> doGet(String url, String token) async {
+
     BaseOptions baseOp = BaseOptions(
       followRedirects: false,
       baseUrl: url,
@@ -89,7 +90,10 @@ class Service {
         //print(response.data);
         return response;
       }
+      
     }
+
+
     return http.Response('Service unavaiable', 500);
   }
 
