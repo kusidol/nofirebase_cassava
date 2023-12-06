@@ -302,34 +302,40 @@ class SurveyProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> _doSearch(List<Survey> surveys) async {
+  Future<void> _doSearch(List<Map<String, dynamic>> surveys) async {
     String? token = tokenFromLogin?.token;
     SurveyTargetPoint surveyTargetPointService = SurveyTargetPoint();
 
     PlantingService plantingService = PlantingService();
     FieldService fieldService = FieldService();
     UserService userService = UserService();
+    SurveyService surveyService = SurveyService();
+    numberAllSurveys = surveys.length;
 
-    for (int i = 0; i < surveys.length; i++) {
+    for (Map<String, dynamic> survey in surveys) {
+
+    //for (int i = 0; i < surveys.length; i++) {
+      //print("==========${surveys[i].date}========");
 
       bool checkTarget = await surveyTargetPointService.checkSurveyTargetBySurveyId(
-          token.toString(), surveys[i].surveyID);
+          token.toString(), survey['surveyId']);
       Planting planting = await plantingService.getPlantingFromSurveyID(
-          surveys[i].surveyID, token.toString()) as Planting;
+          survey['surveyId'], token.toString()) as Planting;
 
-      Field field = await fieldService.getFieldByPlantingID(planting.plantingId, token.toString()) as Field;
+      Survey s = await surveyService.getSurveyByID(token.toString(), survey['surveyId']) as Survey;
+      //Field field = await fieldService.getFieldByPlantingID(planting.plantingId, token.toString()) as Field;
 
-      String location = await fieldService.getLocationByFielID(field.fieldID, token.toString()) as String;
-      String subDis = "",district = "", province = "";
-      if(location != null){
+      //String location = await fieldService.getLocationByFielID(field.fieldID, token.toString()) as String;
+      //String subDis = "",district = "", province = "";
+      /*if(location != null){
         List<String> parts =  location.split(",");
         subDis =parts[1] ;
         district= parts[0];
         province = parts[2];
-      }
+      }*/
 
-      User user = await userService.getUserByFieldID(field.fieldID, token.toString()) as User;
-      if(user == null){
+      //User user = await userService.getUserByFieldID(field.fieldID, token.toString()) as User;
+      /*if(user == null){
         user = User(
             -1,
             "undefined",
@@ -340,13 +346,13 @@ class SurveyProvider with ChangeNotifier {
             UserStatus.invalid,
             0,
             RequestInfoStatus.No) ;
-      }
+      }*/
 
-      SurveyData searchData = SurveyData(surveys[i].surveyID,planting.name,field.name,subDis,district,province,user.title,user.firstName,user.lastName,checkTarget,planting,surveys[i]) ;
+      SurveyData searchData = SurveyData(survey['surveyId'],survey['plantingName'],survey['fieldName'],survey['substrict'],survey['district'],survey['province'],survey['title'],survey['firstName'],survey['lastName'],checkTarget,planting,s) ;
       surveyData.add(searchData);
     }
     isLoading = true;
-    numberAllSurveys = surveyData.length;
+
     notifyListeners() ;
   }
 
