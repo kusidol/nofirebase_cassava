@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_qr_reader/flutter_qr_reader.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as Http;
 import 'package:flutter/material.dart';
@@ -17,6 +16,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:mun_bot/screen/login/staff_register_screen.dart';
 import 'package:mun_bot/screen/main_screen.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:scan/scan.dart';
 import '../../env.dart';
 import '../../main.dart';
 import 'app_styles.dart';
@@ -390,9 +390,14 @@ void showAlert(BuildContext context) {
       print(e);
     }
     if (pickedImageFile != null) {
-      String rest = await FlutterQrReader.imgScan(pickedImageFile.path);
+      //String rest = await FlutterQrReader.imgScan(pickedImageFile.path);
+       await Scan.parse(pickedImageFile.path).then((value) {
 
-      doQR(rest);
+        if(value != null)
+          doQR(value);
+
+      });
+
 
       /*await _getRole().then((value) {
         final responseBody = json.decode(value.data) as Map<String, dynamic>;
