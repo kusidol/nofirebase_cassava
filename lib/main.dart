@@ -203,7 +203,7 @@ class _SplashScreenState extends State<SplashScreen>
       JwtDecoder.decode(tokenFromLogin!.token);
 
       DateTime expirationDate = DateTime.fromMillisecondsSinceEpoch(decodedToken['exp'] * 1000);
-
+      
       if(DateTime.now().isAfter(expirationDate)){
 
         UserService userService = UserService();
