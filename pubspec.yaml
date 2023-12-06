@@ -46,7 +46,9 @@ dependencies:
   #google_sign_in: ^5.3.1
   #firebase_auth: 2.0.0
   #firebase_core: ^1.12.0
-  flutter_qr_reader: ^1.0.5
+  #flutter_qr_reader: ^1.0.5
+  #qrscan: ^0.3.3
+  scan: ^1.6.0
 
 
   multi_select_flutter: 4.1.1
