@@ -1171,12 +1171,17 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                                           Axis.vertical,
                                                       itemBuilder:
                                                           (context, index) {
-                                                        Planting planting =
-                                                            plantings[index];
-                                                        String
-                                                            temp_plantingName =
-                                                            planting.name;
-
+                                                            if (index < data.plantings.length &&
+                                                            index < list_fieldName.length &&
+                                                            index < list_substrict.length &&
+                                                            index < list_district.length &&
+                                                            index < list_province.length &&
+                                                            index < list_title.length &&
+                                                            index < list_firstName.length &&
+                                                            index < list_lastName.length) {
+                                                          Planting planting = plantings[index];
+                                                          String temp_plantingName = planting.name;
+                                                        
                                                         RegExp regex = RegExp(
                                                             r'\([^)]*\)');
                                                         String result =
@@ -1283,8 +1288,11 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                                               planting
                                                                   .createDate),
                                                         );
-                                                      },
-                                                    )
+                                                      } else {
+                                                // Handle index is out of bounds
+                                                return Container();
+                                              }
+                                                  })
                                                   : NoData()
                                                       .showNoData(context),
                                             )
