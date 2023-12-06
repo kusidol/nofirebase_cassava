@@ -255,7 +255,7 @@ class _SurveyMoreDetailScreen extends State<SurveyMoreDetailScreen>
                     Radius.circular(sizeHeight(32, context)),
                   ),
                   onTap: () {
-                    Navigator.pop(context, true);
+                    Navigator.pop(context, false);
                   },
                   child: Padding(
                     padding: EdgeInsets.all(sizeWidth(8, context)),
