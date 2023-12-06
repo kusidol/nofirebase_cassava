@@ -171,9 +171,9 @@ class SurveyService {
     return response.statusCode;
   }
 
-  Future<List<Survey>> searchSurveyByKey(Map<String, dynamic> data, int page,
+  Future<List<Map<String, dynamic>>> searchSurveyByKey(Map<String, dynamic> data, int page,
       int value, int date, String token) async {
-    List<Survey> surveys = [];
+    List<Map<String, dynamic>> surveys = [];
 
     Service surveysService = new Service();
     var response = await surveysService.doPostWithFormData(
@@ -182,8 +182,11 @@ class SurveyService {
         data);
 
     if (response.statusCode == 200) {
-      surveys = ObjectList<Survey>.fromJson(
-          jsonDecode(response.data), (body) => Survey.fromJson(body)).list;
+      Map<String, dynamic> res = jsonDecode(response.data);
+      for (int i = 0; i < res['body'].length; i++) {
+        Map<String, dynamic> item = res['body'][i];
+        surveys.add(item);
+      }
     } else if (response.statusCode == 401) {
       print('error statusCode 401');
     } else {
@@ -192,8 +195,8 @@ class SurveyService {
     return surveys;
   }
 
-  Future<List<Survey>> search(Map<String, dynamic> data, String token) async {
-    List<Survey> surveys = [];
+  Future<List<Map<String, dynamic>>>  search(Map<String, dynamic> data, String token) async {
+    List<Map<String, dynamic>> surveys = [];
     int page = 1;
     int value = 1000;
     int date = DateTime.now().millisecondsSinceEpoch;
@@ -204,8 +207,11 @@ class SurveyService {
         data);
 
     if (response.statusCode == 200) {
-      surveys = ObjectList<Survey>.fromJson(
-          jsonDecode(response.data), (body) => Survey.fromJson(body)).list;
+      Map<String, dynamic> res = jsonDecode(response.data);
+      for (int i = 0; i < res['body'].length; i++) {
+        Map<String, dynamic> item = res['body'][i];
+        surveys.add(item);
+      }
     } else if (response.statusCode == 401) {
       print('error statusCode 401');
     } else {
