@@ -71,6 +71,7 @@ class _SurveyTable extends State<SurveyTable>
   TextEditingController endDatePlantingController = TextEditingController();
   TextEditingController startDateSurveyController = TextEditingController();
   TextEditingController endDateSurveyController = TextEditingController();
+  String shortCutValue = '';
   String addressValue = '';
   String fieldNameValue = '';
   String ownerNameValue = '';
@@ -508,7 +509,7 @@ TabController? _mainTapController;
                         child: TextField(
                           onChanged: (String txt) {
                             setState(() {
-                              fieldNameValue = txt;
+                              shortCutValue = txt;
                             });
                           },
                           style: TextStyle(
@@ -549,7 +550,7 @@ TabController? _mainTapController;
                       ),
                       onTap: () {
                         FocusScope.of(context).requestFocus(FocusNode());
-                        if (fieldNameValue == null || fieldNameValue == "") {
+                        if (shortCutValue == null || shortCutValue == "") {
                           isSearching = false;
                           asyncFunction();
                         }
@@ -575,7 +576,7 @@ TabController? _mainTapController;
   void _handleSearchByKeyButton(SurveyProvider provider) async {
     //call Service
     Map<String, dynamic> jsonData = {
-      "key": fieldNameValue,
+      "key": shortCutValue,
     };
 
     jsonData.removeWhere(
