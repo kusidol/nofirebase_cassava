@@ -86,14 +86,19 @@ class OAuth {
     //print(authUrl) ;
 
     InAppWebView wv = InAppWebView(
+
        onReceivedServerTrustAuthRequest: (controller, challenge) async {
           //Do some checks here to decide if CANCELS or PROCEEDS
           return ServerTrustAuthResponse(action: ServerTrustAuthResponseAction.PROCEED);
         },
         initialUrlRequest: URLRequest(url: Uri.parse(authUrl)),
       initialOptions: InAppWebViewGroupOptions(
+        android: AndroidInAppWebViewOptions(
+          useHybridComposition: true,
+        ),
 
         crossPlatform: InAppWebViewOptions(
+
           userAgent: 'random',
           clearCache:true,
           javaScriptEnabled: true,
@@ -105,6 +110,8 @@ class OAuth {
       ),
       onWebViewCreated: (controller) {
         webViewController = controller;
+
+        //webViewController.req
       },
       onLoadStop: _getNavigationDelegate(webViewController,onDone),
       //shouldOverrideUrlLoading: _getNavigationDelegate(webViewController,onDone),
@@ -119,7 +126,7 @@ class OAuth {
   /// navigates to a new page. Once the redirect url
   /// is found, it calls the [onDone] callback.
   _getNavigationDelegate(controller, onDone) => (controller, _url) async {
-
+    //controller.requestImageRef();
     String url = _url.toString();
     if (debugMode) _debug.info('Inspecting Url Before Loading: $url');
 
