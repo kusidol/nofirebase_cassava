@@ -292,10 +292,10 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
   void _handleDeletion() async {
     SurveyService surveyervice = SurveyService();
     String? token = tokenFromLogin?.token;
-    print("widget.surveyProvider.surveys : ${widget.surveyProvider.surveys}");
+   // print("widget.surveyProvider.surveys : ${widget.surveyProvider.surveys}");
     print("widget.survey : ${widget.survey}");
-    int statusCode = await widget.surveyProvider.deleteSurvey(widget.survey);
-    if (statusCode == 200) {
+    bool isDeleted = await widget.surveyProvider.deleteSurvey(widget.survey);
+    if (isDeleted) {
       //alert
       print("delete success");
       Navigator.of(context).pop();
