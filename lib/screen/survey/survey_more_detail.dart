@@ -188,10 +188,10 @@ class _SurveyMoreDetailScreen extends State<SurveyMoreDetailScreen>
   void _handleDeletion() async {
     SurveyService surveyervice = SurveyService();
     String? token = tokenFromLogin?.token;
-    print("widget.surveyProvider.surveys : ${widget.surveyProvider.surveys}");
+    //print("widget.surveyProvider.surveys : ${widget.surveyProvider.surveys}");
     print("widget.survey : ${widget.surveys}");
-    int statusCode = await widget.surveyProvider.deleteSurvey(widget.surveys);
-    if (statusCode == 200) {
+    bool isDeleted = await widget.surveyProvider.deleteSurvey(widget.surveys);
+    if (isDeleted) {
       //alert
       print("delete success");
       Navigator.of(context).pop();
