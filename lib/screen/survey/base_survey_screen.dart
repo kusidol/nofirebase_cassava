@@ -55,7 +55,7 @@ class _SurveyTable extends State<SurveyTable>
   final ScrollController _inerscrollController = ScrollController();
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now().add(const Duration(days: 5));
-  List<Survey> surveyList = [];
+
   bool _isLoading = true;
   bool _isLoadMore = false;
 
@@ -115,13 +115,14 @@ TabController? _mainTapController;
     _scrollController.addListener(_scrollListener);
     animationController = AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
-    super.initState();
-   
+
     asyncFunction();
+    super.initState();
    
   }
 
   void asyncFunction() async {
+
     if (mounted) {
       setState(() {
         _isLoading = true;
@@ -129,19 +130,20 @@ TabController? _mainTapController;
     }
     SurveyProvider surveyProvider;
 
-
-  
     surveyProvider =
        widget.surveyProvider;
-
     if(!surveyProvider.isSearch){
       //print("plantingID =  ${surveyProvider.plantingId}");
       surveyProvider.reset();
       if(surveyProvider.plantingId != 0) {
         surveyProvider.fetchDataFromPlanting();
       } else {
-        surveyProvider.fetchData();
+        if(!surveyProvider.isFetch()){
+          surveyProvider.setFetch(true);
+          surveyProvider.fetchData();
+        }
       }
+
     }
 
     if (mounted) {
@@ -158,14 +160,16 @@ TabController? _mainTapController;
       });
     }
 
-    SurveyProvider surveyProvider =
-        widget.surveyProvider;
-    if (!isSearching && !widget.surveyProvider.isSearch) {
-      if(surveyProvider.plantingId != 0) {
-      surveyProvider.fetchDataFromPlanting();
-    } else {
-      surveyProvider.fetchData();
-    }
+    SurveyProvider surveyProvider =  widget.surveyProvider;
+      if (!isSearching && !widget.surveyProvider.isSearch) {
+        if(surveyProvider.plantingId != 0) {
+        surveyProvider.fetchDataFromPlanting();
+      } else {
+          if(!surveyProvider.isFetch()) {
+            surveyProvider.setFetch(true);
+            surveyProvider.fetchData();
+          }
+      }
     }
 
     if (mounted) {
@@ -173,6 +177,7 @@ TabController? _mainTapController;
         _isLoadMore = false;
       });
     }
+
   }
 
   Future<void> _pullRefresh() async {}
@@ -193,7 +198,8 @@ TabController? _mainTapController;
   }
 
 
-  
+
+
 
   void alert(Survey survey) {
     showDialog(
@@ -544,6 +550,7 @@ TabController? _mainTapController;
                       onTap: () {
                         FocusScope.of(context).requestFocus(FocusNode());
                         if (fieldNameValue == null || fieldNameValue == "") {
+                          isSearching = false;
                           asyncFunction();
                         }
                         else {
@@ -1204,6 +1211,7 @@ Widget getFilterBarUI(int numItemFounded) {
     setState(() {
       isShowbasicSearch = true;
     });
+    //print("-------------------------");
     provider.search(jsonData);
     isSearching = true;
   }
@@ -1217,9 +1225,9 @@ Widget getFilterBarUI(int numItemFounded) {
         child:
        Consumer<SurveyProvider>(
          builder: (context, surveyProvider, index) {
-           List<Survey> surveyList = surveyProvider.surveys;
-        List<Planting> plantings = surveyProvider.plantings;
-            List<String> list_plantingName = surveyProvider.list_plantingName;
+         //  List<Survey> surveyList = surveyProvider.surveys;
+        //List<Planting> plantings = surveyProvider.plantings;
+          /*  List<String> list_plantingName = surveyProvider.list_plantingName;
             List<String> list_fieldName = surveyProvider.list_fieldName;
             List<String> list_substrict = surveyProvider.list_substrict;
             List<String> list_district = surveyProvider.list_district;
@@ -1227,7 +1235,7 @@ Widget getFilterBarUI(int numItemFounded) {
             List<String> list_title = surveyProvider.list_title;
             List<String> list_firstName = surveyProvider.list_firstName;
             List<String> list_lastName = surveyProvider.list_lastName;
-            List<bool>list_check_target=surveyProvider.list_check_target;
+            List<bool>list_check_target=surveyProvider.list_check_target;*/
            return WillPopScope(
                 onWillPop: () => onBackButtonPressed(context),
                   child: Scaffold(
@@ -1251,7 +1259,7 @@ Widget getFilterBarUI(int numItemFounded) {
                                               ScrollEndNotification>(
                                           onNotification:
                                               (ScrollEndNotification scrollInfo) {
-                                            if (surveyList.length < 2) {
+                                            if (surveyProvider.surveyData.length < 2) {
                                               if (scrollInfo.depth == 0) {
                                                 if (scrollInfo.metrics.pixels <
                                                     scrollInfo
@@ -1278,12 +1286,12 @@ Widget getFilterBarUI(int numItemFounded) {
                                               }
                                             }
                                          if (check == 1) {
-                                      if (surveyProvider.surveys.length ==
-                                          surveyProvider.numberAllSurveys) {
-                                        showToastMessage(
-                                            "ข้อมูลแสดงครบทั้งหมดเป็นที่เรียบร้อยแล้ว");
-                                      }
-                                    }
+                                            if (surveyProvider.surveyData.length ==
+                                                surveyProvider.numberAllSurveys) {
+                                              showToastMessage(
+                                                  "ข้อมูลแสดงครบทั้งหมดเป็นที่เรียบร้อยแล้ว");
+                                            }
+                                          }
                                             return true;
                                           },
                                           child: RefreshIndicator(
@@ -1313,8 +1321,7 @@ Widget getFilterBarUI(int numItemFounded) {
                                             floating: true,
                                             delegate: ContestTabHeader(Column(
                                               children: <Widget>[
-                                                getFilterBarUI(
-                                                          surveyProvider.numberAllSurveys),
+                                                getFilterBarUI(surveyProvider.numberAllSurveys),
                                               ],
                                             )),
                                           ),
@@ -1333,9 +1340,9 @@ Widget getFilterBarUI(int numItemFounded) {
                                                           ],
                                                         ),
                                                       ),
-                                                      child: surveyProvider.surveys.isNotEmpty ?ListView.builder(
+                                                      child: surveyProvider.surveyData.isNotEmpty ? ListView.builder(
                                                         //controller: _inerscrollController,
-                                                        itemCount: surveyList.length,
+                                                        itemCount: surveyProvider.surveyData.length,
                                                         padding: EdgeInsets.only(
                                                             top: sizeHeight(
                                                                 8, context)),
@@ -1344,33 +1351,31 @@ Widget getFilterBarUI(int numItemFounded) {
                                                         itemBuilder:
                                                             (BuildContext context,
                                                                 int index) {
+
+                                                          //print(index);
                                                                   // print("surveyList length : ${surveyList.length} index :${index}");
-                                                         IsCheckTarget=list_check_target[index]; 
-                                                         Planting planting =
-                                                              plantings[index];
+                                                         IsCheckTarget=surveyProvider.surveyData[index].checkTarget;
+                                                         Planting planting = surveyProvider.surveyData[index].planting ;
+                                                         //     plantings[index];
                                                           // Adding new
-                                                          String plantingName =
-                                                              list_plantingName[
-                                                                  index];
-                                                          String fieldName =
-                                                              list_fieldName[index];
-                                                          String substrict =
-                                                              list_substrict[index];
-                                                          String district =
-                                                              list_district[index];
-                                                          String province =
-                                                              list_province[index];
-                                                          String title =
-                                                              list_title[index];
-                                                          String firstName =
-                                                              list_firstName[index];
-                                                          String lastName =
-                                                              list_lastName[index];
+                                                          String plantingName =surveyProvider.surveyData[index].plantingName ;
+                                                             /* list_plantingName[
+                                                                  index];*/
+                                                          String fieldName = surveyProvider.surveyData[index].fieldName ;
+                                                          String substrict = surveyProvider.surveyData[index].substrict ;
+                                                          String district = surveyProvider.surveyData[index].district ;
+                                                          String province = surveyProvider.surveyData[index].province ;
+                                                          String title = surveyProvider.surveyData[index].title ;
+
+                                                          String firstName = surveyProvider.surveyData[index].firstName ;
+
+                                                          String lastName = surveyProvider.surveyData[index].lastName ;
+
                                                             
                                                           final int count =
-                                                              surveyList.length > 10
+                                                          surveyProvider.surveyData.length > 10
                                                                   ? 10
-                                                                  : surveyList.length;
+                                                                  : surveyProvider.surveyData.length;
                                                           final Animation<
                                                               double> animation = Tween<
                                                                       double>(
@@ -1389,27 +1394,25 @@ Widget getFilterBarUI(int numItemFounded) {
                                                               ?.forward();
                                                           return CardItemWithOutImage(
                                                             callback: () {
-                                                             if (list_check_target[index] == false) {
-                                                              alert(surveyList[index]);
+                                                             if (surveyProvider.surveyData[index].checkTarget == false) {
+                                                              //alert(surveyList[index]);
                                                                   } else {
                                                                     Navigator.push(
                                                                       context,
                                                                       MaterialPageRoute(
                                                                         builder: (context) =>
-                                                                            BaseSurveyPoint(surveyList[index], planting.code),
+                                                                            BaseSurveyPoint(surveyProvider.surveyData[index].survey, planting.code),
                                                                       ),
                                                                     );
                                                                   }
                                                             },
                                                             callback2: () {                                                       
-                                                                  Navigator.push(
+                                                                 Navigator.push(
                                                                   context,
                                                                       MaterialPageRoute(
                                                                           maintainState: false,
                                                                           builder: (context) =>
-                                                                              SurveyMoreDetailScreen(
-                                                                            surveyList[
-                                                                                index],
+                                                                              SurveyMoreDetailScreen( surveyProvider.surveyData[index].survey,
                                                                             planting
                                                                                 .code, surveyProvider))).then((value) {
                                                                     if (value == true) {
@@ -1437,9 +1440,7 @@ Widget getFilterBarUI(int numItemFounded) {
                                                             animation: animation,
                                                             animationController:
                                                                 animationController!,
-                                                            date: ChangeDateTime(
-                                                                surveyList[index]
-                                                                    .date),
+                                                            date: ChangeDateTime(surveyProvider.surveyData[index].survey.date),
                                                           );
                                                         },
                                                       ): NoData().showNoData(context),
@@ -1698,38 +1699,38 @@ Widget getFilterBarUI(int numItemFounded) {
     );
   }
 
-Future<bool> onBackButtonPressed(BuildContext context) async {
-  bool? exitApp = await showCupertinoDialog<bool>(
-    context: context,
-    builder: (BuildContext context) => CupertinoAlertDialog(
-      title: Text("notification-label".i18n()),
-      content: Text("exit-application".i18n()),
-      actions: [
-        CupertinoDialogAction(
-          onPressed: () {
-            Navigator.of(context).pop(false);
-          },
-          child: Text('No', style: TextStyle(
+  Future<bool> onBackButtonPressed(BuildContext context) async {
+    bool? exitApp = await showCupertinoDialog<bool>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text("notification-label".i18n()),
+        content: Text("exit-application".i18n()),
+        actions: [
+          CupertinoDialogAction(
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+            child: Text('No', style: TextStyle(
               color: Colors.red,
               fontWeight: FontWeight.w400,
             ),),
-        ),
-        CupertinoDialogAction(
-          onPressed: () {
-            Navigator.of(context).pop(true);
-            SystemNavigator.pop();
-          },
-          child: Text('Yes', style: TextStyle(
+          ),
+          CupertinoDialogAction(
+            onPressed: () {
+              Navigator.of(context).pop(true);
+              SystemNavigator.pop();
+            },
+            child: Text('Yes', style: TextStyle(
               color: Colors.blue,
               fontWeight: FontWeight.w400,
             ),),
-        ),
-      ],
-    ),
-  );
+          ),
+        ],
+      ),
+    );
 
-  return exitApp ?? false;
-}
+    return exitApp ?? false;
+  }
 }
 
 class ContestTabHeader extends SliverPersistentHeaderDelegate {
