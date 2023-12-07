@@ -41,6 +41,8 @@ import 'package:shimmer/shimmer.dart';
 class SurveyTable extends StatefulWidget {
   TabController? mainTapController;
   SurveyProvider surveyProvider;
+  //SurveyTable(this.mainTapController,this.surveyProvider);
+
   SurveyTable(this.mainTapController,this.surveyProvider);
  
   @override
@@ -113,6 +115,8 @@ TabController? _mainTapController;
 
   @override
   void initState() {
+
+   widget.surveyProvider.reset();
     _scrollController.addListener(_scrollListener);
     animationController = AnimationController(
         duration: const Duration(milliseconds: 5000), vsync: this
@@ -136,16 +140,19 @@ TabController? _mainTapController;
 
     surveyProvider =
        widget.surveyProvider;
+
     if(!surveyProvider.isSearch && !surveyProvider.isFetch()){
       //print("plantingID =  ${surveyProvider.plantingId}");
+      surveyProvider.setFetch(true);
 
-      if(surveyProvider.plantingId != 0) {
+      if(surveyProvider.plantingId != -1) {
+
         surveyProvider.fetchDataFromPlanting();
       } else {
 
       //  if(!surveyProvider.isFetch()){
 
-          surveyProvider.setFetch(true);
+       //   surveyProvider.setFetch(true);
 
           surveyProvider.fetchData();
       //  }
