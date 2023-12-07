@@ -4,13 +4,13 @@ import 'package:json_annotation/json_annotation.dart';
 part 'surveypointstatus.g.dart';
 
 class SurveyPointStatus {
-  final int surveyId;
-  final int pointNumber;
+  final int surveyPointId;
+  final int pointNo;
   final String status;
 
   SurveyPointStatus(
-    this.surveyId,
-    this.pointNumber,
+    this.surveyPointId,
+    this.pointNo,
     this.status,
   );
   factory SurveyPointStatus.fromJson(Map<String, dynamic> json) =>
