@@ -5,6 +5,7 @@ import 'package:mun_bot/entities/survey.dart';
 import 'package:mun_bot/entities/surveypointstatus.dart';
 import 'package:mun_bot/env.dart';
 import 'dart:developer';
+import 'package:mun_bot/entities/response.dart' as EntityResponse;
 
 class SurveyService {
   Future<List<Survey>> getSurvey(String token, int page, int value) async {
@@ -61,9 +62,9 @@ class SurveyService {
   }
 
   List<Map<String, dynamic>> surveyPointList = [];
+
   Future<List<Map<String, dynamic>>> getSurveyPoint(
       String token, int surveyId) async {
-    var bodyValue;
 
     Service service = Service();
     var response = await service.doGet(
@@ -127,7 +128,7 @@ class SurveyService {
     return SurveyPoint;
   }
 
-  Future<SurveyPointStatus?> postSurveyPointStatus(
+  Future<int> postSurveyPointStatus(
       int surveyId, int pointNumber, String status, token) async {
     var request = {
       'surveyId': surveyId,
@@ -137,7 +138,19 @@ class SurveyService {
     Service surveysService = new Service();
     var response = await surveysService.update(
         "${LOCAL_SERVER_IP_URL}/survey/surveypoint", token, request);
-    var responseBody = json.decode(response.data);
+    //var responseBody = json.decode(response.data);
+
+    if (response.statusCode == 200) {
+      //print(">>${response.data}");
+
+      EntityResponse.Response<SurveyPointStatus> surveyPointStatus = EntityResponse.Response<SurveyPointStatus>.fromJson(
+          jsonDecode(response.data), (body) => SurveyPointStatus.fromJson(body)) ;
+
+      return response.statusCode ;
+
+    }
+
+    return 400 ;
   }
 
   Future<int> updateSurvey(String token, Survey surveying) async {
