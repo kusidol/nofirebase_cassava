@@ -117,14 +117,23 @@ class SurveyProvider with ChangeNotifier {
     //data = await surveyService.getSurvey(token.toString(), _page, _value);
     numberAllSurveys = await surveyService.countSurveys(token.toString());
 
+    if(numberAllSurveys == 0){
+      notifyListeners();
+      return ;
+    }
+
+
     isLoading = false;
 
     notifyListeners();
 
 
     int index = ((_page-1)*_value) ;
+
     index = (index >= _value) ? index -1 : index ;
+
     String none = "" ;
+
     Survey sv = Survey(0, 0, 0, none, none, 0, 0, none, none, none, none, none, none, none, none, 0, 0, 0, none, 0, none, none, 0, 0, 0, 0, none, none, none) ;
 
     for(int i = 0 ; i < _value ; i++){
