@@ -136,16 +136,19 @@ TabController? _mainTapController;
 
     surveyProvider =
        widget.surveyProvider;
-    if(!surveyProvider.isSearch){
+    if(!surveyProvider.isSearch && !surveyProvider.isFetch()){
       //print("plantingID =  ${surveyProvider.plantingId}");
-      surveyProvider.reset();
+
       if(surveyProvider.plantingId != 0) {
         surveyProvider.fetchDataFromPlanting();
       } else {
-        if(!surveyProvider.isFetch()){
+
+      //  if(!surveyProvider.isFetch()){
+
           surveyProvider.setFetch(true);
+
           surveyProvider.fetchData();
-        }
+      //  }
       }
 
     }
@@ -554,11 +557,13 @@ TabController? _mainTapController;
                       onTap: () {
                         FocusScope.of(context).requestFocus(FocusNode());
                         if (shortCutValue == null || shortCutValue == "") {
+                          //print("-----------------");
                           isSearching = false;
                           asyncFunction();
                         }
                         else {
                           _handleSearchByKeyButton(surveyProvider);
+
                         }
                       },
                       child: Padding(
@@ -1167,7 +1172,9 @@ Widget getFilterBarUI(int numItemFounded) {
                         asyncFunction();
                       }
                       else {
+                        shortCutValue="";
                         _handleSearchButton(provider);
+
                       }
                     },
                     padding: EdgeInsets.all(sizeHeight(10, context)),
