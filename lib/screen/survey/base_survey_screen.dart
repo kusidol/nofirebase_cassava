@@ -589,7 +589,12 @@ TabController? _mainTapController;
   }
 
   void _handleSearchByKeyButton(SurveyProvider provider) async {
-    //call Service
+
+   if(provider.isFetch()){
+
+     return ;
+   }
+
     Map<String, dynamic> jsonData = {
       "key": shortCutValue,
     };
@@ -1208,6 +1213,11 @@ Widget getFilterBarUI(int numItemFounded) {
   }
 
   void _handleSearchButton(SurveyProvider provider) async {
+
+   if(provider.isFetch()){
+     return ;
+   }
+
     //call Service
     Map<String, dynamic> jsonData = {
       "address": addressValue,
