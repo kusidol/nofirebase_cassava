@@ -80,7 +80,7 @@ class _SurveyTable extends State<SurveyTable>
   int endDatePlantingSelect = 0;
   int startDateSurveySelect = 0;
   int endDateSurveySelect = 0;
-  
+
    bool? IsCheckTarget;
   DateTime _startDatePlanting = DateTime.now();
   DateTime _endDatePlanting = DateTime.now().add(const Duration(days: 5));
@@ -115,10 +115,13 @@ TabController? _mainTapController;
   void initState() {
     _scrollController.addListener(_scrollListener);
     animationController = AnimationController(
-        duration: const Duration(milliseconds: 1000), vsync: this);
+        duration: const Duration(milliseconds: 5000), vsync: this
+    );
 
     asyncFunction();
     super.initState();
+   // animation = AnimationController(vsync: this, duration: Duration(seconds: 3),);
+   // _fadeInFadeOut = Tween<double>(begin: 0.0, end: 0.1).animate(animation);
    
   }
 
@@ -1216,7 +1219,8 @@ Widget getFilterBarUI(int numItemFounded) {
     provider.search(jsonData);
     isSearching = true;
   }
-
+ // AnimationController  animation  ;
+ // Animation<double> _fadeInFadeOut;
   @override
   Widget build(BuildContext context) {
         
@@ -1328,8 +1332,7 @@ Widget getFilterBarUI(int numItemFounded) {
                                           ),
                                                 ];
                                               },
-                                              body: surveyProvider.isLoading
-                                                  ? Container(
+                                              body: Container(
                                                       decoration: BoxDecoration(
                                                         gradient: LinearGradient(
                                                           begin: Alignment.topCenter,
@@ -1356,7 +1359,7 @@ Widget getFilterBarUI(int numItemFounded) {
                                                           //print(index);
                                                                   // print("surveyList length : ${surveyList.length} index :${index}");
                                                          IsCheckTarget=surveyProvider.surveyData[index].checkTarget;
-                                                         Planting planting = surveyProvider.surveyData[index].planting ;
+                                                         //Planting planting = surveyProvider.surveyData[index].planting ;
                                                          //     plantings[index];
                                                           // Adding new
                                                           String plantingName =surveyProvider.surveyData[index].plantingName ;
@@ -1373,27 +1376,16 @@ Widget getFilterBarUI(int numItemFounded) {
                                                           String lastName = surveyProvider.surveyData[index].lastName ;
 
                                                             
-                                                          final int count =
-                                                          surveyProvider.surveyData.length > 10
-                                                                  ? 10
-                                                                  : surveyProvider.surveyData.length;
-                                                          final Animation<
-                                                              double> animation = Tween<
-                                                                      double>(
-                                                                  begin: 0.0,
-                                                                  end: 1.0)
-                                                              .animate(CurvedAnimation(
-                                                                  parent:
-                                                                      animationController!,
-                                                                  curve: Interval(
-                                                                      (1 / count) *
-                                                                          index,
-                                                                      1.0,
-                                                                      curve: Curves
+                                                          final int count =  surveyProvider.surveyData.length > 10  ? 10 : surveyProvider.surveyData.length;
+                                                          final Animation <double> animation = Tween<double>(begin: 0.0,end: 1.0).animate(CurvedAnimation(parent:animationController!, curve: Interval( (1 / count) *  index,   1.0, curve: Curves
                                                                           .fastOutSlowIn)));
-                                                          animationController
-                                                              ?.forward();
-                                                          return CardItemWithOutImage(
+                                                          animationController ?.forward();
+
+
+                                                          return surveyProvider.surveyData[index].isLoading ? mockShimmer():
+                                                              
+                                                             // FadeTransition(opacity: animation)
+                                                          CardItemWithOutImage(
                                                             callback: () {
                                                              if (surveyProvider.surveyData[index].checkTarget == false) {
                                                               //alert(surveyList[index]);
@@ -1402,32 +1394,32 @@ Widget getFilterBarUI(int numItemFounded) {
                                                                       context,
                                                                       MaterialPageRoute(
                                                                         builder: (context) =>
-                                                                            BaseSurveyPoint(surveyProvider.surveyData[index].survey, planting.code),
+                                                                            BaseSurveyPoint(surveyProvider.surveyData[index].survey, surveyProvider.surveyData[index].code),
                                                                       ),
                                                                     );
                                                                   }
                                                             },
-                                                            callback2: () {                                                       
+                                                            callback2: () {
+
                                                                  Navigator.push(
                                                                   context,
                                                                       MaterialPageRoute(
                                                                           maintainState: false,
                                                                           builder: (context) =>
                                                                               SurveyMoreDetailScreen( surveyProvider.surveyData[index].survey,
-                                                                            planting
-                                                                                .code, surveyProvider))).then((value) {
+                                                                                  surveyProvider.surveyData[index].code, surveyProvider))).then((value) {
                                                                     if (value == true) {
                                                                       asyncFunction();
                                                                       //print("value${value}");
-                                                                     
+
                                                                     }
                                                                   });
-            
+
                                                               },
-                                                            
+
                                                             itemName: plantingName,
                                                             itemID:
-                                                                "${planting.code}",
+                                                                "${surveyProvider.surveyData[index].code}",
                                                             city: "อ." +
                                                                 "${district}," +
                                                                 " จ." +
@@ -1446,7 +1438,7 @@ Widget getFilterBarUI(int numItemFounded) {
                                                         },
                                                       ): NoData().showNoData(context),
                                                     )
-                                                  : shimmerLoading(),
+                                                  ,
                                             ),
                                           ))),
                             ],
