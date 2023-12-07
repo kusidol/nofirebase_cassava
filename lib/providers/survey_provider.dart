@@ -44,7 +44,7 @@ class SurveyProvider with ChangeNotifier {
   //List<Map<String, dynamic>> surveyPointList = [];
   //List<SurveyTargetPoint> surveyTargetPointCount = [];
   bool isLoading = false;
-  final int _value = 10;
+  int _value = 10;
   int _page = 1;
   int _date = DateTime.now().millisecondsSinceEpoch;
   int plantingId = 0;
@@ -122,11 +122,13 @@ class SurveyProvider with ChangeNotifier {
       return ;
     }
 
+    _value = 10 ;
 
     isLoading = false;
 
     notifyListeners();
 
+    _value = numberAllSurveys < _value ? numberAllSurveys : _value ;
 
     int index = ((_page-1)*_value) ;
 
@@ -142,8 +144,6 @@ class SurveyProvider with ChangeNotifier {
 
 
     notifyListeners();
-
-    //int index = ((_page - 1) * 5) - 1 ;
 
     await surveyService.getSurveysWithPlantingAndLocationAndOwner(
         token.toString(), _page, _value).then((value) async {
@@ -289,6 +289,7 @@ class SurveyProvider with ChangeNotifier {
         .getSurveyByPlantingID(token.toString(), plantingId, _page, _value);
     numberAllSurveys = await surveyService.countSurveysByPlantingId(
         token.toString(), plantingId);
+
     for (Map<String, dynamic> data in detail) {
       /*list_plantingName.add(data['plantingName']);
       list_fieldName.add(data['fieldName']);
@@ -444,6 +445,7 @@ class SurveyProvider with ChangeNotifier {
   }
 
   void search(Map<String, dynamic> data) async {
+
 
     reset();
     //notifyListeners();
