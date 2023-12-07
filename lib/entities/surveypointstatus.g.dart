@@ -7,14 +7,14 @@ part of 'surveypointstatus.dart';
 // **************************************************************************
 SurveyPointStatus _$SurveyPointStatusFromJson(Map<String, dynamic> json) =>
     SurveyPointStatus(
-      json['surveyId'] as int,
-      json['pointNumber'] == null ? 0 : json['pointNumber'] as int,
+      json['surveyPointId'] as int,
+      json['pointNo'] == null ? 0 : json['pointNo'] as int,
       json['status'] == "" ? "" : json['status'] as String,
     );
 
 Map<String, dynamic> _$SurveyPointStatusToJson(SurveyPointStatus instance) =>
     <String, dynamic>{
-      'surveyId': instance.surveyId,
-      'pointNumber': instance.pointNumber,
+      'surveyPointId': instance.surveyPointId,
+      'pointNo': instance.pointNo,
       'status': instance.status,
     };
