@@ -175,12 +175,12 @@ TabController? _mainTapController;
     }
 
     SurveyProvider surveyProvider =  widget.surveyProvider;
-      if (!isSearching && !widget.surveyProvider.isSearch) {
-        if(surveyProvider.plantingId != 0) {
+      if (!isSearching && !widget.surveyProvider.isSearch ) {
+        surveyProvider.setFetch(true);
+        if(surveyProvider.plantingId != -1) {
         surveyProvider.fetchDataFromPlanting();
       } else {
           if(!surveyProvider.isFetch()) {
-            surveyProvider.setFetch(true);
             surveyProvider.fetchData();
           }
       }
@@ -591,7 +591,6 @@ TabController? _mainTapController;
   void _handleSearchByKeyButton(SurveyProvider provider) async {
 
    if(provider.isFetch()){
-
      return ;
    }
 
