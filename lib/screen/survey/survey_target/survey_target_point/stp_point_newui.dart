@@ -45,7 +45,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
     getAllsurveyStatus();
   }
 
-  Future<void> asyncFunction() async {
+  /*Future<void> asyncFunction() async {
     String? token = tokenFromLogin?.token;
     SurveyTargetPoint surveyTargetPoint = SurveyTargetPoint();
 
@@ -99,7 +99,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
     if (mounted) {
       setState(() {});
     }
-  }
+  }*/
 
   Future<void> getAllsurveyStatus() async {
     var bodyValue;
@@ -174,24 +174,22 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
     }
   }
 
-  Future<void> putPointStatus(
+  Future<bool> putPointStatus(
       int surveyId, int pointNumber, String status) async {
     try {
       String? token = tokenFromLogin?.token;
       SurveyService surveyPoint = SurveyService();
-      final response = await surveyPoint.postSurveyPointStatus(
+      final code = await surveyPoint.postSurveyPointStatus(
           surveyId, pointNumber, status, token);
 
-      if (response!.status == 200) {
+      if (code == 200) {
         // The update was successful, handle the response if necessary
-        print('Resource updated successfully.');
-      } else {
-        // Handle other status codes like 404, 500, etc.
-        //print('Failed to update resource. Status code: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error during update: $e');
+          return true ;
+        }
+    }catch(e){
+
     }
+    return false ;
   }
 
   Future<void> updateSurveyStatus() async {
@@ -326,8 +324,8 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                 builder: (context, snapshot) {
                   if (true) {
                     String countData = '';
-                    countData = snapshot.data.toString() == null
-                        ? '0'
+                    countData = snapshot.data == null
+                        ? ''
                         : snapshot.data.toString();
 
                     return summaryBox(
@@ -352,8 +350,9 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                 builder: (context, snapshot) {
                   if (true) {
                     String countData = '';
-                    countData = snapshot.data.toString() == null
-                        ? '0'
+
+                    countData = snapshot.data == null
+                        ? ''
                         : snapshot.data.toString();
 
                     return summaryBox(
@@ -379,7 +378,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                   if (true) {
                     String countData = '';
                     countData =
-                        snapshot.data == null ? '0' : snapshot.data.toString();
+                        snapshot.data == null ? '' : snapshot.data.toString();
 
                     return summaryBox(
                         "Disease".i18n(),
@@ -657,6 +656,8 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
     );
   }
 
+  List<String> statusList = ["Editing","Complete"];
+
   List<Widget> getCompleteBox() {
     List<Widget> completeBoxes = [];
     for (int i = 0; i < 5; i++) {
@@ -678,21 +679,37 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                 offset: Offset(0, 1.5),
               ),
             ],
-            onChanged: (value) {
-              setState(() {
-                if (value) {
-                  status = "Complete";
-                  putPointStatus(widget.survey.surveyID, i, status!);
-                  reFreshstatus();
-                } else {
-                  status = "Editing";
-                  putPointStatus(widget.survey.surveyID, i, status!);
-                  reFreshstatus();
+            onChanged: (value) async{
+
+              int index = value ? 1 : 0 ;
+
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) => LoadingWidget(message: "Submitting",),
+              );
+
+              await putPointStatus(widget.survey.surveyID, i, statusList[index]).then((value) {
+
+
+                //print(value);
+
+                if(value){
+                  setState(() {
+                    reFreshstatus();
+                    pointStatus[i] = !pointStatus[i];
+                  });
+
                 }
-                pointStatus[i] = !pointStatus[i];
+
               });
+
+              await Future.delayed(Duration(milliseconds: 500));
+
+              Navigator.pop(context);
             },
             colorBuilder: (value) => value == false ? Colors.red : Colors.green,
+
             iconBuilder: (value) => value == false
                 ? Icon(
                     Icons.cancel,
