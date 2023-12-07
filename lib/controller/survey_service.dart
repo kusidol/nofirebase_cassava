@@ -171,10 +171,11 @@ class SurveyService {
     return response.statusCode;
   }
 
-  Future<List<Map<String, dynamic>>> searchSurveyByKey(Map<String, dynamic> data, int page,
-      int value, int date, String token) async {
+  Future<List<Map<String, dynamic>>> searchSurveyByKey(Map<String, dynamic> data, String token) async {
     List<Map<String, dynamic>> surveys = [];
-
+    int page = 1;
+    int value = 1000;
+    int date = DateTime.now().millisecondsSinceEpoch;
     Service surveysService = new Service();
     var response = await surveysService.doPostWithFormData(
         "${LOCAL_SERVER_IP_URL}/survey/searchbykey/page/$page/value/$value/date/$date",
