@@ -39,7 +39,7 @@ class SurveyTargetPoint {
       try {
         Map<String, dynamic> res = jsonDecode(response.data);
         bodyData = res["body"];
-        print(bodyData);
+
       } catch (e) {
         print("error on service: $e");
       }
