@@ -399,8 +399,7 @@ class SurveyProvider with ChangeNotifier {
   }
 
   void search(Map<String, dynamic> data) async {
-
-
+    
     reset();
     //notifyListeners();
     SurveyService surveyService = SurveyService();
@@ -417,90 +416,9 @@ class SurveyProvider with ChangeNotifier {
           await _doSearch(surveys,0) ;
         }
 
-
       });
 
     }
-
-
-    //List<Survey> data2 = surveys;
-   /* bool checkTarget = false;
-
-    for (int i = 0; i < surveys.length; i++) {
-      String? token = tokenFromLogin?.token;
-
-      checkTarget = await surveyTargetPointService.checkSurveyTargetBySurveyId(
-          token.toString(), surveys[i].surveyID);
-      //list_check_target.add(checkTarget);
-
-      //PlantingService plantingService = new PlantingService();
-      Planting? plantingData = await plantingService.getPlantingFromSurveyID(
-          surveys[i].surveyID, token.toString());
-
-      //if (plantingData != null) {
-      //  plantings.add(plantingData);
-      //  list_plantingName.add(plantingData.name);
-      //}
-
-      Planting? planting = plantingData;
-      int plantingID = planting?.plantingId ?? 0;
-      //SurveyService surveyPoint = SurveyService();
-      //List<Map<String, dynamic>> dataPoint = (await surveyPoint.getSurveyPoint(
-      //    token.toString(), surveys[i].surveyID));
-
-      //surveyPointList = dataPoint;
-
-      Field? field;
-      //FieldService fieldService = FieldService();
-      field =
-          await fieldService.getFieldByPlantingID(plantingID, token.toString());
-      if (field != null) {
-        //fields.add(field);
-        //list_fieldName.add(field.name);
-
-        int fieldID = field.fieldID;
-
-        String? location =
-            await fieldService.getLocationByFielID(fieldID, token.toString());
-        if (location != null) {
-          locations.add(location);
-          List<String> parts =
-              location.split(","); // แยกข้อความด้วยเครื่องหมาย ','
-          list_district.add(parts[0]);
-          list_substrict.add(parts[1]);
-          list_province.add(parts[2]);
-        } else {
-          locations.add("");
-          list_district.add("ไม่ระบุ");
-          list_substrict.add("ไม่ระบุ");
-          list_province.add("ไม่ระบุ");
-        }
-
-        UserService userService = UserService();
-        User? user =
-            await userService.getUserByFieldID(fieldID, token.toString());
-        if (user != null) {
-          owner.add(user);
-          list_title.add(user.title);
-          list_firstName.add(user.firstName);
-          list_lastName.add(user.lastName);
-        } else {
-          owner.add(User(
-              -1,
-              "service null",
-              "service null",
-              "service null",
-              "service null",
-              "service null",
-              UserStatus.invalid,
-              0,
-              RequestInfoStatus.No));
-          list_title.add("ไม่ระบุ");
-          list_firstName.add("ไม่ระบุ");
-          list_lastName.add("ไม่ระบุ");
-        }
-      }
-    }*/
     isLoading = true;
     numberAllSurveys = surveyData.length;
     notifyListeners();
@@ -517,18 +435,11 @@ class SurveyProvider with ChangeNotifier {
     if(plantingId != -1){
       //data["plantinswgId"] = "10";
      //print(data);
-
-
     }else{
-
-      await surveyService.searchSurveyByKey(data, 1, 1000, _date,  token.toString()).then((surveys) async {
-
+      await surveyService.searchSurveyByKey(data,token.toString()).then((surveys) async {
         if(surveys != null){
-
           await _doSearch(surveys,0);
-
         }
-
       });
     }
 
