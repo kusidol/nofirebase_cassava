@@ -1382,7 +1382,7 @@ Widget getFilterBarUI(int numItemFounded) {
                                                           animationController ?.forward();
 
 
-                                                          return surveyProvider.surveyData[index].isLoading ? mockShimmer():
+                                                          return surveyProvider.surveyData[index].isLoading &&  surveyProvider.surveyData[index].isLoading? mockShimmer():
                                                               
                                                              // FadeTransition(opacity: animation)
                                                           CardItemWithOutImage(
@@ -1436,7 +1436,7 @@ Widget getFilterBarUI(int numItemFounded) {
                                                             date: ChangeDateTime(surveyProvider.surveyData[index].survey.date),
                                                           );
                                                         },
-                                                      ): NoData().showNoData(context),
+                                                      ):   !surveyProvider.isLoading ? Container() : NoData().showNoData(context),
                                                     )
                                                   ,
                                             ),
