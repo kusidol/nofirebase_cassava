@@ -13,7 +13,7 @@ Response<T> _$ResponseFromJson<T>(
     Response<T>(
       json['status'] as int,
       fromJsonT(json['body']),
-      json['message'] as String,
+      json['message'] == null ? "" : json['message'] as String,
     );
 
 Map<String, dynamic> _$ResponseToJson<T>(
