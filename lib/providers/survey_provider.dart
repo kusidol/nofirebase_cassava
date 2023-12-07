@@ -410,8 +410,8 @@ class SurveyProvider with ChangeNotifier {
 
     }else{
 
-      await surveyService.searchSurveyByKey(
-          data, 1, 1000, _date, token.toString()).then((surveys) async {
+      await surveyService.search(
+          data,token.toString()).then((surveys) async {
 
         if(surveys != null){
           await _doSearch(surveys,0) ;
@@ -507,7 +507,6 @@ class SurveyProvider with ChangeNotifier {
   }
 
   void searchByKey(Map<String, dynamic> data) async {
-    //print("searchByKey");
 
     reset();
     String? token = tokenFromLogin?.token;
@@ -516,12 +515,13 @@ class SurveyProvider with ChangeNotifier {
 
 
     if(plantingId != -1){
-
+      //data["plantinswgId"] = "10";
+     //print(data);
 
 
     }else{
 
-      await surveyService.search(data, token.toString()).then((surveys) async {
+      await surveyService.searchSurveyByKey(data, 1, 1000, _date,  token.toString()).then((surveys) async {
 
         if(surveys != null){
 
