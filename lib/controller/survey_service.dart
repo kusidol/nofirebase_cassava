@@ -177,7 +177,7 @@ class SurveyService {
 
     Service surveysService = new Service();
     var response = await surveysService.doPostWithFormData(
-        "${LOCAL_SERVER_IP_URL}/survey/search/page/$page/value/$value/date/$date",
+        "${LOCAL_SERVER_IP_URL}/survey/searchbykey/page/$page/value/$value/date/$date",
         token,
         data);
 
@@ -195,14 +195,14 @@ class SurveyService {
     return surveys;
   }
 
-  Future<List<Map<String, dynamic>>>  search(Map<String, dynamic> data, String token) async {
+  Future<List<Map<String, dynamic>>> search(Map<String, dynamic> data, String token) async {
     List<Map<String, dynamic>> surveys = [];
     int page = 1;
     int value = 1000;
     int date = DateTime.now().millisecondsSinceEpoch;
     Service service = new Service();
     var response = await service.doPostWithFormData(
-        "${LOCAL_SERVER_IP_URL}/survey/searchbykey/page/$page/value/$value/date/$date",
+        "${LOCAL_SERVER_IP_URL}/survey/search/page/$page/value/$value/date/$date",
         token,
         data);
 
