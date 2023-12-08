@@ -61,6 +61,7 @@ class SurveyProvider with ChangeNotifier {
 
     if(!isFetch()){
       surveyData.clear();
+
     }
 
     //notifyListeners();
@@ -100,7 +101,8 @@ class SurveyProvider with ChangeNotifier {
 
     numberAllSurveys = await surveyService.countSurveys(token.toString());
 
-    if(numberAllSurveys == 0 || numberAllSurveys == surveyData.length){
+    if(numberAllSurveys == 0 || numberAllSurveys == surveyData.length || (surveyData.length > 0 && surveyData.last.isLoading)){
+
       setFetch(false);
       notifyListeners();
       return ;
@@ -176,6 +178,8 @@ class SurveyProvider with ChangeNotifier {
     }
 
     isLoading = true;
+
+    //print("${index}    ${surveyData.length}");
     notifyListeners();
   }
 
