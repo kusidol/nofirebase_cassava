@@ -88,11 +88,9 @@ class _SurveyTable extends State<SurveyTable>
   DateTime _endDatePlanting = DateTime.now().add(const Duration(days: 5));
   DateTime _startDateSurvey = DateTime.now();
   DateTime _endDateSurvey = DateTime.now().add(const Duration(days: 5));
-TabController? _mainTapController;
+  TabController? _mainTapController;
   bool isShowbasicSearch = true;
   GlobalKey expansionTileKey = GlobalKey();
-
-  //------------------
 
  void showToastMessage(String msg) {
     FlutterToastr.show(msg, context,
@@ -103,23 +101,26 @@ TabController? _mainTapController;
   }
   @override
   void dispose() {
+
     animationController?.dispose();
     codeNameController.dispose();
     ownerController.dispose();
     locationController.dispose();
     cultivationController.dispose();
     widget.surveyProvider.isSearch=false;
-    
+    widget.surveyProvider.resetPlantingID();
+    widget.surveyProvider.reset();
     super.dispose();
   }
 
   @override
   void initState() {
 
-   widget.surveyProvider.reset();
+   //widget.surveyProvider.reset();
+    widget.surveyProvider.reset();
     _scrollController.addListener(_scrollListener);
     animationController = AnimationController(
-        duration: const Duration(milliseconds: 5000), vsync: this
+        duration: const Duration(milliseconds: 4000), vsync: this
     );
 
     asyncFunction();
@@ -128,6 +129,7 @@ TabController? _mainTapController;
    // _fadeInFadeOut = Tween<double>(begin: 0.0, end: 0.1).animate(animation);
    
   }
+
 
   void asyncFunction() async {
 
@@ -150,22 +152,22 @@ TabController? _mainTapController;
         surveyProvider.fetchDataFromPlanting();
       } else {
 
-      //  if(!surveyProvider.isFetch()){
-
-       //   surveyProvider.setFetch(true);
-
           surveyProvider.fetchData();
-      //  }
       }
 
     }
 
+
+
     if (mounted) {
       setState(() {
         _isLoading = false;
+
       });
     }
   }
+
+
 
   void fetchMoreData() async {
     if (mounted) {
@@ -175,15 +177,19 @@ TabController? _mainTapController;
     }
 
     SurveyProvider surveyProvider =  widget.surveyProvider;
-      if (!isSearching && !widget.surveyProvider.isSearch ) {
+      if (!isSearching && !widget.surveyProvider.isSearch && !surveyProvider.isFetch() ) {
+
         surveyProvider.setFetch(true);
+
         if(surveyProvider.plantingId != -1) {
+
         surveyProvider.fetchDataFromPlanting();
-      } else {
-          if(!surveyProvider.isFetch()) {
+
+        } else {
+
             surveyProvider.fetchData();
-          }
       }
+
     }
 
     if (mounted) {
@@ -566,6 +572,7 @@ TabController? _mainTapController;
                         if (shortCutValue == null || shortCutValue == "") {
                           //print("-----------------");
                           isSearching = false;
+                          surveyProvider.reset();
                           asyncFunction();
                         }
                         else {
@@ -730,7 +737,7 @@ Widget getFilterBarUI(int numItemFounded) {
                           child: Center(
                              child: ExpandableText(
                                plantingName == "" ?
-                               'surveys-founded-label'.i18n() + ' ${numItemFounded}' : 'surveys-founded-id-label'.i18n() + " ${plantingName}" + ' (${numItemFounded})',
+                               'surveys-founded-label'.i18n()+' ${numItemFounded}' : 'surveys-founded-id-label'.i18n() + " ${plantingName}" + ' (${numItemFounded})',
                                expandText:  plantingName == "" ?
                                'surveys-founded-label'.i18n() + ' ${numItemFounded}' : 'surveys-founded-id-label'.i18n() + ' (${numItemFounded})',
                                              collapseText: 'show less',       
@@ -1406,7 +1413,7 @@ Widget getFilterBarUI(int numItemFounded) {
 
 
                                                           return surveyProvider.surveyData[index].isLoading &&  surveyProvider.surveyData[index].isLoading? mockShimmer():
-                                                              
+
                                                              // FadeTransition(opacity: animation)
                                                           CardItemWithOutImage(
                                                             callback: () {
