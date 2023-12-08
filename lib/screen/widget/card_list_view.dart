@@ -1065,7 +1065,7 @@ class CardItemWithOutImage extends StatelessWidget {
           opacity: animation!,
           child: Transform(
             transform: Matrix4.translationValues(
-                0.0, 50 * (1.0 - animation!.value), 0.0),
+                0.0, 10 * (1.0 - animation!.value), 0.0),
             child: Padding(
               padding:
                   const EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 16),
