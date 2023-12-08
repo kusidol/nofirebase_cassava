@@ -1038,18 +1038,18 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
       data: HotelAppTheme.buildLightTheme(),
       child: Container(
         child: Consumer<PlantingProvider>(builder: (context, data, index) {
-          List<Planting> plantings = data.plantings;
-          List<User> owners = data.owners;
-          List<Field> fields = data.fields;
-          List<String> locations = data.locations;
+          // List<Planting> plantings = data.plantings;
+          // List<User> owners = data.owners;
+          // List<Field> fields = data.fields;
+          // List<String> locations = data.locations;
 
-          List<String> list_fieldName = data.list_fieldName;
-          List<String> list_substrict = data.list_substrict;
-          List<String> list_district = data.list_district;
-          List<String> list_province = data.list_province;
-          List<String> list_title = data.list_title;
-          List<String> list_firstName = data.list_firstName;
-          List<String> list_lastName = data.list_lastName;
+          // List<String> list_fieldName = data.list_fieldName;
+          // List<String> list_substrict = data.list_substrict;
+          // List<String> list_district = data.list_district;
+          // List<String> list_province = data.list_province;
+          // List<String> list_title = data.list_title;
+          // List<String> list_firstName = data.list_firstName;
+          // List<String> list_lastName = data.list_lastName;
           return WillPopScope(
             onWillPop: () => onBackButtonPressed(context),
             child: Scaffold(
@@ -1073,7 +1073,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                     NotificationListener<ScrollEndNotification>(
                                   onNotification:
                                       (ScrollEndNotification scrollInfo) {
-                                    if (plantings.length < 2) {
+                                    if (data.plantingData.length < 2) {
                                       if (scrollInfo.depth == 0) {
                                         if (scrollInfo.metrics.pixels <
                                             scrollInfo
@@ -1101,7 +1101,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                     // print(
                                     //     "${scrollInfo.depth} position :  ${scrollInfo.metrics.pixels}   : ${scrollInfo.metrics.maxScrollExtent}   check : ${check}");
                                     if (check == 1) {
-                                      if (data.plantings.length ==
+                                      if (data.plantingData.length ==
                                           data.numberAllPlantings) {
                                         showToastMessage(
                                             "ข้อมูลแสดงครบทั้งหมดเป็นที่เรียบร้อยแล้ว");
@@ -1159,11 +1159,12 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                                   ],
                                                 ),
                                               ),
-                                              child: data.plantings.isNotEmpty
+                                              child: data
+                                                      .plantingData.isNotEmpty
                                                   ? ListView.builder(
                                                       //controller: _inerscrollController,
-                                                      itemCount:
-                                                          data.plantings.length,
+                                                      itemCount: data
+                                                          .plantingData.length,
                                                       padding: EdgeInsets.only(
                                                           top: sizeHeight(
                                                               8, context)),
@@ -1171,17 +1172,15 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                                           Axis.vertical,
                                                       itemBuilder:
                                                           (context, index) {
-                                                            if (index < data.plantings.length &&
-                                                            index < list_fieldName.length &&
-                                                            index < list_substrict.length &&
-                                                            index < list_district.length &&
-                                                            index < list_province.length &&
-                                                            index < list_title.length &&
-                                                            index < list_firstName.length &&
-                                                            index < list_lastName.length) {
-                                                          Planting planting = plantings[index];
-                                                          String temp_plantingName = planting.name;
-                                                        
+                                                        // Planting planting = plantings[index];
+                                                        String
+                                                            temp_plantingName =
+                                                            data
+                                                                .plantingData[
+                                                                    index]
+                                                                .planting
+                                                                .name;
+
                                                         RegExp regex = RegExp(
                                                             r'\([^)]*\)');
                                                         String result =
@@ -1191,33 +1190,35 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                                         String plantingName =
                                                             result.trim();
                                                         // Adding new
-                                                        String fieldName =
-                                                            list_fieldName[
-                                                                index];
-                                                        String substrict =
-                                                            list_substrict[
-                                                                index];
-                                                        String district =
-                                                            list_district[
-                                                                index];
-                                                        String province =
-                                                            list_province[
-                                                                index];
-                                                        String title =
-                                                            list_title[index];
-                                                        String firstName =
-                                                            list_firstName[
-                                                                index];
-                                                        String lastName =
-                                                            list_lastName[
-                                                                index];
+                                                        String fieldName = data
+                                                            .plantingData[index]
+                                                            .fieldName;
+                                                        String substrict = data
+                                                            .plantingData[index]
+                                                            .substrict;
+                                                        String district = data
+                                                            .plantingData[index]
+                                                            .district;
+                                                        String province = data
+                                                            .plantingData[index]
+                                                            .province;
+                                                        String title = data
+                                                            .plantingData[index]
+                                                            .title;
+                                                        String firstName = data
+                                                            .plantingData[index]
+                                                            .firstName;
+                                                        String lastName = data
+                                                            .plantingData[index]
+                                                            .lastName;
 
-                                                        final int count =
-                                                            plantings.length >
-                                                                    10
-                                                                ? 10
-                                                                : plantings
-                                                                    .length;
+                                                        final int count = data
+                                                                    .plantingData
+                                                                    .length >
+                                                                10
+                                                            ? 10
+                                                            : data.plantingData
+                                                                .length;
                                                         final Animation<
                                                             double> animation = Tween<
                                                                     double>(
@@ -1235,7 +1236,10 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                                         animationController
                                                             ?.forward();
                                                         return CardItemWithOutImage_Planting(
-                                                          plantings: planting,
+                                                          plantings: data
+                                                              .plantingData[
+                                                                  index]
+                                                              .planting,
                                                           provider:
                                                               plantingProvider,
                                                           callback2: () {
@@ -1251,11 +1255,18 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                                                         false);
                                                             surveyProvider
                                                                     .plantingId =
-                                                                planting
+                                                                data
+                                                                    .plantingData[
+                                                                        index]
+                                                                    .planting
                                                                     .plantingId;
                                                             surveyProvider
                                                                     .plantingName =
-                                                                planting.name;
+                                                                data
+                                                                    .plantingData[
+                                                                        index]
+                                                                    .planting
+                                                                    .name;
                                                           },
                                                           callback: () {
                                                             // Navigator.push(
@@ -1285,14 +1296,13 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                                           animationController:
                                                               animationController!,
                                                           date: ChangeDateTime(
-                                                              planting
+                                                              data
+                                                                  .plantingData[
+                                                                      index]
+                                                                  .planting
                                                                   .createDate),
                                                         );
-                                                      } else {
-                                                // Handle index is out of bounds
-                                                return Container();
-                                              }
-                                                  })
+                                                      })
                                                   : NoData()
                                                       .showNoData(context),
                                             )
@@ -1318,38 +1328,44 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
     );
   }
 
- Future<bool> onBackButtonPressed(BuildContext context) async {
-  bool? exitApp = await showCupertinoDialog<bool>(
-    context: context,
-    builder: (BuildContext context) => CupertinoAlertDialog(
-      title: Text("notification-label".i18n()),
-      content: Text("exit-application".i18n()),
-      actions: [
-        CupertinoDialogAction(
-          onPressed: () {
-            Navigator.of(context).pop(false);
-          },
-          child: Text('No', style: TextStyle(
-              color: Colors.red,
-              fontWeight: FontWeight.w400,
-            ),),
-        ),
-        CupertinoDialogAction(
-          onPressed: () {
-            Navigator.of(context).pop(true);
-            SystemNavigator.pop();
-          },
-          child: Text('Yes', style: TextStyle(
-              color: Colors.blue,
-              fontWeight: FontWeight.w400,
-            ),),
-        ),
-      ],
-    ),
-  );
+  Future<bool> onBackButtonPressed(BuildContext context) async {
+    bool? exitApp = await showCupertinoDialog<bool>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text("notification-label".i18n()),
+        content: Text("exit-application".i18n()),
+        actions: [
+          CupertinoDialogAction(
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+            child: Text(
+              'No',
+              style: TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+          CupertinoDialogAction(
+            onPressed: () {
+              Navigator.of(context).pop(true);
+              SystemNavigator.pop();
+            },
+            child: Text(
+              'Yes',
+              style: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
 
-  return exitApp ?? false;
-}
+    return exitApp ?? false;
+  }
 
   Widget _buildMultiSearchBar() {
     return Container(
