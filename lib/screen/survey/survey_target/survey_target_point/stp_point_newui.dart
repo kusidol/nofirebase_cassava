@@ -192,20 +192,21 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
     return false ;
   }
 
-  Future<void> updateSurveyStatus() async {
+  Future<bool> updateSurveyStatus() async {
     try {
       String? token = tokenFromLogin?.token;
       SurveyService surveyService = SurveyService();
       int statusCode =
           await surveyService.updateSurvey(token.toString(), widget.survey);
       if (statusCode == 200) {
-        print('Resource updated successfully.');
+        return true;
       } else {
         print('Failed to update resource. Status code: ${statusCode}');
       }
     } catch (e) {
       print('Error during update: $e');
     }
+    return false;
   }
 
   Widget getAppBarUI() {
@@ -513,16 +514,30 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                     offset: Offset(0, 1.5),
                   ),
                 ],
-                onChanged: (value) {
-                  setState(() {
-                    if (value) {
-                      widget.survey.status = "Complete";
-                      updateSurveyStatus();
-                    } else {
-                      widget.survey.status = "Editing";
-                      updateSurveyStatus();
+                onChanged: (value) async {
+
+                  int index = value ? 1 : 0 ;
+
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) => LoadingWidget(message: "Submitting",),
+                  );
+
+                  await updateSurveyStatus().then((value) {
+
+                    if(value){
+                      setState(() {
+                        widget.survey.status = statusList[index];
+                      });
                     }
+
                   });
+
+                  await Future.delayed(Duration(milliseconds: 500));
+
+                  Navigator.pop(context);
+
                 },
                 colorBuilder: (value) =>
                     value == false ? Colors.red : Colors.green,
