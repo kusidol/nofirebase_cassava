@@ -44,7 +44,7 @@ class SurveyProvider with ChangeNotifier {
   //List<Map<String, dynamic>> surveyPointList = [];
   //List<SurveyTargetPoint> surveyTargetPointCount = [];
   bool isLoading = false;
-  int _value = 10;
+  int _value = 20;
   int _page = 1;
   int _date = DateTime.now().millisecondsSinceEpoch;
   int plantingId = -1;
@@ -54,34 +54,15 @@ class SurveyProvider with ChangeNotifier {
 
   List<SurveyData> surveyData = [] ;
 
-  /*List<String> list_plantingName = [];
-  List<String> list_fieldName = [];
-  List<String> list_substrict = [];
-  List<String> list_district = [];
-  List<String> list_province = [];
-  List<String> list_title = [];
-  List<String> list_firstName = [];
-  List<String> list_lastName = [];
-  List<bool> list_check_target = [];*/
   int numberAllSurveys = 0;
 
   void reset() {
     isLoading = false;
-    //surveys = [];
-    //plantings = [];
-    //surveyTargetPointCount = [];
-    //surveyPointList = [];
-    /*list_plantingName = [];
-    list_fieldName = [];
-    list_substrict = [];
-    list_district = [];
-    list_province = [];
-    list_title = [];
-    list_firstName = [];
-    list_check_target = [];*/
 
-    //surveyData = [] ;
-    surveyData.clear();
+    if(!isFetch()){
+      surveyData.clear();
+    }
+
     //notifyListeners();
     _date = DateTime.now().millisecondsSinceEpoch;
     //list_lastName = [];
@@ -102,7 +83,7 @@ class SurveyProvider with ChangeNotifier {
 
   setFetch(bool fetch){
     this._fetch = fetch ;
-    ///notifyListeners();
+    //notifyListeners();
   }
 
   int count = -1 ;
@@ -120,11 +101,12 @@ class SurveyProvider with ChangeNotifier {
     numberAllSurveys = await surveyService.countSurveys(token.toString());
 
     if(numberAllSurveys == 0 || numberAllSurveys == surveyData.length){
+      setFetch(false);
       notifyListeners();
       return ;
     }
 
-    _value = 10 ;
+    _value = 20 ;
 
     isLoading = false;
 
@@ -132,18 +114,17 @@ class SurveyProvider with ChangeNotifier {
 
     _value = numberAllSurveys < _value ? numberAllSurveys : _value ;
 
-    int index = ((_page-1)*_value) ;
-
-    index = (index >= _value) ? index -1 : index ;
+    int index = ((_page-1) * _value) ;
 
     String none = "" ;
 
     Survey sv = Survey(0, 0, 0, none, none, 0, 0, none, none, none, none, none, none, none, none, 0, 0, 0, none, 0, none, none, 0, 0, 0, 0, none, none, none) ;
 
-    for(int i = 0 ; i < _value ; i++){
+    int dummySize = surveyData.length + _value < numberAllSurveys ? _value : numberAllSurveys - surveyData.length  ;
+    //print("Dummy ${dummySize}");
+    for(int i = 0 ; i < dummySize ; i++){
       surveyData.add(SurveyData(0,none,none,none,none,none,none,none,none,false,none,sv,true));
     }
-
 
     notifyListeners();
 
@@ -152,9 +133,6 @@ class SurveyProvider with ChangeNotifier {
 
           if(value != null){
 
-            if(numberAllSurveys == surveyData.length)
-              return ;
-
               for (Map<String, dynamic> data in value) {
 
                 bool checkTarget = await surveyTargetPointService
@@ -162,9 +140,6 @@ class SurveyProvider with ChangeNotifier {
 
                 Survey survey = await surveyService.getSurveyByID(token.toString(), data['surveyId']) as Survey;
 
-                //print(data['surveyId']);
-                //Planting plantingData = await plantingService.getPlantingFromSurveyID(
-                 //   data['surveyId'], token.toString()) as Planting;
                 surveyData[index].id = data['surveyId'] ;
                 surveyData[index].plantingName = data['plantingName'] ;
                 surveyData[index].fieldName = data['fieldName'] ;
@@ -200,13 +175,11 @@ class SurveyProvider with ChangeNotifier {
       isHavePlanting = true;
     }
 
-
     isLoading = true;
     notifyListeners();
   }
 
   Future<void> fetchDataFromPlanting() async {
-
 
     SurveyService surveyService = SurveyService();
 
@@ -221,13 +194,12 @@ class SurveyProvider with ChangeNotifier {
     numberAllSurveys = await surveyService.countSurveysByPlantingId(token.toString(), plantingId);
 
     if(numberAllSurveys == 0 || numberAllSurveys == surveyData.length) {
+      setFetch(false);
       notifyListeners();
       return ;
     }
 
-
-
-    _value = 10 ;
+    _value = 20 ;
 
     isLoading = false;
 
@@ -236,8 +208,6 @@ class SurveyProvider with ChangeNotifier {
     _value = numberAllSurveys < _value ? numberAllSurveys : _value ;
 
     int index = ((_page-1)*_value) ;
-
-    index = (index >= _value) ? index -1 : index ;
 
     String none = "" ;
 
@@ -289,16 +259,6 @@ class SurveyProvider with ChangeNotifier {
     });
 
 
-    /*if (surveys.length % _value != 0) {
-      int x = surveys.length % _value;
-      for (int i = 0; i < x; i++) {
-        surveys.removeLast();
-      }
-      surveys = [...surveys, ...dataSurvey];
-    } else {
-      surveys = [...surveys, ...dataSurvey];
-    }*/
-
 
     isLoading = true;
     if (count == 0) {
@@ -308,6 +268,7 @@ class SurveyProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+
 
   Future<void> _doSearch(List<Map<String, dynamic>> surveys,index) async {
     String? token = tokenFromLogin?.token;
@@ -399,7 +360,7 @@ class SurveyProvider with ChangeNotifier {
   }
 
   void search(Map<String, dynamic> data) async {
-    
+
     reset();
     //notifyListeners();
     SurveyService surveyService = SurveyService();
