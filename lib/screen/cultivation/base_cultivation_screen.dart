@@ -727,8 +727,8 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
       "plantingName": plantingNameValue,
       "startDate": startDateSelect
     };
-    print("DAte = ");
-    print(startDateSelect);
+    print("fieldName = ");
+    print(fieldNameValue);
 
     jsonData.removeWhere(
         (key, value) => value == null || value == '' || value == 0);

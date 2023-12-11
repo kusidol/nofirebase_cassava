@@ -357,6 +357,8 @@ class PlantingProvider with ChangeNotifier {
         // fields.add(field);
         // list_fieldName.add(field.name);
         fieldName = field.name;
+        print("search fieldName = ");
+        print(fieldName);
         int fieldID = field.fieldID;
 
         String? location =
@@ -386,7 +388,7 @@ class PlantingProvider with ChangeNotifier {
         if (user != null) {
           // owners.add(user);
           title = user.title;
-          fieldName = user.firstName;
+          firstName = user.firstName;
           lastName = user.lastName;
           // list_title.insert(0, user.title);
           // list_firstName.insert(0, user.firstName);
