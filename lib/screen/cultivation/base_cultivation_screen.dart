@@ -119,10 +119,20 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
     SurveyProvider surveyProvider =
         Provider.of<SurveyProvider>(context, listen: false);
     surveyProvider.resetPlantingID();
-    if (provider.fieldID != 0) {
+    provider.setFetch(false);
+    if (!provider.isSearch && !provider.isFetch()) {
+      provider.setFetch(true);
+      if (provider.fieldID != 0) {
+        provider.fetchDataFromField();
+      } else {
+        //  if(!surveyProvider.isFetch()){
+
+        //   surveyProvider.setFetch(true);
+
+        provider.fetchData();
+        //  }
+      }
       provider.fetchDataFromField();
-    } else {
-      provider.fetchData();
     }
 
     if (mounted) {
@@ -1145,97 +1155,96 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                           ),
                                         ];
                                       },
-                                      body: data.isLoading
-                                          ? Container(
-                                              decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  begin: Alignment.topCenter,
-                                                  end: Alignment.bottomCenter,
-                                                  colors: [
-                                                    Colors.white.withOpacity(1),
-                                                    theme_color3
-                                                        .withOpacity(.4),
-                                                    theme_color4.withOpacity(1),
-                                                  ],
-                                                ),
-                                              ),
-                                              child: data
-                                                      .plantingData.isNotEmpty
-                                                  ? ListView.builder(
-                                                      //controller: _inerscrollController,
-                                                      itemCount: data
-                                                          .plantingData.length,
-                                                      padding: EdgeInsets.only(
-                                                          top: sizeHeight(
-                                                              8, context)),
-                                                      scrollDirection:
-                                                          Axis.vertical,
-                                                      itemBuilder:
-                                                          (context, index) {
-                                                        // Planting planting = plantings[index];
-                                                        String
-                                                            temp_plantingName =
-                                                            data
-                                                                .plantingData[
-                                                                    index]
-                                                                .planting
-                                                                .name;
+                                      body: Container(
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            colors: [
+                                              Colors.white.withOpacity(1),
+                                              theme_color3.withOpacity(.4),
+                                              theme_color4.withOpacity(1),
+                                            ],
+                                          ),
+                                        ),
+                                        child: data.plantingData.isNotEmpty
+                                            ? ListView.builder(
+                                                //controller: _inerscrollController,
+                                                itemCount:
+                                                    data.plantingData.length,
+                                                padding: EdgeInsets.only(
+                                                    top:
+                                                        sizeHeight(8, context)),
+                                                scrollDirection: Axis.vertical,
+                                                itemBuilder: (context, index) {
+                                                  // Planting planting = plantings[index];
+                                                  String temp_plantingName =
+                                                      data.plantingData[index]
+                                                          .planting.name;
 
-                                                        RegExp regex = RegExp(
-                                                            r'\([^)]*\)');
-                                                        String result =
-                                                            temp_plantingName
-                                                                .replaceAll(
-                                                                    regex, '');
-                                                        String plantingName =
-                                                            result.trim();
-                                                        // Adding new
-                                                        String fieldName = data
-                                                            .plantingData[index]
-                                                            .fieldName;
-                                                        String substrict = data
-                                                            .plantingData[index]
-                                                            .substrict;
-                                                        String district = data
-                                                            .plantingData[index]
-                                                            .district;
-                                                        String province = data
-                                                            .plantingData[index]
-                                                            .province;
-                                                        String title = data
-                                                            .plantingData[index]
-                                                            .title;
-                                                        String firstName = data
-                                                            .plantingData[index]
-                                                            .firstName;
-                                                        String lastName = data
-                                                            .plantingData[index]
-                                                            .lastName;
+                                                  RegExp regex =
+                                                      RegExp(r'\([^)]*\)');
+                                                  String result =
+                                                      temp_plantingName
+                                                          .replaceAll(
+                                                              regex, '');
+                                                  String plantingName =
+                                                      result.trim();
+                                                  // Adding new
+                                                  String fieldName = data
+                                                      .plantingData[index]
+                                                      .fieldName;
+                                                  String substrict = data
+                                                      .plantingData[index]
+                                                      .substrict;
+                                                  String district = data
+                                                      .plantingData[index]
+                                                      .district;
+                                                  String province = data
+                                                      .plantingData[index]
+                                                      .province;
+                                                  String title = data
+                                                      .plantingData[index]
+                                                      .title;
+                                                  String firstName = data
+                                                      .plantingData[index]
+                                                      .firstName;
+                                                  String lastName = data
+                                                      .plantingData[index]
+                                                      .lastName;
 
-                                                        final int count = data
-                                                                    .plantingData
-                                                                    .length >
-                                                                10
-                                                            ? 10
-                                                            : data.plantingData
-                                                                .length;
-                                                        final Animation<
-                                                            double> animation = Tween<
-                                                                    double>(
-                                                                begin: 0.0,
-                                                                end: 1.0)
-                                                            .animate(CurvedAnimation(
-                                                                parent:
-                                                                    animationController!,
-                                                                curve: Interval(
-                                                                    (1 / count) *
-                                                                        index,
-                                                                    1.0,
-                                                                    curve: Curves
-                                                                        .fastOutSlowIn)));
-                                                        animationController
-                                                            ?.forward();
-                                                        return CardItemWithOutImage_Planting(
+                                                  final int count =
+                                                      data.plantingData.length >
+                                                              10
+                                                          ? 10
+                                                          : data.plantingData
+                                                              .length;
+                                                  final Animation<
+                                                      double> animation = Tween<
+                                                              double>(
+                                                          begin: 0.0, end: 1.0)
+                                                      .animate(CurvedAnimation(
+                                                          parent:
+                                                              animationController!,
+                                                          curve: Interval(
+                                                              (1 / count) *
+                                                                  index,
+                                                              1.0,
+                                                              curve: Curves
+                                                                  .fastOutSlowIn)));
+                                                  animationController
+                                                      ?.forward();
+
+                                                  return data
+                                                              .plantingData[
+                                                                  index]
+                                                              .isLoading &&
+                                                          data
+                                                              .plantingData[
+                                                                  index]
+                                                              .isLoading
+                                                      ? mockShimmer()
+                                                      : CardItemWithOutImage_Planting(
                                                           plantings: data
                                                               .plantingData[
                                                                   index]
@@ -1302,11 +1311,11 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                                                   .planting
                                                                   .createDate),
                                                         );
-                                                      })
-                                                  : NoData()
-                                                      .showNoData(context),
-                                            )
-                                          : shimmerLoading(),
+                                                })
+                                            : !data.isLoading
+                                                ? Container()
+                                                : NoData().showNoData(context),
+                                      ),
                                     ),
                                   ),
                                 ),

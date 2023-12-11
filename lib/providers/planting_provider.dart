@@ -22,6 +22,7 @@ class PlantingData {
   String firstName;
   String lastName;
   Planting planting;
+  bool isLoading;
   PlantingData(
       this.plantingId,
       this.plantingName,
@@ -32,7 +33,8 @@ class PlantingData {
       this.title,
       this.firstName,
       this.lastName,
-      this.planting);
+      this.planting,
+      this.isLoading);
 }
 
 class PlantingProvider with ChangeNotifier {
@@ -53,9 +55,11 @@ class PlantingProvider with ChangeNotifier {
   // List<String> list_title = [];
   // List<String> list_firstName = [];
   // List<String> list_lastName = [];
-  final int _value = 5;
+  int _value = 5;
   int _page = 1;
   bool isLoading = false;
+  bool isSearch = false;
+  bool _fetch = false;
 
   int fieldID = 0;
   String fieldName = "";
@@ -83,15 +87,99 @@ class PlantingProvider with ChangeNotifier {
     fieldName = "";
   }
 
+  bool isFetch() {
+    return _fetch;
+  }
+
+  setFetch(bool fetch) {
+    this._fetch = fetch;
+
+    ///notifyListeners();
+  }
+
   Future<void> fetchData() async {
     // List<Planting> data = [];
     PlantingService plantingService = PlantingService();
     String? token = tokenFromLogin?.token;
-    numberAllPlantings = await plantingService.countPlantings(token.toString());
+    int countPlanting = await plantingService.countPlantings(token.toString());
     FieldService fieldService = FieldService();
     int count = await fieldService.countFields(token.toString());
     // data = await plantingService.getPlanting(token.toString(), _page, _value);
-    // print("page : ${_page}");
+    numberAllPlantings = countPlanting;
+
+    if (numberAllPlantings == 0 || numberAllPlantings == plantingData.length) {
+      notifyListeners();
+      return;
+    }
+
+    _value = 10;
+
+    isLoading = false;
+
+    notifyListeners();
+
+    _value = numberAllPlantings < _value ? numberAllPlantings : _value;
+
+    int index = ((_page - 1) * _value);
+
+    index = (index >= _value) ? index - 1 : index;
+
+    String none = "";
+
+    Planting pt = Planting(
+        0,
+        none,
+        none,
+        0,
+        none,
+        none,
+        none,
+        none,
+        none,
+        none,
+        0,
+        0,
+        none,
+        none,
+        0,
+        0,
+        none,
+        none,
+        none,
+        none,
+        none,
+        0,
+        none,
+        0,
+        none,
+        0,
+        none,
+        none,
+        none,
+        0,
+        0,
+        none,
+        0,
+        0,
+        none,
+        0,
+        0,
+        none,
+        none,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0);
+
+    for (int i = 0; i < _value; i++) {
+      plantingData.add(PlantingData(
+          0, none, none, none, none, none, none, none, none, pt, true));
+    }
+
+    notifyListeners();
+
     await plantingService
         .getPlantingsWithLocationAndOwner(token.toString(), _page, _value)
         .then((value) async {
@@ -100,23 +188,29 @@ class PlantingProvider with ChangeNotifier {
 
         for (Map<String, dynamic> data in value) {
           Planting? planting = await plantingService.getPlantingByID(
-              data['plantingId'], token.toString());
-          if (planting != null) {
-            plantingData.add(PlantingData(
-                data['plantingId'],
-                data['plantingName'],
-                data['fieldName'],
-                data['substrict'],
-                data['district'],
-                data['province'],
-                data['title'],
-                data['firstName'],
-                data['lastName'],
-                planting));
-          }
+              data['plantingId'], token.toString()) as Planting;
+
+          plantingData[index].plantingId = data['plantingId'];
+          plantingData[index].plantingName = data['plantingName'];
+          plantingData[index].fieldName = data['fieldName'];
+          plantingData[index].substrict = data['substrict'];
+          plantingData[index].district = data['district'];
+          plantingData[index].province = data['province'];
+          plantingData[index].firstName = data['firstName'];
+          plantingData[index].lastName = data['lastName'];
+          plantingData[index].planting = planting;
+          plantingData[index].isLoading = false;
+
+          notifyListeners();
+
+          new Future.delayed(const Duration(seconds: 2), () {});
+
+          index++;
         }
 
         _page = (plantingData.length ~/ _value) + 1;
+
+        setFetch(false);
       }
     });
     // for (Map<String, dynamic> data in detail) {
@@ -156,36 +250,111 @@ class PlantingProvider with ChangeNotifier {
     PlantingService plantingService = PlantingService();
     String? token = tokenFromLogin?.token;
     // print("page : ${_page}");
-    List<Map<String, dynamic>> detail = await plantingService
-        .getPlantingByFieldID(token.toString(), fieldID, _page, _value);
     numberAllPlantings = await plantingService.countPlantingsByFieldId(
         token.toString(), fieldID);
-    for (Map<String, dynamic> data in detail) {
-      // list_fieldName.add(data['fieldName']);
-      // list_substrict.add(data['substrict']);
-      // list_district.add(data['district']);
-      // list_province.add(data['province']);
-      // list_title.add(data['title']);
-      // list_firstName.add(data['firstName']);
-      // list_lastName.add(data['lastName']);
-      // Planting? plant = await plantingService.getPlantingByID(
-      //     data['plantingId'], token.toString());
-      // dataPlanting.add(plant!);
-      Planting planting = await plantingService.getPlantingByID(
-          data['plantingId'], token.toString()) as Planting;
 
-      plantingData.add(PlantingData(
-          data['plantingId'],
-          data['plantingName'],
-          data['fieldName'],
-          data['substrict'],
-          data['district'],
-          data['province'],
-          data['title'],
-          data['firstName'],
-          data['lastName'],
-          planting));
+    if (numberAllPlantings == 0 || numberAllPlantings == plantingData.length) {
+      notifyListeners();
+      return;
     }
+
+    _value = 5;
+
+    isLoading = false;
+
+    notifyListeners();
+
+    _value = numberAllPlantings < _value ? numberAllPlantings : _value;
+
+    int index = ((_page - 1) * _value);
+
+    index = (index >= _value) ? index - 1 : index;
+
+    String none = "";
+
+    Planting pt = Planting(
+        0,
+        none,
+        none,
+        0,
+        none,
+        none,
+        none,
+        none,
+        none,
+        none,
+        0,
+        0,
+        none,
+        none,
+        0,
+        0,
+        none,
+        none,
+        none,
+        none,
+        none,
+        0,
+        none,
+        0,
+        none,
+        0,
+        none,
+        none,
+        none,
+        0,
+        0,
+        none,
+        0,
+        0,
+        none,
+        0,
+        0,
+        none,
+        none,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0);
+
+    for (int i = 0; i < _value; i++) {
+      plantingData.add(PlantingData(
+          0, none, none, none, none, none, none, none, none, pt, true));
+    }
+
+    notifyListeners();
+
+    await plantingService
+        .getPlantingByFieldID(token.toString(), fieldID, _page, _value)
+        .then((value) async {
+      for (Map<String, dynamic> data in value) {
+        Planting? planting = await plantingService.getPlantingByID(
+            data['plantingId'], token.toString()) as Planting;
+
+        plantingData[index].plantingId = data['plantingId'];
+        plantingData[index].plantingName = data['plantingName'];
+        plantingData[index].fieldName = data['fieldName'];
+        plantingData[index].substrict = data['substrict'];
+        plantingData[index].district = data['district'];
+        plantingData[index].province = data['province'];
+        plantingData[index].firstName = data['firstName'];
+        plantingData[index].lastName = data['lastName'];
+        plantingData[index].planting = planting;
+        plantingData[index].isLoading = false;
+
+        notifyListeners();
+
+        new Future.delayed(const Duration(seconds: 2), () {});
+
+        index++;
+      }
+
+      _page = (plantingData.length ~/ _value) + 1;
+
+      setFetch(false);
+    });
     // if (plantings.length % _value != 0) {
     //   // plantings.removeRange((_value*(_page-1))+1, plantings.length);
     //   int x = plantings.length % _value;
@@ -197,10 +366,6 @@ class PlantingProvider with ChangeNotifier {
     //   plantings = [...plantings, ...dataPlanting];
     // }
 
-    _page = (plantingData.length ~/ _value) + 1;
-
-    // List<Planting> plant = this.plantings;
-    notifyListeners();
     isLoading = true;
   }
 
@@ -301,7 +466,8 @@ class PlantingProvider with ChangeNotifier {
           title,
           firstName,
           lastName,
-          data);
+          data,
+          false);
 
       plantingData.insert(0, newPlantingData);
     }
@@ -330,10 +496,105 @@ class PlantingProvider with ChangeNotifier {
     return statusCode;
   }
 
+  Future<void> _doSearch(List<Map<String, dynamic>> plantings, index) async {
+    String? token = tokenFromLogin?.token;
+
+    PlantingService plantingService = PlantingService();
+
+    numberAllPlantings = plantings.length;
+
+    String none = "";
+    Planting pt = Planting(
+        0,
+        none,
+        none,
+        0,
+        none,
+        none,
+        none,
+        none,
+        none,
+        none,
+        0,
+        0,
+        none,
+        none,
+        0,
+        0,
+        none,
+        none,
+        none,
+        none,
+        none,
+        0,
+        none,
+        0,
+        none,
+        0,
+        none,
+        none,
+        none,
+        0,
+        0,
+        none,
+        0,
+        0,
+        none,
+        0,
+        0,
+        none,
+        none,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0);
+
+    for (int i = 0; i < _value; i++) {
+      plantingData.add(PlantingData(
+          0, none, none, none, none, none, none, none, none, pt, true));
+    }
+
+    for (Map<String, dynamic> data in plantings) {
+      Planting? planting = await plantingService.getPlantingByID(
+          data['plantingId'], token.toString()) as Planting;
+
+      plantingData[index].plantingId = data['plantingId'];
+      plantingData[index].plantingName = data['plantingName'];
+      plantingData[index].fieldName = data['fieldName'];
+      plantingData[index].substrict = data['substrict'];
+      plantingData[index].district = data['district'];
+      plantingData[index].province = data['province'];
+      plantingData[index].firstName = data['firstName'];
+      plantingData[index].lastName = data['lastName'];
+      plantingData[index].planting = planting;
+      plantingData[index].isLoading = false;
+
+      notifyListeners();
+
+      new Future.delayed(const Duration(seconds: 2), () {
+        // deleayed code here
+      });
+
+      index++;
+    }
+    isLoading = true;
+
+    notifyListeners();
+  }
+
   void search(Map<String, dynamic> data) async {
     reset();
     PlantingService plantingService = PlantingService();
     String? token = tokenFromLogin?.token;
+    // await plantingService
+    //     .searchPlantingByKey2(data, token.toString())
+    //     .then((value) async {
+    //   if (value != null) {
+    //     await _doSearch(value, 0);
+    //   }
+    // });
     List<Planting> searchPlantings =
         await plantingService.searchPlantingByKey2(data, token.toString());
     // List<Planting> plant = this.plantings;
@@ -357,8 +618,6 @@ class PlantingProvider with ChangeNotifier {
         // fields.add(field);
         // list_fieldName.add(field.name);
         fieldName = field.name;
-        print("search fieldName = ");
-        print(fieldName);
         int fieldID = field.fieldID;
 
         String? location =
@@ -419,7 +678,8 @@ class PlantingProvider with ChangeNotifier {
             title,
             firstName,
             lastName,
-            searchPlantings[i]);
+            searchPlantings[i],
+            false);
 
         plantingData.add(newPlantingData);
       }
@@ -462,7 +722,8 @@ class PlantingProvider with ChangeNotifier {
             data['title'],
             data['firstName'],
             data['lastName'],
-            planting));
+            planting,
+            false));
       }
     }
     // this.plantings = plantingTemp;
