@@ -119,10 +119,20 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
     SurveyProvider surveyProvider =
         Provider.of<SurveyProvider>(context, listen: false);
     surveyProvider.resetPlantingID();
-    if (provider.fieldID != 0) {
+    provider.setFetch(false);
+    if (!provider.isSearch && !provider.isFetch()) {
+      provider.setFetch(true);
+      if (provider.fieldID != 0) {
+        provider.fetchDataFromField();
+      } else {
+        //  if(!surveyProvider.isFetch()){
+
+        //   surveyProvider.setFetch(true);
+
+        provider.fetchData();
+        //  }
+      }
       provider.fetchDataFromField();
-    } else {
-      provider.fetchData();
     }
 
     if (mounted) {
@@ -727,8 +737,8 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
       "plantingName": plantingNameValue,
       "startDate": startDateSelect
     };
-    print("DAte = ");
-    print(startDateSelect);
+    print("fieldName = ");
+    print(fieldNameValue);
 
     jsonData.removeWhere(
         (key, value) => value == null || value == '' || value == 0);
@@ -1038,18 +1048,18 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
       data: HotelAppTheme.buildLightTheme(),
       child: Container(
         child: Consumer<PlantingProvider>(builder: (context, data, index) {
-          List<Planting> plantings = data.plantings;
-          List<User> owners = data.owners;
-          List<Field> fields = data.fields;
-          List<String> locations = data.locations;
+          // List<Planting> plantings = data.plantings;
+          // List<User> owners = data.owners;
+          // List<Field> fields = data.fields;
+          // List<String> locations = data.locations;
 
-          List<String> list_fieldName = data.list_fieldName;
-          List<String> list_substrict = data.list_substrict;
-          List<String> list_district = data.list_district;
-          List<String> list_province = data.list_province;
-          List<String> list_title = data.list_title;
-          List<String> list_firstName = data.list_firstName;
-          List<String> list_lastName = data.list_lastName;
+          // List<String> list_fieldName = data.list_fieldName;
+          // List<String> list_substrict = data.list_substrict;
+          // List<String> list_district = data.list_district;
+          // List<String> list_province = data.list_province;
+          // List<String> list_title = data.list_title;
+          // List<String> list_firstName = data.list_firstName;
+          // List<String> list_lastName = data.list_lastName;
           return WillPopScope(
             onWillPop: () => onBackButtonPressed(context),
             child: Scaffold(
@@ -1073,7 +1083,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                     NotificationListener<ScrollEndNotification>(
                                   onNotification:
                                       (ScrollEndNotification scrollInfo) {
-                                    if (plantings.length < 2) {
+                                    if (data.plantingData.length < 2) {
                                       if (scrollInfo.depth == 0) {
                                         if (scrollInfo.metrics.pixels <
                                             scrollInfo
@@ -1101,7 +1111,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                     // print(
                                     //     "${scrollInfo.depth} position :  ${scrollInfo.metrics.pixels}   : ${scrollInfo.metrics.maxScrollExtent}   check : ${check}");
                                     if (check == 1) {
-                                      if (data.plantings.length ==
+                                      if (data.plantingData.length ==
                                           data.numberAllPlantings) {
                                         showToastMessage(
                                             "ข้อมูลแสดงครบทั้งหมดเป็นที่เรียบร้อยแล้ว");
@@ -1145,97 +1155,100 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                           ),
                                         ];
                                       },
-                                      body: data.isLoading
-                                          ? Container(
-                                              decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  begin: Alignment.topCenter,
-                                                  end: Alignment.bottomCenter,
-                                                  colors: [
-                                                    Colors.white.withOpacity(1),
-                                                    theme_color3
-                                                        .withOpacity(.4),
-                                                    theme_color4.withOpacity(1),
-                                                  ],
-                                                ),
-                                              ),
-                                              child: data.plantings.isNotEmpty
-                                                  ? ListView.builder(
-                                                      //controller: _inerscrollController,
-                                                      itemCount:
-                                                          data.plantings.length,
-                                                      padding: EdgeInsets.only(
-                                                          top: sizeHeight(
-                                                              8, context)),
-                                                      scrollDirection:
-                                                          Axis.vertical,
-                                                      itemBuilder:
-                                                          (context, index) {
-                                                            if (index < data.plantings.length &&
-                                                            index < list_fieldName.length &&
-                                                            index < list_substrict.length &&
-                                                            index < list_district.length &&
-                                                            index < list_province.length &&
-                                                            index < list_title.length &&
-                                                            index < list_firstName.length &&
-                                                            index < list_lastName.length) {
-                                                          Planting planting = plantings[index];
-                                                          String temp_plantingName = planting.name;
-                                                        
-                                                        RegExp regex = RegExp(
-                                                            r'\([^)]*\)');
-                                                        String result =
-                                                            temp_plantingName
-                                                                .replaceAll(
-                                                                    regex, '');
-                                                        String plantingName =
-                                                            result.trim();
-                                                        // Adding new
-                                                        String fieldName =
-                                                            list_fieldName[
-                                                                index];
-                                                        String substrict =
-                                                            list_substrict[
-                                                                index];
-                                                        String district =
-                                                            list_district[
-                                                                index];
-                                                        String province =
-                                                            list_province[
-                                                                index];
-                                                        String title =
-                                                            list_title[index];
-                                                        String firstName =
-                                                            list_firstName[
-                                                                index];
-                                                        String lastName =
-                                                            list_lastName[
-                                                                index];
+                                      body: Container(
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            colors: [
+                                              Colors.white.withOpacity(1),
+                                              theme_color3.withOpacity(.4),
+                                              theme_color4.withOpacity(1),
+                                            ],
+                                          ),
+                                        ),
+                                        child: data.plantingData.isNotEmpty
+                                            ? ListView.builder(
+                                                //controller: _inerscrollController,
+                                                itemCount:
+                                                    data.plantingData.length,
+                                                padding: EdgeInsets.only(
+                                                    top:
+                                                        sizeHeight(8, context)),
+                                                scrollDirection: Axis.vertical,
+                                                itemBuilder: (context, index) {
+                                                  // Planting planting = plantings[index];
+                                                  String temp_plantingName =
+                                                      data.plantingData[index]
+                                                          .planting.name;
 
-                                                        final int count =
-                                                            plantings.length >
-                                                                    10
-                                                                ? 10
-                                                                : plantings
-                                                                    .length;
-                                                        final Animation<
-                                                            double> animation = Tween<
-                                                                    double>(
-                                                                begin: 0.0,
-                                                                end: 1.0)
-                                                            .animate(CurvedAnimation(
-                                                                parent:
-                                                                    animationController!,
-                                                                curve: Interval(
-                                                                    (1 / count) *
-                                                                        index,
-                                                                    1.0,
-                                                                    curve: Curves
-                                                                        .fastOutSlowIn)));
-                                                        animationController
-                                                            ?.forward();
-                                                        return CardItemWithOutImage_Planting(
-                                                          plantings: planting,
+                                                  RegExp regex =
+                                                      RegExp(r'\([^)]*\)');
+                                                  String result =
+                                                      temp_plantingName
+                                                          .replaceAll(
+                                                              regex, '');
+                                                  String plantingName =
+                                                      result.trim();
+                                                  // Adding new
+                                                  String fieldName = data
+                                                      .plantingData[index]
+                                                      .fieldName;
+                                                  String substrict = data
+                                                      .plantingData[index]
+                                                      .substrict;
+                                                  String district = data
+                                                      .plantingData[index]
+                                                      .district;
+                                                  String province = data
+                                                      .plantingData[index]
+                                                      .province;
+                                                  String title = data
+                                                      .plantingData[index]
+                                                      .title;
+                                                  String firstName = data
+                                                      .plantingData[index]
+                                                      .firstName;
+                                                  String lastName = data
+                                                      .plantingData[index]
+                                                      .lastName;
+
+                                                  final int count =
+                                                      data.plantingData.length >
+                                                              10
+                                                          ? 10
+                                                          : data.plantingData
+                                                              .length;
+                                                  final Animation<
+                                                      double> animation = Tween<
+                                                              double>(
+                                                          begin: 0.0, end: 1.0)
+                                                      .animate(CurvedAnimation(
+                                                          parent:
+                                                              animationController!,
+                                                          curve: Interval(
+                                                              (1 / count) *
+                                                                  index,
+                                                              1.0,
+                                                              curve: Curves
+                                                                  .fastOutSlowIn)));
+                                                  animationController
+                                                      ?.forward();
+
+                                                  return data
+                                                              .plantingData[
+                                                                  index]
+                                                              .isLoading &&
+                                                          data
+                                                              .plantingData[
+                                                                  index]
+                                                              .isLoading
+                                                      ? mockShimmer()
+                                                      : CardItemWithOutImage_Planting(
+                                                          plantings: data
+                                                              .plantingData[
+                                                                  index]
+                                                              .planting,
                                                           provider:
                                                               plantingProvider,
                                                           callback2: () {
@@ -1251,11 +1264,18 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                                                         false);
                                                             surveyProvider
                                                                     .plantingId =
-                                                                planting
+                                                                data
+                                                                    .plantingData[
+                                                                        index]
+                                                                    .planting
                                                                     .plantingId;
                                                             surveyProvider
                                                                     .plantingName =
-                                                                planting.name;
+                                                                data
+                                                                    .plantingData[
+                                                                        index]
+                                                                    .planting
+                                                                    .name;
                                                           },
                                                           callback: () {
                                                             // Navigator.push(
@@ -1285,18 +1305,17 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                                           animationController:
                                                               animationController!,
                                                           date: ChangeDateTime(
-                                                              planting
+                                                              data
+                                                                  .plantingData[
+                                                                      index]
+                                                                  .planting
                                                                   .createDate),
                                                         );
-                                                      } else {
-                                                // Handle index is out of bounds
-                                                return Container();
-                                              }
-                                                  })
-                                                  : NoData()
-                                                      .showNoData(context),
-                                            )
-                                          : shimmerLoading(),
+                                                })
+                                            : !data.isLoading
+                                                ? Container()
+                                                : NoData().showNoData(context),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -1318,38 +1337,44 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
     );
   }
 
- Future<bool> onBackButtonPressed(BuildContext context) async {
-  bool? exitApp = await showCupertinoDialog<bool>(
-    context: context,
-    builder: (BuildContext context) => CupertinoAlertDialog(
-      title: Text("notification-label".i18n()),
-      content: Text("exit-application".i18n()),
-      actions: [
-        CupertinoDialogAction(
-          onPressed: () {
-            Navigator.of(context).pop(false);
-          },
-          child: Text('No', style: TextStyle(
-              color: Colors.red,
-              fontWeight: FontWeight.w400,
-            ),),
-        ),
-        CupertinoDialogAction(
-          onPressed: () {
-            Navigator.of(context).pop(true);
-            SystemNavigator.pop();
-          },
-          child: Text('Yes', style: TextStyle(
-              color: Colors.blue,
-              fontWeight: FontWeight.w400,
-            ),),
-        ),
-      ],
-    ),
-  );
+  Future<bool> onBackButtonPressed(BuildContext context) async {
+    bool? exitApp = await showCupertinoDialog<bool>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text("notification-label".i18n()),
+        content: Text("exit-application".i18n()),
+        actions: [
+          CupertinoDialogAction(
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+            child: Text(
+              'No',
+              style: TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+          CupertinoDialogAction(
+            onPressed: () {
+              Navigator.of(context).pop(true);
+              SystemNavigator.pop();
+            },
+            child: Text(
+              'Yes',
+              style: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
 
-  return exitApp ?? false;
-}
+    return exitApp ?? false;
+  }
 
   Widget _buildMultiSearchBar() {
     return Container(
