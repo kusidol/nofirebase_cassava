@@ -32,7 +32,7 @@ class _TermScreen extends State<TermScreen>
   String? _codeCompanyregister;
   String? _userType;
   String? _nameCompanyregister;
-    String? _headerTerm = "copyrightregistration".i18n();
+  String? _headerTerm = "copyrightregistration".i18n();
   String? _headerTerm2 = "transferofcopyright".i18n();
   String? _headerTerm3 = "publicdomainannouncement".i18n();
   String? _dataTerm = "dataterm1".i18n();
@@ -48,7 +48,7 @@ class _TermScreen extends State<TermScreen>
 
   bool isChecked = false;
   bool isChecked2 = false;
- @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -211,7 +211,7 @@ class _TermScreen extends State<TermScreen>
                           padding: EdgeInsets.only(left: 10.0),
                           alignment: Alignment.center,
                           child: Text(
-                              "approveterm1".i18n(),
+                            "approveterm1".i18n(),
                             style: const TextStyle(
                               color: Color(0xFF25282B),
                               fontSize: 12,
@@ -279,7 +279,7 @@ class _TermScreen extends State<TermScreen>
                             minimumSize: Size(341, 55),
                           ),
                           child: Text(
-                             "done".i18n(),
+                            "done".i18n(),
                             style: const TextStyle(
                               color: Color(0xFFF9FAFB),
                               fontSize: 18,
@@ -295,7 +295,7 @@ class _TermScreen extends State<TermScreen>
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               FarmerRegisterScreen(
-                                                token: widget.token,
+                                            token: widget.token,
                                             codeCompanyregister:
                                                 widget.codeCompanyregister,
                                           ),
@@ -303,15 +303,15 @@ class _TermScreen extends State<TermScreen>
                                       );
                                       break;
                                     case "Staff":
-                                      print(widget.userType);
-                                      print(widget.codeCompanyregister);
-                                      print(widget.nameCompanyregister);
+                                      //print(widget.userType);
+                                      //print(widget.codeCompanyregister);
+                                      //print(widget.nameCompanyregister);
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               StaffRegisterScreen(
-                                                token: widget.token,
+                                            token: widget.token,
                                             codeCompanyregister:
                                                 _codeCompanyregister,
                                             nameCompanyregister:

@@ -24,7 +24,6 @@ import 'package:provider/provider.dart';
 import 'package:localization/localization.dart';
 //import 'package:flutter_gen/gen_l10n/app_localizations.dart' ;
 
-
 //เพิ่มเติม
 import 'package:mun_bot/screen/survey/survey_target/survey_target_point/stp_plant.dart';
 
@@ -34,7 +33,6 @@ import 'login/login_screen.dart';
 //
 
 class MainScreen extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() => _MainScreen();
 }
@@ -56,7 +54,6 @@ class _MainScreen extends State<MainScreen>
     // TODO: implement initState
     super.initState();
 
-
     _mainTapController = new TabController(vsync: this, length: 4);
     // _mainTapController = new TabController(vsync: this, length: 5);
   }
@@ -68,7 +65,7 @@ class _MainScreen extends State<MainScreen>
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    //print(SizeConfig.screenHeight);
+    ////print(SizeConfig.screenHeight);
     var iconTabSize = SizeConfig.screenWidth! * 0.043;
 
     return Scaffold(

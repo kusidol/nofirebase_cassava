@@ -143,7 +143,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    print(" width : ${SizeConfig.screenWidth}");
+    ////   print(" width : ${SizeConfig.screenWidth}");
     asyncFunction();
     super.initState();
   }
@@ -365,7 +365,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
       } else {
         _selectPestManagement = "เลือกวิธีการจัดการแมลง";
       }
-      //print("testtest ------ : ${_selectStemSource}");
+      ////   print("testtest ------ : ${_selectStemSource}");
     }
 
     FieldService fieldService = new FieldService();
@@ -499,26 +499,26 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
         save_plantingName = planting.name;
         setState(() => _currentStep += 1);
       } else {
-        print("in valid");
+        //   //   print("in valid");
       }
     } else if (_currentStep == 1) {
       if (_formKeyPage2.currentState!.validate()) {
         setState(() => _currentStep += 1);
       } else {
-        print("in valid");
+        //   print("in valid");
       }
     } else if (_currentStep == 2) {
       if (_formKeyPage3.currentState!.validate()) {
         save_plantingPrimaryVarietyOther = planting.primaryVarietyOther;
         setState(() => _currentStep += 1);
       } else {
-        print("in valid");
+        //   print("in valid");
       }
     } else if (_currentStep == 4) {
       if (_formKeyPage5.currentState!.validate()) {
         setState(() => _currentStep += 1);
       } else {
-        print("in valid");
+        //   print("in valid");
       }
     } else {
       setState(() => _currentStep += 1);
@@ -714,7 +714,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
         test = int.parse(selectedField.toString());
       } catch (e) {
         test = widget.passFieldID;
-        print("never select field set to default 0");
+        //   print("never select field set to default 0");
       }
 
       String? token = tokenFromLogin?.token.toString();
@@ -831,7 +831,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
         }
       }
       var json_postData = jsonEncode(postData);
-      // print("postData Json : ${json_postData}");
+      // //   print("postData Json : ${json_postData}");
 
       Planting? newPlanting =
           await plantingService.createPlanting(token.toString(), json_postData);
@@ -945,7 +945,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                     setState(() {
                       _selectPreviousPlant = value;
                       planting.previousPlant = value.toString();
-                      print(planting.previousPlant);
+                      //   print(planting.previousPlant);
                     });
                   },
                   selectedItem: planting.previousPlant == ""
@@ -1490,7 +1490,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                             onConfirm: (List<String> selected) {
                               setState(() {
                                 _selectedMainPlanting = selected;
-                                print("Selected : ${_selectedMainPlanting}");
+                                //   print("Selected : ${_selectedMainPlanting}");
                               });
                             },
                             initialValue: _selectedMainPlanting,
@@ -1518,7 +1518,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
   }
 
   void itemSelectionChanged(String? s) {
-    print(s);
+    //   print(s);
   }
 
   Widget _buildfertilized() {
@@ -1725,7 +1725,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
               onChanged: (value) {
                 setState(() {
                   _selectChemical1 = value;
-                  print(_selectChemical1);
+                  //   print(_selectChemical1);
                   planting.herbicideByWeedingChemical1 = returnIndexFromList(
                       weedingChemicalName, value.toString());
                   if (_isPassValueFromPage) {
@@ -2263,7 +2263,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
         return i;
       }
     }
-    print("value select not found ");
+    //   print("value select not found ");
     return 0;
   }
 
@@ -2429,7 +2429,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                                           builder: (context, child) =>
                                               DropdownForField(
                                             (value) {
-                                              print(value);
+                                              //   print(value);
                                               bool duplicate = false;
                                               List<String> temp =
                                                   dropdownfield.fieldString;
@@ -2454,8 +2454,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                                                 isSelectedField = true;
                                                 fieldIdFromDropdown =
                                                     value['id'];
-                                                print(
-                                                    "fieldIdFromDropdown : ${fieldIdFromDropdown}");
+                                                //   print("fieldIdFromDropdown : ${fieldIdFromDropdown}");
                                                 dropdownfield
                                                     .getFieldAndUserAndLocationByfieldId(
                                                         fieldIdFromDropdown);
@@ -2466,7 +2465,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                                       ),
                                     );
                                   } else {
-                                    print(value);
+                                    //   print(value);
                                     int id = 0;
                                     for (int i = 0;
                                         i < dropdownfield.items.length;
@@ -2482,8 +2481,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                                       isSelectedField = true;
                                       fieldIdFromDropdown = id;
                                       selectedField = id.toString();
-                                      print(
-                                          "fieldIdFromDropdown : ${fieldIdFromDropdown}");
+                                      //   print("fieldIdFromDropdown : ${fieldIdFromDropdown}");
                                       dropdownfield
                                           .getFieldAndUserAndLocationByfieldId(
                                               fieldIdFromDropdown);
@@ -2617,7 +2615,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                 (text) => {
                   setState(() {
                     errorText['code'] = null;
-                    print("resset");
+                    //   print("resset");
                     planting.code = text;
                   }),
                   if (text.isEmpty || (text == null) || (text == ""))
@@ -2717,7 +2715,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                                     style: TextStyle(
                                         fontSize: sizeHeight(20, context))),
                                 onChanged: (value) {
-                                  print("MyRadioListTile : ${value}");
+                                  //   print("MyRadioListTile : ${value}");
                                   setState(() => {
                                         if (value != null)
                                           {
@@ -2741,7 +2739,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                                     style: TextStyle(
                                         fontSize: sizeHeight(20, context))),
                                 onChanged: (value) {
-                                  print("MyRadioListTile : ${value}");
+                                  //   print("MyRadioListTile : ${value}");
                                   setState(() => {
                                         if (value != null)
                                           {
@@ -2766,8 +2764,8 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                           );
                         },
                         // validator: (value) {
-                        //   print("Check value : ");
-                        //   print(value);
+                        //   //   print("Check value : ");
+                        //   //   print(value);
                         //   if (value == null) {
                         //     return 'กรุณาเลือกข้อมูลที่ต้องการ';
                         //   }

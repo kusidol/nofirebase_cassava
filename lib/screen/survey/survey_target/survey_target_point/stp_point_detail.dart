@@ -90,7 +90,7 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
 
   @override
   initState() {
-    print("${SizeConfig.screenHeight}");
+    //print("${SizeConfig.screenHeight}");
     super.initState();
     clearParameter();
     asyncFunction();
@@ -103,8 +103,7 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
     List<SurveyPoint> stpsPest = [];
     List<SurveyPoint> stpsNatural = [];
     List<SurveyPoint> stpsDisease = [];
-    print("${widget.survey.surveyID} + "
-        " +  ${widget.surveyPoint}");
+    //print("${widget.survey.surveyID} + "" +  ${widget.surveyPoint}");
     stpsDisease = await surveyTargetPoint.surveyPointDiseaseBySurveyId(
         token.toString(), widget.survey.surveyID, widget.surveyPoint);
     stpsNatural = await surveyTargetPoint.surveyPointNaturalBySurveyId(
@@ -166,7 +165,7 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
 
         _pathImage = _image.path;
         GallerySaver.saveImage(_pathImage);
-        // print(_pathImage);
+        // //print(_pathImage);
       },
     );
   }
@@ -198,10 +197,10 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
       setState(() {
         isLoading = true;
 
-        print("${widget.survey.surveyID}+${widget.surveyPoint}");
+        //print("${widget.survey.surveyID}+${widget.surveyPoint}");
       });
     } catch (e) {
-      print(e);
+      //print(e);
     }
   }
 
@@ -308,11 +307,11 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
       if (countDiseases != null) {
         return countDiseases["count"];
       }
-      //  print("countDiseases");
-      //  print(countDiseases);
+      //  //print("countDiseases");
+      //  //print(countDiseases);
       return "0";
     } catch (e) {
-      //  print(e);
+      //  //print(e);
     }
   }
 
@@ -386,7 +385,7 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                             ],
                             onChanged: isCompleteAll[numStart] == true
                                 ? (value) async {
-                                    // print(status);
+                                    // //print(status);
                                     setState(() {
                                       if (value) {
                                         status = "Complete";
@@ -453,7 +452,7 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
   }
 
   Future<void> resetValue(int point, int number) async {
-    print("${point} ${number}");
+    //print("${point} ${number}");
     setState(() {
       foundList[number] = 0;
     });
@@ -492,7 +491,7 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
           e.surveyTargetPoints.value.toDouble(), point));
     });
 
-    print("imgID = ${imgID}");
+    //print("imgID = ${imgID}");
     ImageTagetpointService imageService = ImageTagetpointService();
     for (int i = 0; i < imgID.length; i++) {
       List<ImageData> images =
@@ -504,9 +503,9 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
           setState(() {
             imageList[number * 5 + point] = "0";
           });
-          print("reset img success");
+          //print("reset img success");
         } else {
-          print("reset img fail");
+          //print("reset img fail");
         }
       });
     }
@@ -572,13 +571,13 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
       if (statusCodePest == 200 &&
           statusCodeNatural == 200 &&
           statusCodePest == 200) {
-        print("reset success");
+        //print("reset success");
       } else {
-        print("reset fail");
+        //print("reset fail");
       }
     } catch (e) {
       // Handle any exceptions that occur during the async operations.
-      print("Error occurred: $e");
+      //print("Error occurred: $e");
     }
   }
 

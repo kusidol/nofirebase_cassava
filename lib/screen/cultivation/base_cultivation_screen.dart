@@ -114,7 +114,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
 
     PlantingProvider provider =
         Provider.of<PlantingProvider>(context, listen: false);
-    //print("fieldID =  ${provider.fieldID}");
+
     provider.reset();
     SurveyProvider surveyProvider =
         Provider.of<SurveyProvider>(context, listen: false);
@@ -505,7 +505,6 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
         (key, value) => value == null || value == '' || value == 0);
 
     String jsonString = jsonEncode(jsonData);
-    print(jsonString);
 
     setState(() {
       isShowbasicSearch = true;
@@ -524,10 +523,10 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
             )),
         onExpansionChanged: (bool isExpanded) {
           if (!isExpanded) {
-            print('Hello World');
+            // print('Hello World');
             // dropdownfield.resetItemsAfterSearch();
           } else {
-            print('Save Value');
+            // print('Save Value');
           }
         },
         leading: Icon(Icons.perm_contact_calendar_outlined),
@@ -737,14 +736,14 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
       "plantingName": plantingNameValue,
       "startDate": startDateSelect
     };
-    print("fieldName = ");
-    print(fieldNameValue);
+    // print("fieldName = ");
+    // print(fieldNameValue);
 
     jsonData.removeWhere(
         (key, value) => value == null || value == '' || value == 0);
 
     String jsonString = jsonEncode(jsonData);
-    print(jsonString);
+    //print(jsonString);
 
     setState(() {
       isShowbasicSearch = true;
@@ -1444,7 +1443,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                       ),
                                     ),
                                     onPressed: () {
-                                      print('Button Pressed');
+                                      //  print('Button Pressed');
                                     },
                                     child: Icon(Icons.info_outline_rounded,
                                         color: Colors.white,

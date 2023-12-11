@@ -200,7 +200,7 @@
 //   }
 
 //   _onloadField() async {
-//     print("onload Fields");
+//     //print("onload Fields");
 //     FieldService fieldService = new FieldService();
 //     String? token = tokenFromLogin?.token;
 //     _fields = await fieldService.getFields(token.toString(), 1, 20);
@@ -395,7 +395,7 @@
 //   Widget _buildListView() {
 //     String storyImage = 'assets/images/cassava_field.jpg';
 //     String userImage = 'assets/images/unknown_user.png';
-//     print(_fields.length);
+//     //print(_fields.length);
 //     if (isLoading) {
 //       return Center(
 //         child: Container(
@@ -418,7 +418,7 @@
 //             height: 200,
 //             child: GestureDetector(
 //               onTap: () {
-//                 /*print('ontap fieldId ' + _fields[index].fieldID.toString());
+//                 /*//print('ontap fieldId ' + _fields[index].fieldID.toString());
 //                 Navigator.push(
 //                   context,
 //                   MaterialPageRoute(
@@ -571,6 +571,6 @@
 //   }
 
 //   void itemSelectionChanged(String? s) {
-//     print(s);
+//     //print(s);
 //   }
 // }

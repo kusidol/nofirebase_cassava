@@ -117,7 +117,7 @@ class _DropdownForFarmerState extends State<DropdownForFarmer> {
                       ),
                       onTap: () {
                         // Create User
-                        print("CREATE USER IN FIELD");
+                        //print("CREATE USER IN FIELD");
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -177,9 +177,9 @@ class _DropdownForFarmerState extends State<DropdownForFarmer> {
                               fontSize: 20, fontWeight: FontWeight.bold)),
                       onExpansionChanged: (bool isExpanded) {
                         if (!isExpanded) {
-                          print('Hello World');
+                          //print('Hello World');
                         } else {
-                          print('Save Value');
+                          //print('Save Value');
                         }
                       },
                       leading: Icon(Icons.perm_contact_calendar_outlined),
@@ -272,7 +272,7 @@ class _DropdownForFarmerState extends State<DropdownForFarmer> {
                       onNotification: (scrollInfo) {
                         if (scrollInfo.metrics.pixels ==
                             scrollInfo.metrics.maxScrollExtent) {
-                          print('เลื่อนสุดขอบหน้าจอแล้ว');
+                          //print('เลื่อนสุดขอบหน้าจอแล้ว');
                           if (dropdownFarmer.scroll) {
                             dropdownFarmer.fetchData();
                             dropdownFarmer.isScroll = true;

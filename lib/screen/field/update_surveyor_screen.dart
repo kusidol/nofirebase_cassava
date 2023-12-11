@@ -275,15 +275,15 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
         setState(() {
           updateStatus = true;
         });
-        print('Resource updated successfully.');
+        //print('Resource updated successfully.');
       } else {
         setState(() {
           updateStatus = false;
         });
-        print('Resource updated not successfully.');
+        //print('Resource updated not successfully.');
       }
     } catch (e) {
-      print('Error during update: $e');
+      //print('Error during update: $e');
     }
   }
 
@@ -296,15 +296,15 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
         setState(() {
           updateStatus = true;
         });
-        print('Resource updated successfully.');
+        //print('Resource updated successfully.');
       } else {
         setState(() {
           updateStatus = false;
         });
-        print('Resource updated not successfully.');
+        //print('Resource updated not successfully.');
       }
     } catch (e) {
-      print('Error during update: $e');
+      //print('Error during update: $e');
     }
   }
 
@@ -317,15 +317,15 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
         setState(() {
           updateStatus = true;
         });
-        print('Resource updated successfully.');
+        //print('Resource updated successfully.');
       } else {
         setState(() {
           updateStatus = false;
         });
-        print('Resource updated not successfully.');
+        //print('Resource updated not successfully.');
       }
     } catch (e) {
-      print('Error during update: $e');
+      //print('Error during update: $e');
     }
   }
 
@@ -338,15 +338,15 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
         setState(() {
           updateStatus = true;
         });
-        print('Resource updated successfully.');
+        //print('Resource updated successfully.');
       } else {
         setState(() {
           updateStatus = false;
         });
-        print('Resource updated not successfully.');
+        //print('Resource updated not successfully.');
       }
     } catch (e) {
-      print('Error during update: $e');
+      //print('Error during update: $e');
     }
   }
 
@@ -653,9 +653,9 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
         onExpansionChanged: (bool isExpanded) {
           if (!isExpanded) {
-            print('Hello World');
+            //print('Hello World');
           } else {
-            print('Save Value');
+            //print('Save Value');
           }
         },
         leading: Icon(Icons.perm_contact_calendar_outlined),
@@ -783,9 +783,9 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
         onExpansionChanged: (bool isExpanded) {
           if (!isExpanded) {
-            print('Hello World');
+            //print('Hello World');
           } else {
-            print('Save Value');
+            //print('Save Value');
           }
         },
         leading: Icon(Icons.perm_contact_calendar_outlined),

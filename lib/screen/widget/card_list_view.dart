@@ -370,7 +370,7 @@ class CardItemWithOutImage_Planting_Calendar extends StatelessWidget {
                                           ),
                                           onPressed: () {
                                             // Button press logic goes here
-                                            print('Button Pressed');
+                                            //print('Button Pressed');
 
                                             if (plantings != null &&
                                                 provider != null) {
@@ -637,7 +637,7 @@ class CardItemWithOutImage_Planting extends StatelessWidget {
                                           ),
                                           onPressed: () {
                                             // Button press logic goes here
-                                            print('Button Pressed');
+                                            //print('Button Pressed');
                                             if (plantings != null &&
                                                 provider != null) {
                                               Navigator.push(
@@ -1292,7 +1292,7 @@ class CardItemForFieldNoImage extends StatelessWidget {
       userFromField = userFromFields;
       return userFromField;
     } catch (e) {
-      print(e);
+      //print(e);
     }
   }
 
@@ -1377,7 +1377,7 @@ class CardItemForFieldNoImage extends StatelessWidget {
                                           ),
                                           onPressed: () {
                                             // Button press logic goes here
-                                            print('Button Pressed');
+                                            //print('Button Pressed');
                                           },
                                           child: Icon(
                                             Icons.edit,

@@ -81,15 +81,13 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
   }
 
   Future<void> _checkPermission() async {
-
     final granted = await Permission.storage.isGranted;
 
-    if (granted){
+    if (granted) {
       setState(() {
-          _permissionReady = true;
+        _permissionReady = true;
       });
     }
-
   }
 
   showAboutDialog(context) => showCupertinoDialog<void>(
@@ -153,7 +151,7 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
   //         showToastMessage("Download Failed");
   //       }
   //     } else {
-  //       print("Platform not supported.");
+  //       //print("Platform not supported.");
   //     }
   //   } catch (e) {
   //     showToastMessage("Download Failed");
@@ -221,7 +219,7 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
               onPressed: () {
                 setState(() {
                   widget.notificationStatus = values;
-                  print(widget.notificationStatus);
+                  //print(widget.notificationStatus);
                   values == true
                       ? notificationColor = Colors.green
                       : notificationColor = Colors.grey.shade800;
@@ -258,16 +256,15 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
             ),
             ElevatedButton(
               onPressed: () {
-
                 setState(() async {
                   if (appSetting!.signIn == false) {
                     appSetting!.signIn = true;
                   } else {
                     appSetting!.signIn = false;
                   }
-                  //print(autoLogInStatus.toString());
+                  ////print(autoLogInStatus.toString());
                   //saveAutoLogInStatusToStorage(autoLogInStatus);
-                  save("app_setting",appSetting);
+                  save("app_setting", appSetting);
                   values == true
                       ? autoLoginColor = Colors.green
                       : autoLoginColor = Colors.grey.shade800;
@@ -291,9 +288,9 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text(loggedUser.email ,
+            accountName: Text(loggedUser.email,
                 style: TextStyle(fontSize: sizeHeight(15, context))),
-            accountEmail: Text(loggedUser.email ,
+            accountEmail: Text(loggedUser.email,
                 style: TextStyle(fontSize: sizeHeight(15, context))),
             currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.transparent,
@@ -305,7 +302,11 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
                     border: Border.all(
                         color: Colors.white, width: sizeWidth(2, context)),
                     image: DecorationImage(
-                      image: (loggedUser.img_url == "")? AssetImage('assets/images/no_profile_img.png') as ImageProvider : MemoryImage(Base64Decoder().convert(loggedUser.img_url)),
+                      image: (loggedUser.img_url == "")
+                          ? AssetImage('assets/images/no_profile_img.png')
+                              as ImageProvider
+                          : MemoryImage(
+                              Base64Decoder().convert(loggedUser.img_url)),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -345,7 +346,7 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
                 onChanged: (bool values) {
                   setState(() {
                     widget.notificationStatus = values;
-                    print(widget.notificationStatus);
+                    //print(widget.notificationStatus);
                     saveNotificationToStorage(widget.notificationStatus);
                     values == true
                         ? notificationColor = Colors.green
@@ -386,15 +387,15 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
                   value: appSetting!.signIn,
                   onChanged: (bool values) async {
                     setState(() {
-                      appSetting!.signIn = values ;
-                     /* if (autoLogInStatus == false) {
+                      appSetting!.signIn = values;
+                      /* if (autoLogInStatus == false) {
                         autoLogInStatus = true;
                       } else {
                         autoLogInStatus = false;
                       }*/
-                      //print(autoLogInStatus.toString());
+                      ////print(autoLogInStatus.toString());
                       //sa(values);
-                      save("app_setting",appSetting);
+                      save("app_setting", appSetting);
 
                       values == true
                           ? autoLoginColor = Colors.green
@@ -424,17 +425,17 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
                     context: context,
                     builder: (context) => CupertinoAlertDialog(
                       title: const Text('Delete Account'),
-                      content: Text('delete-account-message'.i18n()
-                      ,style: TextStyle(fontSize: 15),),
+                      content: Text(
+                        'delete-account-message'.i18n(),
+                        style: TextStyle(fontSize: 15),
+                      ),
                       actions: <Widget>[
                         TextButton(
-                          onPressed: () => {
-
-                            Navigator.pop(context, 'Cancel')
-
-                          },
+                          onPressed: () => {Navigator.pop(context, 'Cancel')},
                           child: Text('cancle'.i18n(),
-                              style: TextStyle(color: Colors.blue,fontSize: SizeConfig.AlertfontSize)),
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  fontSize: SizeConfig.AlertfontSize)),
                         ),
                         TextButton(
                           onPressed: () async {
@@ -447,11 +448,12 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
 
                             UserService uservice = UserService();
 
-                            uservice.deleteAccount(tokenFromLogin!.token).then((value) async {
-
-                              if(value == true){
-                                appSetting!.signIn = false ;
-                                save("app_setting",appSetting) ;
+                            uservice
+                                .deleteAccount(tokenFromLogin!.token)
+                                .then((value) async {
+                              if (value == true) {
+                                appSetting!.signIn = false;
+                                save("app_setting", appSetting);
                                 //saveAutoLogInStatusToStorage(false);
 
                                 await remove("user");
@@ -464,15 +466,14 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => LoginScreen()),
-                                      (route) => false,
+                                  (route) => false,
                                 );
                               }
-
                             });
                           },
                           child: Text(
                             'delete'.i18n(),
-                            style: TextStyle(color: Colors.red,fontSize: 15),
+                            style: TextStyle(color: Colors.red, fontSize: 15),
                           ),
                         ),
                       ],
@@ -508,9 +509,7 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
                     content: Text('exit-application'.i18n()),
                     actions: <Widget>[
                       TextButton(
-                        onPressed: () => {
-                          Navigator.pop(context, 'Cancel')
-                        },
+                        onPressed: () => {Navigator.pop(context, 'Cancel')},
                         child: Text('cancle'.i18n(),
                             style: TextStyle(color: Colors.blue)),
                       ),
@@ -524,16 +523,16 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
                           );
 
                           setState(() {
-                            appSetting!.signIn = false ;
+                            appSetting!.signIn = false;
                           });
 
-                          await save("app_setting",appSetting);
+                          await save("app_setting", appSetting);
                           //saveAutoLogInStatusToStorage(false);
 
                           await remove("user");
 
                           await Future.delayed(Duration(seconds: 2));
-                          
+
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(

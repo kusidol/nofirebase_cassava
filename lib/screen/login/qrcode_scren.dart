@@ -24,22 +24,21 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class QRCodeScannerScreen extends StatefulWidget {
-
   String token;
 
   @override
-
   QRCodeScannerScreen(this.token);
 
   _QRCodeScannerScreenState createState() => _QRCodeScannerScreenState();
 }
 
 //CameraScanner
-class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> with WidgetsBindingObserver {
+class _QRCodeScannerScreenState extends State<QRCodeScannerScreen>
+    with WidgetsBindingObserver {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController? controller;
   bool _permission = false;
-  bool arkPermission = false ;
+  bool arkPermission = false;
   String? registerCode;
   String message = "";
   String userType = "";
@@ -51,8 +50,8 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> with WidgetsB
     super.initState();
     _getPermission();
     WidgetsBinding.instance!.addObserver(this);
-
   }
+
   @override
   void dispose() {
     controller?.dispose();
@@ -73,13 +72,13 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> with WidgetsB
     if (state == AppLifecycleState.resumed) {
       final granted = await Permission.camera.isGranted;
       if (granted && !_permission) {
-        _permission = granted ;
+        _permission = granted;
         Navigator.of(context).pop();
       }
     }
   }
-  Future<void> doQR(String regisCode) async {
 
+  Future<void> doQR(String regisCode) async {
     final String? token = widget.token;
     final Service service = Service();
 
@@ -87,9 +86,9 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> with WidgetsB
       final response = await service.doGet(
           '$LOCAL_SERVER_IP_URL/register/$regisCode', token.toString());
       final responseBody = json.decode(response.data) as Map<String, dynamic>;
-      //print(responseBody);
+      ////print(responseBody);
 
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         final body = responseBody['body'] as Map<String, dynamic>;
         showDialog<String>(
           context: context,
@@ -100,15 +99,14 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> with WidgetsB
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
-                 // print("--"+Navigator.);
+                  // //print("--"+Navigator.);
                 },
-                child: Text('cancle'.i18n(),
-                    style: TextStyle(color: Colors.red)),
+                child:
+                    Text('cancle'.i18n(), style: TextStyle(color: Colors.red)),
               ),
               TextButton(
                 onPressed: () async {
                   // Show a loading dialog
-
 
                   await Future.delayed(Duration(seconds: 2));
                   Navigator.pop(context);
@@ -124,7 +122,6 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> with WidgetsB
                     ),
                   );
                 },
-
                 child: Text(
                   'confirm'.i18n(),
                   style: TextStyle(color: Colors.blue),
@@ -133,11 +130,8 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> with WidgetsB
             ],
           ),
         );
-
-      }else if(response.statusCode == 400){
-
+      } else if (response.statusCode == 400) {
         _showAlertDialog(context, "qrcode-invalid".i18n());
-
       }
 
       //registerCode = rest;
@@ -146,27 +140,22 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> with WidgetsB
       //userType = body['userType'] as String;
       //nameCompany = body['organizationName'] as String;
 
-    }
-    catch (error) {
-
+    } catch (error) {
       //showAlert(context);
       //return error;
     }
-
   }
 
-
-   Future<dynamic> _getRole() async {
+  Future<dynamic> _getRole() async {
     final String? token = widget.token;
     final Service service = Service();
     try {
       final response = await service.doGet(
           '$LOCAL_SERVER_IP_URL/register/$registerCode', token.toString());
       final responseBody = json.decode(response.data) as Map<String, dynamic>;
-      //print(responseBody);
+      ////print(responseBody);
 
-
-      return response ;
+      return response;
       /*if (responseBody['status'] == 400) {
         String messageCheck = responseBody['message'] as String;
         if (messageCheck == "รหัสไม่ถูกต้อง") {
@@ -183,57 +172,55 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> with WidgetsB
         nameCompany = body['organizationName'] as String;
       }*/
     } catch (error) {
-
       showAlert(context);
       return error;
     }
   }
 
-void showAlert(BuildContext context) {
-  showCupertinoDialog<void>(
-    context: context,
-    barrierDismissible: false,
-    builder: (BuildContext context) => CupertinoAlertDialog(
-      title: Text(
-        "notification-label".i18n(),
-        style: const TextStyle(
-          color: theme_color4,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-      content: Text(
-        "erroroccurred".i18n(),
-        style: const TextStyle(
-          color: theme_color4,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-      actions: <CupertinoDialogAction>[
-        CupertinoDialogAction(
-          onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (BuildContext context) {
-                return LoginScreen();
-              }),
-              (r) {
-                return false;
-              },
-            );
-          },
-          child: Text(
-            "allow".i18n(),
-            style: const TextStyle(
-             color: CupertinoColors.activeBlue,
-              fontWeight: FontWeight.w400,
-            ),
+  void showAlert(BuildContext context) {
+    showCupertinoDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text(
+          "notification-label".i18n(),
+          style: const TextStyle(
+            color: theme_color4,
+            fontWeight: FontWeight.w400,
           ),
         ),
-      ],
-    ),
-  );
-}
-
+        content: Text(
+          "erroroccurred".i18n(),
+          style: const TextStyle(
+            color: theme_color4,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (BuildContext context) {
+                  return LoginScreen();
+                }),
+                (r) {
+                  return false;
+                },
+              );
+            },
+            child: Text(
+              "allow".i18n(),
+              style: const TextStyle(
+                color: CupertinoColors.activeBlue,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _buildQrView(BuildContext context) {
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
@@ -281,12 +268,11 @@ void showAlert(BuildContext context) {
           bottom: 20,
           left: 20,
           child: GestureDetector(
-            onTap: ()  {
+            onTap: () {
               setState(() {
                 controller!.pauseCamera();
                 controller!.resumeCamera();
               });
-
             },
             child: Container(
               width: 50,
@@ -307,97 +293,84 @@ void showAlert(BuildContext context) {
     );
   }
 
-  void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p)  {
-    //print('${DateTime.now().toIso8601String()}_onPermissionSet $p');
+  void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
+    ////print('${DateTime.now().toIso8601String()}_onPermissionSet $p');
     if (!p && !arkPermission) {
       /*ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('No permission to access camera')),
       );*/
       setState(() {
-        arkPermission = true ;
+        arkPermission = true;
       });
       showAboutDialog(context);
     }
   }
 
   showAboutDialog(context) => showCupertinoDialog<void>(
-    context: context,
-    barrierDismissible: false,
-    builder: (BuildContext context) => CupertinoAlertDialog(
-      title: Text("Permission Denied"),
-      content: Text('Allow access to camera'),
-      actions: <CupertinoDialogAction>[
-        CupertinoDialogAction(
-            onPressed: () {
-               Navigator.of(context).pop(false);
-               Navigator.of(context).pop(false);
-            },
-            child: Text('Cancel')),
-        CupertinoDialogAction(
-            isDefaultAction: true,
-            onPressed: () => openAppSettings(),
-            child: Text('Settings')),
-      ],
-    ),
-  );
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: Text("Permission Denied"),
+          content: Text('Allow access to camera'),
+          actions: <CupertinoDialogAction>[
+            CupertinoDialogAction(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                  Navigator.of(context).pop(false);
+                },
+                child: Text('Cancel')),
+            CupertinoDialogAction(
+                isDefaultAction: true,
+                onPressed: () => openAppSettings(),
+                child: Text('Settings')),
+          ],
+        ),
+      );
 
   void _onQRViewCreated(QRViewController controller) {
-    print("===========create==============");
+    //print("===========create==============");
     setState(() {
       this.controller = controller;
       //this.controller!.resumeCamera();
     });
 
-    controller.scannedDataStream.listen((scanData)  {
-     // print(scanData.code);
+    controller.scannedDataStream.listen((scanData) {
+      // //print(scanData.code);
       //if (scanData != null) {
-        //controller.pauseCamera();
+      //controller.pauseCamera();
 
-        //setState(() {
+      //setState(() {
 
-          //doQR(scanData.code);
-          //controller.stopCamera();
-          //return ;
-         // registerCode = scanData.code;
-        //});
-     // }
+      //doQR(scanData.code);
+      //controller.stopCamera();
+      //return ;
+      // registerCode = scanData.code;
+      //});
+      // }
     }).onData((data) async {
-
       controller.stopCamera();
 
       setState(() {
-
         doQR(data.code);
       });
 
-
-      //print("========================="+data.code);
+      ////print("========================="+data.code);
     });
-
-
   }
-
-
 
 //Gallery Picker
   Future<bool> _pickQRCodeFromGallery() async {
-
-    XFile? pickedImageFile = null ;
+    XFile? pickedImageFile = null;
     try {
-      pickedImageFile = await _picker.pickImage(
-          source: ImageSource.gallery);
-    }catch (e) {
-      print(e);
+      pickedImageFile = await _picker.pickImage(source: ImageSource.gallery);
+    } catch (e) {
+      //print(e);
     }
     if (pickedImageFile != null) {
       //String rest = await FlutterQrReader.imgScan(pickedImageFile.path);
-       await Scan.parse(pickedImageFile.path).then((value) {
-
-        if(value != null)
-          doQR(value);
-
+      await Scan.parse(pickedImageFile.path).then((value) {
+        if (value != null) doQR(value);
       });
-
 
       /*await _getRole().then((value) {
         final responseBody = json.decode(value.data) as Map<String, dynamic>;
@@ -420,7 +393,7 @@ void showAlert(BuildContext context) {
 
       });*/
 
-      //print(rest);
+      ////print(rest);
       //return true ;
 
       /*if (registerCode == null) {
@@ -439,7 +412,7 @@ void showAlert(BuildContext context) {
       } else if (message == "รหัสหมดอายุ") {
         _showAlertDialog(context, 'รหัสหมดอายุ');
       } else if (message == "รหัสถูกต้อง") {
-        //print("---------------"+message);
+        ////print("---------------"+message);
         if(mounted){
           //Navigator.pop(context);
 
@@ -469,81 +442,81 @@ void showAlert(BuildContext context) {
     return true;
   }
 
-void _showAlertDialog(BuildContext context, String message) {
-  showCupertinoDialog<void>(
-    context: context,
-    builder: (BuildContext context) => CupertinoAlertDialog(
-      title: Text(
-        "notification-label".i18n(),
-        style: const TextStyle(
-          color: CupertinoColors.black,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-      content: Text(
-        message,
-        style: const TextStyle(
-          color: CupertinoColors.black,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-      actions: <CupertinoDialogAction>[
-        CupertinoDialogAction(
-          child: Text(
-            "allow".i18n(),
-            style: const TextStyle(
-              color: CupertinoColors.activeBlue,
-              fontWeight: FontWeight.w400,
-            ),
+  void _showAlertDialog(BuildContext context, String message) {
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text(
+          "notification-label".i18n(),
+          style: const TextStyle(
+            color: CupertinoColors.black,
+            fontWeight: FontWeight.w400,
           ),
-          onPressed: () {
-            message = "";
-            Navigator.pop(context);
-          },
         ),
-      ],
-    ),
-  );
-}
+        content: Text(
+          message,
+          style: const TextStyle(
+            color: CupertinoColors.black,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            child: Text(
+              "allow".i18n(),
+              style: const TextStyle(
+                color: CupertinoColors.activeBlue,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            onPressed: () {
+              message = "";
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
 
-void _showAlertDialogWithScanCamera(
-    BuildContext context, String message, QRViewController controller) {
-  showCupertinoDialog<void>(
-    context: context,
-    builder: (BuildContext context) => CupertinoAlertDialog(
-      title: Text(
-        "notification-label".i18n(),
-        style: const TextStyle(
-          color: CupertinoColors.black,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-      content: Text(
-        message,
-        style: const TextStyle(
-          color: CupertinoColors.black,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-      actions: <CupertinoDialogAction>[
-        CupertinoDialogAction(
-          child: Text(
-            "allow".i18n(),
-            style: const TextStyle(
-              color: CupertinoColors.activeBlue,
-              fontWeight: FontWeight.w400,
-            ),
+  void _showAlertDialogWithScanCamera(
+      BuildContext context, String message, QRViewController controller) {
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text(
+          "notification-label".i18n(),
+          style: const TextStyle(
+            color: CupertinoColors.black,
+            fontWeight: FontWeight.w400,
           ),
-          onPressed: () {
-            message = "";
-            Navigator.pop(context);
-            controller.resumeCamera();
-          },
         ),
-      ],
-    ),
-  );
-}
+        content: Text(
+          message,
+          style: const TextStyle(
+            color: CupertinoColors.black,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            child: Text(
+              "allow".i18n(),
+              style: const TextStyle(
+                color: CupertinoColors.activeBlue,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            onPressed: () {
+              message = "";
+              Navigator.pop(context);
+              controller.resumeCamera();
+            },
+          ),
+        ],
+      ),
+    );
+  }
 
 //returnbuild
   @override
@@ -559,7 +532,7 @@ void _showAlertDialogWithScanCamera(
                 size: 20,
               ),
               onPressed: () {
-                print("back");
+                //print("back");
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (BuildContext context) {
                   return LoginScreen();
@@ -572,7 +545,7 @@ void _showAlertDialogWithScanCamera(
         title: Container(
           margin: EdgeInsets.only(left: 25, right: 25),
           child: Text(
-             "scanqrcodelabel".i18n(),
+            "scanqrcodelabel".i18n(),
             style: const TextStyle(
               color: Color(0xFF118E7D),
               fontSize: 18,

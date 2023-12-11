@@ -38,7 +38,7 @@ class _StaffRegisterScreen extends State<StaffRegisterScreen> {
     _codeCompanyregister = widget.codeCompanyregister!;
     _nameCompanyregister = widget.nameCompanyregister!;
     //token = tokenFromLogin?.token;
-    print(widget.token);
+    //print(widget.token);
   }
 
   String prefix = "";
@@ -59,8 +59,10 @@ class _StaffRegisterScreen extends State<StaffRegisterScreen> {
   Future<bool> createStaff(var staffBody) async {
     Service service = Service();
     var response = await service.doPostWithFormData(
-        "$LOCAL_SERVER_IP_URL/register/staff", widget.token.toString(), staffBody);
-    //print(response);
+        "$LOCAL_SERVER_IP_URL/register/staff",
+        widget.token.toString(),
+        staffBody);
+    ////print(response);
     var responseBody = json.decode(response.data);
     if (responseBody['status'] == 200) {
       String messageCheck = responseBody['message'] as String;
@@ -71,65 +73,63 @@ class _StaffRegisterScreen extends State<StaffRegisterScreen> {
         String showMS = "มีการใช้งาน E-mail นี้แล้ว";
         showAlert(context, showMS);
       }
-      //print(responseBody['body']);
+      ////print(responseBody['body']);
       return true;
     } else {
       return false;
     }
   }
 
-void showAlert(BuildContext context, String showMS) {
-  Color backgroundColor =
-      showMS == "มีการใช้งาน E-mail นี้แล้ว" ? Colors.red : Colors.green;
-  if(showMS=="มีการใช้งาน E-mail นี้แล้ว"){
-    showMS = "emailalreadyinuse".i18n();
-  }
-  else if(showMS=="ลงทะเบียนเจ้าหน้าที่สำเร็จ"){
-     showMS = "registerstaffdone".i18n();
-  }
-  showCupertinoDialog<void>(
-    context: context,
-    builder: (BuildContext context) => CupertinoAlertDialog(
-      title: Text(
-       "notification-label".i18n(),
-        style: const TextStyle(
-          color: CupertinoColors.black,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-      content: Text(
-        showMS,
-        style: const TextStyle(
-          color: CupertinoColors.black,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-      actions: <CupertinoDialogAction>[
-        CupertinoDialogAction(
-          child: Text(
-              "done".i18n(),
-            style: const TextStyle(
-              color: CupertinoColors.activeBlue,
-              fontWeight: FontWeight.w400,
-            ),
+  void showAlert(BuildContext context, String showMS) {
+    Color backgroundColor =
+        showMS == "มีการใช้งาน E-mail นี้แล้ว" ? Colors.red : Colors.green;
+    if (showMS == "มีการใช้งาน E-mail นี้แล้ว") {
+      showMS = "emailalreadyinuse".i18n();
+    } else if (showMS == "ลงทะเบียนเจ้าหน้าที่สำเร็จ") {
+      showMS = "registerstaffdone".i18n();
+    }
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text(
+          "notification-label".i18n(),
+          style: const TextStyle(
+            color: CupertinoColors.black,
+            fontWeight: FontWeight.w400,
           ),
-          onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (BuildContext context) {
-                return LoginScreen();
-              }),
-              (r) {
-                return false;
-              },
-            );
-          },
         ),
-      ],
-    ),
-  );
-}
-
+        content: Text(
+          showMS,
+          style: const TextStyle(
+            color: CupertinoColors.black,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            child: Text(
+              "done".i18n(),
+              style: const TextStyle(
+                color: CupertinoColors.activeBlue,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (BuildContext context) {
+                  return LoginScreen();
+                }),
+                (r) {
+                  return false;
+                },
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget createStaffform() {
     return Form(
@@ -150,7 +150,7 @@ void showAlert(BuildContext context, String showMS) {
                         Container(
                           margin: EdgeInsets.only(left: 16, top: 16),
                           child: Text(
-                               "prefix".i18n(),
+                            "prefix".i18n(),
                             style: const TextStyle(
                               color: Color(0xFFB8B6B6),
                               fontSize: 16,
@@ -232,7 +232,7 @@ void showAlert(BuildContext context, String showMS) {
                         Container(
                           margin: EdgeInsets.only(left: 16, top: 16),
                           child: Text(
-                               "firstname".i18n(),
+                            "firstname".i18n(),
                             style: const TextStyle(
                               color: Color(0xFFB8B6B6),
                               fontSize: 16,
@@ -495,7 +495,7 @@ void showAlert(BuildContext context, String showMS) {
                         Container(
                           margin: EdgeInsets.only(left: 16, top: 16),
                           child: Text(
-                             "position".i18n(),
+                            "position".i18n(),
                             style: const TextStyle(
                               color: Color(0xFFB8B6B6),
                               fontSize: 16,
@@ -763,7 +763,7 @@ void showAlert(BuildContext context, String showMS) {
                             ),
                             Container(
                               margin: EdgeInsets.only(left: 65, right: 50),
-                               alignment: Alignment.center,
+                              alignment: Alignment.center,
                               child: Text(
                                 "registerforofficials".i18n(),
                                 style: const TextStyle(
@@ -809,4 +809,3 @@ void showAlert(BuildContext context, String showMS) {
     );
   }
 }
-

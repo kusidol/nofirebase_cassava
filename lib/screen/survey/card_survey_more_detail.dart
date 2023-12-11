@@ -90,7 +90,7 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
       final countDiseases =
           await surveyTarget.countDiseaseBySurveyId(id, token.toString());
       if (countDiseases != null) {
-        print("infunction");
+        //print("infunction");
         setState(() {
           countDis = countDiseases["count"].toString();
           checkCountSurveyNull();
@@ -99,7 +99,7 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
       }
       return "0";
     } catch (e) {
-      print(e);
+      //print(e);
     }
   }
 
@@ -116,11 +116,11 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
         });
         return countNaturalEnemy["count"].toString();
       }
-      print("countNaturalEnemy");
-      print(countNaturalEnemy);
+      //print("countNaturalEnemy");
+      //print(countNaturalEnemy);
       return "0";
     } catch (e) {
-      print(e);
+      //print(e);
     }
   }
 
@@ -137,11 +137,11 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
         });
         return countPestPhaseSurvey["count"].toString();
       }
-      print("countPestPhaseSurvey");
-      print(countPestPhaseSurvey);
+      //print("countPestPhaseSurvey");
+      //print(countPestPhaseSurvey);
       return "0";
     } catch (e) {
-      print(e);
+      //print(e);
     }
   }
 
@@ -292,12 +292,12 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
   void _handleDeletion() async {
     SurveyService surveyervice = SurveyService();
     String? token = tokenFromLogin?.token;
-   // print("widget.surveyProvider.surveys : ${widget.surveyProvider.surveys}");
-    print("widget.survey : ${widget.survey}");
+    // //print("widget.surveyProvider.surveys : ${widget.surveyProvider.surveys}");
+    //print("widget.survey : ${widget.survey}");
     bool isDeleted = await widget.surveyProvider.deleteSurvey(widget.survey);
     if (isDeleted) {
       //alert
-      print("delete success");
+      //print("delete success");
       Navigator.of(context).pop();
       Navigator.of(context).pop();
     } else {}

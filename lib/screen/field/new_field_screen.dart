@@ -129,7 +129,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
     if (state == AppLifecycleState.resumed) {
       final location_granted = await Permission.location.isGranted;
       if (location_granted) {
-        // print("Resume with Location");
+        // //print("Resume with Location");
       }
     }
   }
@@ -154,7 +154,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
       //     content: Text(
       //         'Location permissions are permanently denied, we cannot request permissions.')));
       var statusLocation = await Permission.location.status;
-      print("status : ${statusLocation}");
+      //print("status : ${statusLocation}");
       if (statusLocation.isDenied) {
         showAlertDialog_Location(context);
       }
@@ -252,7 +252,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
       _isPassValueFromPage = true;
 
       field = widget.fieldFromPassPage!;
-      // print("widget.location : ${widget.location!}");
+      // //print("widget.location : ${widget.location!}");
       selectedProvince_value = widget.location!.split(",").last;
       selectedDistrict_value = widget.location!.split(",").first;
       selectedSubdistrict_value = widget.location!.split(",")[1];
@@ -344,7 +344,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
         save_Road = field.road;
         setState(() => _currentStep += 1);
       } else {
-        print("in valid");
+        //print("in valid");
       }
     } else if (_currentStep == 1) {
       if (_formKeyPage2.currentState!.validate()) {
@@ -352,7 +352,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
         save_Landmark = field.landmark;
         setState(() => _currentStep += 1);
       } else {
-        print("in valid");
+        //print("in valid");
       }
     } else if (_currentStep == 2) {
       if (_formKeyPage3.currentState!.validate()) {
@@ -361,7 +361,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
         save_MetresAboveSeaLv = field.metresAboveSeaLv.toString();
         setState(() => _currentStep += 1);
       } else {
-        print("in valid");
+        //print("in valid");
       }
     } else {
       setState(() => _currentStep += 1);
@@ -422,10 +422,10 @@ class _NewFieldScreenState extends State<NewFieldScreen>
         "status": field.status,
         "userinfields": widget.user!.userID,
       };
-      print("UPDATE VALUE : ${updateData.toString()}");
+      //print("UPDATE VALUE : ${updateData.toString()}");
       int statusUpdateField =
           await fieldService.updateField(token.toString(), updateData);
-      print("NUMBER STATUS : ${statusUpdateField}");
+      //print("NUMBER STATUS : ${statusUpdateField}");
       if (statusUpdateField == 200) {
         Navigator.pop(context);
         CustomLoading.showSuccess();
@@ -450,7 +450,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
         "userinfields": userInFieldID,
         "createDate": DateTime.now().millisecondsSinceEpoch,
       };
-      print(createData);
+      //print(createData);
       FieldService fieldService = new FieldService();
       String? token = tokenFromLogin?.token;
       Field? newField =
@@ -458,7 +458,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
       CustomLoading.dismissLoading();
       if (newField != null) {
         CustomLoading.showSuccess();
-        print("addField newField ${newField.fieldID}");
+        //print("addField newField ${newField.fieldID}");
 
         widget.fieldProviders.addField(newField);
         widget.fieldProviders.notifyListeners();
@@ -675,7 +675,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                                       builder: (context, child) =>
                                           DropdownForFarmer(
                                         (value) {
-                                          print(value);
+                                          //print(value);
                                           bool duplicate = false;
                                           List<String> temp =
                                               dropdownFarmer.farmerString;
@@ -694,8 +694,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                                           }
                                           setState(() {
                                             userInFieldID = value['id'];
-                                            print(
-                                                "SELECT userInFieldID : ${userInFieldID}");
+                                            //print("SELECT userInFieldID : ${userInFieldID}");
                                             selectedValue = value['nameFarmer'];
                                           });
                                         },
@@ -704,7 +703,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                                   ),
                                 );
                               } else {
-                                print(value);
+                                //print(value);
                                 int id = 0;
                                 for (int i = 0;
                                     i < dropdownFarmer.items.length;
@@ -716,8 +715,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                                 }
                                 setState(() {
                                   userInFieldID = id;
-                                  print(
-                                      "SELECT userInFieldID : ${userInFieldID}");
+                                  //print("SELECT userInFieldID : ${userInFieldID}");
                                   selectedValue = value.toString();
                                 });
                               }
@@ -1124,7 +1122,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                           try {
                             field.size = double.parse(text);
                           } catch (e) {
-                            print("NUMBER FUCKING ERROR :${e}");
+                            //print("NUMBER FUCKING ERROR :${e}");
                           }
                         }
                       }),
@@ -1228,7 +1226,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                                 try {
                                   field.latitude = double.parse(value);
                                 } catch (e) {
-                                  print("NUMBER FUCKING ERROR :${e}");
+                                  //print("NUMBER FUCKING ERROR :${e}");
                                 }
                               }
                             });
@@ -1243,7 +1241,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                                 try {
                                   field.latitude = double.parse(text);
                                 } catch (e) {
-                                  print("NUMBER FUCKING ERROR :${e}");
+                                  //print("NUMBER FUCKING ERROR :${e}");
                                 }
                               }
                             }),
@@ -1297,7 +1295,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                                 try {
                                   field.longtitude = double.parse(value);
                                 } catch (e) {
-                                  print("NUMBER FUCKING ERROR :${e}");
+                                  //print("NUMBER FUCKING ERROR :${e}");
                                 }
                               }
                             });
@@ -1312,7 +1310,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                                 try {
                                   field.longtitude = double.parse(text);
                                 } catch (e) {
-                                  print("NUMBER FUCKING ERROR :${e}");
+                                  //print("NUMBER FUCKING ERROR :${e}");
                                 }
                               }
                             }),
@@ -1352,7 +1350,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                           try {
                             field.metresAboveSeaLv = double.parse(text);
                           } catch (e) {
-                            print("NUMBER FUCKING ERROR :${e}");
+                            //print("NUMBER FUCKING ERROR :${e}");
                           }
                         }
                       }),
@@ -1380,7 +1378,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
   Future<void> submitUpdateGPS() async {
     await _getCurrentLocation();
 
-    print("Subdistrict : ${selectedSubistrictId}");
+    //print("Subdistrict : ${selectedSubistrictId}");
     if (canUpdateGPS) {
       setState(() {
         field.longtitude =

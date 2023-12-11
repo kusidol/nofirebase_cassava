@@ -511,7 +511,7 @@ class SearchSurveyFieldScreenState extends State<SearchSurveyFieldScreen> {
         (key, value) => value == null || value == '' || value == 0);
 
     String jsonString = jsonEncode(jsonData);
-    print(jsonString);
+    //print(jsonString);
 
     setState(() {
       isShowbasicSearch = true;
@@ -527,7 +527,7 @@ class SearchSurveyFieldScreenState extends State<SearchSurveyFieldScreen> {
   Widget build(BuildContext context) {
     String locale = Localizations.localeOf(context).languageCode;
      SurveyProvider surveyProvider =widget.surveyProvider;
-    print("Page Base SurveySearch Context: $context");
+    //print("Page Base SurveySearch Context: $context");
     
     return 
        Scaffold(
@@ -578,7 +578,7 @@ class SearchSurveyFieldScreenState extends State<SearchSurveyFieldScreen> {
   }
 
   void itemSelectionChanged(String? s) {
-    print(s);
+    //print(s);
   }
 
 

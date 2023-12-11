@@ -103,7 +103,7 @@ class _BaseHomeScreen extends State<BaseHomeScreen>
   int check = 0;
   final ScrollController _scrollController = ScrollController();
   Future<void> _pullRefresh() async {
-    print("123");
+    //print("123");
   }
 
   @override
@@ -674,7 +674,7 @@ class _BaseHomeScreen extends State<BaseHomeScreen>
 
                 if (selected != null && selected != _selectedDay)
                   setState(() {
-                    //print(selected);
+                    ////print(selected);
                     _selectedDay = selected;
                     _focusedDay = selected;
                     // selectedDate = selected;
@@ -705,7 +705,7 @@ class _BaseHomeScreen extends State<BaseHomeScreen>
               onPageChanged: (focusedDay) async {
                 // No need to call `setState()` here
                 _focusedDay = focusedDay;
-                // print("_focusedDay : ${focusedDay}");
+                // //print("_focusedDay : ${focusedDay}");
                 await calendarFunction(_focusedDay);
               }),
         ],
@@ -821,7 +821,7 @@ class _BaseHomeScreen extends State<BaseHomeScreen>
           ],
           initialValue: 0,
           onCanceled: () {
-            print("You have canceled the menu.");
+            //print("You have canceled the menu.");
           },
           onSelected: (value) {
             setState(() {
@@ -906,7 +906,7 @@ class _BaseHomeScreen extends State<BaseHomeScreen>
           plantings: planting,
           provider: widget.plantingProvider,
           callback: () {
-            // print("test inkwell");
+            // //print("test inkwell");
             // Navigator.push(
             //   context,
             //   MaterialPageRoute(
@@ -965,7 +965,7 @@ class _BaseHomeScreen extends State<BaseHomeScreen>
         animationController?.forward();
         return CardItemWithOutImage_Calendar(
           callback: () {
-            print("test inkwell");
+            //print("test inkwell");
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -975,7 +975,7 @@ class _BaseHomeScreen extends State<BaseHomeScreen>
             );
           },
           callback2: () {
-            print("test inkwell");
+            //print("test inkwell");
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -1043,7 +1043,7 @@ class _BaseHomeScreen extends State<BaseHomeScreen>
                 plantings: planting,
                 provider: widget.plantingProvider,
                 callback: () {
-                  // print("test inkwell");
+                  // //print("test inkwell");
                   // Navigator.push(
                   //   context,
                   //   MaterialPageRoute(
@@ -1065,7 +1065,7 @@ class _BaseHomeScreen extends State<BaseHomeScreen>
               )
             : CardItemWithOutImage_Calendar(
                 callback: () {
-                  print("test inkwell");
+                  //print("test inkwell");
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -1075,7 +1075,7 @@ class _BaseHomeScreen extends State<BaseHomeScreen>
                   );
                 },
                 callback2: () {
-                  print("test inkwell");
+                  //print("test inkwell");
                   Navigator.push(
                     context,
                     MaterialPageRoute(

@@ -135,7 +135,7 @@ class _DropdownForFieldState extends State<DropdownForField> {
   }
 
   _onloadField() async {
-    print("onload Fields");
+    //print("onload Fields");
   }
 
   //
@@ -194,10 +194,10 @@ class _DropdownForFieldState extends State<DropdownForField> {
                               fontSize: 20, fontWeight: FontWeight.bold)),
                       onExpansionChanged: (bool isExpanded) {
                         if (!isExpanded) {
-                          print('Hello World');
+                          //print('Hello World');
                           // dropdownfield.resetItemsAfterSearch();
                         } else {
-                          print('Save Value');
+                          //print('Save Value');
                         }
                       },
                       leading: Icon(Icons.perm_contact_calendar_outlined),
@@ -293,7 +293,7 @@ class _DropdownForFieldState extends State<DropdownForField> {
                       onNotification: (scrollInfo) {
                         if (scrollInfo.metrics.pixels ==
                             scrollInfo.metrics.maxScrollExtent) {
-                          print('เลื่อนสุดขอบหน้าจอแล้ว');
+                          //print('เลื่อนสุดขอบหน้าจอแล้ว');
                           if (dropdownfield.scroll) {
                             dropdownfield.fetchData();
                             dropdownfield.isScroll = true;
@@ -373,7 +373,7 @@ class _DropdownForFieldState extends State<DropdownForField> {
   }
 
   void itemSelectionChanged(String? s) {
-    print(s);
+    //print(s);
   }
 
   void getAll() {
@@ -419,7 +419,7 @@ class _DropdownForFieldState extends State<DropdownForField> {
   int getID(String value, String Option) {
     if (Option == "Sub") {
       for (Subdistrict subdistrict in _subdistrict) {
-        //print(subdistrict.name);
+        ////print(subdistrict.name);
         if (subdistrict.name == value) {
           return subdistrict.subdistrictId;
         }

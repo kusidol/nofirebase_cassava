@@ -167,25 +167,25 @@ class _DropdownForPlantingState extends State<DropdownForPlanting> {
   }
 
   _onloadField() async {
-    print("onload Fields");
+    //print("onload Fields");
   }
 
   _callUserBySubdistrict(int value) async {
-    print("onload Fields");
+    //print("onload Fields");
     UserService userService = new UserService();
     String? token = tokenFromLogin?.token;
     _user = await userService.getUserBySubdistrict(value, token.toString());
   }
 
   _callFieldsByUserID(int value) async {
-    print("onload Fields");
+    //print("onload Fields");
     FieldService fieldService = new FieldService();
     String? token = tokenFromLogin?.token;
     _fields = await fieldService.getFieldsByUserID(value, token.toString());
   }
 
   _callPlantingInField(int value) async {
-    print("onload Fields");
+    //print("onload Fields");
     PlantingService plantingService = new PlantingService();
     String? token = tokenFromLogin?.token;
     _plants = await plantingService.getPlantingInfield(value, token.toString());
@@ -231,7 +231,7 @@ class _DropdownForPlantingState extends State<DropdownForPlanting> {
     };
 
     String jsonString = jsonEncode(jsonData);
-    print(jsonString);
+    //print(jsonString);
 
     PlantingService plantingService = new PlantingService();
     String? token = tokenFromLogin?.token;
@@ -562,7 +562,7 @@ class _DropdownForPlantingState extends State<DropdownForPlanting> {
                       onNotification: (scrollInfo) {
                         if (scrollInfo.metrics.pixels ==
                             scrollInfo.metrics.maxScrollExtent) {
-                          print('เลื่อนสุดขอบหน้าจอแล้ว');
+                          //print('เลื่อนสุดขอบหน้าจอแล้ว');
                           if (dropdownplanting.scroll) {
                             dropdownplanting.fetchData();
                             dropdownplanting.isScroll = true;
@@ -642,7 +642,7 @@ class _DropdownForPlantingState extends State<DropdownForPlanting> {
   }
 
   void itemSelectionChanged(String? s) {
-    print(s);
+    //print(s);
   }
 
   void getAll() {
@@ -688,9 +688,9 @@ class _DropdownForPlantingState extends State<DropdownForPlanting> {
   int getID(String value, String Option) {
     if (Option == "Sub") {
       for (Subdistrict subdistrict in _subdistrict) {
-        //print(subdistrict.name);
+        ////print(subdistrict.name);
         if (subdistrict.name == value) {
-          //print(subdistrict.subdistrictId);
+          ////print(subdistrict.subdistrictId);
           return subdistrict.subdistrictId;
         }
       }
@@ -703,7 +703,7 @@ class _DropdownForPlantingState extends State<DropdownForPlanting> {
     } else if (Option == "Field") {
       for (Field field in _fields) {
         if (field.name == value) {
-          //print(field.name);
+          ////print(field.name);
           return field.fieldID;
         }
       }

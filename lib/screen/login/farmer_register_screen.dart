@@ -14,7 +14,7 @@ import 'app_styles.dart';
 
 class FarmerRegisterScreen extends StatefulWidget {
   final String? codeCompanyregister;
-  final String? token ;
+  final String? token;
   FarmerRegisterScreen({
     required this.token,
     required this.codeCompanyregister,
@@ -37,7 +37,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
   void initState() {
     super.initState();
     _codeCompanyregister = widget.codeCompanyregister!;
-    print(_codeCompanyregister);
+    //print(_codeCompanyregister);
 
     getAllprovic();
   }
@@ -48,7 +48,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
     Service service = Service();
     var response = await service.doGet(
         "$LOCAL_SERVER_IP_URL/provinces/", widget.token.toString());
-    // print(response);
+    // //print(response);
     if (response.statusCode == 200) {
       var responseBody = json.decode(response.data);
       if (responseBody['status'] == 200) {
@@ -79,11 +79,12 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
     });
 
     var bodyValue;
-    print(province);
+    //print(province);
     Service service = Service();
     var response = await service.doGet(
-        "$LOCAL_SERVER_IP_URL/provinces/$province/districts", widget.token.toString());
-    // print(response);
+        "$LOCAL_SERVER_IP_URL/provinces/$province/districts",
+        widget.token.toString());
+    // //print(response);
     if (response.statusCode == 200) {
       var responseBody = json.decode(response.data);
       if (responseBody['status'] == 200) {
@@ -118,12 +119,12 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
     });
 
     var bodyValue;
-    print(district);
+    //print(district);
     Service service = Service();
     var response = await service.doGet(
         "$LOCAL_SERVER_IP_URL/districts/$district/subdistricts",
         widget.token.toString());
-    // print(response);
+    // //print(response);
     if (response.statusCode == 200) {
       var responseBody = json.decode(response.data);
       if (responseBody['status'] == 200) {
@@ -151,8 +152,10 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
   Future<bool> createFarmer(var farmerBody) async {
     Service service = Service();
     var response = await service.doPostWithFormData(
-        "$LOCAL_SERVER_IP_URL/register/farmer", widget.token.toString(), farmerBody);
-    print(response);
+        "$LOCAL_SERVER_IP_URL/register/farmer",
+        widget.token.toString(),
+        farmerBody);
+    //print(response);
     var responseBody = json.decode(response.data);
     if (responseBody['status'] == 200) {
       String messageCheck = responseBody['message'] as String;
@@ -163,67 +166,67 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
         String showMS = "มีการใช้งาน E-mail นี้แล้ว";
         showAlert(context, showMS);
       }
-      print(responseBody['body']);
+      //print(responseBody['body']);
       return true;
     } else {
       return false;
     }
   }
 
-   void showAlert(BuildContext context, String showMS) {
-  Color backgroundColor =
-      showMS == "มีการใช้งาน E-mail นี้แล้ว" ? Colors.red : Colors.green;
+  void showAlert(BuildContext context, String showMS) {
+    Color backgroundColor =
+        showMS == "มีการใช้งาน E-mail นี้แล้ว" ? Colors.red : Colors.green;
 
-  if (showMS == "มีการใช้งาน E-mail นี้แล้ว") {
-    showMS = "emailalreadyinuse".i18n();
-  } else if (showMS == "ลงทะเบียนเกษตรกรสำเร็จ") {
-    showMS = "registerfarmerdone".i18n();
+    if (showMS == "มีการใช้งาน E-mail นี้แล้ว") {
+      showMS = "emailalreadyinuse".i18n();
+    } else if (showMS == "ลงทะเบียนเกษตรกรสำเร็จ") {
+      showMS = "registerfarmerdone".i18n();
+    }
+
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text(
+          "notification-label".i18n(),
+          style: const TextStyle(
+            color: CupertinoColors.black,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        content: Text(
+          showMS,
+          style: const TextStyle(
+            color: CupertinoColors.black,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            child: Text(
+              "done".i18n(),
+              style: const TextStyle(
+                color: CupertinoColors.activeBlue,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (BuildContext context) {
+                  return LoginScreen();
+                }),
+                (r) {
+                  return false;
+                },
+              );
+            },
+          ),
+        ],
+      ),
+    );
   }
 
-  showCupertinoDialog<void>(
-    context: context,
-    builder: (BuildContext context) => CupertinoAlertDialog(
-      title: Text(
-         "notification-label".i18n(),
-        style: const TextStyle(
-          color: CupertinoColors.black,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-      content: Text(
-        showMS,
-        style: const TextStyle(
-          color: CupertinoColors.black,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-      actions: <CupertinoDialogAction>[
-        CupertinoDialogAction(
-          child: Text(
-            "done".i18n(),
-            style: const TextStyle(
-              color: CupertinoColors.activeBlue,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (BuildContext context) {
-                return LoginScreen();
-              }),
-              (r) {
-                return false;
-              },
-            );
-          },
-        ),
-      ],
-    ),
-  );
-}
-
- String prefix = "";
+  String prefix = "";
   bool prefixCheck = false;
   String name = "";
   bool nameCheck = false;
@@ -424,7 +427,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                         Container(
                           margin: EdgeInsets.only(left: 16, top: 16),
                           child: Text(
-                              "lastname".i18n(),
+                            "lastname".i18n(),
                             style: const TextStyle(
                               color: Color(0xFFB8B6B6),
                               fontSize: 16,
@@ -584,7 +587,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                         Container(
                           margin: EdgeInsets.only(left: 16, top: 16),
                           child: Text(
-                              "province".i18n(),
+                            "province".i18n(),
                             style: const TextStyle(
                               color: Color(0xFFB8B6B6),
                               fontSize: 16,
@@ -643,8 +646,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                                               province['name'] ==
                                               newValue)['provinceId']
                                           .toString();
-                                      print(
-                                          "ProvinceIdSelected : " + province!);
+                                      //print("ProvinceIdSelected : " + province!);
                                       if (province != null) {
                                         provinceCheck = true;
                                         getAlldistrict();
@@ -675,7 +677,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                                     fontSize: 16,
                                   ),
                                   hint: Text(
-                                   "selectprovince".i18n(),
+                                    "selectprovince".i18n(),
                                     style: const TextStyle(
                                       color: Color(0xFF7696FE),
                                       fontSize: 16,
@@ -700,7 +702,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                         Container(
                           margin: EdgeInsets.only(left: 16, top: 16),
                           child: Text(
-                              "district".i18n(),
+                            "district".i18n(),
                             style: const TextStyle(
                               color: Color(0xFFB8B6B6),
                               fontSize: 16,
@@ -748,8 +750,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                                                   district['name'] ==
                                                   newValue)['districtId']
                                               .toString();
-                                          print("DistrictIdSelected : " +
-                                              district!);
+                                          //print("DistrictIdSelected : " +district!);
                                           if (district != null) {
                                             districtCheck = true;
                                             getAllsubdistrict();
@@ -808,7 +809,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                         Container(
                           margin: EdgeInsets.only(left: 16, top: 16),
                           child: Text(
-                              "sub-district".i18n(),
+                            "sub-district".i18n(),
                             style: const TextStyle(
                               color: Color(0xFFB8B6B6),
                               fontSize: 16,
@@ -858,8 +859,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                                                   subdistrict['name'] ==
                                                   newValue)['subdistrictId']
                                               .toString();
-                                          print("SubDistrictIdSelected : " +
-                                              subdistrict!);
+                                          //print("SubDistrictIdSelected : " +subdistrict!);
                                           if (subdistrict != null) {
                                             subdistrictCheck = true;
                                           } else {
@@ -1065,7 +1065,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                                     }
                                   : null,
                               child: Text(
-                                 "done".i18n(),
+                                "done".i18n(),
                                 style: const TextStyle(
                                   color: Color(0xFFF9FAFB),
                                   fontSize: 18,
@@ -1129,7 +1129,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                                 size: 20,
                               ),
                               onPressed: () {
-                                print("back");
+                                //print("back");
                                 Navigator.pushAndRemoveUntil(context,
                                     MaterialPageRoute(
                                         builder: (BuildContext context) {
@@ -1142,7 +1142,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                             Container(
                               margin: EdgeInsets.only(left: 50, right: 50),
                               child: Text(
-                               "registerforfarmer".i18n(),
+                                "registerforfarmer".i18n(),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
@@ -1175,4 +1175,3 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
     );
   }
 }
-

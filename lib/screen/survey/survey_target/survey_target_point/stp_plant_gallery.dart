@@ -41,7 +41,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance!.addObserver(this);
     token = tokenFromLogin?.token;
-    print(widget.targetpointId);
+    //print(widget.targetpointId);
     _fetchImages();
   }
 
@@ -56,11 +56,11 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
       final camera_granted = await Permission.camera.isGranted;
       final storage_granted = await Permission.storage.isGranted;
       if (camera_granted) {
-        // print("Resume with Camera");
+        // //print("Resume with Camera");
         Navigator.of(context).pop();
       }
       if (storage_granted) {
-        // print("Resume with Storage");
+        // //print("Resume with Storage");
         Navigator.of(context).pop();
       }
     }
@@ -75,7 +75,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
         isLoading = false;
       });
     } catch (e) {
-      print(e);
+      //print(e);
     }
   }
 
@@ -83,7 +83,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
     try {
       final picker = ImagePicker();
       final pickedFile = await picker.pickImage(source: source);
-      print("PICKEDFILE : ${pickedFile}");
+      //print("PICKEDFILE : ${pickedFile}");
       if (pickedFile != null) {
         final shouldUpload = await showDialog(
           context: context,
@@ -170,14 +170,14 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
         if (statusCamera.isDenied) {
           showAlertDialog_Camera(context);
         } else {
-          print("Exception !");
+          //print("Exception !");
         }
       } else {
         var statusPhotos = await Permission.photos.status;
         if (statusPhotos.isDenied) {
           showAlertDialog_Photos(context);
         } else {
-          print("Exception !");
+          //print("Exception !");
         }
       }
     }
@@ -193,7 +193,6 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
             CupertinoDialogAction(
                 onPressed: () {
                   Navigator.of(context).pop();
-
                 },
                 child: Text('cancel'.i18n())),
             CupertinoDialogAction(
@@ -214,7 +213,6 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
             CupertinoDialogAction(
                 onPressed: () {
                   Navigator.of(context).pop();
-
                 },
                 child: Text('cancel'.i18n())),
             CupertinoDialogAction(
@@ -303,7 +301,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
       }
       progressDialog.hide();
     } catch (e) {
-      print(e);
+      //print(e);
     }
   }
 
@@ -392,7 +390,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
 
       progressDialog.hide();
     } catch (e) {
-      print(e);
+      //print(e);
     }
   }
 

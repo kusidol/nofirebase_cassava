@@ -146,7 +146,7 @@ class _FullScreenImageState extends State<FullScreenImage> {
           },
         );
       } catch (error) {
-        print('Error deleting image: $error');
+        //print('Error deleting image: $error');
       }
     }
 

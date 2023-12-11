@@ -41,7 +41,7 @@ class _dropdownReuseForServiceState extends State<dropdownReuseForService> {
     DropdownProvider provider =
         Provider.of<DropdownProvider>(context, listen: false);
     await provider.getFields();
-    print("Check");
+    //print("Check");
   }
 
   @override
@@ -63,8 +63,8 @@ class _dropdownReuseForServiceState extends State<dropdownReuseForService> {
           List<Dropdown> dropdown = data.dropdown;
           return NotificationListener<ScrollEndNotification>(
             onNotification: (notification) {
-              print(notification.metrics.pixels);
-              print(notification.metrics.maxScrollExtent);
+              //print(notification.metrics.pixels);
+              //print(notification.metrics.maxScrollExtent);
               if (notification.metrics.pixels == 0) {
                 // data.getFields();
               }
@@ -84,7 +84,7 @@ class _dropdownReuseForServiceState extends State<dropdownReuseForService> {
                     title: Text(dropdown[index].title.toString()),
                     onTap: () {
                       selectedIndex = dropdown[index].id.toString();
-                      print("selectedIndex : ${selectedIndex}");
+                      //print("selectedIndex : ${selectedIndex}");
                       Navigator.pop(context, selectedIndex);
                     },
                   ),

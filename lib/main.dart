@@ -19,44 +19,41 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 //import 'package:month_year_picker/month_year_picker.dart';
 import 'package:localization/localization.dart';
 import 'entities/token.dart';
+
 //import 'package:firebase_core/firebase_core.dart';
-class AppSetting{
+class AppSetting {
+  AppSetting(this.local, this.signIn);
 
-  AppSetting(this.local,this.signIn) ;
+  int local;
 
-  int local ;
-
-  bool signIn ;
+  bool signIn;
 
   AppSetting.fromJson(Map<String, dynamic> json)
       : local = json['local'],
         signIn = json['signIn'];
 
-  Map<String, dynamic> toJson() => {
-    'local': local,
-    'signIn': signIn
-  };
-
+  Map<String, dynamic> toJson() => {'local': local, 'signIn': signIn};
 }
 
-class MyHttpOverrides extends HttpOverrides{
-
+class MyHttpOverrides extends HttpOverrides {
   @override
-  HttpClient createHttpClient(SecurityContext? context){
+  HttpClient createHttpClient(SecurityContext? context) {
     return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }
+
 //import 'package:flutter_localizations/flutter_localizations.dart';
 //import 'package:flutter_gen/gen_l10n/app_localizations.dart' ;
 // Token? tokenFromLogin;
-AppSetting? appSetting ;
+AppSetting? appSetting;
 //bool autoLogInStatus = false;
 Token? tokenFromLogin;
 
 void main() async {
   HttpOverrides.global = MyHttpOverrides();
-   WidgetsFlutterBinding
+  WidgetsFlutterBinding
       .ensureInitialized(); // Ensure that the WidgetsBinding is initialized.
 
   // Locks the device orientation to portrait mode only
@@ -64,9 +61,7 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  runApp(
-
-      MultiProvider(
+  runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<TabPassModel>(
         create: (BuildContext context) {
@@ -95,7 +90,6 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   Locale? _locale;
   initState() {
-
     //final myApp = context.findAncestorStateOfType<MyAppState>();
 
     // tokenFromLogin = Token("123");
@@ -106,13 +100,11 @@ class MyAppState extends State<MyApp> {
   }
 
   void asyncFunction() async {
-
-
-
     appSetting = await loadSetting("app_setting");
 
     setState(() {
-      _locale = appSetting!.local == 0 ?  Locale('th', 'TH') :  Locale('en', 'EN');
+      _locale =
+          appSetting!.local == 0 ? Locale('th', 'TH') : Locale('en', 'EN');
     });
 
     WidgetsFlutterBinding.ensureInitialized();
@@ -120,7 +112,7 @@ class MyAppState extends State<MyApp> {
     //UserService userService = UserService();
     // Token? t = await userService.login("rojjanakorn.y@ku.th");
     // tokenFromLogin = t;
-    // print("token  on main is ${tokenFromLogin}");
+    // //print("token  on main is ${tokenFromLogin}");
   }
 
   changeLocale(Locale locale) {
@@ -176,7 +168,6 @@ class MyAppState extends State<MyApp> {
   }
 }
 
-
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -187,42 +178,37 @@ class _SplashScreenState extends State<SplashScreen>
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
 
-
   initSetting() async {
-
     appSetting = await loadSetting("app_setting");
 
-    if(appSetting!.signIn){
-
+    if (appSetting!.signIn) {
       loggedUser = await readUser("user");
 
-      tokenFromLogin = Token(loggedUser.token) ;
-   
+      tokenFromLogin = Token(loggedUser.token);
+
       Map<String, dynamic> decodedToken =
+          JwtDecoder.decode(tokenFromLogin!.token);
 
-      JwtDecoder.decode(tokenFromLogin!.token);
+      DateTime expirationDate =
+          DateTime.fromMillisecondsSinceEpoch(decodedToken['exp'] * 1000);
 
-      DateTime expirationDate = DateTime.fromMillisecondsSinceEpoch(decodedToken['exp'] * 1000);
-      
-      if(DateTime.now().isAfter(expirationDate)){
-
+      if (DateTime.now().isAfter(expirationDate)) {
         UserService userService = UserService();
         // bool? checkRefreshtoken =
-        bool? isExpired = await userService.refreshTokentoLogin(loggedUser.refresh_token);
+        bool? isExpired =
+            await userService.refreshTokentoLogin(loggedUser.refresh_token);
 
-        if(!isExpired!){
+        if (!isExpired!) {
           Navigator.of(context).pushReplacement(
             FadeRoute1(LoginScreen()),
           );
-          return ;
+          return;
         }
       }
       Navigator.of(context).pushReplacement(
         FadeRoute1(MainScreen()),
       );
-
-    }else{
-
+    } else {
       _fadeAnimation =
           Tween<double>(begin: 0, end: 1).animate(_animationController);
 
@@ -236,9 +222,7 @@ class _SplashScreenState extends State<SplashScreen>
         );
       });
     }
-
   }
-
 
   @override
   void initState() {
@@ -248,9 +232,8 @@ class _SplashScreenState extends State<SplashScreen>
       vsync: this,
       duration: Duration(milliseconds: 1500),
     );
-    //print("initSetting");
+    ////print("initSetting");
     initSetting();
-
   }
 
   // Function to request camera permission
