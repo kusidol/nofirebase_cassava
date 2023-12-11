@@ -64,7 +64,7 @@ class _MenuScreen extends State<MenuScreen>
   late String _localPath;
 
   bool checkNoti = false;
-   Color notificationColor = Colors.grey.shade800 ;
+  Color notificationColor = Colors.grey.shade800;
   @override
   void initState() {
     super.initState();
@@ -75,14 +75,14 @@ class _MenuScreen extends State<MenuScreen>
     SurveyProvider surveyProvider = widget.surveyProvider;
     surveyProvider.resetPlantingID();
     getCountMessage();
-     getNotificationToStorage().then((storedNotification) {
+    getNotificationToStorage().then((storedNotification) {
       setState(() {
-      checkNoti= storedNotification;
-      if (checkNoti == true) {
-       notificationColor = Colors.green;
-      } else {
-        notificationColor = Colors.grey.shade800;
-      }
+        checkNoti = storedNotification;
+        if (checkNoti == true) {
+          notificationColor = Colors.green;
+        } else {
+          notificationColor = Colors.grey.shade800;
+        }
       });
     });
     _permissionReady = false;
@@ -100,7 +100,7 @@ class _MenuScreen extends State<MenuScreen>
           token.toString());
       if (response.statusCode == 200) {
         var responseBody = json.decode(response.data);
-        print(responseBody);
+        //print(responseBody);
         setState(() {
           count = responseBody['body'] as int;
         });
@@ -110,7 +110,7 @@ class _MenuScreen extends State<MenuScreen>
 
   Future<void> _checkPermission() async {
     final status = await Permission.storage.status;
-    print("Permission status: $status");
+    //print("Permission status: $status");
     if (status != PermissionStatus.granted) {
       final result = await Permission.storage.request();
       if (result == PermissionStatus.granted) {
@@ -118,7 +118,7 @@ class _MenuScreen extends State<MenuScreen>
           _permissionReady = true;
         });
       } else {
-        print("Permission not granted");
+        //print("Permission not granted");
       }
     } else {
       setState(() {
@@ -171,7 +171,7 @@ class _MenuScreen extends State<MenuScreen>
           showToastMessage("Download Failed");
         }
       } else {
-        print("Platform not supported.");
+        //print("Platform not supported.");
       }
     } catch (e) {
       showToastMessage("Download Failed");
@@ -201,7 +201,7 @@ class _MenuScreen extends State<MenuScreen>
   Widget build(BuildContext context) {
     double _w = MediaQuery.of(context).size.width;
     SurveyProvider surveyProvider = widget.surveyProvider;
-    //print("menu Screen context :${context}");
+    ////print("menu Screen context :${context}");
     return Consumer<PlantingProvider>(
       builder: (context, plantingProvider, index) {
         return WillPopScope(
@@ -304,13 +304,15 @@ class _MenuScreen extends State<MenuScreen>
                                                     child: IconButton(
                                                         icon: Icon(
                                                           Icons.notifications,
-                                                          color:
-                                                             checkNoti ? Colors.green : Colors.grey.shade800,
+                                                          color: checkNoti
+                                                              ? Colors.green
+                                                              : Colors.grey
+                                                                  .shade800,
                                                           size: sizeHeight(
                                                               25, context),
                                                         ),
                                                         onPressed: () {
-                                                          //print("home");
+                                                          ////print("home");
                                                           Navigator.push(
                                                             context,
                                                             MaterialPageRoute(
@@ -328,7 +330,7 @@ class _MenuScreen extends State<MenuScreen>
                                                           25, context),
                                                     ),
                                                     onPressed: () {
-                                                      //print("home");
+                                                      ////print("home");
                                                       Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
@@ -360,7 +362,16 @@ class _MenuScreen extends State<MenuScreen>
                                                         sizeWidth(1, context),
                                                   ),
                                                   image: DecorationImage(
-                                                    image: (loggedUser.img_url == "")? AssetImage('assets/images/no_profile_img.png') as ImageProvider : MemoryImage(Base64Decoder().convert(loggedUser.img_url)),
+                                                    image: (loggedUser
+                                                                .img_url ==
+                                                            "")
+                                                        ? AssetImage(
+                                                                'assets/images/no_profile_img.png')
+                                                            as ImageProvider
+                                                        : MemoryImage(
+                                                            Base64Decoder()
+                                                                .convert(loggedUser
+                                                                    .img_url)),
                                                     fit: BoxFit.cover,
                                                   ),
                                                 ),
@@ -603,7 +614,7 @@ class _MenuScreen extends State<MenuScreen>
       );
     } catch (e) {
       // An exception is thrown if browser app is not installed on Android device.
-      debugPrint(e.toString());
+
     }
   }
 
@@ -634,7 +645,7 @@ class _MenuScreen extends State<MenuScreen>
               builder: (BuildContext context) {
                 return GestureDetector(
                   onTap: () {
-                    print("click");
+                    //print("click");
                     _launchURL(
                         context, uriList[_currentIndexCarousel].toString());
                   },
@@ -690,36 +701,42 @@ class _MenuScreen extends State<MenuScreen>
     );
   }
 
-Future<bool> onBackButtonPressed(BuildContext context) async {
-  bool? exitApp = await showCupertinoDialog<bool>(
-    context: context,
-    builder: (BuildContext context) => CupertinoAlertDialog(
-      title: Text("notification-label".i18n()),
-      content: Text("exit-application".i18n()),
-      actions: [
-        CupertinoDialogAction(
-          onPressed: () {
-            Navigator.of(context).pop(false);
-          },
-          child: Text('No', style: TextStyle(
-              color: Colors.red,
-              fontWeight: FontWeight.w400,
-            ),),
-        ),
-        CupertinoDialogAction(
-          onPressed: () {
-            Navigator.of(context).pop(true);
-            SystemNavigator.pop();
-          },
-          child: Text('Yes', style: TextStyle(
-              color: Colors.blue,
-              fontWeight: FontWeight.w400,
-            ),),
-        ),
-      ],
-    ),
-  );
+  Future<bool> onBackButtonPressed(BuildContext context) async {
+    bool? exitApp = await showCupertinoDialog<bool>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text("notification-label".i18n()),
+        content: Text("exit-application".i18n()),
+        actions: [
+          CupertinoDialogAction(
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+            child: Text(
+              'No',
+              style: TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+          CupertinoDialogAction(
+            onPressed: () {
+              Navigator.of(context).pop(true);
+              SystemNavigator.pop();
+            },
+            child: Text(
+              'Yes',
+              style: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
 
-  return exitApp ?? false;
-}
+    return exitApp ?? false;
+  }
 }

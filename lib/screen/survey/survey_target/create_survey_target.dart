@@ -412,7 +412,7 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
                                                 child: TabBar(
                                                   onTap: (value) {
                                                     setState(() {
-                                                      print("value${value}");
+                                                      //print("value${value}");
                                                       _tabController!.index =
                                                           value;
                                                       _tabIndex = value;
@@ -907,7 +907,7 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
                 } else {
                   _checkBoxPestPhaseAll = [];
                 }
-                print(_checkBoxPestPhaseAll);
+                //print(_checkBoxPestPhaseAll);
               });
             },
           )
@@ -947,7 +947,7 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
   }
 
   void itemSelectionChanged(String? s) {
-    print(s);
+    //print(s);
   }
 
   switchStepsType() {

@@ -64,7 +64,7 @@ class _SurveyMoreDetailScreen extends State<SurveyMoreDetailScreen>
     _scrollController.addListener(_scrollListener);
     animationController = AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
-    print(SizeConfig.screenHeight);
+    //print(SizeConfig.screenHeight);
     super.initState();
     onfirst();
   }
@@ -188,12 +188,12 @@ class _SurveyMoreDetailScreen extends State<SurveyMoreDetailScreen>
   void _handleDeletion() async {
     SurveyService surveyervice = SurveyService();
     String? token = tokenFromLogin?.token;
-    //print("widget.surveyProvider.surveys : ${widget.surveyProvider.surveys}");
-    print("widget.survey : ${widget.surveys}");
+    ////print("widget.surveyProvider.surveys : ${widget.surveyProvider.surveys}");
+    //print("widget.survey : ${widget.surveys}");
     bool isDeleted = await widget.surveyProvider.deleteSurvey(widget.surveys);
     if (isDeleted) {
       //alert
-      print("delete success");
+      //print("delete success");
       Navigator.of(context).pop();
       Navigator.of(context).pop();
     } else {}

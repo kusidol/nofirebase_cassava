@@ -166,13 +166,13 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
       if (_formKeyPage1.currentState!.validate()) {
         setState(() => _currentStep += 1);
       } else {
-        print("in valid");
+        ////print("in valid");
       }
     } else if (_currentStep == 1) {
       if (_formKeyPage2.currentState!.validate()) {
         setState(() => _currentStep += 1);
       } else {
-        print("in valid");
+        ////print("in valid");
       }
     } else {
       setState(() => _currentStep += 1);
@@ -196,7 +196,7 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
 
   // Submitfunction
   submitFunction() async {
-    print("SUBMIT FUNCTION FOR CREATE");
+    ////print("SUBMIT FUNCTION FOR CREATE");
     // FOR CREATE DATA
     var createData = {
       "title": title,
@@ -505,7 +505,7 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                       setState(() {
                         // _selectPreviousPlant = value;
                         // planting.previousPlant = value.toString();
-                        // print(planting.previousPlant);
+                        // ////print(planting.previousPlant);
                         selectedProvince_value = value.toString();
                         selectedProvinceId =
                             getId(selectedProvince_value, data_provinces, 1);
@@ -569,7 +569,7 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                             setState(() {
                               // _selectPreviousPlant = value;
                               // planting.previousPlant = value.toString();
-                              // print(planting.previousPlant);
+                              // ////print(planting.previousPlant);
                               selectedDistrict_value = value.toString();
                               selectedDistrictId = getId(
                                   selectedDistrict_value, data_districts, 2);
@@ -639,7 +639,7 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                             setState(() {
                               // _selectPreviousPlant = value;
                               // planting.previousPlant = value.toString();
-                              // print(planting.previousPlant);
+                              // ////print(planting.previousPlant);
                               selectedSubdistrict_value = value.toString();
                               selectedSubistrictId = getId(
                                   selectedSubdistrict_value,

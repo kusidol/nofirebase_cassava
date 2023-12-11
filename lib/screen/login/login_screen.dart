@@ -27,7 +27,6 @@ import 'package:auth_buttons/auth_buttons.dart';
 import 'package:crypto/crypto.dart';
 import 'package:mun_bot/entities/response.dart' as EntityResponse;
 
-
 //RefreshToken? refreshToken;
 //GoogleSignInAccount? googleUser;
 
@@ -51,9 +50,6 @@ class _LoginScreenState extends State<LoginScreen> {
   //late bool hasExpired = true;
   @override
   void initState() {
-
-
-
     super.initState();
 
     /*getRefreshTokenFromStorage().then((storedRefreshToken) {
@@ -62,10 +58,10 @@ class _LoginScreenState extends State<LoginScreen> {
       if (storedRefreshToken != null) {
         setState(() {
           refreshToken = RefreshToken(storedRefreshToken);
-          print('RefreshToken: ${refreshToken!.refreshtoken}');
+          //print('RefreshToken: ${refreshToken!.refreshtoken}');
         });
       } else {
-        print('refreshTokenFromLogin is null.');
+        //print('refreshTokenFromLogin is null.');
       }
     });*/
     /*getTokenFromStorage().then((storedToken) async {
@@ -90,33 +86,32 @@ class _LoginScreenState extends State<LoginScreen> {
           hasExpired = false;
         }
         // hasExpired = Jwt.isExpired(tokenFromLogin!.token);
-        print('Token From API When open login page: ${tokenFromLogin!.token}');
-        print('Token Expired status : ${hasExpired.toString()}');
-        //print('RememberUser status : ${rememberMe.toString()}');
+        //print('Token From API When open login page: ${tokenFromLogin!.token}');
+        //print('Token Expired status : ${hasExpired.toString()}');
+        ////print('RememberUser status : ${rememberMe.toString()}');
         /*if (googleUser != null) {
-          print(googleUser!.email);
+          //print(googleUser!.email);
         } else {
-          print('The user is not signed in.');
+          //print('The user is not signed in.');
         }*/
       } else {
-        print('TokenFromLogin is null.');
+        //print('TokenFromLogin is null.');
       }
     });*/
   }
 
-  Widget JustLogIn(){
+  Widget JustLogIn() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () async {
-
-          loggedUser = LoggedUser("sidol.sat@gmail.com", "", "", "" );
+          loggedUser = LoggedUser("sidol.sat@gmail.com", "", "", "");
 
           UserService userService = UserService();
-          var response = await userService.login("sidol.sat@gmail.com", "${LOCAL_SERVER_IP_URL}/oauth/google");
-
+          var response = await userService.login(
+              "sidol.sat@gmail.com", "${LOCAL_SERVER_IP_URL}/oauth/google");
 
           EntityResponse.Response<Token> t;
 
@@ -125,11 +120,11 @@ class _LoginScreenState extends State<LoginScreen> {
           t = EntityResponse.Response<Token>.fromJson(
               jsonDecode(response.data), (body) => Token.fromJson(body));
 
-           rft = EntityResponse.Response<RefreshToken>.fromJson(
+          rft = EntityResponse.Response<RefreshToken>.fromJson(
               jsonDecode(response.data), (body) => RefreshToken.fromJson(body));
 
           Token token = Token(t.body.token /*, t.body.user*/);
-          tokenFromLogin = token ;
+          tokenFromLogin = token;
           RefreshToken refreshToken = RefreshToken(rft.body.refreshtoken);
           loggedUser.token = t.body.token;
           loggedUser.refresh_token = rft.body.refreshtoken;
@@ -137,12 +132,11 @@ class _LoginScreenState extends State<LoginScreen> {
           await save("user", loggedUser);
 
           loggedUser = await readUser("user");
-          //print(ts);
+          ////print(ts);
           //await saveRefreshTokenToStorage(refreshToken.refreshtoken);
 
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => MainScreen()));
-
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => MainScreen()));
         },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
@@ -181,13 +175,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 builder: (context) => LoadingWidget(),
               );
               googleUser = await GoogleSignIn().signIn();
-              print('Token From API: ${tokenFromLogin?.token}');
+              //print('Token From API: ${tokenFromLogin?.token}');
               await Future.delayed(Duration(seconds: 2));
               Navigator.pop(context);
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => MainScreen()));
             } catch (e) {
-              print('Google Sign-In Error: $e');
+              //print('Google Sign-In Error: $e');
             }
           } else {
             logoutAndsignInWithGoogle();
@@ -260,46 +254,50 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildSocialBtnRow() {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 30.0),
-      child: Column(
+        padding: EdgeInsets.symmetric(vertical: 30.0),
+        child: Column(
+          children: [
+            Utils.getButton(
+                text: '  Sign in with Google',
+                color: Colors.white,
+                bgColor: HexColor('#4D4D4D'),
+                mini: false,
+                fontScale: 0.025,
+                height: 65,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                icon: Image.asset('assets/images/google_new.png', width: 37),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    FadeRoute1(AuthPage(
+                        context: context,
+                        isLogged: false,
+                        thirdParty: 'google')),
+                  );
+                }),
 
-        children: [
+            Utils.getButton(
+                text: '  Sign in with Apple ID',
+                color: Colors.white,
+                bgColor: HexColor('#4D4D4D'),
+                mini: false,
+                fontScale: 0.025,
+                height: 65,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                icon: Image.asset('assets/images/apple.png', width: 37),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    FadeRoute1(AuthPage(
+                        context: context,
+                        isLogged: false,
+                        thirdParty: 'apple')),
+                  );
+                }),
 
-          Utils.getButton(
-              text: '  Sign in with Google',
-              color: Colors.white,
-              bgColor: HexColor('#4D4D4D'),
-              mini: false,
-              fontScale: 0.025,
-              height: 65,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              icon: Image.asset('assets/images/google_new.png', width: 37),
-              onPressed: () {
-                Navigator.of(context).push(
-                  FadeRoute1(AuthPage(context: context,isLogged: false ,thirdParty: 'google')),
-                );
-              }),
-
-          Utils.getButton(
-              text: '  Sign in with Apple ID',
-              color: Colors.white,
-              bgColor: HexColor('#4D4D4D'),
-              mini: false,
-              fontScale: 0.025,
-              height: 65,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              icon: Image.asset('assets/images/apple.png', width: 37),
-              onPressed: () {
-                Navigator.of(context).push(
-                  FadeRoute1(AuthPage(context: context,isLogged: false ,thirdParty: 'apple')),
-                );
-              }),
-
-          /*GoogleAuthButton(
+            /*GoogleAuthButton(
             onPressed: () => googleSignInSignUp()  ,
             style: AuthButtonStyle(
               width: 300,
@@ -308,15 +306,15 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),*/
 
-          SizedBox(height: 25),
+            SizedBox(height: 25),
 
-          //Platform.isIOS ?
-          /*AppleAuthButton(
+            //Platform.isIOS ?
+            /*AppleAuthButton(
             onPressed:() async {
 
               await AppleSignInSignUp();
 
-              print("finish");
+              //print("finish");
             },
             style: AuthButtonStyle(
               //  width: 185,
@@ -325,35 +323,31 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           )//: Container(),
 */
-        ],
-      )
+          ],
+        )
 
-
-      /*Row(
+        /*Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           _buildSocialBtn(
-            () => print('Login with Google'),
+            () => //print('Login with Google'),
             AssetImage(
               'assets/images/google.jpg',
             ),
           ),
         ],
       ),*/
-    );
+        );
   }
-  AppleSignInSignUp() async {
 
-
-
-  }
+  AppleSignInSignUp() async {}
 
   String generateNonce([int length = 32]) {
     const charset =
         '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
     final random = Random.secure();
-    return List.generate(length, (_) =>
-    charset[random.nextInt(charset.length)]).join();
+    return List.generate(length, (_) => charset[random.nextInt(charset.length)])
+        .join();
   }
 
   String sha256ofString(String input) {
@@ -373,7 +367,7 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       googleUser = await GoogleSignIn().signIn();
       if (googleUser == null) {
-        print('Google Sign-In Canceled');
+        //print('Google Sign-In Canceled');
       } else {
         final GoogleSignInAuthentication googleAuth =
             await googleUser!.authentication;
@@ -385,9 +379,9 @@ class _LoginScreenState extends State<LoginScreen> {
         final UserCredential userCredential =
             await FirebaseAuth.instance.signInWithCredential(credential);
         if (userCredential.user != null) {
-          // Printing the user token for demonstration purposes.
-          print('User Token: ${googleAuth.accessToken}');
-          print('User gmail: ${googleUser!.email}');
+          // //printing the user token for demonstration purposes.
+          //print('User Token: ${googleAuth.accessToken}');
+          //print('User gmail: ${googleUser!.email}');
           var accessToken = googleAuth.accessToken;
           var userName = googleUser!.email;
           UserService userService = UserService();
@@ -419,7 +413,7 @@ class _LoginScreenState extends State<LoginScreen> {
               barrierDismissible: false,
               builder: (context) => LoadingWidget(),
             );
-            print('Token From API: ${tokenFromLogin?.token}');
+            //print('Token From API: ${tokenFromLogin?.token}');
             await Future.delayed(Duration(seconds: 2));
             Navigator.pop(context);
             Navigator.push(
@@ -428,14 +422,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     builder: (context) => QRCodeScannerScreen()));
           }
         } else {
-          print('Google Sign-In Failed');
+          //print('Google Sign-In Failed');
         }
       }
     } catch (e) {
-      print('Google Sign-In Error: $e');
+      //print('Google Sign-In Error: $e');
     }
   }*/
-
 
   /*Widget _buildSignupBtn() {
     return GestureDetector(
@@ -452,7 +445,7 @@ class _LoginScreenState extends State<LoginScreen> {
         try {
           googleUser = await GoogleSignIn().signIn();
           if (googleUser == null) {
-            print('Google Sign-In Canceled');
+            //print('Google Sign-In Canceled');
           } else {
             final GoogleSignInAuthentication googleAuth =
                 await googleUser!.authentication;
@@ -464,9 +457,9 @@ class _LoginScreenState extends State<LoginScreen> {
             final UserCredential userCredential =
                 await FirebaseAuth.instance.signInWithCredential(credential);
             if (userCredential.user != null) {
-              // Printing the user token for demonstration purposes.
-              print('User Token: ${googleAuth.accessToken}');
-              print('User gmail: ${googleUser!.email}');
+              // //printing the user token for demonstration purposes.
+              //print('User Token: ${googleAuth.accessToken}');
+              //print('User gmail: ${googleUser!.email}');
               var accessToken = googleAuth.accessToken;
               var userName = googleUser!.email;
               UserService userService = UserService();
@@ -498,7 +491,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   barrierDismissible: false,
                   builder: (context) => LoadingWidget(),
                 );
-                print('Token From API: ${tokenFromLogin?.token}');
+                //print('Token From API: ${tokenFromLogin?.token}');
                 await Future.delayed(Duration(seconds: 2));
                 Navigator.pop(context);
                 Navigator.push(
@@ -507,11 +500,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         builder: (context) => QRCodeScannerScreen()));
               }
             } else {
-              print('Google Sign-In Failed');
+              //print('Google Sign-In Failed');
             }
           }
         } catch (e) {
-          print('Google Sign-In Error: $e');
+          //print('Google Sign-In Error: $e');
         }
       },
       child: RichText(
@@ -576,19 +569,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-
                       Container(
                         width: 200,
                         height: 200,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                         // borderRadius: BorderRadius.circular(20),
+                          // borderRadius: BorderRadius.circular(20),
                           image: DecorationImage(
                             image: AssetImage('assets/images/app_icons.png'),
                             fit: BoxFit.cover,
                           ),
                         ),
-                      )  ,
+                      ),
 
                       SizedBox(
                         height: 50.0,
@@ -611,7 +603,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       //_buildForgotPasswordBtn(),
                       //_buildRememberMeCheckbox(),
                       //_buildLoginBtn(),
-                     // _buildSignInWithText(),
+                      // _buildSignInWithText(),
                       _buildSocialBtnRow(),
                       //_buildSignupBtn(),
                     ],
@@ -636,7 +628,7 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       googleUser = await GoogleSignIn().signIn();
       if (googleUser == null) {
-        print('Google Sign-In Canceled');
+        //print('Google Sign-In Canceled');
       } else {
         final GoogleSignInAuthentication googleAuth =
             await googleUser!.authentication;
@@ -648,9 +640,9 @@ class _LoginScreenState extends State<LoginScreen> {
         final UserCredential userCredential =
             await FirebaseAuth.instance.signInWithCredential(credential);
         if (userCredential.user != null) {
-          // Printing the user token for demonstration purposes.
-          print('User Token: ${googleAuth.accessToken}');
-          print('User gmail: ${googleUser!.email}');
+          // //printing the user token for demonstration purposes.
+          //print('User Token: ${googleAuth.accessToken}');
+          //print('User gmail: ${googleUser!.email}');
           var accessToken = googleAuth.accessToken;
           var userName = googleUser!.email;
           UserService userService = UserService();
@@ -696,7 +688,7 @@ class _LoginScreenState extends State<LoginScreen> {
               barrierDismissible: false,
               builder: (context) => LoadingWidget(),
             );
-            print('Token From API: ${tokenFromLogin?.token}');
+            //print('Token From API: ${tokenFromLogin?.token}');
             await Future.delayed(Duration(seconds: 2));
             await saveTokenToStorage(tokenFromLogin!.token);
             rememberMe = true;
@@ -706,11 +698,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 context, MaterialPageRoute(builder: (context) => MainScreen()));
           }
         } else {
-          print('Google Sign-In Failed');
+          //print('Google Sign-In Failed');
         }
       }
     } catch (e) {
-      print('Google Sign-In Error: $e');
+      //print('Google Sign-In Error: $e');
     }
   }*/
 }
@@ -781,32 +773,29 @@ class LoadingWidget extends StatelessWidget {
   }
 }
 
-
-
-save(String key,value) async {
+save(String key, value) async {
   final prefs = await SharedPreferences.getInstance();
-    prefs.setString(key, json.encode(value));
+  prefs.setString(key, json.encode(value));
 }
 
 loadSetting(String key) async {
   final prefs = await SharedPreferences.getInstance();
 
-  if(prefs.getString(key) == null )
-    return AppSetting(0,false);
+  if (prefs.getString(key) == null) return AppSetting(0, false);
 
   var js = json.decode(prefs.getString(key) as String);
 
-  return AppSetting(js["local"], js['signIn']) ;
+  return AppSetting(js["local"], js['signIn']);
 }
 
 readUser(String key) async {
   final prefs = await SharedPreferences.getInstance();
   var js = json.decode(prefs.getString(key) as String);
-  return LoggedUser(js["email"], js['token'], js['refresh_token'], js['img_url']) ;
+  return LoggedUser(
+      js["email"], js['token'], js['refresh_token'], js['img_url']);
 }
 
 remove(String key) async {
   final prefs = await SharedPreferences.getInstance();
   prefs.remove(key);
 }
-

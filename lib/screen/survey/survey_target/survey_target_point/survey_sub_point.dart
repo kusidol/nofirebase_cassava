@@ -50,10 +50,10 @@ class _BaseSurveySubPoint extends State<BaseSurveySubPoint> {
   @override
   initState() {
     //("init");
-    //print(widget._param.parameter);
-    //print(widget._param.isEmpty);
+    ////print(widget._param.parameter);
+    ////print(widget._param.isEmpty);
     clearParameter();
-    //print(widget._param.isEmpty);
+    ////print(widget._param.isEmpty);
   }
 
   bool isSelected = false;
@@ -81,7 +81,7 @@ class _BaseSurveySubPoint extends State<BaseSurveySubPoint> {
         //saveExperiment(_image) ;
         _pathImage = _image.path;
         GallerySaver.saveImage(_pathImage);
-        print(_pathImage);
+        //print(_pathImage);
         //_image = null ;
       },
     );
@@ -106,7 +106,7 @@ class _BaseSurveySubPoint extends State<BaseSurveySubPoint> {
           ],
           initialValue: 0,
           onCanceled: () {
-            print("You have canceled the menu.");
+            //print("You have canceled the menu.");
           },
           onSelected: (value) {
             setState(() {

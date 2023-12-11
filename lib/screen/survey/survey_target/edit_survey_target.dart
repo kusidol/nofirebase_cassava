@@ -271,9 +271,8 @@ class _EditSurveyTarget extends State<EditSurveyTarget> {
                             widget.surveyFromPassPage.temperature =
                                 double.parse(value);
                           } catch (e) {
-                            print(
-                                "on surveyFromPassPage.temPerature  can't pass string to Double value: ${value}");
-                            print(e);
+                            //print( "on surveyFromPassPage.temPerature  can't pass string to Double value: ${value}");
+                            //print(e);
                           }
                         });
                       },
@@ -324,8 +323,7 @@ class _EditSurveyTarget extends State<EditSurveyTarget> {
                             widget.surveyFromPassPage.temperature =
                                 double.parse(temperatureController.text);
                           } catch (e) {
-                            print(
-                                "temperatureController can't parse to double   temperatureController.text = ${temperatureController.text}");
+                            //print("temperatureController can't parse to double   temperatureController.text = ${temperatureController.text}");
                           }
                         });
                       },
@@ -368,8 +366,7 @@ class _EditSurveyTarget extends State<EditSurveyTarget> {
                             widget.surveyFromPassPage.humidity =
                                 double.parse(value);
                           } catch (e) {
-                            print(
-                                "can't parse to double with surveyFromPassPage!.humidity");
+                            //print("can't parse to double with surveyFromPassPage!.humidity");
                           }
                         });
                       },
@@ -419,8 +416,7 @@ class _EditSurveyTarget extends State<EditSurveyTarget> {
                             widget.surveyFromPassPage.humidity =
                                 double.parse(humidityController.text);
                           } catch (e) {
-                            print(
-                                "can't parse string to double with surveyFromPassPage!.humidity");
+                            //print("can't parse string to double with surveyFromPassPage!.humidity");
                           }
                         });
                       },
@@ -472,7 +468,7 @@ class _EditSurveyTarget extends State<EditSurveyTarget> {
                 leading: _rainContion == 1 ? '/' : 'x',
                 title: Text(RainType[1], style: TextStyle(fontSize: 16)),
                 onChanged: (value) {
-                  //print(value);
+                  ////print(value);
                   setState(() {
                     _rainContion = value!;
                     rain = _rainContion.toString();
@@ -487,7 +483,7 @@ class _EditSurveyTarget extends State<EditSurveyTarget> {
                 leading: _rainContion == 2 ? '/' : 'x',
                 title: Text(RainType[2], style: TextStyle(fontSize: 16)),
                 onChanged: (value) {
-                  //print(value);
+                  ////print(value);
                   setState(() {
                     _rainContion = value!;
                     rain = _rainContion.toString();
@@ -502,7 +498,7 @@ class _EditSurveyTarget extends State<EditSurveyTarget> {
                 leading: _rainContion == 3 ? '/' : 'x',
                 title: Text(RainType[3], style: TextStyle(fontSize: 16)),
                 onChanged: (value) {
-                  //print(value);
+                  ////print(value);
                   setState(() {
                     _rainContion = value!;
                     rain = _rainContion.toString();
@@ -541,7 +537,7 @@ class _EditSurveyTarget extends State<EditSurveyTarget> {
                 leading: _sunContion == 0 ? '/' : 'x',
                 title: Text(SunlightType[0], style: TextStyle(fontSize: 16)),
                 onChanged: (value) {
-                  //print(value);
+                  ////print(value);
                   setState(() {
                     _sunContion = value!;
                     sun = _sunContion.toString();
@@ -557,7 +553,7 @@ class _EditSurveyTarget extends State<EditSurveyTarget> {
                 leading: _sunContion == 1 ? '/' : 'x',
                 title: Text(SunlightType[1], style: TextStyle(fontSize: 16)),
                 onChanged: (value) {
-                  //print(value);
+                  ////print(value);
                   setState(() {
                     _sunContion = value!;
                     sun = _sunContion.toString();
@@ -597,7 +593,7 @@ class _EditSurveyTarget extends State<EditSurveyTarget> {
                     leading: _dewContion == 0 ? '/' : 'x',
                     title: Text(DewType[0], style: TextStyle(fontSize: 16)),
                     onChanged: (value) {
-                      //print(value);
+                      ////print(value);
                       setState(() {
                         _dewContion = value!;
                         dew = _dewContion.toString();
@@ -612,7 +608,7 @@ class _EditSurveyTarget extends State<EditSurveyTarget> {
                     leading: _dewContion == 1 ? '/' : 'x',
                     title: Text(DewType[1], style: TextStyle(fontSize: 16)),
                     onChanged: (value) {
-                      //print(value);
+                      ////print(value);
                       setState(() {
                         _dewContion = value!;
                         dew = _dewContion.toString();
@@ -627,7 +623,7 @@ class _EditSurveyTarget extends State<EditSurveyTarget> {
                     leading: _dewContion == 2 ? '/' : 'x',
                     title: Text(DewType[2], style: TextStyle(fontSize: 16)),
                     onChanged: (value) {
-                      //print(value);
+                      ////print(value);
                       setState(() {
                         _dewContion = value!;
                         dew = _dewContion.toString();

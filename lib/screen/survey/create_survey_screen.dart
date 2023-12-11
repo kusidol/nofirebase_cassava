@@ -393,26 +393,26 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
         if (_formKeyPage1.currentState!.validate()) {
           setState(() => _currentStep += 1);
         } else {
-          print("in valid");
+          //print("in valid");
         }
       } else if (_currentStep == 1) {
         if (_formKeyPage2.currentState!.validate()) {
           setState(() => _currentStep += 1);
         } else {
-          print("in valid");
+          //print("in valid");
         }
       } else if (_currentStep == 2) {
         if (_formKeyPage3.currentState!.validate()) {
           setState(() => _currentStep += 1);
         } else {
-          print("in valid");
+          //print("in valid");
         }
       } else if (_currentStep == 3) {
         if (_formKeyPage4.currentState!.validate()) {
-          print("object");
+          //print("object");
           createSurvryByPlantingID();
         } else {
-          print("in valid");
+          //print("in valid");
         }
       } else {
         setState(() {
@@ -607,7 +607,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                     title: Text('${RainType[2]}',
                         style: TextStyle(fontSize: sizeHeight(20, context))),
                     onChanged: (value) {
-                      //print(value);
+                      ////print(value);
                       setState(() {
                         _rainContion = value!;
                         surveying.rainType = _rainContion.toString();
@@ -628,7 +628,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                     title: Text('${RainType[3]}',
                         style: TextStyle(fontSize: sizeHeight(20, context))),
                     onChanged: (value) {
-                      //print(value);
+                      ////print(value);
                       setState(
                         () {
                           _rainContion = value!;
@@ -683,7 +683,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                     title: Text('แดดจัด',
                         style: TextStyle(fontSize: sizeHeight(20, context))),
                     onChanged: (value) {
-                      //print(value);
+                      ////print(value);
                       setState(() {
                         _sunContion = value!;
                         surveying.sunlightType = _sunContion.toString();
@@ -705,7 +705,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                     title: Text('แดดน้อยฟ้าครึ้ม',
                         style: TextStyle(fontSize: sizeHeight(20, context))),
                     onChanged: (value) {
-                      //print(value);
+                      ////print(value);
                       setState(
                         () {
                           _sunContion = value!;
@@ -761,7 +761,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                     title: Text('น้ำค้างแรง',
                         style: TextStyle(fontSize: sizeHeight(20, context))),
                     onChanged: (value) {
-                      //print(value);
+                      ////print(value);
                       setState(() {
                         _dewContion = value!;
                         surveying.dewType = _dewContion.toString();
@@ -782,7 +782,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                     title: Text('น้ำค้างเล็กน้อย',
                         style: TextStyle(fontSize: sizeHeight(20, context))),
                     onChanged: (value) {
-                      //print(value);
+                      ////print(value);
                       setState(() {
                         _dewContion = value!;
                         surveying.dewType = _dewContion.toString();
@@ -803,7 +803,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                     title: Text('ไม่มีน้ำค้าง',
                         style: TextStyle(fontSize: sizeHeight(20, context))),
                     onChanged: (value) {
-                      //print(value);
+                      ////print(value);
                       setState(() {
                         _dewContion = value!;
                         surveying.dewType = _dewContion.toString();
@@ -1266,7 +1266,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                             surveying.temperature = temperatureValue;
                           } catch (e) {
                             // Handle the parsing error, e.g., display an error message
-                            print("Parsing error: $e");
+                            //print("Parsing error: $e");
                           }
                         }
                       }
@@ -1363,7 +1363,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                             surveying.humidity = humidityValue;
                           } catch (e) {
                             // Handle the parsing error, e.g., display an error message
-                            print("Parsing error: $e");
+                            //print("Parsing error: $e");
                           }
                         }
                       }
@@ -1541,7 +1541,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
               title: Text('อายุพืช',
                   style: TextStyle(fontSize: sizeHeight(20, context))),
               onChanged: (value) {
-                //print(value);
+                ////print(value);
                 setState(() => _plantPeriodvalue = value!);
               },
             ),
@@ -1570,7 +1570,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
         title: Text('ระหว่างเก็บเกี่ยว',
             style: TextStyle(fontSize: sizeHeight(20, context))),
         onChanged: (value) {
-          //print(value);
+          ////print(value);
           setState(() => _plantPeriodvalue = value!);
         },
       ),
@@ -1581,7 +1581,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
         title: Text('ไม่มีพืชในแปลงปลูก',
             style: TextStyle(fontSize: sizeHeight(20, context))),
         onChanged: (value) {
-          //print(value);
+          ////print(value);
           setState(() => _plantPeriodvalue = value!);
         },
       ),
@@ -1725,7 +1725,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                       title: Text('${SurveyPatternDisease[1]}',
                           style: TextStyle(fontSize: sizeHeight(20, context))),
                       onChanged: (value) {
-                        //print(value);
+                        ////print(value);
                         setState(() {
                           _plantDisease = value!;
                           surveying.surveyPatternDisease =
@@ -1748,7 +1748,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                       title: Text('${SurveyPatternDisease[2]}',
                           style: TextStyle(fontSize: sizeHeight(20, context))),
                       onChanged: (value) {
-                        //print(value);
+                        ////print(value);
                         setState(() {
                           _plantDisease = value!;
                           surveying.surveyPatternDisease =
@@ -1771,7 +1771,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                       title: Text('${SurveyPatternDisease[3]}',
                           style: TextStyle(fontSize: sizeHeight(20, context))),
                       onChanged: (value) {
-                        //print(value);
+                        ////print(value);
                         setState(() {
                           _plantDisease = value!;
                           surveying.surveyPatternDisease =
@@ -1828,7 +1828,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                       title: Text('${SurveyPatternPest[0]}',
                           style: TextStyle(fontSize: sizeHeight(20, context))),
                       onChanged: (value) {
-                        //print(value);
+                        ////print(value);
                         setState(() {
                           _pest = value!;
                           surveying.surveyPatternPest = _pest.toString();
@@ -1850,7 +1850,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                       title: Text('${SurveyPatternPest[1]}',
                           style: TextStyle(fontSize: sizeHeight(20, context))),
                       onChanged: (value) {
-                        //print(value);
+                        ////print(value);
                         setState(() {
                           _pest = value!;
                           surveying.surveyPatternPest = _pest.toString();
@@ -1872,7 +1872,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                       title: Text('${SurveyPatternPest[2]}',
                           style: TextStyle(fontSize: sizeHeight(20, context))),
                       onChanged: (value) {
-                        //print(value);
+                        ////print(value);
                         setState(() {
                           _pest = value!;
                           surveying.surveyPatternPest = _pest.toString();
@@ -1894,7 +1894,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                       title: Text('${SurveyPatternPest[3]}',
                           style: TextStyle(fontSize: sizeHeight(20, context))),
                       onChanged: (value) {
-                        //print(value);
+                        ////print(value);
                         setState(() {
                           _pest = value!;
                           surveying.surveyPatternPest = _pest.toString();
@@ -1916,7 +1916,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                       title: Text('${SurveyPatternPest[4]}',
                           style: TextStyle(fontSize: sizeHeight(20, context))),
                       onChanged: (value) {
-                        //print(value);
+                        ////print(value);
                         setState(() {
                           _pest = value!;
                           surveying.surveyPatternPest = _pest.toString();
@@ -1972,7 +1972,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                       title: Text('${SurveyPatternNaturalEnemy[0]}',
                           style: TextStyle(fontSize: sizeHeight(20, context))),
                       onChanged: (value) {
-                        //print(value);
+                        ////print(value);
                         setState(() {
                           _naturalEnemy = value!;
                           surveying.surveyPatternNaturalEnemy =
@@ -1995,7 +1995,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                       title: Text('${SurveyPatternNaturalEnemy[1]}',
                           style: TextStyle(fontSize: sizeHeight(20, context))),
                       onChanged: (value) {
-                        //print(value);
+                        ////print(value);
                         setState(() {
                           _naturalEnemy = value!;
                           surveying.surveyPatternNaturalEnemy =
@@ -2018,7 +2018,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                       title: Text('${SurveyPatternNaturalEnemy[2]}',
                           style: TextStyle(fontSize: sizeHeight(20, context))),
                       onChanged: (value) {
-                        //print(value);
+                        ////print(value);
                         setState(() {
                           _naturalEnemy = value!;
                           surveying.surveyPatternNaturalEnemy =
@@ -2041,7 +2041,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                       title: Text('${SurveyPatternNaturalEnemy[3]}',
                           style: TextStyle(fontSize: sizeHeight(20, context))),
                       onChanged: (value) {
-                        //print(value);
+                        ////print(value);
                         setState(() {
                           _naturalEnemy = value!;
                           surveying.surveyPatternNaturalEnemy =

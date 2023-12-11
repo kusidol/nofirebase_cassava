@@ -144,7 +144,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
       );
     });
 
-    // print("---- update disease -----");
+    // //print("---- update disease -----");
 
     showDialog(
       context: context,
@@ -153,7 +153,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
         message: "Submiting...",
       ),
     );
-    // print(updateDisease);
+    // //print(updateDisease);
     int statusCodeDisease =
         await surveyTargetPoint.updateSurveyTargetPointDisease(
             token.toString(), widget.point, widget.number, updateDisease);
@@ -164,7 +164,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
         await surveyTargetPoint.updateSurveyTargetPointPestPhase(
             token.toString(), widget.point, widget.number, updatePest);
 
-    // print(
+    // //print(
     //     " statusCode : ${statusCodeDisease} ${statusCodeNatural} ${statusCodePest}");
     if (statusCodeDisease == 200 &&
         statusCodeNatural == 200 &&
@@ -187,8 +187,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
         _opacity = 1.0;
       });
     });
-    print(
-        "item : ${widget.point}  ${widget.number} surveyId : ${widget.survey.surveyID}");
+    //print("item : ${widget.point}  ${widget.number} surveyId : ${widget.survey.surveyID}");
     _scrollController = ScrollController();
     _scrollController!.addListener(_scrollListener);
     dateinputPlanting.text = "";
@@ -224,9 +223,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
     stpsDisease = [];
 
     usedController = 0;
-    print("${widget.survey.surveyID} + "
-        " +  ${widget.point} + "
-        " + ${widget.number}");
+    //print("${widget.survey.surveyID} + "" +  ${widget.point} + "" + ${widget.number}");
     String? token = tokenFromLogin?.token;
     SurveyTargetPoint surveyTargetPoint = SurveyTargetPoint();
     stpsDisease = await surveyTargetPoint.surveyTargetPointDiseaseBySurveyId(
@@ -247,8 +244,8 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
     stpsPest.forEach((e) {
       stpPest.add(STPvalueAndCon(e, TextEditingController(),
           e.surveyTargetPoints.value.toDouble(), widget.point));
-      print("stpPest = ${e.surveyTargetPoints.surveyTargetPointId}");
-      print("stpPestV = ${e.surveyTargetPoints.value.toDouble()}");
+      //print("stpPest = ${e.surveyTargetPoints.surveyTargetPointId}");
+      //print("stpPestV = ${e.surveyTargetPoints.value.toDouble()}");
     });
 
     if (mounted) {
@@ -390,7 +387,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                                             //           Radius.circular(32.0),
                                             //         ),
                                             //         onTap: () {
-                                            //           print(
+                                            //           //print(
                                             //               "--------------------123-----test-----------------");
                                             //           submitFunction();
                                             //         },
@@ -426,7 +423,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                                                   child: TabBar(
                                                     onTap: (value) {
                                                       setState(() {
-                                                        print("value${value}");
+                                                        //print("value${value}");
                                                         _tabController!.index =
                                                             value;
                                                         _tabIndex = value;
@@ -963,8 +960,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                         Radius.circular(32.0),
                       ),
                       onTap: () {
-                        print(
-                            "--------------------123-----test-----------------");
+                        //print("--------------------123-----test-----------------");
                         submitFunction();
                       },
                       child: Padding(
@@ -1169,7 +1165,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                                 color: theme_color2,
                               ),
                               onTap: () {
-                                print(data[i].stp.surveyTargetId);
+                                //print(data[i].stp.surveyTargetId);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -1226,11 +1222,11 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
   Widget buildRating(int i) {
     //widget.radioValue[i]v
     int x = int.parse(widget.radioValue[i].toString());
-    print(i);
-    print(" ");
-    print(x);
-    print("Rating = ");
-    print(colors[i][x]);
+    //print(i);
+    //print(" ");
+    //print(x);
+    //print("Rating = ");
+    //print(colors[i][x]);
     colors[i][x] = true;
     ratingBars.add((RatingBar.builder(
       initialRating: 6,
@@ -1330,8 +1326,8 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
   _buildListViewNaturalAndPest(List<STPvalueAndCon> data) {
     List<Widget> widgetForShow = [];
     List<String> input = [];
-    print("natural and pest : ");
-    print(data.length);
+    //print("natural and pest : ");
+    //print(data.length);
     for (int i = 0; i < data.length; i++) {
       input.add("");
       widgetForShow.add(

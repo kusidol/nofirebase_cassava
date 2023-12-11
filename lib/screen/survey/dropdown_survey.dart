@@ -34,7 +34,7 @@ class _dropdownForServiceAPIState extends State<dropdownForServiceAPI> {
     String? token = tokenFromLogin?.token;
     List<Field> data =
         await fieldService.getFields(token.toString(), pageService, 2);
-    print("data = ${data.length}");
+    //print("data = ${data.length}");
     List<String> test = [];
     data.forEach((e) {
       test.add(e.fieldID.toString());
@@ -48,9 +48,9 @@ class _dropdownForServiceAPIState extends State<dropdownForServiceAPI> {
   }
 
   Future<void> fetchData() async {
-    print("Before PageService : ${pageService}");
+    //print("Before PageService : ${pageService}");
     pageService++;
-    print("After PageService : ${pageService}");
+    //print("After PageService : ${pageService}");
 
     FieldService fieldService = FieldService();
     String? token = tokenFromLogin?.token;
@@ -90,7 +90,7 @@ class _dropdownForServiceAPIState extends State<dropdownForServiceAPI> {
                       title: Text(fieldItemsForDropdown[index]),
                       onTap: () {
                         selectedIndex = fieldItemsForDropdown[index];
-                        print("selectedIndex : ${selectedIndex}");
+                        //print("selectedIndex : ${selectedIndex}");
                         Navigator.pop(context,
                             selectedIndex); // ส่งค่า selectedIndex กลับไปยังหน้าก่อนหน้า
                       },

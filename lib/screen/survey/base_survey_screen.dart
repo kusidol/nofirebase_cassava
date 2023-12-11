@@ -142,7 +142,7 @@ TabController? _mainTapController;
        widget.surveyProvider;
 
     if(!surveyProvider.isSearch && !surveyProvider.isFetch()){
-      //print("plantingID =  ${surveyProvider.plantingId}");
+      ////print("plantingID =  ${surveyProvider.plantingId}");
       surveyProvider.setFetch(true);
 
       if(surveyProvider.plantingId != -1) {
@@ -197,7 +197,7 @@ TabController? _mainTapController;
   Future<void> _pullRefresh() async {}
 
   void _scrollListener() {
-    //print("scroll listener");
+    ////print("scroll listener");
 
     //if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
     if (_scrollController.offset >=
@@ -205,9 +205,9 @@ TabController? _mainTapController;
         !_scrollController.position.outOfRange) {
       //  fetchMoreData();
 
-      // print("call");
+      // //print("call");
     } else {
-      // print("don't call");
+      // //print("don't call");
     }
   }
 
@@ -564,7 +564,7 @@ TabController? _mainTapController;
                       onTap: () {
                         FocusScope.of(context).requestFocus(FocusNode());
                         if (shortCutValue == null || shortCutValue == "") {
-                          //print("-----------------");
+                          ////print("-----------------");
                           isSearching = false;
                           asyncFunction();
                         }
@@ -602,7 +602,7 @@ TabController? _mainTapController;
         (key, value) => value == null || value == '' || value == 0);
 
     String jsonString = jsonEncode(jsonData);
-    //print(jsonString);
+    ////print(jsonString);
 
     setState(() {
       isShowbasicSearch = true;
@@ -621,10 +621,10 @@ TabController? _mainTapController;
             )),
         onExpansionChanged: (bool isExpanded) {
           if (!isExpanded) {
-            print('Hello World');
+            //print('Hello World');
             // dropdownfield.resetItemsAfterSearch();
           } else {
-            print('Save Value');
+            //print('Save Value');
           }
         },
         leading: Icon(Icons.perm_contact_calendar_outlined),
@@ -1233,12 +1233,12 @@ Widget getFilterBarUI(int numItemFounded) {
         (key, value) => value == null || value == '' || value == 0);
 
     String jsonString = jsonEncode(jsonData);
-    //print(jsonString);
+    ////print(jsonString);
 
     setState(() {
       isShowbasicSearch = true;
     });
-    //print("-------------------------");
+    ////print("-------------------------");
     provider.search(jsonData);
     isSearching = true;
   }
@@ -1379,8 +1379,8 @@ Widget getFilterBarUI(int numItemFounded) {
                                                             (BuildContext context,
                                                                 int index) {
 
-                                                          //print(index);
-                                                                  // print("surveyList length : ${surveyList.length} index :${index}");
+                                                          ////print(index);
+                                                                  // //print("surveyList length : ${surveyList.length} index :${index}");
                                                          IsCheckTarget=surveyProvider.surveyData[index].checkTarget;
                                                          //Planting planting = surveyProvider.surveyData[index].planting ;
                                                          //     plantings[index];
@@ -1433,7 +1433,7 @@ Widget getFilterBarUI(int numItemFounded) {
                                                                                   surveyProvider.surveyData[index].code, surveyProvider))).then((value) {
                                                                     if (value == true) {
                                                                       asyncFunction();
-                                                                      //print("value${value}");
+                                                                      ////print("value${value}");
 
                                                                     }
                                                                   });
@@ -1548,7 +1548,7 @@ Widget getFilterBarUI(int numItemFounded) {
                                     ),
                                     onPressed: () {
                                       // Button press logic goes here
-                                      print('Button Pressed');
+                                      //print('Button Pressed');
                                     },
                                     child: Icon(
                                       Icons.remove_red_eye_rounded,

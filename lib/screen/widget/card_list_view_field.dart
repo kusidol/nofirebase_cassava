@@ -340,7 +340,7 @@ class CardItemWithOutImageField extends StatelessWidget {
                                           ),
                                           onPressed: () {
                                             // Button press logic goes here
-                                            print('Button Pressed');
+                                            //print('Button Pressed');
                                           },
                                           child: IconButton(
                                             icon: Icon(

@@ -138,7 +138,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
           await fieldService.fetchImages(token.toString(), id);
       return fetchedImages;
     } catch (e) {
-      print('Error fetching images: $e');
+      //print('Error fetching images: $e');
       return null;
     }
   }
@@ -153,7 +153,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
       locationFromField = locationFromFields;
       return locationFromField;
     } catch (e) {
-      print(e);
+      //print(e);
     }
   }
 
@@ -175,7 +175,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
   }
 
   Future<void> _pullRefresh() async {
-    // print("123");
+    // //print("123");
   }
 
   void _scrollListener() {
@@ -595,7 +595,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                                 0, null, null, "", fieldProviders)),
                       );
 
-                      print("GO TO PAGE => CREATE FIELDS");
+                      //print("GO TO PAGE => CREATE FIELDS");
                     },
                     child: Padding(
                       padding: EdgeInsets.all(
@@ -625,7 +625,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
         (key, value) => value == null || value == '' || value == 0);
 
     String jsonString = jsonEncode(jsonData);
-    print(jsonString);
+    //print(jsonString);
 
     setState(() {
       isShowbasicSearch = true;
@@ -644,7 +644,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
         (key, value) => value == null || value == '' || value == 0);
 
     String jsonString = jsonEncode(jsonData);
-    print(jsonString);
+    //print(jsonString);
 
     setState(() {
       isShowbasicSearch = true;
@@ -665,7 +665,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
         (key, value) => value == null || value == '' || value == 0);
 
     String jsonString = jsonEncode(jsonData);
-    print(jsonString);
+    //print(jsonString);
 
     setState(() {
       isShowbasicSearch = true;
@@ -809,7 +809,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
   @override
   Widget build(BuildContext context) {
     final fieldProvider = Provider.of<FieldProviders>(context);
-    print("Page Base Planting Context: $context");
+    //print("Page Base Planting Context: $context");
     return Theme(
       data: HotelAppTheme.buildLightTheme(),
       child: Container(
@@ -985,8 +985,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                                                                 field.name;
                                                           },
                                                           callback: () {
-                                                            print(
-                                                                "test inkwell");
+                                                            //print("test inkwell");
 
                                                             Navigator.push(
                                                               context,
@@ -1052,38 +1051,44 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
     );
   }
 
-Future<bool> onBackButtonPressed(BuildContext context) async {
-  bool? exitApp = await showCupertinoDialog<bool>(
-    context: context,
-    builder: (BuildContext context) => CupertinoAlertDialog(
-      title: Text("notification-label".i18n()),
-      content: Text("exit-application".i18n()),
-      actions: [
-        CupertinoDialogAction(
-          onPressed: () {
-            Navigator.of(context).pop(false);
-          },
-          child: Text('No', style: TextStyle(
-              color: Colors.red,
-              fontWeight: FontWeight.w400,
-            ),),
-        ),
-        CupertinoDialogAction(
-          onPressed: () {
-            Navigator.of(context).pop(true);
-            SystemNavigator.pop();
-          },
-          child: Text('Yes', style: TextStyle(
-              color: Colors.blue,
-              fontWeight: FontWeight.w400,
-            ),),
-        ),
-      ],
-    ),
-  );
+  Future<bool> onBackButtonPressed(BuildContext context) async {
+    bool? exitApp = await showCupertinoDialog<bool>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text("notification-label".i18n()),
+        content: Text("exit-application".i18n()),
+        actions: [
+          CupertinoDialogAction(
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+            child: Text(
+              'No',
+              style: TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+          CupertinoDialogAction(
+            onPressed: () {
+              Navigator.of(context).pop(true);
+              SystemNavigator.pop();
+            },
+            child: Text(
+              'Yes',
+              style: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
 
-  return exitApp ?? false;
-}
+    return exitApp ?? false;
+  }
 
   Widget shimmerLoading() {
     return Container(
@@ -1160,7 +1165,7 @@ Shimmer mockShimmer(BuildContext context) {
                                   ),
                                   onPressed: () {
                                     // Button press logic goes here
-                                    print('Button Pressed');
+                                    //print('Button Pressed');
                                   },
                                   child: Icon(
                                     Icons.info_outline_rounded,

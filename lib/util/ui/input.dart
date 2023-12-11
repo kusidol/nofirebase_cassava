@@ -68,13 +68,13 @@ class _AnimTFFState extends State<AnimTFF> {
       ..addListener(() {
         if (focusNode!.hasFocus && inputStatus == InputStatus.none) {
           setState(() {
-            print(" focus on none");
+            //print(" focus on none");
             var color = Colors.deepPurple;
             border = getBorder(color);
             labelColor = color;
           });
         } else if (focusNode!.hasFocus && inputStatus == InputStatus.invalid) {
-          print("-------focus on Invalid----");
+          //print("-------focus on Invalid----");
           if (widget.errorText == null) {
             setState(() {
               var color = Colors.deepPurple;
@@ -85,7 +85,7 @@ class _AnimTFFState extends State<AnimTFF> {
             });
           }
         } else if (focusNode!.hasFocus && inputStatus == InputStatus.valid) {
-          print("-------focus on valid----");
+          //print("-------focus on valid----");
           if (widget.errorText == null) {
             setState(() {
               var color = Colors.deepPurple;
@@ -107,7 +107,7 @@ class _AnimTFFState extends State<AnimTFF> {
   }
 
   String? validator(String? text) {
-    print("validate now");
+    //print("validate now");
     String? error;
     if (widget.validator1 == null) return null;
 
@@ -169,8 +169,8 @@ class _AnimTFFState extends State<AnimTFF> {
 
   @override
   Widget build(BuildContext context) {
-    print("showError : ${showError}");
-    print(" label Text : ${lableText}");
+    //print("showError : ${showError}");
+    //print(" label Text : ${lableText}");
     // if(widget.errorText ){
     //   inputStatus=InputStatus.none;
     //   setInputDetails(showError);
