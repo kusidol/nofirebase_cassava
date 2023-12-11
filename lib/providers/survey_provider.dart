@@ -371,11 +371,10 @@ class SurveyProvider with ChangeNotifier {
     String? token = tokenFromLogin?.token;
 
     if(plantingId != -1){
+      data["plantingId"] = plantingId.toString();
+    }
 
-    }else{
-
-      await surveyService.search(
-          data,token.toString()).then((surveys) async {
+    await surveyService.search( data,token.toString()).then((surveys) async {
 
         if(surveys != null){
           await _doSearch(surveys,0) ;
@@ -383,7 +382,6 @@ class SurveyProvider with ChangeNotifier {
 
       });
 
-    }
     isLoading = true;
     numberAllSurveys = surveyData.length;
     notifyListeners();
@@ -398,15 +396,17 @@ class SurveyProvider with ChangeNotifier {
 
 
     if(plantingId != -1){
-      //data["plantinswgId"] = "10";
-     //print(data);
-    }else{
+      data["plantingId"] = plantingId.toString();
+
+
+    }
+
       await surveyService.searchSurveyByKey(data,token.toString()).then((surveys) async {
         if(surveys != null){
           await _doSearch(surveys,0);
         }
       });
-    }
+
 
 
     /*List<Survey> data2 = surveys;
