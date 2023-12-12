@@ -40,7 +40,8 @@ import 'package:shimmer/shimmer.dart';
 
 class BaseCultivationScreen extends StatefulWidget {
   TabController mainTapController;
-  BaseCultivationScreen(this.mainTapController);
+  PlantingProvider plantingProvider;
+  BaseCultivationScreen(this.mainTapController, this.plantingProvider);
   @override
   State<StatefulWidget> createState() => _BaseCultivationScreen();
 }
@@ -82,6 +83,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
 
   @override
   void initState() {
+    widget.plantingProvider.reset();
     _scrollController.addListener(_scrollListener);
     animationController = AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
@@ -102,6 +104,9 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
   void dispose() {
     animationController?.dispose();
     ownerController.dispose();
+    widget.plantingProvider.isSearch = false;
+    widget.plantingProvider.resetFieldID();
+    widget.plantingProvider.reset();
     super.dispose();
   }
 
@@ -112,14 +117,12 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
       });
     }
 
-    PlantingProvider provider =
-        Provider.of<PlantingProvider>(context, listen: false);
+    PlantingProvider provider = widget.plantingProvider;
 
-    provider.reset();
     SurveyProvider surveyProvider =
         Provider.of<SurveyProvider>(context, listen: false);
     surveyProvider.resetPlantingID();
-    provider.setFetch(false);
+    print("Check: ${provider.isSearch} ${provider.isFetch()}");
     if (!provider.isSearch && !provider.isFetch()) {
       provider.setFetch(true);
       if (provider.fieldID != 0) {
@@ -132,7 +135,6 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
         provider.fetchData();
         //  }
       }
-      provider.fetchDataFromField();
     }
 
     if (mounted) {
@@ -149,10 +151,9 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
       });
     }
 
-    PlantingProvider provider =
-        Provider.of<PlantingProvider>(context, listen: false);
-
-    if (!isSearching) {
+    PlantingProvider provider = widget.plantingProvider;
+    if (!isSearching && !provider.isSearch && !provider.isFetch()) {
+      provider.setFetch(true);
       if (provider.fieldID != 0) {
         provider.fetchDataFromField();
       } else {
@@ -474,6 +475,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                       onTap: () {
                         FocusScope.of(context).requestFocus(FocusNode());
                         if (fieldNameValue == null || fieldNameValue == "") {
+                          plantingProvider.reset();
                           // _handleSearchButton(plantingProvider);
                           onfirstLoadData();
                         } else {
@@ -496,6 +498,9 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
   }
 
   void _handleSearchByKeyButton(PlantingProvider provider) async {
+    if (provider.isFetch()) {
+      return;
+    }
     //call Service
     Map<String, dynamic> jsonData = {
       "key": fieldNameValue,
@@ -727,6 +732,9 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
   }
 
   void _handleSearchButton(PlantingProvider provider) async {
+    if (provider.isFetch()) {
+      return;
+    }
     //call Service
     Map<String, dynamic> jsonData = {
       "address": addressValue,
@@ -1005,6 +1013,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                       //side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))
                     ),
                     onPressed: () {
+                      provider.reset();
                       if (addressValue == "" &&
                           fieldNameValue == "" &&
                           ownerNameValue == "" &&

@@ -154,14 +154,15 @@ class _MainScreen extends State<MainScreen>
                 )),
                 body:
                     //scrollDirection: Axis.horizontal,
-                    Consumer<SurveyProvider>(
-                        builder: (context, surveyProvider, index) {
+                    Consumer2<SurveyProvider, PlantingProvider>(builder:
+                        (context, surveyProvider, plantingProvider, index) {
                   return TabBarView(
                     controller: _mainTapController,
                     children: [
                       MenuScreen(_mainTapController!, surveyProvider),
                       BaseFieldScreen(_mainTapController!),
-                      BaseCultivationScreen(_mainTapController!),
+                      BaseCultivationScreen(
+                          _mainTapController!, plantingProvider),
                       SurveyTable(_mainTapController!, surveyProvider),
                     ],
                   );

@@ -253,29 +253,33 @@ class PlantingService {
     return plantings;
   }
 
-  Future<List<Planting>> searchPlantingByKey2(
+  Future<List<Map<String, dynamic>>> searchPlantingByKey2(
       Map<String, dynamic> data, String token) async {
-    List<Planting> plantings = [];
+    List<Map<String, dynamic>> datas = [];
     Service plantingsService = new Service();
     var response = await plantingsService.doPostWithFormData(
         "${LOCAL_SERVER_IP_URL}/planting/search", token, data);
 
     if (response.statusCode == 200) {
-      plantings = ObjectList<Planting>.fromJson(
-          jsonDecode(response.data), (body) => Planting.fromJson(body)).list;
+      Map<String, dynamic> res = jsonDecode(response.data);
+      for (int i = 0; i < res['body'].length; i++) {
+        Map<String, dynamic> item = res['body'][i];
+        print(item);
+        datas.add(item);
+      }
     } else if (response.statusCode == 401) {
       print('error statusCode 401');
     } else {
       print("error with out statusCode");
     }
-    return plantings;
+    return datas;
   }
 
   Future<List<Map<String, dynamic>>> search(
-      Map<String, dynamic> data, int page, int value, String token) async {
+      Map<String, dynamic> data, String token) async {
     List<Map<String, dynamic>> datas = [];
-
-    value = 100;
+    int page = 1;
+    int value = 1000;
     int date = DateTime.now().millisecondsSinceEpoch;
     Service service = new Service();
     var response = await service.doPostWithFormData(
