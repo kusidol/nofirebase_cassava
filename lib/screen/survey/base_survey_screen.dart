@@ -52,7 +52,7 @@ class SurveyTable extends StatefulWidget {
 class _SurveyTable extends State<SurveyTable>
     with SingleTickerProviderStateMixin {
   bool isVisible = true;
-  AnimationController? animationController;
+  //AnimationController? animationController;
   final ScrollController _scrollController = ScrollController();
   final ScrollController _inerscrollController = ScrollController();
   DateTime startDate = DateTime.now();
@@ -102,7 +102,7 @@ class _SurveyTable extends State<SurveyTable>
   @override
   void dispose() {
 
-    animationController?.dispose();
+    //animationController?.dispose();
     codeNameController.dispose();
     ownerController.dispose();
     locationController.dispose();
@@ -119,9 +119,10 @@ class _SurveyTable extends State<SurveyTable>
    //widget.surveyProvider.reset();
     widget.surveyProvider.reset();
     _scrollController.addListener(_scrollListener);
-    animationController = AnimationController(
+   /* animationController = AnimationController(
         duration: const Duration(milliseconds: 4000), vsync: this
-    );
+    );*/
+
 
     asyncFunction();
     super.initState();
@@ -143,10 +144,11 @@ class _SurveyTable extends State<SurveyTable>
     surveyProvider =
        widget.surveyProvider;
 
-    if(!surveyProvider.isSearch && !surveyProvider.isFetch()){
+    if(!surveyProvider.isSearch /*&& !surveyProvider.isFetch()*/){
       ////print("plantingID =  ${surveyProvider.plantingId}");
-      surveyProvider.setFetch(true);
-
+      if(!mounted)
+        return ;
+      //surveyProvider.setFetch(true);
       if(surveyProvider.plantingId != -1) {
 
         surveyProvider.fetchDataFromPlanting();
@@ -167,7 +169,13 @@ class _SurveyTable extends State<SurveyTable>
     }
   }
 
+  Future<int> countSurvey() async {
+    SurveyService surveyService = SurveyService();
+    String? token = tokenFromLogin?.token;
+    int count = await surveyService.countSurveys(token.toString()); ;
 
+    return count;
+  }
 
   void fetchMoreData() async {
     if (mounted) {
@@ -177,9 +185,9 @@ class _SurveyTable extends State<SurveyTable>
     }
 
     SurveyProvider surveyProvider =  widget.surveyProvider;
-      if (!isSearching && !widget.surveyProvider.isSearch && !surveyProvider.isFetch() ) {
+      if (!isSearching && !widget.surveyProvider.isSearch /*&& !surveyProvider.isFetch()*/ ) {
 
-        surveyProvider.setFetch(true);
+       // surveyProvider.setFetch(true);
 
         if(surveyProvider.plantingId != -1) {
 
@@ -597,13 +605,17 @@ class _SurveyTable extends State<SurveyTable>
 
   void _handleSearchByKeyButton(SurveyProvider provider) async {
 
-   if(provider.isFetch()){
+  /* if(provider.isFetch()){
      return ;
-   }
+   }*/
 
     Map<String, dynamic> jsonData = {
       "key": shortCutValue,
     };
+
+    if(provider.plantingId != -1){
+      jsonData['plantingId'] = provider.plantingId;
+    }
 
     jsonData.removeWhere(
         (key, value) => value == null || value == '' || value == 0);
@@ -737,7 +749,7 @@ Widget getFilterBarUI(int numItemFounded) {
                           child: Center(
                              child: ExpandableText(
                                plantingName == "" ?
-                               'surveys-founded-label'.i18n()+' ${numItemFounded}' : 'surveys-founded-id-label'.i18n() + " ${plantingName}" + ' (${numItemFounded})',
+                               'surveys-founded-label'.i18n()+' ${numItemFounded} ' + 'surveying-label'.i18n(): 'surveys-founded-id-label'.i18n() + " ${plantingName} " + 'surveys-founded-label'.i18n() + ' ${numItemFounded} ' + 'surveying-label'.i18n(),
                                expandText:  plantingName == "" ?
                                'surveys-founded-label'.i18n() + ' ${numItemFounded}' : 'surveys-founded-id-label'.i18n() + ' (${numItemFounded})',
                                              collapseText: 'show less',       
@@ -1220,9 +1232,9 @@ Widget getFilterBarUI(int numItemFounded) {
 
   void _handleSearchButton(SurveyProvider provider) async {
 
-   if(provider.isFetch()){
+  /* if(provider.isFetch()){
      return ;
-   }
+   }*/
 
     //call Service
     Map<String, dynamic> jsonData = {
@@ -1287,6 +1299,8 @@ Widget getFilterBarUI(int numItemFounded) {
                           child: Column(
                             children: <Widget>[
                               getAppBarUI(),
+
+                              getFilterBarUI(surveyProvider.numberAllSurveys),
                               _isLoading
                                   ? Container()
                                   : Expanded(
@@ -1301,9 +1315,9 @@ Widget getFilterBarUI(int numItemFounded) {
                                                         .metrics.maxScrollExtent) {
                                                   check = 0;
                                                 } else if (check == 0) {
-                                                  
+
                                                   fetchMoreData();
-                
+
                                                   check = 1;
                                                 }
                                               }
@@ -1315,7 +1329,7 @@ Widget getFilterBarUI(int numItemFounded) {
                                                   check = 0;
                                                 } else if (check == 0) {
                                                   fetchMoreData();
-                
+
                                                   check = 1;
                                                 }
                                               }
@@ -1351,15 +1365,7 @@ Widget getFilterBarUI(int numItemFounded) {
                                                       );
                                                     }, childCount: 1),
                                                   ),
-                                                 SliverPersistentHeader(
-                                            pinned: true,
-                                            floating: true,
-                                            delegate: ContestTabHeader(Column(
-                                              children: <Widget>[
-                                                getFilterBarUI(surveyProvider.numberAllSurveys),
-                                              ],
-                                            )),
-                                          ),
+
                                                 ];
                                               },
                                               body: Container(
@@ -1405,11 +1411,11 @@ Widget getFilterBarUI(int numItemFounded) {
 
                                                           String lastName = surveyProvider.surveyData[index].lastName ;
 
-                                                            
+
                                                           final int count =  surveyProvider.surveyData.length > 10  ? 10 : surveyProvider.surveyData.length;
-                                                          final Animation <double> animation = Tween<double>(begin: 0.0,end: 1.0).animate(CurvedAnimation(parent:animationController!, curve: Interval( (1 / count) *  index,   1.0, curve: Curves
+                                                          /*final Animation <double> animation = Tween<double>(begin: 0.0,end: 1.0).animate(CurvedAnimation(parent:animationController!, curve: Interval( (1 / count) *  index,   1.0, curve: Curves
                                                                           .fastOutSlowIn)));
-                                                          animationController ?.forward();
+                                                          animationController ?.forward();*/
 
 
                                                           return surveyProvider.surveyData[index].isLoading &&  surveyProvider.surveyData[index].isLoading? mockShimmer():
@@ -1511,7 +1517,7 @@ Widget getFilterBarUI(int numItemFounded) {
                                                             date: ChangeDateTime(surveyProvider.surveyData[index].survey.date),
                                                           );*/
                                                         },
-                                                      ):   !surveyProvider.isLoading ? Container() : NoData().showNoData(context),
+                                                      ):   !surveyProvider.isSearch ? Container() : NoData().showNoData(context),
                                                     )
                                                   ,
                                             ),
@@ -1742,7 +1748,7 @@ Widget getFilterBarUI(int numItemFounded) {
     );
   }
 
-  Widget shimmerLoading() {
+  /*Widget shimmerLoading() {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -1765,7 +1771,7 @@ Widget getFilterBarUI(int numItemFounded) {
         },
       ),
     );
-  }
+  }*/
 
   Future<bool> onBackButtonPressed(BuildContext context) async {
     bool? exitApp = await showCupertinoDialog<bool>(
