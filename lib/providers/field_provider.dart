@@ -12,85 +12,141 @@ import 'package:mun_bot/entities/user.dart';
 import 'package:mun_bot/main.dart';
 import 'package:mun_bot/screen/login/login_screen.dart';
 
+class FieldData {
+  int fieldId;
+  String fieldName;
+  String substrict;
+  String district;
+  String province;
+  String title;
+  String firstName;
+  String lastName;
+  bool isLoading;
+  FieldData(this.fieldId, this.fieldName, this.substrict, this.district,
+      this.province, this.title, this.firstName, this.lastName, this.isLoading);
+}
+
 class FieldProviders with ChangeNotifier {
-  List<Field> fields = [];
-  List<User> owner = [];
-  List<String> locations = [];
-  List<ImageData?> images = [];
+  bool isHaveField = false;
+  // List<Field> fields = [];
+  // List<User> owner = [];
+  // List<String> locations = [];
+  // List<ImageData?> images = [];
+
   bool isLoading = false;
-  final int _value = 5;
+  int _value = 20;
   int _page = 1;
+  bool isSearch = false;
+  bool _fetch = false;
+  int fieldID = 0;
+  String fieldName = "";
   int numberAllFields = 0;
+  List<FieldData> fieldData = [];
+
   void reset() {
     isLoading = false;
-    fields = [];
-    owner = [];
-    locations = [];
-    images = [];
+    if (!isFetch()) {
+      fieldData.clear();
+    }
+    // fields = [];
+    // owner = [];
+    // locations = [];
+    // images = [];
     _page = 1;
   }
 
-  Future<void> fetchData() async {
-    List<Field> data = [];
-    FieldService fieldService = FieldService();
+  void resetFieldID() {
+    fieldID = 0;
+    fieldName = "";
+  }
 
+  bool isFetch() {
+    return _fetch;
+  }
+
+  setFetch(bool fetch) {
+    this._fetch = fetch;
+
+    ///notifyListeners();
+  }
+
+  Future<void> fetchData() async {
+    FieldService fieldService = FieldService();
     String? token = tokenFromLogin?.token;
-    data = await fieldService.getFields(token.toString(), _page, _value);
-    numberAllFields = await fieldService.countFields(token.toString());
-    if (fields.length % _value != 0) {
-      int x = fields.length % _value;
-      for (int i = 0; i < x; i++) {
-        fields.removeLast();
-      }
-      fields = [...fields, ...data];
-    } else {
-      fields = [...fields, ...data];
+    int count = await fieldService.countFields(token.toString());
+
+    numberAllFields = count;
+
+    if (numberAllFields == 0 || numberAllFields == fieldData.length) {
+      notifyListeners();
+      return;
     }
 
-    _page = (fields.length ~/ _value) + 1;
+    _value = 20;
 
-    for (int i = 0; i < fields.length; i++) {
-      String? token = tokenFromLogin?.token;
+    isLoading = false;
 
-      int fieldID = fields[i].fieldID;
+    notifyListeners();
 
-      ImageData? fetchedImages =
-          await fieldService.fetchImages(token.toString(), fieldID);
+    _value = numberAllFields < _value ? numberAllFields : _value;
 
-      if (fetchedImages != null) {
-        images.add(fetchedImages);
-      } else {
-        images.add(null);
-      }
+    int index = ((_page - 1) * _value);
 
-      String? location =
-          await fieldService.getLocationByFielID(fieldID, token.toString());
-      if (location != null) {
-        locations.add(location);
-      } else {
-        locations.add("");
-      }
+    String none = "";
 
-      UserService userService = UserService();
-      User? user = await userService.getUserByFieldID(
-          fields[i].fieldID, token.toString());
-      if (user != null) {
-        owner.add(user);
-      } else {
-        owner.add(User(
-            -1,
-            "service null",
-            "service null",
-            "service null",
-            "service null",
-            "service null",
-            UserStatus.invalid,
-            0,
-            RequestInfoStatus.No));
-      }
+    FieldData pt = FieldData(0, none, none, none, none, none, none, none, true);
+
+    int dummySize = fieldData.length + _value < numberAllFields
+        ? _value
+        : numberAllFields - fieldData.length;
+
+    for (int i = 0; i < dummySize; i++) {
+      fieldData
+          .add(FieldData(0, none, none, none, none, none, none, none, true));
+    }
+
+    notifyListeners();
+
+    await fieldService
+        .getFieldsByUserID(
+      _value,
+      token.toString(),
+    )
+        .then((value) async {
+      // if (value != null) {
+      //   for (Map<String, dynamic> data in value) {
+      //     Field? field = await fieldService.getFieldByFieldID(
+      //         data['plantingId'], token.toString()) as Planting;
+
+      //     plantingData[index].plantingId = data['plantingId'];
+      //     plantingData[index].plantingName = data['plantingName'];
+      //     plantingData[index].fieldName = data['fieldName'];
+      //     plantingData[index].substrict = data['substrict'];
+      //     plantingData[index].district = data['district'];
+      //     plantingData[index].province = data['province'];
+      //     plantingData[index].firstName = data['firstName'];
+      //     plantingData[index].lastName = data['lastName'];
+      //     plantingData[index].planting = planting;
+      //     plantingData[index].isLoading = false;
+
+      //     notifyListeners();
+
+      //     new Future.delayed(const Duration(seconds: 2), () {});
+
+      //     index++;
+      //   }
+
+      //   _page = (plantingData.length ~/ _value) + 1;
+
+      //   setFetch(false);
+      // }
+    });
+
+    isLoading = true;
+    if (count > 0) {
+      isHaveField = true;
     }
     notifyListeners();
-    isLoading = true;
   }
 
   void search(Map<String, dynamic> data) async {
