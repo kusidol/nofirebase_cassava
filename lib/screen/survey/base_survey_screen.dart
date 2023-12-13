@@ -1420,9 +1420,11 @@ Widget getFilterBarUI(int numItemFounded) {
                                                    ),
                                                  ),
                                                  child: surveyProvider.surveyData.isNotEmpty ? ListView.builder(
-                                                   physics: NeverScrollableScrollPhysics(),
+                                                   padding: EdgeInsets.only(
+                                                       top: sizeHeight(8, context)),
+                                                   //physics: NeverScrollableScrollPhysics(),
                                                    shrinkWrap: false,
-                                                   //controller: _inerscrollController,
+                                                   controller: _inerscrollController,
                                                    itemCount: surveyProvider.surveyData.length,
 
                                                    scrollDirection:
@@ -1433,14 +1435,14 @@ Widget getFilterBarUI(int numItemFounded) {
 
                                                      ////print(index);
                                                      // //print("surveyList length : ${surveyList.length} index :${index}");
-                                                     IsCheckTarget=surveyProvider.surveyData[index].checkTarget;
+                                                     //IsCheckTarget=surveyProvider.surveyData[index].checkTarget;
                                                      //Planting planting = surveyProvider.surveyData[index].planting ;
                                                      //     plantings[index];
                                                      // Adding new
                                                      String plantingName =surveyProvider.surveyData[index].plantingName ;
                                                      /* list_plantingName[
                                                                   index];*/
-                                                     String fieldName = surveyProvider.surveyData[index].fieldName ;
+                                                     //String fieldName = surveyProvider.surveyData[index].fieldName ;
                                                      String substrict = surveyProvider.surveyData[index].substrict ;
                                                      String district = surveyProvider.surveyData[index].district ;
                                                      String province = surveyProvider.surveyData[index].province ;
