@@ -120,11 +120,15 @@ class SurveyProvider with ChangeNotifier {
 
     int index = ((_page-1) * _value) ;
 
+
+
     String none = "" ;
 
     Survey sv = Survey(0, 0, 0, none, none, 0, 0, none, none, none, none, none, none, none, none, 0, 0, 0, none, 0, none, none, 0, 0, 0, 0, none, none, none) ;
 
     int dummySize = surveyData.length + _value < numberAllSurveys ? _value : numberAllSurveys - surveyData.length  ;
+
+    
     //print("Dummy ${dummySize}");
     for(int i = 0 ; i < dummySize ; i++){
       surveyData.add(SurveyData(0,none,none,none,none,none,none,none,none,false,none,sv,true));
@@ -293,7 +297,6 @@ class SurveyProvider with ChangeNotifier {
     SurveyService surveyService = SurveyService();
     numberAllSurveys = surveys.length;
 
-
     String none = "" ;
     Survey sv = Survey(0, 0, 0, none, none, 0, 0, none, none, none, none, none, none, none, none, 0, 0, 0, none, 0, none, none, 0, 0, 0, 0, none, none, none) ;
 
@@ -336,6 +339,8 @@ class SurveyProvider with ChangeNotifier {
             0,
             RequestInfoStatus.No) ;
       }*/
+      if(surveyData.isEmpty)
+        return ;
 
       surveyData[index].id = data['surveyId'] ;
       surveyData[index].plantingName = data['plantingName'] ;
