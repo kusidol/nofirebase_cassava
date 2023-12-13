@@ -749,7 +749,7 @@ Widget getFilterBarUI(int numItemFounded) {
                           child: Center(
                              child: ExpandableText(
                                plantingName == "" ?
-                               'surveys-founded-label'.i18n()+' ${numItemFounded} ' + 'surveying-label'.i18n(): 'surveys-founded-id-label'.i18n() + " ${plantingName} " + 'surveys-founded-label'.i18n() + ' ${numItemFounded} ' + 'surveying-label'.i18n(),
+                               'surveys-founded-label'.i18n()+' ${numItemFounded} ' + 'item-label'.i18n(): 'surveys-founded-id-label'.i18n() + " ${plantingName} " + 'surveys-founded-label'.i18n() + ' ${numItemFounded} ' + 'item-label'.i18n(),
                                expandText:  plantingName == "" ?
                                'surveys-founded-label'.i18n() + ' ${numItemFounded}' : 'surveys-founded-id-label'.i18n() + ' (${numItemFounded})',
                                              collapseText: 'show less',       
@@ -828,12 +828,17 @@ Widget getFilterBarUI(int numItemFounded) {
     );
   }
 
+  //bool _isExpanded = false ;
+  double size = 0.35 ;
   Widget searchMore1(SurveyProvider provider) {
     var _startDateUserNameColor = Colors.black;
     String _startDateTimeText = " Start Date";
     // for search
     void _startDateTFToggle(e) {
       setState(() {
+
+        //_isExpanded = !_isExpanded ;
+        //size = _isExpanded ? 0.70 : 0.35 ;
         //_rqVisible = !_rqVisible;
         _startDateTimeText = "Start Date";
         _startDateUserNameColor = Colors.black;
@@ -995,6 +1000,7 @@ Widget getFilterBarUI(int numItemFounded) {
           onTap: () {
             setState(() {
               isShowbasicSearch = !isShowbasicSearch;
+              size = isShowbasicSearch ? 0.70 : 0.35 ;
             });
           },
         ),
@@ -1286,6 +1292,7 @@ Widget getFilterBarUI(int numItemFounded) {
            return WillPopScope(
                 onWillPop: () => onBackButtonPressed(context),
                   child: Scaffold(
+                    resizeToAvoidBottomInset: false,
                     body: Stack(
                       children: <Widget>[
                         InkWell(
@@ -1297,13 +1304,48 @@ Widget getFilterBarUI(int numItemFounded) {
                             FocusScope.of(context).requestFocus(FocusNode());
                           },
                           child: Column(
+
                             children: <Widget>[
                               getAppBarUI(),
 
-                              getFilterBarUI(surveyProvider.numberAllSurveys),
+                              Container(
+                                height:  isShowbasicSearch ? MediaQuery.of(context).size.height *0.175: MediaQuery.of(context).size.height * 0.475,
+                                child:
+
+                                CustomScrollView(
+                                  physics: BouncingScrollPhysics(),
+                                  slivers: [
+                                    SliverList(
+
+                                      delegate:
+                                      SliverChildBuilderDelegate(
+
+                                              (BuildContext context,
+                                              int index) {
+                                            return Column(
+                                              children: <Widget>[
+                                                getSearchBarUI(context, surveyProvider),
+                                                searchMore1(surveyProvider),
+                                                // getTimeDateUI(),
+
+                                              ],
+                                            );
+                                          }, childCount: 1),
+                                    )
+                                  ],
+                                )
+                                ,
+                              )
+
+
+                              ,   getFilterBarUI(surveyProvider.numberAllSurveys),
+
+
+
                               _isLoading
                                   ? Container()
                                   : Expanded(
+
                                       child: NotificationListener<
                                               ScrollEndNotification>(
                                           onNotification:
@@ -1345,6 +1387,7 @@ Widget getFilterBarUI(int numItemFounded) {
                                           },
                                           child: RefreshIndicator(
                                             onRefresh: _pullRefresh,
+
                                             child: NestedScrollView(
                                               controller: _scrollController,
                                               headerSliverBuilder:
@@ -1358,8 +1401,8 @@ Widget getFilterBarUI(int numItemFounded) {
                                                                 int index) {
                                                       return Column(
                                                         children: <Widget>[
-                                                          getSearchBarUI(context, surveyProvider),
-                                                          searchMore1(surveyProvider),
+                                                       //   getSearchBarUI(context, surveyProvider),
+                                                       //   searchMore1(surveyProvider),
                                                           // getTimeDateUI(),
                                                         ],
                                                       );
