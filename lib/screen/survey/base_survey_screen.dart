@@ -569,13 +569,15 @@ class _SurveyTable extends State<SurveyTable>
                       ),
                       onTap: () {
                         FocusScope.of(context).requestFocus(FocusNode());
+                        surveyProvider.reset();
                         if (shortCutValue == null || shortCutValue == "") {
                           ////print("-----------------");
-                          isSearching = false;
-                          surveyProvider.reset();
+                        //  isSearching = false;
+
                           asyncFunction();
                         }
                         else {
+                         // surveyProvider.reset();
                           _handleSearchByKeyButton(surveyProvider);
 
                         }
@@ -1283,7 +1285,7 @@ Widget getFilterBarUI(int numItemFounded) {
            return WillPopScope(
                 onWillPop: () => onBackButtonPressed(context),
                   child: Scaffold(
-                    resizeToAvoidBottomInset: false,
+                  //  resizeToAvoidBottomInset: false,
                     body: Stack(
                       children: <Widget>[
                         InkWell(
@@ -1294,213 +1296,215 @@ Widget getFilterBarUI(int numItemFounded) {
                           onTap: () {
                             FocusScope.of(context).requestFocus(FocusNode());
                           },
-                          child: Column(
-
-                            children: <Widget>[
-                              getAppBarUI(),
-
-                              Container(
-                                height:  isShowbasicSearch ? MediaQuery.of(context).size.height *0.175: MediaQuery.of(context).size.height * 0.475,
-                                child:
-
-                                CustomScrollView(
-                                  physics: BouncingScrollPhysics(),
-                                  slivers: [
-                                    SliverList(
-
-                                      delegate:
-                                      SliverChildBuilderDelegate(
-
-                                              (BuildContext context,
-                                              int index) {
-                                            return Column(
-                                              children: <Widget>[
-                                                getSearchBarUI(context, surveyProvider),
-                                                searchMore1(surveyProvider),
-                                                // getTimeDateUI(),
-
-                                              ],
-                                            );
-                                          }, childCount: 1),
-                                    )
-                                  ],
-                                )
-                                ,
-                              )
+                          child: Flex(
+                            direction: Axis.vertical,
 
 
-                              ,   getFilterBarUI(surveyProvider.numberAllSurveys),
+                              children: <Widget>[
 
 
+                                getAppBarUI(),
 
-                              _isLoading
-                                  ? Container()
-                                  : Expanded(
+                                Container(
+                                  height:  isShowbasicSearch ? MediaQuery.of(context).size.height *0.175: MediaQuery.of(context).size.height * 0.475,
+                                  child:
 
-                                      child: NotificationListener<
-                                              ScrollEndNotification>(
-                                          onNotification:
-                                              (ScrollEndNotification scrollInfo) {
-                                            if (surveyProvider.surveyData.length < 2) {
-                                              if (scrollInfo.depth == 0) {
-                                                if (scrollInfo.metrics.pixels <
-                                                    scrollInfo
-                                                        .metrics.maxScrollExtent) {
-                                                  check = 0;
-                                                } else if (check == 0) {
+                                  CustomScrollView(
 
-                                                  fetchMoreData();
+                                    slivers: [
+                                      SliverList(
 
-                                                  check = 1;
-                                                }
-                                              }
-                                            } else {
-                                              if (scrollInfo.depth == 1) {
-                                                if (scrollInfo.metrics.pixels <
-                                                    scrollInfo
-                                                        .metrics.maxScrollExtent) {
-                                                  check = 0;
-                                                } else if (check == 0) {
-                                                  fetchMoreData();
+                                        delegate:
+                                        SliverChildBuilderDelegate(
 
-                                                  check = 1;
-                                                }
-                                              }
-                                            }
-                                         if (check == 1) {
-                                            if (surveyProvider.surveyData.length ==
-                                                surveyProvider.numberAllSurveys) {
-                                              showToastMessage(
-                                                  "ข้อมูลแสดงครบทั้งหมดเป็นที่เรียบร้อยแล้ว");
-                                            }
-                                          }
-                                            return true;
-                                          },
-                                          child: RefreshIndicator(
-                                            onRefresh: _pullRefresh,
+                                                (BuildContext context,
+                                                int index) {
+                                              return Column(
+                                                children: <Widget>[
+                                                  getSearchBarUI(context, surveyProvider),
+                                                  searchMore1(surveyProvider),
+                                                  // getTimeDateUI(),
 
-                                            child: NestedScrollView(
-                                              controller: _scrollController,
-                                              headerSliverBuilder:
-                                                  (BuildContext context,
-                                                      bool innerBoxIsScrolled) {
-                                                return <Widget>[
-                                                  SliverList(
-                                                    delegate:
-                                                        SliverChildBuilderDelegate(
-                                                            (BuildContext context,
-                                                                int index) {
-                                                      return Column(
-                                                        children: <Widget>[
-                                                       //   getSearchBarUI(context, surveyProvider),
-                                                       //   searchMore1(surveyProvider),
-                                                          // getTimeDateUI(),
-                                                        ],
-                                                      );
-                                                    }, childCount: 1),
-                                                  ),
+                                                ],
+                                              );
+                                            }, childCount: 1),
+                                      )
+                                    ],
+                                  )
+                                  ,
+                                ),
+                                getFilterBarUI(surveyProvider.numberAllSurveys),
 
-                                                ];
-                                              },
-                                              body: Container(
-                                                      decoration: BoxDecoration(
-                                                        gradient: LinearGradient(
-                                                          begin: Alignment.topCenter,
-                                                          end: Alignment.bottomCenter,
-                                                          colors: [
-                                                            Colors.white.withOpacity(1),
-                                                            theme_color3.withOpacity(.4),
-                                                            theme_color4.withOpacity(1),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      child: surveyProvider.surveyData.isNotEmpty ? ListView.builder(
-                                                        //controller: _inerscrollController,
-                                                        itemCount: surveyProvider.surveyData.length,
-                                                        padding: EdgeInsets.only(
-                                                            top: sizeHeight(
-                                                                8, context)),
-                                                        scrollDirection:
-                                                            Axis.vertical,
-                                                        itemBuilder:
-                                                            (BuildContext context,
-                                                                int index) {
 
-                                                          ////print(index);
-                                                                  // //print("surveyList length : ${surveyList.length} index :${index}");
-                                                         IsCheckTarget=surveyProvider.surveyData[index].checkTarget;
-                                                         //Planting planting = surveyProvider.surveyData[index].planting ;
-                                                         //     plantings[index];
-                                                          // Adding new
-                                                          String plantingName =surveyProvider.surveyData[index].plantingName ;
-                                                             /* list_plantingName[
+                                _isLoading
+                                    ? Container()
+                                    : Expanded(
+                                        flex: 1,
+                                       child: NotificationListener<
+                                           ScrollEndNotification>(
+                                           onNotification:
+                                               (ScrollEndNotification scrollInfo) {
+                                             if (surveyProvider.surveyData.isNotEmpty) {
+                                               if (scrollInfo.depth == 0) {
+                                                 if (scrollInfo.metrics.pixels <
+                                                     scrollInfo
+                                                         .metrics.maxScrollExtent) {
+                                                   check = 0;
+                                                 } else if (check == 0) {
+
+                                                   fetchMoreData();
+
+                                                   check = 1;
+                                                 }
+                                               }
+                                             } else {
+                                               if (scrollInfo.depth == 1) {
+                                                 if (scrollInfo.metrics.pixels <
+                                                     scrollInfo
+                                                         .metrics.maxScrollExtent) {
+                                                   check = 0;
+                                                 } else if (check == 0) {
+                                                   fetchMoreData();
+
+                                                   check = 1;
+                                                 }
+                                               }
+                                             }
+                                             if (check == 1) {
+                                               if (surveyProvider.surveyData.length ==
+                                                   surveyProvider.numberAllSurveys) {
+                                                 showToastMessage(
+                                                     "ข้อมูลแสดงครบทั้งหมดเป็นที่เรียบร้อยแล้ว");
+                                               }
+                                             }
+                                             return true;
+                                           },
+                                           child: RefreshIndicator(
+                                             onRefresh: _pullRefresh,
+
+                                             child: NestedScrollView(
+                                               controller: _scrollController,
+                                               headerSliverBuilder:
+                                                   (BuildContext context,
+                                                   bool innerBoxIsScrolled) {
+                                                 return <Widget>[
+                                                   SliverList(
+
+                                                     delegate:
+                                                     SliverChildBuilderDelegate(
+
+                                                             (BuildContext context,
+                                                             int index) {
+                                                           return Column(
+                                                             children: <Widget>[
+                                                                SizedBox(height: 1,)
+                                                               // getTimeDateUI(),
+
+                                                             ],
+                                                           );
+                                                         }, childCount: 1),
+                                                   )
+                                                 ];
+                                               },
+                                               body: Container(
+                                                 decoration: BoxDecoration(
+                                                   gradient: LinearGradient(
+                                                     begin: Alignment.topCenter,
+                                                     end: Alignment.bottomCenter,
+                                                     colors: [
+                                                       Colors.white.withOpacity(1),
+                                                       theme_color3.withOpacity(.4),
+                                                       theme_color4.withOpacity(1),
+                                                     ],
+                                                   ),
+                                                 ),
+                                                 child: surveyProvider.surveyData.isNotEmpty ? ListView.builder(
+                                                   physics: NeverScrollableScrollPhysics(),
+                                                   shrinkWrap: false,
+                                                   //controller: _inerscrollController,
+                                                   itemCount: surveyProvider.surveyData.length,
+
+                                                   scrollDirection:
+                                                   Axis.vertical,
+                                                   itemBuilder:
+                                                       (BuildContext context,
+                                                       int index) {
+
+                                                     ////print(index);
+                                                     // //print("surveyList length : ${surveyList.length} index :${index}");
+                                                     IsCheckTarget=surveyProvider.surveyData[index].checkTarget;
+                                                     //Planting planting = surveyProvider.surveyData[index].planting ;
+                                                     //     plantings[index];
+                                                     // Adding new
+                                                     String plantingName =surveyProvider.surveyData[index].plantingName ;
+                                                     /* list_plantingName[
                                                                   index];*/
-                                                          String fieldName = surveyProvider.surveyData[index].fieldName ;
-                                                          String substrict = surveyProvider.surveyData[index].substrict ;
-                                                          String district = surveyProvider.surveyData[index].district ;
-                                                          String province = surveyProvider.surveyData[index].province ;
-                                                          String title = surveyProvider.surveyData[index].title ;
+                                                     String fieldName = surveyProvider.surveyData[index].fieldName ;
+                                                     String substrict = surveyProvider.surveyData[index].substrict ;
+                                                     String district = surveyProvider.surveyData[index].district ;
+                                                     String province = surveyProvider.surveyData[index].province ;
+                                                     String title = surveyProvider.surveyData[index].title ;
 
-                                                          String firstName = surveyProvider.surveyData[index].firstName ;
+                                                     String firstName = surveyProvider.surveyData[index].firstName ;
 
-                                                          String lastName = surveyProvider.surveyData[index].lastName ;
+                                                     String lastName = surveyProvider.surveyData[index].lastName ;
 
 
-                                                          final int count =  surveyProvider.surveyData.length > 10  ? 10 : surveyProvider.surveyData.length;
-                                                          /*final Animation <double> animation = Tween<double>(begin: 0.0,end: 1.0).animate(CurvedAnimation(parent:animationController!, curve: Interval( (1 / count) *  index,   1.0, curve: Curves
+                                                     //final int count =  surveyProvider.surveyData.length > 10  ? 10 : surveyProvider.surveyData.length;
+                                                     /*final Animation <double> animation = Tween<double>(begin: 0.0,end: 1.0).animate(CurvedAnimation(parent:animationController!, curve: Interval( (1 / count) *  index,   1.0, curve: Curves
                                                                           .fastOutSlowIn)));
                                                           animationController ?.forward();*/
 
 
-                                                          return surveyProvider.surveyData[index].isLoading &&  surveyProvider.surveyData[index].isLoading? mockShimmer():
+                                                     return surveyProvider.surveyData[index].isLoading &&  surveyProvider.surveyData[index].isLoading? mockShimmer():
 
-                                                          AnimatedListItem( callback: () {
-                                                            if (surveyProvider.surveyData[index].checkTarget == false) {
-                                                              //alert(surveyList[index]);
-                                                            } else {
-                                                              Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                  builder: (context) =>
-                                                                      BaseSurveyPoint(surveyProvider.surveyData[index].survey, surveyProvider.surveyData[index].code),
-                                                                ),
-                                                              );
-                                                            }
-                                                          },
-                                                            callback2: () {
+                                                     AnimatedListItem( callback: () {
+                                                       if (surveyProvider.surveyData[index].checkTarget == false) {
+                                                         //alert(surveyList[index]);
+                                                       } else {
+                                                         Navigator.push(
+                                                           context,
+                                                           MaterialPageRoute(
+                                                             builder: (context) =>
+                                                                 BaseSurveyPoint(surveyProvider.surveyData[index].survey, surveyProvider.surveyData[index].code),
+                                                           ),
+                                                         );
+                                                       }
+                                                     },
+                                                       callback2: () {
 
-                                                              Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      maintainState: false,
-                                                                      builder: (context) =>
-                                                                          SurveyMoreDetailScreen( surveyProvider.surveyData[index].survey,
-                                                                              surveyProvider.surveyData[index].code, surveyProvider))).then((value) {
-                                                                if (value == true) {
-                                                                  asyncFunction();
-                                                                  //print("value${value}");
+                                                         Navigator.push(
+                                                             context,
+                                                             MaterialPageRoute(
+                                                                 maintainState: false,
+                                                                 builder: (context) =>
+                                                                     SurveyMoreDetailScreen( surveyProvider.surveyData[index].survey,
+                                                                         surveyProvider.surveyData[index].code, surveyProvider))).then((value) {
+                                                           if (value == true) {
+                                                             asyncFunction();
+                                                             //print("value${value}");
 
-                                                                }
-                                                              });
+                                                           }
+                                                         });
 
-                                                            },
+                                                       },
 
-                                                            itemName: plantingName,
-                                                            itemID:
-                                                            "${surveyProvider.surveyData[index].code}",
-                                                            city: "อ." +
-                                                                "${district}," +
-                                                                " จ." +
-                                                                "${province}",
-                                                            district:
-                                                            "ต." + "${substrict}",
-                                                            itemOwnerName:
-                                                            "${title} ${firstName}",
-                                                            itemOwnerLastName:
-                                                            "${lastName}",
-                                                            date: ChangeDateTime(surveyProvider.surveyData[index].survey.date),);
-                                                             // FadeTransition(opacity: animation)
-                                                          /*CardItemWithOutImage(
+                                                       itemName: plantingName,
+                                                       itemID:
+                                                       "${surveyProvider.surveyData[index].code}",
+                                                       city: "อ." +
+                                                           "${district}," +
+                                                           " จ." +
+                                                           "${province}",
+                                                       district:
+                                                       "ต." + "${substrict}",
+                                                       itemOwnerName:
+                                                       "${title} ${firstName}",
+                                                       itemOwnerLastName:
+                                                       "${lastName}",
+                                                       date: ChangeDateTime(surveyProvider.surveyData[index].survey.date),);
+                                                     // FadeTransition(opacity: animation)
+                                                     /*CardItemWithOutImage(
                                                             callback: () {
                                                              if (surveyProvider.surveyData[index].checkTarget == false) {
                                                               //alert(surveyList[index]);
@@ -1550,14 +1554,17 @@ Widget getFilterBarUI(int numItemFounded) {
                                                                 animationController!,
                                                             date: ChangeDateTime(surveyProvider.surveyData[index].survey.date),
                                                           );*/
-                                                        },
-                                                      ):   !surveyProvider.isSearch ? Container() : NoData().showNoData(context),
-                                                    )
-                                                  ,
-                                            ),
-                                          ))),
-                            ],
-                          ),
+                                                   },
+                                                 ):   !surveyProvider.isSearch ? Container() : NoData().showNoData(context),
+                                               )
+                                               ,
+                                             ),
+                                           ))
+                                ) ,
+
+                              ],
+                            
+                          ) ,
                         ),
                          surveyProvider.isHavePlanting && surveyProvider.isLoading ? _createSurveybutton(surveyProvider) : Container(),
                       ],
