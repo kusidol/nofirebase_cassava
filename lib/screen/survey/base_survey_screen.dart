@@ -1197,6 +1197,7 @@ Widget getFilterBarUI(int numItemFounded) {
                       //side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))
                     ),
                     onPressed: () {
+                      provider.reset();
                        if (addressValue == "" && fieldNameValue == "" && ownerNameValue == "" && plantingNameValue == "" && startDateSurveySelect == 0 && endDateSurveySelect == 0 && startDatePlantingSelect == 0 && endDatePlantingSelect == 0) {
                         asyncFunction();
                       }
