@@ -169,14 +169,6 @@ class _SurveyTable extends State<SurveyTable>
     }
   }
 
-  Future<int> countSurvey() async {
-    SurveyService surveyService = SurveyService();
-    String? token = tokenFromLogin?.token;
-    int count = await surveyService.countSurveys(token.toString()); ;
-
-    return count;
-  }
-
   void fetchMoreData() async {
     if (mounted) {
       setState(() {
@@ -829,7 +821,6 @@ Widget getFilterBarUI(int numItemFounded) {
   }
 
   //bool _isExpanded = false ;
-  double size = 0.35 ;
   Widget searchMore1(SurveyProvider provider) {
     var _startDateUserNameColor = Colors.black;
     String _startDateTimeText = " Start Date";
@@ -1000,7 +991,7 @@ Widget getFilterBarUI(int numItemFounded) {
           onTap: () {
             setState(() {
               isShowbasicSearch = !isShowbasicSearch;
-              size = isShowbasicSearch ? 0.70 : 0.35 ;
+
             });
           },
         ),
