@@ -113,33 +113,31 @@ class FieldProviders with ChangeNotifier {
       token.toString(),
     )
         .then((value) async {
-      // if (value != null) {
-      //   for (Map<String, dynamic> data in value) {
-      //     Field? field = await fieldService.getFieldByFieldID(
-      //         data['plantingId'], token.toString()) as Planting;
+      if (value != null) {
+        for (Map<String, dynamic> data in value) {
+          Field? field = await fieldService.getFieldByFieldID(
+              data['fieldID'], token.toString());
 
-      //     plantingData[index].plantingId = data['plantingId'];
-      //     plantingData[index].plantingName = data['plantingName'];
-      //     plantingData[index].fieldName = data['fieldName'];
-      //     plantingData[index].substrict = data['substrict'];
-      //     plantingData[index].district = data['district'];
-      //     plantingData[index].province = data['province'];
-      //     plantingData[index].firstName = data['firstName'];
-      //     plantingData[index].lastName = data['lastName'];
-      //     plantingData[index].planting = planting;
-      //     plantingData[index].isLoading = false;
+          fieldData[index].fieldId = data['fieldID'];
+          fieldData[index].fieldName = data['fieldName'];
+          fieldData[index].substrict = data['substrict'];
+          fieldData[index].district = data['district'];
+          fieldData[index].province = data['province'];
+          fieldData[index].firstName = data['firstName'];
+          fieldData[index].lastName = data['lastName'];
+          fieldData[index].isLoading = false;
 
-      //     notifyListeners();
+          notifyListeners();
 
-      //     new Future.delayed(const Duration(seconds: 2), () {});
+          new Future.delayed(const Duration(seconds: 2), () {});
 
-      //     index++;
-      //   }
+          index++;
+        }
 
-      //   _page = (plantingData.length ~/ _value) + 1;
+        _page = (fieldData.length ~/ _value) + 1;
 
-      //   setFetch(false);
-      // }
+        setFetch(false);
+      }
     });
 
     isLoading = true;
@@ -153,7 +151,17 @@ class FieldProviders with ChangeNotifier {
     reset();
     FieldService fieldService = FieldService();
     String? token = tokenFromLogin?.token;
-    fields = await fieldService.searchFieldsByKey2(data, token.toString());
+
+    if (fieldID != 0) {
+      data["fieldId"] = fieldID.toString();
+    }
+
+    await fieldService.searchFieldsByKey2(data, token.toString()).then((value) async {
+      if (value != null) {
+        print(value);
+        await _doSearch(value, 0);
+      }
+    });
 
     List<Field> data2 = this.fields;
     numberAllFields = this.fields.length;
