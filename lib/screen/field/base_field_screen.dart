@@ -808,16 +808,17 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
 
   @override
   Widget build(BuildContext context) {
-    final fieldProvider = Provider.of<FieldProviders>(context);
+    // final fieldProvider = Provider.of<FieldProviders>(context);
     //print("Page Base Planting Context: $context");
     return Theme(
       data: HotelAppTheme.buildLightTheme(),
       child: Container(
-        child: Consumer<FieldProviders>(builder: (context, data, index) {
-          List<User> owners = data.owner;
-          List<Field> fields = data.fields;
-          List<String> locations = data.locations;
-          List<ImageData?> images = data.images;
+        child:
+            Consumer<FieldProviders>(builder: (context, fieldProvder, index) {
+          // List<User> owners = data.owner;
+          // List<Field> fields = data.fields;
+          // List<String> locations = data.locations;
+          // List<ImageData?> images = data.images;
           return WillPopScope(
             onWillPop: () => onBackButtonPressed(context),
             child: Scaffold(
@@ -841,7 +842,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                                     NotificationListener<ScrollEndNotification>(
                                   onNotification:
                                       (ScrollEndNotification scrollInfo) {
-                                    if (fields.length < 2) {
+                                    if (fieldProvder.fieldData.length < 2) {
                                       if (scrollInfo.depth == 0) {
                                         if (scrollInfo.metrics.pixels <
                                             scrollInfo
@@ -868,8 +869,8 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                                     }
 
                                     if (check == 1) {
-                                      if (data.fields.length ==
-                                          data.numberAllFields) {
+                                      if (fieldProvder.fieldData.length ==
+                                          fieldProvder.numberAllFields) {
                                         showToastMessage(
                                             "ข้อมูลแสดงครบทั้งหมดเป็นที่เรียบร้อยแล้ว");
                                       }
@@ -893,8 +894,8 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                                               return Column(
                                                 children: <Widget>[
                                                   getSearchBarUI(
-                                                      context, fieldProvider),
-                                                  searchMore1(data)
+                                                      context, fieldProvder),
+                                                  searchMore1(fieldProvder)
                                                 ],
                                               );
                                             }, childCount: 1),
@@ -904,14 +905,14 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                                             floating: true,
                                             delegate: ContestTabHeader(Column(
                                               children: <Widget>[
-                                                getFilterBarUI(
-                                                    data.numberAllFields)
+                                                getFilterBarUI(fieldProvder
+                                                    .numberAllFields)
                                               ],
                                             )),
                                           ),
                                         ];
                                       },
-                                      body: data.isLoading
+                                      body: fieldProvder.isLoading
                                           ? Container(
                                               decoration: BoxDecoration(
                                                 gradient: LinearGradient(
@@ -925,10 +926,11 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                                                   ],
                                                 ),
                                               ),
-                                              child: data.fields.isNotEmpty
+                                              child: fieldProvder
+                                                      .fieldData.isNotEmpty
                                                   ? ListView.builder(
-                                                      itemCount:
-                                                          data.fields.length,
+                                                      itemCount: fieldProvder
+                                                          .fieldData.length,
                                                       padding: EdgeInsets.only(
                                                           top: sizeHeight(
                                                               8, context)),
@@ -937,17 +939,33 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                                                       itemBuilder:
                                                           (context, index) {
                                                         User owner =
-                                                            owners[index];
+                                                            fieldProvder
+                                                                .fieldData[
+                                                                    index]
+                                                                .owner;
                                                         Field field =
-                                                            fields[index];
+                                                            fieldProvder
+                                                                .fieldData[
+                                                                    index]
+                                                                .field;
                                                         String location =
-                                                            locations[index];
+                                                            fieldProvder
+                                                                .fieldData[
+                                                                    index]
+                                                                .location;
                                                         ImageData? image =
-                                                            images[index];
+                                                            fieldProvder
+                                                                .fieldData[
+                                                                    index]
+                                                                .image;
                                                         final int count =
-                                                            fields.length > 10
+                                                            fieldProvder.fieldData
+                                                                        .length >
+                                                                    10
                                                                 ? 10
-                                                                : fields.length;
+                                                                : fieldProvder
+                                                                    .fieldData
+                                                                    .length;
                                                         final Animation<
                                                             double> animation = Tween<
                                                                     double>(
@@ -965,7 +983,8 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                                                         animationController
                                                             ?.forward();
                                                         return CardItemWithOutImageField(
-                                                          fieldProviders: data,
+                                                          fieldProviders:
+                                                              fieldProvder,
                                                           callback2: () {
                                                             widget
                                                                 .mainTapController
@@ -996,7 +1015,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                                                                           owner,
                                                                           location,
                                                                           image,
-                                                                          data)),
+                                                                          fieldProvder)),
                                                             );
                                                           },
                                                           field: field,
@@ -1037,9 +1056,9 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                     ),
                   ),
                   // Note for BuildCreateNewField
-                  data.isLoading
+                  fieldProvder.isLoading
                       ? checkCreateField
-                          ? _buildCreateNewField(data)
+                          ? _buildCreateNewField(fieldProvder)
                           : Container()
                       : Container(),
                 ],
