@@ -66,9 +66,9 @@ class PlantingProvider with ChangeNotifier {
 
   void reset() {
     isLoading = false;
-    if (!isFetch()) {
-      plantingData.clear();
-    }
+    // if (!isFetch()) {
+    plantingData.clear();
+    // }
     // plantings = [];
     // owners = [];
     // fields = [];
@@ -109,7 +109,9 @@ class PlantingProvider with ChangeNotifier {
     // data = await plantingService.getPlanting(token.toString(), _page, _value);
     numberAllPlantings = countPlanting;
 
-    if (numberAllPlantings == 0 || numberAllPlantings == plantingData.length) {
+    if (numberAllPlantings == 0 ||
+        numberAllPlantings == plantingData.length ||
+        (plantingData.length > 0 && plantingData.last.isLoading)) {
       notifyListeners();
       return;
     }
@@ -192,6 +194,8 @@ class PlantingProvider with ChangeNotifier {
           Planting? planting = await plantingService.getPlantingByID(
               data['plantingId'], token.toString()) as Planting;
 
+          if (plantingData.isEmpty) return;
+
           plantingData[index].plantingId = data['plantingId'];
           plantingData[index].plantingName = data['plantingName'];
           plantingData[index].fieldName = data['fieldName'];
@@ -212,7 +216,7 @@ class PlantingProvider with ChangeNotifier {
 
         _page = (plantingData.length ~/ _value) + 1;
 
-        setFetch(false);
+        // setFetch(false);
       }
     });
     // for (Map<String, dynamic> data in detail) {
@@ -242,6 +246,8 @@ class PlantingProvider with ChangeNotifier {
     isLoading = true;
     if (count > 0) {
       isHaveField = true;
+    } else {
+      isHaveField = false;
     }
     notifyListeners();
   }
@@ -249,8 +255,12 @@ class PlantingProvider with ChangeNotifier {
   Future<void> fetchDataFromField() async {
     // print("LOADING PLANTING PROVIDER");
     // List<Planting> dataPlanting = [];
+    FieldService fieldService = FieldService();
     PlantingService plantingService = PlantingService();
     String? token = tokenFromLogin?.token;
+
+    int count = await fieldService.countFields(token.toString());
+
     // print("page : ${_page}");
     numberAllPlantings = await plantingService.countPlantingsByFieldId(
         token.toString(), fieldID);
@@ -333,6 +343,8 @@ class PlantingProvider with ChangeNotifier {
         Planting? planting = await plantingService.getPlantingByID(
             data['plantingId'], token.toString()) as Planting;
 
+        if (plantingData.isEmpty) return;
+
         plantingData[index].plantingId = data['plantingId'];
         plantingData[index].plantingName = data['plantingName'];
         plantingData[index].fieldName = data['fieldName'];
@@ -353,7 +365,7 @@ class PlantingProvider with ChangeNotifier {
 
       _page = (plantingData.length ~/ _value) + 1;
 
-      setFetch(false);
+      // setFetch(false);
     });
     // if (plantings.length % _value != 0) {
     //   // plantings.removeRange((_value*(_page-1))+1, plantings.length);
@@ -367,6 +379,12 @@ class PlantingProvider with ChangeNotifier {
     // }
 
     isLoading = true;
+    if (count > 0) {
+      isHaveField = true;
+    } else {
+      isHaveField = false;
+    }
+    notifyListeners();
   }
 
   // List<Planting> getPlantings() {
@@ -393,7 +411,7 @@ class PlantingProvider with ChangeNotifier {
 
     String location = await fieldService.getLocationByFielID(
         field.fieldID, token.toString()) as String;
-    print("Location = ${location}");
+    // print("Location = ${location}");
 
     List<String> parts = location.split(","); // แยกข้อความด้วยเครื่องหมาย ','
 
