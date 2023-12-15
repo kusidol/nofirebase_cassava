@@ -85,8 +85,8 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
   void initState() {
     widget.plantingProvider.reset();
     _scrollController.addListener(_scrollListener);
-    animationController = AnimationController(
-        duration: const Duration(milliseconds: 1000), vsync: this);
+    // animationController = AnimationController(
+    //     duration: const Duration(milliseconds: 1000), vsync: this);
     super.initState();
     onfirstLoadData();
   }
@@ -122,9 +122,9 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
     SurveyProvider surveyProvider =
         Provider.of<SurveyProvider>(context, listen: false);
     surveyProvider.resetPlantingID();
-    print("Check: ${provider.isSearch} ${provider.isFetch()}");
-    if (!provider.isSearch && !provider.isFetch()) {
-      provider.setFetch(true);
+    if (!provider.isSearch /*&& !provider.isFetch()*/) {
+      //provider.setFetch(true);
+      if (!mounted) return;
       if (provider.fieldID != 0) {
         provider.fetchDataFromField();
       } else {
@@ -152,8 +152,8 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
     }
 
     PlantingProvider provider = widget.plantingProvider;
-    if (!isSearching && !provider.isSearch && !provider.isFetch()) {
-      provider.setFetch(true);
+    if (!isSearching && !provider.isSearch /*&& !provider.isFetch()*/) {
+      //provider.setFetch(true);
       if (provider.fieldID != 0) {
         provider.fetchDataFromField();
       } else {
@@ -498,13 +498,17 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
   }
 
   void _handleSearchByKeyButton(PlantingProvider provider) async {
-    if (provider.isFetch()) {
-      return;
-    }
+    // if (provider.isFetch()) {
+    //   return;
+    // }
     //call Service
     Map<String, dynamic> jsonData = {
       "key": fieldNameValue,
     };
+
+    if (provider.fieldID != 0) {
+      jsonData['fieldId'] = provider.fieldID;
+    }
 
     jsonData.removeWhere(
         (key, value) => value == null || value == '' || value == 0);
@@ -732,9 +736,9 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
   }
 
   void _handleSearchButton(PlantingProvider provider) async {
-    if (provider.isFetch()) {
-      return;
-    }
+    // if (provider.isFetch()) {
+    //   return;
+    // }
     //call Service
     Map<String, dynamic> jsonData = {
       "address": addressValue,
@@ -1050,8 +1054,6 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
 
   @override
   Widget build(BuildContext context) {
-    final plantingProvider = Provider.of<PlantingProvider>(context);
-    // print("Page Base Planting Context: $context");
     return Theme(
       data: HotelAppTheme.buildLightTheme(),
       child: Container(
@@ -1081,9 +1083,32 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                     onTap: () {
                       FocusScope.of(context).requestFocus(FocusNode());
                     },
-                    child: Column(
+                    child: Flex(
+                      direction: Axis.vertical,
                       children: <Widget>[
                         getAppBarUI(),
+                        Container(
+                          height: isShowbasicSearch
+                              ? MediaQuery.of(context).size.height * 0.175
+                              : MediaQuery.of(context).size.height * 0.475,
+                          child: CustomScrollView(
+                            slivers: [
+                              SliverList(
+                                delegate: SliverChildBuilderDelegate(
+                                    (BuildContext context, int index) {
+                                  return Column(
+                                    children: <Widget>[
+                                      getSearchBarUI(context, data),
+                                      searchMore1(data),
+                                      // getTimeDateUI(),
+                                    ],
+                                  );
+                                }, childCount: 1),
+                              )
+                            ],
+                          ),
+                        ),
+                        getFilterBarUI(data.numberAllPlantings),
                         _istLoading
                             ? Container()
                             : Expanded(
@@ -1091,7 +1116,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                     NotificationListener<ScrollEndNotification>(
                                   onNotification:
                                       (ScrollEndNotification scrollInfo) {
-                                    if (data.plantingData.length < 2) {
+                                    if (data.plantingData.isNotEmpty) {
                                       if (scrollInfo.depth == 0) {
                                         if (scrollInfo.metrics.pixels <
                                             scrollInfo
@@ -1142,24 +1167,16 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                                         int index) {
                                               return Column(
                                                 children: <Widget>[
-                                                  getSearchBarUI(context,
-                                                      plantingProvider),
+                                                  SizedBox(
+                                                    height: 1,
+                                                  )
+                                                  //getSearchBarUI(context,plantingProvider),
                                                   // getTimeDateUI(),
                                                   // searchMore(plantingProvider)
-                                                  searchMore1(plantingProvider),
+                                                  //searchMore1(plantingProvider),
                                                 ],
                                               );
                                             }, childCount: 1),
-                                          ),
-                                          SliverPersistentHeader(
-                                            pinned: true,
-                                            floating: true,
-                                            delegate: ContestTabHeader(Column(
-                                              children: <Widget>[
-                                                getFilterBarUI(
-                                                    data.numberAllPlantings)
-                                              ],
-                                            )),
                                           ),
                                         ];
                                       },
@@ -1221,27 +1238,27 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                                       .plantingData[index]
                                                       .lastName;
 
-                                                  final int count =
-                                                      data.plantingData.length >
-                                                              10
-                                                          ? 10
-                                                          : data.plantingData
-                                                              .length;
-                                                  final Animation<
-                                                      double> animation = Tween<
-                                                              double>(
-                                                          begin: 0.0, end: 1.0)
-                                                      .animate(CurvedAnimation(
-                                                          parent:
-                                                              animationController!,
-                                                          curve: Interval(
-                                                              (1 / count) *
-                                                                  index,
-                                                              1.0,
-                                                              curve: Curves
-                                                                  .fastOutSlowIn)));
-                                                  animationController
-                                                      ?.forward();
+                                                  // final int count =
+                                                  //     data.plantingData.length >
+                                                  //             10
+                                                  //         ? 10
+                                                  //         : data.plantingData
+                                                  //             .length;
+                                                  // final Animation<
+                                                  //     double> animation = Tween<
+                                                  //             double>(
+                                                  //         begin: 0.0, end: 1.0)
+                                                  //     .animate(CurvedAnimation(
+                                                  //         parent:
+                                                  //             animationController!,
+                                                  //         curve: Interval(
+                                                  //             (1 / count) *
+                                                  //                 index,
+                                                  //             1.0,
+                                                  //             curve: Curves
+                                                  //                 .fastOutSlowIn)));
+                                                  // animationController
+                                                  //     ?.forward();
 
                                                   return data
                                                               .plantingData[
@@ -1252,14 +1269,8 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                                                   index]
                                                               .isLoading
                                                       ? mockShimmer()
-                                                      : CardItemWithOutImage_Planting(
-                                                          plantings: data
-                                                              .plantingData[
-                                                                  index]
-                                                              .planting,
-                                                          provider:
-                                                              plantingProvider,
-                                                          callback2: () {
+                                                      : AnimatedListItem_Planting(
+                                                          callback: () {
                                                             widget
                                                                 .mainTapController
                                                                 .animateTo(3);
@@ -1285,15 +1296,16 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                                                     .planting
                                                                     .name;
                                                           },
-                                                          callback: () {
-                                                            // Navigator.push(
-                                                            //   context,
-                                                            //   MaterialPageRoute(
-                                                            //       builder: (context) =>
-                                                            //           PlantingMoreDetailScreen(
-                                                            //               planting,
-                                                            //               plantingProvider)),
-                                                            // );
+                                                          callback2: () {
+                                                            Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) =>
+                                                                      PlantingMoreDetailScreen(
+                                                                          data.plantingData[index]
+                                                                              .planting,
+                                                                          data)),
+                                                            );
                                                           },
                                                           itemName:
                                                               "${fieldName}",
@@ -1309,9 +1321,6 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                                               "${title} ${firstName}",
                                                           itemOwnerLastName:
                                                               "${lastName}",
-                                                          animation: animation,
-                                                          animationController:
-                                                              animationController!,
                                                           date: ChangeDateTime(
                                                               data
                                                                   .plantingData[
@@ -1319,8 +1328,75 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                                                   .planting
                                                                   .createDate),
                                                         );
+
+                                                  // CardItemWithOutImage_Planting(
+                                                  //     plantings: data
+                                                  //         .plantingData[
+                                                  //             index]
+                                                  //         .planting,
+                                                  //     provider: data,
+                                                  //     callback2: () {
+                                                  //       widget
+                                                  //           .mainTapController
+                                                  //           .animateTo(3);
+                                                  //       SurveyProvider
+                                                  //           surveyProvider =
+                                                  //           Provider.of<
+                                                  //                   SurveyProvider>(
+                                                  //               context,
+                                                  //               listen:
+                                                  //                   false);
+                                                  //       surveyProvider
+                                                  //               .plantingId =
+                                                  //           data
+                                                  //               .plantingData[
+                                                  //                   index]
+                                                  //               .planting
+                                                  //               .plantingId;
+                                                  //       surveyProvider
+                                                  //               .plantingName =
+                                                  //           data
+                                                  //               .plantingData[
+                                                  //                   index]
+                                                  //               .planting
+                                                  //               .name;
+                                                  //     },
+                                                  //     callback: () {
+                                                  //       // Navigator.push(
+                                                  //       //   context,
+                                                  //       //   MaterialPageRoute(
+                                                  //       //       builder: (context) =>
+                                                  //       //           PlantingMoreDetailScreen(
+                                                  //       //               planting,
+                                                  //       //               plantingProvider)),
+                                                  //       // );
+                                                  //     },
+                                                  //     itemName:
+                                                  //         "${fieldName}",
+                                                  //     itemID:
+                                                  //         "${plantingName}",
+                                                  //     city: "อ." +
+                                                  //         "${district}," +
+                                                  //         " จ." +
+                                                  //         "${province}",
+                                                  //     district: "ต." +
+                                                  //         "${substrict}",
+                                                  //     itemOwnerName:
+                                                  //         "${title} ${firstName}",
+                                                  //     itemOwnerLastName:
+                                                  //         "${lastName}",
+                                                  //     animation: animation,
+                                                  //     animationController:
+                                                  //         animationController!,
+                                                  //     date: ChangeDateTime(
+                                                  //         data
+                                                  //             .plantingData[
+                                                  //                 index]
+                                                  //             .planting
+                                                  //             .createDate),
+                                                  //   );
                                                 })
-                                            : !data.isLoading
+                                            : !data.isSearch
                                                 ? Container()
                                                 : NoData().showNoData(context),
                                       ),

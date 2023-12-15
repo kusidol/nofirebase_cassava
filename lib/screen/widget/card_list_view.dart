@@ -1019,7 +1019,6 @@ class CardItemWithOutImage_Calendar extends StatelessWidget {
 }
 
 class CardItemWithOutImage extends StatelessWidget {
-
   CardItemWithOutImage({
     Key? key,
     this.itemID,
@@ -1585,7 +1584,6 @@ class CardItemForFieldNoImage extends StatelessWidget {
 }
 
 class AnimatedListItem extends StatefulWidget {
-
   //final int index;
 
   final VoidCallback? callback;
@@ -1598,8 +1596,18 @@ class AnimatedListItem extends StatefulWidget {
   final String? district;
   final String? date;
 
-
-  AnimatedListItem({this.itemID,this.itemName,this.itemOwnerName,this.itemOwnerLastName,this.city,this.district,this.date,this.callback,this.callback2, Key? key}) : super(key: key);
+  AnimatedListItem(
+      {this.itemID,
+      this.itemName,
+      this.itemOwnerName,
+      this.itemOwnerLastName,
+      this.city,
+      this.district,
+      this.date,
+      this.callback,
+      this.callback2,
+      Key? key})
+      : super(key: key);
 
   @override
   State<AnimatedListItem> createState() => _AnimatedListItemState();
@@ -1614,7 +1622,6 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
   void initState() {
     super.initState();
     if (_isStart) {
-
       Future.delayed(Duration(milliseconds: 250), () {
         if (!mounted) {
           return;
@@ -1631,7 +1638,6 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
 
   @override
   Widget build(BuildContext context) {
-
     String itemNameShow = "No Data";
     if (widget.itemID != null) {
       if (widget.itemID!.length > 15) {
@@ -1651,8 +1657,7 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
             ? const EdgeInsets.all(4.0)
             : const EdgeInsets.only(top: 10),
         child: Padding(
-          padding:
-          const EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 16),
+          padding: const EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 16),
           child: InkWell(
             splashColor: Colors.white,
             onTap: widget.callback,
@@ -1676,8 +1681,8 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                         Container(
                             width: sizeWidth(600, context),
                             height: sizeHeight(50, context),
-                            color: HotelAppTheme.buildLightTheme()
-                                .backgroundColor,
+                            color:
+                                HotelAppTheme.buildLightTheme().backgroundColor,
                             child: Padding(
                               padding: EdgeInsets.only(
                                 left: sizeWidth(15, context),
@@ -1704,7 +1709,7 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                     child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                         primary:
-                                        theme_color2, // Change the button color here
+                                            theme_color2, // Change the button color here
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
                                               50.0), // Set the border radius here
@@ -1728,11 +1733,10 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                         ),
                         Container(
                           height: sizeHeight(80, context),
-                          color: HotelAppTheme.buildLightTheme()
-                              .backgroundColor,
+                          color:
+                              HotelAppTheme.buildLightTheme().backgroundColor,
                           child: Column(
-                            mainAxisAlignment:
-                            MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Padding(
                                 padding: EdgeInsets.only(
@@ -1742,6 +1746,265 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                   children: [
                                     Text(
                                       '     เพาะปลูก: ',
+                                      style: TextStyle(
+                                        fontSize: sizeHeight(14, context),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: sizeWidth(170, context),
+                                      child: ExpandableText(
+                                        '${widget.itemName} (${itemNameShow})',
+                                        expandText: '${widget.itemName}',
+                                        collapseText: 'show less',
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                          fontSize: sizeHeight(16, context),
+                                          //fontWeight: FontWeight.bold,
+                                          // color: Colors.grey
+                                        ),
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Icon(
+                                      Icons.person,
+                                      color: theme_color2,
+                                      size: sizeHeight(20, context),
+                                    ),
+                                    Text(
+                                      " เจ้าของแปลง",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: sizeHeight(14, context),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: sizeWidth(8, context),
+                                    right: sizeWidth(8, context)),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      FontAwesomeIcons.locationDot,
+                                      size: sizeHeight(14, context),
+                                      color: Colors.red,
+                                    ),
+                                    Text(
+                                      ' ${widget.district}',
+                                      style: TextStyle(
+                                        fontSize: sizeHeight(14, context),
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Text(
+                                      ' ${widget.itemOwnerName} ${widget.itemOwnerLastName}',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: sizeHeight(14, context),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: sizeWidth(8, context),
+                                    right: sizeWidth(8, context),
+                                    bottom: sizeHeight(8, context)),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      '     ${widget.city} ',
+                                      style: TextStyle(
+                                        fontSize: sizeHeight(14, context),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AnimatedListItem_Planting extends StatefulWidget {
+  //final int index;
+
+  final VoidCallback? callback;
+  final VoidCallback? callback2;
+  final String? itemID;
+  final String? itemName;
+  final String? itemOwnerName;
+  final String? itemOwnerLastName;
+  final String? city;
+  final String? district;
+  final String? date;
+
+  AnimatedListItem_Planting(
+      {this.itemID,
+      this.itemName,
+      this.itemOwnerName,
+      this.itemOwnerLastName,
+      this.city,
+      this.district,
+      this.date,
+      this.callback,
+      this.callback2,
+      Key? key})
+      : super(key: key);
+
+  @override
+  State<AnimatedListItem_Planting> createState() =>
+      _AnimatedListItemState_Planting();
+}
+
+class _AnimatedListItemState_Planting extends State<AnimatedListItem_Planting> {
+  bool _animate = false;
+
+  bool _isStart = true;
+
+  @override
+  void initState() {
+    super.initState();
+    if (_isStart) {
+      Future.delayed(Duration(milliseconds: 250), () {
+        if (!mounted) {
+          return;
+        }
+        setState(() {
+          _animate = true;
+          _isStart = false;
+        });
+      });
+    } else {
+      _animate = true;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String itemNameShow = "No Data";
+    if (widget.itemID != null) {
+      if (widget.itemID!.length > 15) {
+        itemNameShow = widget.itemID!.substring(0, 12) + "...";
+      } else {
+        itemNameShow = widget.itemID.toString();
+      }
+    }
+
+    return AnimatedOpacity(
+      duration: const Duration(milliseconds: 500),
+      opacity: _animate ? 1 : 0,
+      curve: Curves.easeInOutQuart,
+      child: AnimatedPadding(
+        duration: const Duration(milliseconds: 500),
+        padding: _animate
+            ? const EdgeInsets.all(4.0)
+            : const EdgeInsets.only(top: 10),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 16),
+          child: InkWell(
+            splashColor: Colors.white,
+            onTap: widget.callback,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.6),
+                    offset: const Offset(4, 4),
+                    blurRadius: 16,
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                child: Stack(
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        Container(
+                            width: sizeWidth(600, context),
+                            height: sizeHeight(50, context),
+                            color:
+                                HotelAppTheme.buildLightTheme().backgroundColor,
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                left: sizeWidth(15, context),
+                                top: sizeHeight(8, context),
+                              ),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.grass_sharp,
+                                    color: theme_color2,
+                                    size: sizeHeight(25, context),
+                                  ),
+                                  Text(
+                                    '  การเพาะปลูก : ${widget.itemID}',
+                                    style: TextStyle(
+                                        fontSize: sizeHeight(16, context),
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  Spacer(),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        right: sizeWidth(8, context),
+                                        bottom: sizeHeight(4, context)),
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary:
+                                            theme_color2, // Change the button color here
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              50.0), // Set the border radius here
+                                        ),
+                                      ),
+                                      onPressed: widget.callback2,
+                                      child: Icon(
+                                        Icons.remove_red_eye_rounded,
+                                        color: Colors.white,
+                                        size: sizeHeight(25, context),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )),
+                        Container(
+                          width: sizeWidth(500, context),
+                          height: sizeHeight(0.5, context),
+                          color: Colors.grey.withOpacity(0.1),
+                        ),
+                        Container(
+                          height: sizeHeight(80, context),
+                          color:
+                              HotelAppTheme.buildLightTheme().backgroundColor,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: sizeWidth(8, context),
+                                    right: sizeWidth(8, context)),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      '     แปลง: ',
                                       style: TextStyle(
                                         fontSize: sizeHeight(14, context),
                                       ),

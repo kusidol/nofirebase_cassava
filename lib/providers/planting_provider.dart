@@ -528,6 +528,8 @@ class PlantingProvider with ChangeNotifier {
       Planting? planting = await plantingService.getPlantingByID(
           data['plantingId'], token.toString()) as Planting;
 
+      if (plantingData.isEmpty) return;
+
       plantingData[index].plantingId = data['plantingId'];
       plantingData[index].plantingName = data['plantingName'];
       plantingData[index].fieldName = data['fieldName'];
