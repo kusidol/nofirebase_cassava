@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -107,8 +108,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
     String? token = tokenFromLogin?.token;
     FieldService fieldService = FieldService();
 
-    if(!mounted)
-      return ;
+    if (!mounted) return;
 
     checkCreateField = await fieldService.checkFieldRegistrar(token.toString());
     if (mounted) {
@@ -116,8 +116,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
         _istLoading = true;
       });
     }
-    if(!mounted)
-      return ;
+    if (!mounted) return;
     FieldProviders provider =
         Provider.of<FieldProviders>(context, listen: false);
     provider.reset();
@@ -199,7 +198,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
           BoxShadow(
               color: Colors.grey.withOpacity(0.2),
               offset: const Offset(0, 2),
-              blurRadius: sizeHeight(8, context)),
+              blurRadius: 8.0),
         ],
       ),
       child: Padding(
@@ -211,19 +210,21 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
           children: <Widget>[
             Container(
               alignment: Alignment.centerLeft,
-              width: AppBar().preferredSize.height + sizeHeight(40, context),
+              width: AppBar().preferredSize.height + 40,
               height: AppBar().preferredSize.height,
               child: Material(
                 color: Colors.transparent,
                 child: InkWell(
                   borderRadius: BorderRadius.all(
-                    Radius.circular(sizeHeight(32, context)),
+                    Radius.circular(
+                        MediaQuery.of(context).size.height * 0.0404),
                   ),
                   onTap: () {
                     Navigator.pop(context);
                   },
                   child: Padding(
-                    padding: EdgeInsets.all(sizeHeight(8, context)),
+                    padding: EdgeInsets.all(
+                        MediaQuery.of(context).size.height * 0.01),
                     // child: Icon(Icons.arrow_back),
                   ),
                 ),
@@ -235,7 +236,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      Icons.location_on_rounded,
+                      Icons.description,
                       size: sizeHeight(20, context),
                     ),
                     SizedBox(
@@ -253,7 +254,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
               ),
             ),
             Container(
-              width: AppBar().preferredSize.height + sizeHeight(40, context),
+              width: AppBar().preferredSize.height + 40,
               height: AppBar().preferredSize.height,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -263,11 +264,14 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                     color: Colors.transparent,
                     child: InkWell(
                       borderRadius: BorderRadius.all(
-                        Radius.circular(sizeHeight(32, context)),
+                        Radius.circular(
+                            MediaQuery.of(context).size.height * 0.0409),
                       ),
                       onTap: () {},
                       child: Padding(
-                        padding: EdgeInsets.all(sizeWidth(8, context)),
+                        padding: EdgeInsets.all(
+                            MediaQuery.of(context).size.height * 0.005),
+                        // child: Icon(Icons.map),
                       ),
                     ),
                   ),
@@ -275,11 +279,14 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                     color: Colors.transparent,
                     child: InkWell(
                       borderRadius: BorderRadius.all(
-                        Radius.circular(sizeHeight(32, context)),
+                        Radius.circular(
+                            MediaQuery.of(context).size.height * 0.0409),
                       ),
                       onTap: () {},
                       child: Padding(
-                        padding: EdgeInsets.all(sizeWidth(8, context)),
+                        padding: EdgeInsets.all(
+                            MediaQuery.of(context).size.height * 0.005),
+                        // child: Icon(FontAwesomeIcons.per,color: Colors.grey),
                       ),
                     ),
                   ),
@@ -514,7 +521,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                 BoxShadow(
                     color: Colors.grey.withOpacity(0.2),
                     offset: const Offset(0, -2),
-                    blurRadius: sizeHeight(8, context)),
+                    blurRadius: 8.0),
               ],
             ),
           ),
@@ -536,12 +543,21 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'fields-founded-label'.i18n() + ' ${numItemFounded}',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.0204,
+                        Expanded(
+                          child: Center(
+                            child: ExpandableText(
+                              'surveys-founded-label'.i18n() +
+                                  ' ${numItemFounded} ' +
+                                  'item-label'.i18n(),
+                              expandText: 'surveys-founded-id-label'.i18n() +
+                                  ' (${numItemFounded})',
+                              collapseText: 'show less',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w300,
+                                fontSize:
+                                    MediaQuery.of(context).size.height * 0.0204,
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -648,8 +664,6 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
     Map<String, dynamic> jsonData = {
       "key": fieldNameValue,
     };
-
-
 
     jsonData.removeWhere(
         (key, value) => value == null || value == '' || value == 0);
@@ -836,238 +850,244 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
               body: Stack(
                 children: <Widget>[
                   InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    onTap: () {
-                      FocusScope.of(context).requestFocus(FocusNode());
-                    },
-                    child: Column(
-                      children: <Widget>[
-                        getAppBarUI(),
-                        _istLoading
-                            ? Container()
-                            : Expanded(
-                                child:
-                                    NotificationListener<ScrollEndNotification>(
-                                  onNotification:
-                                      (ScrollEndNotification scrollInfo) {
-                                    if (fieldProvder.fieldData.length < 2) {
-                                      if (scrollInfo.depth == 0) {
-                                        if (scrollInfo.metrics.pixels <
-                                            scrollInfo
-                                                .metrics.maxScrollExtent) {
-                                          check = 0;
-                                        } else if (check == 0) {
-                                          fetchMoreData(context);
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      onTap: () {
+                        FocusScope.of(context).requestFocus(FocusNode());
+                      },
+                      child: Flex(
+                        direction: Axis.vertical,
+                        children: <Widget>[
+                          getAppBarUI(),
+                          Container(
+                            height: isShowbasicSearch
+                                ? MediaQuery.of(context).size.height * 0.175
+                                : MediaQuery.of(context).size.height * 0.475,
+                            child: CustomScrollView(
+                              slivers: [
+                                SliverList(
+                                  delegate: SliverChildBuilderDelegate(
+                                      (BuildContext context, int index) {
+                                    return Column(
+                                      children: <Widget>[
+                                        getSearchBarUI(context, fieldProvder),
+                                        searchMore1(fieldProvder)
+                                        // getTimeDateUI(),
+                                      ],
+                                    );
+                                  }, childCount: 1),
+                                )
+                              ],
+                            ),
+                          ),
+                          getFilterBarUI(fieldProvder.numberAllFields),
+                          _istLoading
+                              ? Container()
+                              : Expanded(
+                                  flex: 1,
+                                  child: NotificationListener<
+                                      ScrollEndNotification>(
+                                    onNotification:
+                                        (ScrollEndNotification scrollInfo) {
+                                      if (fieldProvder.fieldData.length < 2) {
+                                        if (scrollInfo.depth == 0) {
+                                          if (scrollInfo.metrics.pixels <
+                                              scrollInfo
+                                                  .metrics.maxScrollExtent) {
+                                            check = 0;
+                                          } else if (check == 0) {
+                                            fetchMoreData(context);
 
-                                          check = 1;
+                                            check = 1;
+                                          }
+                                        }
+                                      } else {
+                                        if (scrollInfo.depth == 1) {
+                                          if (scrollInfo.metrics.pixels <
+                                              scrollInfo
+                                                  .metrics.maxScrollExtent) {
+                                            check = 0;
+                                          } else if (check == 0) {
+                                            fetchMoreData(context);
+
+                                            check = 1;
+                                          }
                                         }
                                       }
-                                    } else {
-                                      if (scrollInfo.depth == 1) {
-                                        if (scrollInfo.metrics.pixels <
-                                            scrollInfo
-                                                .metrics.maxScrollExtent) {
-                                          check = 0;
-                                        } else if (check == 0) {
-                                          fetchMoreData(context);
 
-                                          check = 1;
+                                      if (check == 1) {
+                                        if (fieldProvder.fieldData.length ==
+                                            fieldProvder.numberAllFields) {
+                                          showToastMessage(
+                                              "ข้อมูลแสดงครบทั้งหมดเป็นที่เรียบร้อยแล้ว");
                                         }
                                       }
-                                    }
 
-                                    if (check == 1) {
-                                      if (fieldProvder.fieldData.length ==
-                                          fieldProvder.numberAllFields) {
-                                        showToastMessage(
-                                            "ข้อมูลแสดงครบทั้งหมดเป็นที่เรียบร้อยแล้ว");
-                                      }
-                                    }
-
-                                    return true;
-                                  },
-                                  child: RefreshIndicator(
-                                    onRefresh: _pullRefresh,
-                                    child: NestedScrollView(
-                                      controller: _scrollController,
-                                      headerSliverBuilder:
-                                          (BuildContext context,
-                                              bool innerBoxIsScrolled) {
-                                        return <Widget>[
-                                          SliverList(
-                                            delegate:
-                                                SliverChildBuilderDelegate(
-                                                    (BuildContext context,
-                                                        int index) {
-                                              return Column(
-                                                children: <Widget>[
-                                                  getSearchBarUI(
-                                                      context, fieldProvder),
-                                                  searchMore1(fieldProvder)
-                                                ],
-                                              );
-                                            }, childCount: 1),
-                                          ),
-                                          SliverPersistentHeader(
-                                            pinned: true,
-                                            floating: true,
-                                            delegate: ContestTabHeader(Column(
-                                              children: <Widget>[
-                                                getFilterBarUI(fieldProvder
-                                                    .numberAllFields)
-                                              ],
-                                            )),
-                                          ),
-                                        ];
-                                      },
-                                      body: fieldProvder.isLoading
-                                          ? Container(
-                                              decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  begin: Alignment.topCenter,
-                                                  end: Alignment.bottomCenter,
-                                                  colors: [
-                                                    Colors.white.withOpacity(1),
-                                                    theme_color3
-                                                        .withOpacity(.4),
-                                                    theme_color4.withOpacity(1),
-                                                  ],
-                                                ),
+                                      return true;
+                                    },
+                                    child: RefreshIndicator(
+                                      onRefresh: _pullRefresh,
+                                      child: NestedScrollView(
+                                          controller: _scrollController,
+                                          headerSliverBuilder:
+                                              (BuildContext context,
+                                                  bool innerBoxIsScrolled) {
+                                            return <Widget>[
+                                              SliverList(
+                                                delegate:
+                                                    SliverChildBuilderDelegate(
+                                                        (BuildContext context,
+                                                            int index) {
+                                                  return Column(
+                                                    children: <Widget>[],
+                                                  );
+                                                }, childCount: 1),
                                               ),
-                                              child: fieldProvder
-                                                      .fieldData.isNotEmpty
-                                                  ? ListView.builder(
-                                                      itemCount: fieldProvder
-                                                          .fieldData.length,
-                                                      padding: EdgeInsets.only(
-                                                          top: sizeHeight(
-                                                              8, context)),
-                                                      scrollDirection:
-                                                          Axis.vertical,
-                                                      itemBuilder:
-                                                          (context, index) {
-                                                        User owner =
-                                                            fieldProvder
-                                                                .fieldData[
-                                                                    index]
-                                                                .owner;
-                                                        Field field =
-                                                            fieldProvder
-                                                                .fieldData[
-                                                                    index]
-                                                                .field;
-                                                        String location =
-                                                            fieldProvder
-                                                                .fieldData[
-                                                                    index]
-                                                                .location;
-                                                        ImageData? image =
-                                                            fieldProvder
-                                                                .fieldData[
-                                                                    index]
-                                                                .image;
-                                                        final int count =
-                                                            fieldProvder.fieldData
-                                                                        .length >
-                                                                    10
-                                                                ? 10
-                                                                : fieldProvder
-                                                                    .fieldData
-                                                                    .length;
-                                                        final Animation<
-                                                            double> animation = Tween<
-                                                                    double>(
-                                                                begin: 0.0,
-                                                                end: 1.0)
-                                                            .animate(CurvedAnimation(
-                                                                parent:
-                                                                    animationController!,
-                                                                curve: Interval(
-                                                                    (1 / count) *
-                                                                        index,
-                                                                    1.0,
-                                                                    curve: Curves
-                                                                        .fastOutSlowIn)));
-                                                        animationController
-                                                            ?.forward();
-                                                        return CardItemWithOutImageField(
-                                                          fieldProviders:
-                                                              fieldProvder,
-                                                          callback2: () {
-                                                            widget
-                                                                .mainTapController
-                                                                .animateTo(2);
-                                                            PlantingProvider
-                                                                provider =
-                                                                Provider.of<
-                                                                        PlantingProvider>(
-                                                                    context,
-                                                                    listen:
-                                                                        false);
-                                                            provider
-                                                                .resetFieldID();
-                                                            provider.fieldID =
-                                                                field.fieldID;
-                                                            provider.fieldName =
-                                                                field.name;
-                                                          },
-                                                          callback: () {
-                                                            //print("test inkwell");
-
-                                                            Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder: (context) =>
-                                                                      FieldMoreDetailScreen(
+                                            ];
+                                          },
+                                          body: Container(
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                begin: Alignment.topCenter,
+                                                end: Alignment.bottomCenter,
+                                                colors: [
+                                                  Colors.white.withOpacity(1),
+                                                  theme_color3.withOpacity(.4),
+                                                  theme_color4.withOpacity(1),
+                                                ],
+                                              ),
+                                            ),
+                                            child: fieldProvder
+                                                    .fieldData.isNotEmpty
+                                                ? ListView.builder(
+                                                    itemCount: fieldProvder
+                                                        .fieldData.length,
+                                                    padding: EdgeInsets.only(
+                                                        top: sizeHeight(
+                                                            8, context)),
+                                                    scrollDirection:
+                                                        Axis.vertical,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      User owner = fieldProvder
+                                                          .fieldData[index]
+                                                          .owner;
+                                                      Field field = fieldProvder
+                                                          .fieldData[index]
+                                                          .field;
+                                                      String location =
+                                                          fieldProvder
+                                                              .fieldData[index]
+                                                              .location;
+                                                      ImageData? image =
+                                                          fieldProvder
+                                                              .fieldData[index]
+                                                              .image;
+                                                      // final int count =
+                                                      //     fieldProvder.fieldData
+                                                      //                 .length >
+                                                      //             10
+                                                      //         ? 10
+                                                      //         : fieldProvder
+                                                      //             .fieldData
+                                                      //             .length;
+                                                      // final Animation<
+                                                      //     double> animation = Tween<
+                                                      //             double>(
+                                                      //         begin: 0.0,
+                                                      //         end: 1.0)
+                                                      //     .animate(CurvedAnimation(
+                                                      //         parent:
+                                                      //             animationController!,
+                                                      //         curve: Interval(
+                                                      //             (1 / count) *
+                                                      //                 index,
+                                                      //             1.0,
+                                                      //             curve: Curves
+                                                      //                 .fastOutSlowIn)));
+                                                      // animationController
+                                                      //     ?.forward();
+                                                      return fieldProvder
+                                                                  .fieldData[
+                                                                      index]
+                                                                  .isLoading &&
+                                                              fieldProvder
+                                                                  .fieldData[
+                                                                      index]
+                                                                  .isLoading
+                                                          ? mockShimmer(context)
+                                                          : AnimatedListItem(
+                                                              callback: () {
+                                                                Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder: (context) => FieldMoreDetailScreen(
                                                                           field,
                                                                           owner,
                                                                           location,
                                                                           image,
                                                                           fieldProvder)),
+                                                                );
+                                                              },
+                                                              callback2: () {
+                                                                widget
+                                                                    .mainTapController
+                                                                    .animateTo(
+                                                                        2);
+                                                                PlantingProvider
+                                                                    provider =
+                                                                    Provider.of<
+                                                                            PlantingProvider>(
+                                                                        context,
+                                                                        listen:
+                                                                            false);
+                                                                provider
+                                                                    .resetFieldID();
+                                                                provider.fieldID =
+                                                                    field
+                                                                        .fieldID;
+                                                                provider.fieldName =
+                                                                    field.name;
+                                                              },
+                                                              field: field,
+                                                              owner: owner,
+                                                              location:
+                                                                  location,
+                                                              image: image,
+                                                              itemName:
+                                                                  "${field.name}",
+                                                              itemID:
+                                                                  "${field.code}",
+                                                              city: "อ." +
+                                                                  "${location.split(",").first}," +
+                                                                  " จ." +
+                                                                  "${location.split(",").last}",
+                                                              district: "ต." +
+                                                                  "${location.split(",").length < 2 ? "" : location.split(",")[1]}",
+                                                              itemOwnerName:
+                                                                  "${owner.title} ${owner.firstName}",
+                                                              itemOwnerLastName:
+                                                                  "${owner.lastName}",
+                                                              date: ChangeDateTime(
+                                                                  field
+                                                                      .createDate),
+                                                              fieldProviders:
+                                                                  fieldProvder,
                                                             );
-                                                          },
-                                                          field: field,
-                                                          owner: owner,
-                                                          location: location,
-                                                          image: image,
-                                                          itemName:
-                                                              "${field.name}",
-                                                          itemID:
-                                                              "${field.code}",
-                                                          city: "อ." +
-                                                              "${location.split(",").first}," +
-                                                              " จ." +
-                                                              "${location.split(",").last}",
-                                                          district: "ต." +
-                                                              "${location.split(",").length < 2 ? "" : location.split(",")[1]}",
-
-
-                                                          itemOwnerName:
-                                                              "${owner.title} ${owner.firstName}",
-                                                          itemOwnerLastName:
-                                                              "${owner.lastName}",
-                                                          animation: animation,
-                                                          animationController:
-                                                              animationController!,
-                                                          date: ChangeDateTime(
-                                                              field.createDate),
-                                                        );
-                                                      },
-                                                    )
-                                                  : NoData()
-                                                      .showNoData(context),
-                                            )
-                                          : shimmerLoading(),
+                                                    },
+                                                  )
+                                                : !fieldProvder.isSearch
+                                                    ? Container()
+                                                    : NoData()
+                                                        .showNoData(context),
+                                          )),
                                     ),
                                   ),
                                 ),
-                              )
-                      ],
-                    ),
-                  ),
+                        ],
+                      )),
                   // Note for BuildCreateNewField
                   fieldProvder.isLoading
                       ? checkCreateField

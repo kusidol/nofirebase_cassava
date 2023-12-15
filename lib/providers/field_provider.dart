@@ -30,7 +30,7 @@ class FieldProviders with ChangeNotifier {
   int _value = 20;
   int _page = 1;
   int numberAllFields = 0;
-
+  bool isSearch = false;
   // Adding new
   List<FieldData> fieldData = [];
 
@@ -47,8 +47,7 @@ class FieldProviders with ChangeNotifier {
     _page = 1;
   }
 
-  void _doSearchField(List fields,int index) async {
-
+  void _doSearchField(List fields, int index) async {
     String none = "";
     FieldService fieldService = FieldService();
     String? token = tokenFromLogin?.token;
@@ -71,7 +70,7 @@ class FieldProviders with ChangeNotifier {
       if (fieldData.isEmpty) return;
       // Image
       ImageData? fetchedImages =
-      await fieldService.fetchImages(token.toString(), fieldID);
+          await fieldService.fetchImages(token.toString(), fieldID);
 
       if (fetchedImages == null) {
         fetchedImages = null;
@@ -79,7 +78,7 @@ class FieldProviders with ChangeNotifier {
 
       // Location
       String? location =
-      await fieldService.getLocationByFielID(fieldID, token.toString());
+          await fieldService.getLocationByFielID(fieldID, token.toString());
       if (location == null) {
         location = "";
       }
@@ -87,7 +86,7 @@ class FieldProviders with ChangeNotifier {
       // Owner
       UserService userService = UserService();
       User? user =
-      await userService.getUserByFieldID(fieldID, token.toString());
+          await userService.getUserByFieldID(fieldID, token.toString());
       if (user == null) {
         user = User(
             -1,
@@ -154,15 +153,17 @@ class FieldProviders with ChangeNotifier {
       fieldData.add(FieldData(fv, os, none, null, true));
     }
 
-    await fieldService.getFields(token.toString(), _page, _value)
+    await fieldService
+        .getFields(token.toString(), _page, _value)
         .then((value) async {
       if (value != null) {
         for (Field data in value) {
           int fieldID = data.fieldID;
 
           if (!(index < fieldData.length)) {
-            return ;
-          };
+            return;
+          }
+          ;
           // Image
           ImageData? fetchedImages =
               await fieldService.fetchImages(token.toString(), fieldID);
@@ -196,8 +197,9 @@ class FieldProviders with ChangeNotifier {
           }
 
           if (!(index < fieldData.length)) {
-            return ;
-          };
+            return;
+          }
+          ;
 
           fieldData[index].field = data;
           fieldData[index].image = fetchedImages;
@@ -205,10 +207,9 @@ class FieldProviders with ChangeNotifier {
           fieldData[index].owner = user;
           fieldData[index].isLoading = false;
           notifyListeners();
-         // new Future.delayed(const Duration(seconds: 2), () {});
+          // new Future.delayed(const Duration(seconds: 2), () {});
 
           index++;
-
         }
         _page = (fieldData.length ~/ _value) + 1;
       }
@@ -324,8 +325,8 @@ class FieldProviders with ChangeNotifier {
         .searchFieldsByKey2(data, token.toString())
         .then((value) async {
       if (value != null) {
-              _doSearchField(value, 0) ;
-        }
+        _doSearchField(value, 0);
+      }
     });
     isLoading = true;
     //numberAllFields = fieldData.length;
@@ -383,11 +384,9 @@ class FieldProviders with ChangeNotifier {
 
     int index = 0;
 
-    await fieldService
-        .search(data, token.toString())
-        .then((value) async {
+    await fieldService.search(data, token.toString()).then((value) async {
       if (value != null) {
-        _doSearchField(value, 0) ;
+        _doSearchField(value, 0);
       }
     });
     /*await fieldService.search(data, token.toString()).then((value) async {
@@ -442,7 +441,6 @@ class FieldProviders with ChangeNotifier {
         }
       }
     });*/
-
   }
 
   void searchNull(Map<String, dynamic> data) async {
