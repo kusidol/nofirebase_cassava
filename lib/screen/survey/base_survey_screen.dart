@@ -52,7 +52,7 @@ class SurveyTable extends StatefulWidget {
 class _SurveyTable extends State<SurveyTable>
     with SingleTickerProviderStateMixin {
   bool isVisible = true;
-  AnimationController? animationController;
+  //AnimationController? animationController;
   final ScrollController _scrollController = ScrollController();
   final ScrollController _inerscrollController = ScrollController();
   DateTime startDate = DateTime.now();
@@ -102,7 +102,7 @@ class _SurveyTable extends State<SurveyTable>
   @override
   void dispose() {
 
-    animationController?.dispose();
+    //animationController?.dispose();
     codeNameController.dispose();
     ownerController.dispose();
     locationController.dispose();
@@ -119,9 +119,10 @@ class _SurveyTable extends State<SurveyTable>
    //widget.surveyProvider.reset();
     widget.surveyProvider.reset();
     _scrollController.addListener(_scrollListener);
-    animationController = AnimationController(
+   /* animationController = AnimationController(
         duration: const Duration(milliseconds: 4000), vsync: this
-    );
+    );*/
+
 
     asyncFunction();
     super.initState();
@@ -143,10 +144,11 @@ class _SurveyTable extends State<SurveyTable>
     surveyProvider =
        widget.surveyProvider;
 
-    if(!surveyProvider.isSearch && !surveyProvider.isFetch()){
+    if(!surveyProvider.isSearch /*&& !surveyProvider.isFetch()*/){
       ////print("plantingID =  ${surveyProvider.plantingId}");
-      surveyProvider.setFetch(true);
-
+      if(!mounted)
+        return ;
+      //surveyProvider.setFetch(true);
       if(surveyProvider.plantingId != -1) {
 
         surveyProvider.fetchDataFromPlanting();
@@ -167,8 +169,6 @@ class _SurveyTable extends State<SurveyTable>
     }
   }
 
-
-
   void fetchMoreData() async {
     if (mounted) {
       setState(() {
@@ -177,9 +177,9 @@ class _SurveyTable extends State<SurveyTable>
     }
 
     SurveyProvider surveyProvider =  widget.surveyProvider;
-      if (!isSearching && !widget.surveyProvider.isSearch && !surveyProvider.isFetch() ) {
+      if (!isSearching && !widget.surveyProvider.isSearch /*&& !surveyProvider.isFetch()*/ ) {
 
-        surveyProvider.setFetch(true);
+       // surveyProvider.setFetch(true);
 
         if(surveyProvider.plantingId != -1) {
 
@@ -569,13 +569,15 @@ class _SurveyTable extends State<SurveyTable>
                       ),
                       onTap: () {
                         FocusScope.of(context).requestFocus(FocusNode());
+                        surveyProvider.reset();
                         if (shortCutValue == null || shortCutValue == "") {
                           ////print("-----------------");
-                          isSearching = false;
-                          surveyProvider.reset();
+                        //  isSearching = false;
+
                           asyncFunction();
                         }
                         else {
+                         // surveyProvider.reset();
                           _handleSearchByKeyButton(surveyProvider);
 
                         }
@@ -597,13 +599,17 @@ class _SurveyTable extends State<SurveyTable>
 
   void _handleSearchByKeyButton(SurveyProvider provider) async {
 
-   if(provider.isFetch()){
+  /* if(provider.isFetch()){
      return ;
-   }
+   }*/
 
     Map<String, dynamic> jsonData = {
       "key": shortCutValue,
     };
+
+    if(provider.plantingId != -1){
+      jsonData['plantingId'] = provider.plantingId;
+    }
 
     jsonData.removeWhere(
         (key, value) => value == null || value == '' || value == 0);
@@ -737,7 +743,7 @@ Widget getFilterBarUI(int numItemFounded) {
                           child: Center(
                              child: ExpandableText(
                                plantingName == "" ?
-                               'surveys-founded-label'.i18n()+' ${numItemFounded}' : 'surveys-founded-id-label'.i18n() + " ${plantingName}" + ' (${numItemFounded})',
+                               'surveys-founded-label'.i18n()+' ${numItemFounded} ' + 'item-label'.i18n(): 'surveys-founded-id-label'.i18n() + " ${plantingName} " + 'surveys-founded-label'.i18n() + ' ${numItemFounded} ' + 'item-label'.i18n(),
                                expandText:  plantingName == "" ?
                                'surveys-founded-label'.i18n() + ' ${numItemFounded}' : 'surveys-founded-id-label'.i18n() + ' (${numItemFounded})',
                                              collapseText: 'show less',       
@@ -816,12 +822,16 @@ Widget getFilterBarUI(int numItemFounded) {
     );
   }
 
+  //bool _isExpanded = false ;
   Widget searchMore1(SurveyProvider provider) {
     var _startDateUserNameColor = Colors.black;
     String _startDateTimeText = " Start Date";
     // for search
     void _startDateTFToggle(e) {
       setState(() {
+
+        //_isExpanded = !_isExpanded ;
+        //size = _isExpanded ? 0.70 : 0.35 ;
         //_rqVisible = !_rqVisible;
         _startDateTimeText = "Start Date";
         _startDateUserNameColor = Colors.black;
@@ -983,6 +993,7 @@ Widget getFilterBarUI(int numItemFounded) {
           onTap: () {
             setState(() {
               isShowbasicSearch = !isShowbasicSearch;
+
             });
           },
         ),
@@ -1186,6 +1197,7 @@ Widget getFilterBarUI(int numItemFounded) {
                       //side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))
                     ),
                     onPressed: () {
+                      provider.reset();
                        if (addressValue == "" && fieldNameValue == "" && ownerNameValue == "" && plantingNameValue == "" && startDateSurveySelect == 0 && endDateSurveySelect == 0 && startDatePlantingSelect == 0 && endDatePlantingSelect == 0) {
                         asyncFunction();
                       }
@@ -1220,9 +1232,9 @@ Widget getFilterBarUI(int numItemFounded) {
 
   void _handleSearchButton(SurveyProvider provider) async {
 
-   if(provider.isFetch()){
+  /* if(provider.isFetch()){
      return ;
-   }
+   }*/
 
     //call Service
     Map<String, dynamic> jsonData = {
@@ -1274,6 +1286,7 @@ Widget getFilterBarUI(int numItemFounded) {
            return WillPopScope(
                 onWillPop: () => onBackButtonPressed(context),
                   child: Scaffold(
+                  //  resizeToAvoidBottomInset: false,
                     body: Stack(
                       children: <Widget>[
                         InkWell(
@@ -1284,183 +1297,217 @@ Widget getFilterBarUI(int numItemFounded) {
                           onTap: () {
                             FocusScope.of(context).requestFocus(FocusNode());
                           },
-                          child: Column(
-                            children: <Widget>[
-                              getAppBarUI(),
-                              _isLoading
-                                  ? Container()
-                                  : Expanded(
-                                      child: NotificationListener<
-                                              ScrollEndNotification>(
-                                          onNotification:
-                                              (ScrollEndNotification scrollInfo) {
-                                            if (surveyProvider.surveyData.length < 2) {
-                                              if (scrollInfo.depth == 0) {
-                                                if (scrollInfo.metrics.pixels <
-                                                    scrollInfo
-                                                        .metrics.maxScrollExtent) {
-                                                  check = 0;
-                                                } else if (check == 0) {
-                                                  
-                                                  fetchMoreData();
-                
-                                                  check = 1;
-                                                }
-                                              }
-                                            } else {
-                                              if (scrollInfo.depth == 1) {
-                                                if (scrollInfo.metrics.pixels <
-                                                    scrollInfo
-                                                        .metrics.maxScrollExtent) {
-                                                  check = 0;
-                                                } else if (check == 0) {
-                                                  fetchMoreData();
-                
-                                                  check = 1;
-                                                }
-                                              }
-                                            }
-                                         if (check == 1) {
-                                            if (surveyProvider.surveyData.length ==
-                                                surveyProvider.numberAllSurveys) {
-                                              showToastMessage(
-                                                  "ข้อมูลแสดงครบทั้งหมดเป็นที่เรียบร้อยแล้ว");
-                                            }
-                                          }
-                                            return true;
-                                          },
-                                          child: RefreshIndicator(
-                                            onRefresh: _pullRefresh,
-                                            child: NestedScrollView(
-                                              controller: _scrollController,
-                                              headerSliverBuilder:
-                                                  (BuildContext context,
-                                                      bool innerBoxIsScrolled) {
-                                                return <Widget>[
-                                                  SliverList(
-                                                    delegate:
-                                                        SliverChildBuilderDelegate(
-                                                            (BuildContext context,
-                                                                int index) {
-                                                      return Column(
-                                                        children: <Widget>[
-                                                          getSearchBarUI(context, surveyProvider),
-                                                          searchMore1(surveyProvider),
-                                                          // getTimeDateUI(),
-                                                        ],
-                                                      );
-                                                    }, childCount: 1),
-                                                  ),
-                                                 SliverPersistentHeader(
-                                            pinned: true,
-                                            floating: true,
-                                            delegate: ContestTabHeader(Column(
-                                              children: <Widget>[
-                                                getFilterBarUI(surveyProvider.numberAllSurveys),
-                                              ],
-                                            )),
-                                          ),
-                                                ];
-                                              },
-                                              body: Container(
-                                                      decoration: BoxDecoration(
-                                                        gradient: LinearGradient(
-                                                          begin: Alignment.topCenter,
-                                                          end: Alignment.bottomCenter,
-                                                          colors: [
-                                                            Colors.white.withOpacity(1),
-                                                            theme_color3.withOpacity(.4),
-                                                            theme_color4.withOpacity(1),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      child: surveyProvider.surveyData.isNotEmpty ? ListView.builder(
-                                                        //controller: _inerscrollController,
-                                                        itemCount: surveyProvider.surveyData.length,
-                                                        padding: EdgeInsets.only(
-                                                            top: sizeHeight(
-                                                                8, context)),
-                                                        scrollDirection:
-                                                            Axis.vertical,
-                                                        itemBuilder:
-                                                            (BuildContext context,
-                                                                int index) {
+                          child: Flex(
+                            direction: Axis.vertical,
 
-                                                          ////print(index);
-                                                                  // //print("surveyList length : ${surveyList.length} index :${index}");
-                                                         IsCheckTarget=surveyProvider.surveyData[index].checkTarget;
-                                                         //Planting planting = surveyProvider.surveyData[index].planting ;
-                                                         //     plantings[index];
-                                                          // Adding new
-                                                          String plantingName =surveyProvider.surveyData[index].plantingName ;
-                                                             /* list_plantingName[
+
+                              children: <Widget>[
+
+
+                                getAppBarUI(),
+
+                                Container(
+                                  height:  isShowbasicSearch ? MediaQuery.of(context).size.height *0.175: MediaQuery.of(context).size.height * 0.475,
+                                  child:
+
+                                  CustomScrollView(
+
+                                    slivers: [
+                                      SliverList(
+
+                                        delegate:
+                                        SliverChildBuilderDelegate(
+
+                                                (BuildContext context,
+                                                int index) {
+                                              return Column(
+                                                children: <Widget>[
+                                                  getSearchBarUI(context, surveyProvider),
+                                                  searchMore1(surveyProvider),
+                                                  // getTimeDateUI(),
+
+                                                ],
+                                              );
+                                            }, childCount: 1),
+                                      )
+                                    ],
+                                  )
+                                  ,
+                                ),
+                                getFilterBarUI(surveyProvider.numberAllSurveys),
+
+
+                                _isLoading
+                                    ? Container()
+                                    : Expanded(
+                                        flex: 1,
+                                       child: NotificationListener<
+                                           ScrollEndNotification>(
+                                           onNotification:
+                                               (ScrollEndNotification scrollInfo) {
+                                             if (surveyProvider.surveyData.isNotEmpty) {
+                                               if (scrollInfo.depth == 0) {
+                                                 if (scrollInfo.metrics.pixels <
+                                                     scrollInfo
+                                                         .metrics.maxScrollExtent) {
+                                                   check = 0;
+                                                 } else if (check == 0) {
+
+                                                   fetchMoreData();
+
+                                                   check = 1;
+                                                 }
+                                               }
+                                             } else {
+                                               if (scrollInfo.depth == 1) {
+                                                 if (scrollInfo.metrics.pixels <
+                                                     scrollInfo
+                                                         .metrics.maxScrollExtent) {
+                                                   check = 0;
+                                                 } else if (check == 0) {
+                                                   fetchMoreData();
+
+                                                   check = 1;
+                                                 }
+                                               }
+                                             }
+                                             if (check == 1) {
+                                               if (surveyProvider.surveyData.length ==
+                                                   surveyProvider.numberAllSurveys) {
+                                                 showToastMessage(
+                                                     "ข้อมูลแสดงครบทั้งหมดเป็นที่เรียบร้อยแล้ว");
+                                               }
+                                             }
+                                             return true;
+                                           },
+                                           child: RefreshIndicator(
+                                             onRefresh: _pullRefresh,
+
+                                             child: NestedScrollView(
+                                               controller: _scrollController,
+                                               headerSliverBuilder:
+                                                   (BuildContext context,
+                                                   bool innerBoxIsScrolled) {
+                                                 return <Widget>[
+                                                   SliverList(
+
+                                                     delegate:
+                                                     SliverChildBuilderDelegate(
+
+                                                             (BuildContext context,
+                                                             int index) {
+                                                           return Column(
+                                                             children: <Widget>[
+                                                                SizedBox(height: 1,)
+                                                               // getTimeDateUI(),
+
+                                                             ],
+                                                           );
+                                                         }, childCount: 1),
+                                                   )
+                                                 ];
+                                               },
+                                               body: Container(
+                                                 decoration: BoxDecoration(
+                                                   gradient: LinearGradient(
+                                                     begin: Alignment.topCenter,
+                                                     end: Alignment.bottomCenter,
+                                                     colors: [
+                                                       Colors.white.withOpacity(1),
+                                                       theme_color3.withOpacity(.4),
+                                                       theme_color4.withOpacity(1),
+                                                     ],
+                                                   ),
+                                                 ),
+                                                 child: surveyProvider.surveyData.isNotEmpty ? ListView.builder(
+                                                   padding: EdgeInsets.only(
+                                                       top: sizeHeight(8, context)),
+                                                   //physics: NeverScrollableScrollPhysics(),
+                                                   shrinkWrap: false,
+                                                   controller: _inerscrollController,
+                                                   itemCount: surveyProvider.surveyData.length,
+
+                                                   scrollDirection:
+                                                   Axis.vertical,
+                                                   itemBuilder:
+                                                       (BuildContext context,
+                                                       int index) {
+
+                                                     ////print(index);
+                                                     // //print("surveyList length : ${surveyList.length} index :${index}");
+                                                     //IsCheckTarget=surveyProvider.surveyData[index].checkTarget;
+                                                     //Planting planting = surveyProvider.surveyData[index].planting ;
+                                                     //     plantings[index];
+                                                     // Adding new
+                                                     String plantingName =surveyProvider.surveyData[index].plantingName ;
+                                                     /* list_plantingName[
                                                                   index];*/
-                                                          String fieldName = surveyProvider.surveyData[index].fieldName ;
-                                                          String substrict = surveyProvider.surveyData[index].substrict ;
-                                                          String district = surveyProvider.surveyData[index].district ;
-                                                          String province = surveyProvider.surveyData[index].province ;
-                                                          String title = surveyProvider.surveyData[index].title ;
+                                                     //String fieldName = surveyProvider.surveyData[index].fieldName ;
+                                                     String substrict = surveyProvider.surveyData[index].substrict ;
+                                                     String district = surveyProvider.surveyData[index].district ;
+                                                     String province = surveyProvider.surveyData[index].province ;
+                                                     String title = surveyProvider.surveyData[index].title ;
 
-                                                          String firstName = surveyProvider.surveyData[index].firstName ;
+                                                     String firstName = surveyProvider.surveyData[index].firstName ;
 
-                                                          String lastName = surveyProvider.surveyData[index].lastName ;
+                                                     String lastName = surveyProvider.surveyData[index].lastName ;
 
-                                                            
-                                                          final int count =  surveyProvider.surveyData.length > 10  ? 10 : surveyProvider.surveyData.length;
-                                                          final Animation <double> animation = Tween<double>(begin: 0.0,end: 1.0).animate(CurvedAnimation(parent:animationController!, curve: Interval( (1 / count) *  index,   1.0, curve: Curves
+
+                                                     //final int count =  surveyProvider.surveyData.length > 10  ? 10 : surveyProvider.surveyData.length;
+                                                     /*final Animation <double> animation = Tween<double>(begin: 0.0,end: 1.0).animate(CurvedAnimation(parent:animationController!, curve: Interval( (1 / count) *  index,   1.0, curve: Curves
                                                                           .fastOutSlowIn)));
-                                                          animationController ?.forward();
+                                                          animationController ?.forward();*/
 
 
-                                                          return surveyProvider.surveyData[index].isLoading &&  surveyProvider.surveyData[index].isLoading? mockShimmer():
+                                                     return surveyProvider.surveyData[index].isLoading &&  surveyProvider.surveyData[index].isLoading? mockShimmer():
 
-                                                          AnimatedListItem( callback: () {
-                                                            if (surveyProvider.surveyData[index].checkTarget == false) {
-                                                              //alert(surveyList[index]);
-                                                            } else {
-                                                              Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                  builder: (context) =>
-                                                                      BaseSurveyPoint(surveyProvider.surveyData[index].survey, surveyProvider.surveyData[index].code),
-                                                                ),
-                                                              );
-                                                            }
-                                                          },
-                                                            callback2: () {
+                                                     AnimatedListItem( callback: () {
+                                                       if (surveyProvider.surveyData[index].checkTarget == false) {
+                                                         //alert(surveyList[index]);
+                                                       } else {
+                                                         Navigator.push(
+                                                           context,
+                                                           MaterialPageRoute(
+                                                             builder: (context) =>
+                                                                 BaseSurveyPoint(surveyProvider.surveyData[index].survey, surveyProvider.surveyData[index].code),
+                                                           ),
+                                                         );
+                                                       }
+                                                     },
+                                                       callback2: () {
 
-                                                              Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      maintainState: false,
-                                                                      builder: (context) =>
-                                                                          SurveyMoreDetailScreen( surveyProvider.surveyData[index].survey,
-                                                                              surveyProvider.surveyData[index].code, surveyProvider))).then((value) {
-                                                                if (value == true) {
-                                                                  asyncFunction();
-                                                                  //print("value${value}");
+                                                         Navigator.push(
+                                                             context,
+                                                             MaterialPageRoute(
+                                                                 maintainState: false,
+                                                                 builder: (context) =>
+                                                                     SurveyMoreDetailScreen( surveyProvider.surveyData[index].survey,
+                                                                         surveyProvider.surveyData[index].code, surveyProvider))).then((value) {
+                                                           if (value == true) {
+                                                             asyncFunction();
+                                                             //print("value${value}");
 
-                                                                }
-                                                              });
+                                                           }
+                                                         });
 
-                                                            },
+                                                       },
 
-                                                            itemName: plantingName,
-                                                            itemID:
-                                                            "${surveyProvider.surveyData[index].code}",
-                                                            city: "อ." +
-                                                                "${district}," +
-                                                                " จ." +
-                                                                "${province}",
-                                                            district:
-                                                            "ต." + "${substrict}",
-                                                            itemOwnerName:
-                                                            "${title} ${firstName}",
-                                                            itemOwnerLastName:
-                                                            "${lastName}",
-                                                            date: ChangeDateTime(surveyProvider.surveyData[index].survey.date),);
-                                                             // FadeTransition(opacity: animation)
-                                                          /*CardItemWithOutImage(
+                                                       itemName: plantingName,
+                                                       itemID:
+                                                       "${surveyProvider.surveyData[index].code}",
+                                                       city: "อ." +
+                                                           "${district}," +
+                                                           " จ." +
+                                                           "${province}",
+                                                       district:
+                                                       "ต." + "${substrict}",
+                                                       itemOwnerName:
+                                                       "${title} ${firstName}",
+                                                       itemOwnerLastName:
+                                                       "${lastName}",
+                                                       date: ChangeDateTime(surveyProvider.surveyData[index].survey.date),);
+                                                     // FadeTransition(opacity: animation)
+                                                     /*CardItemWithOutImage(
                                                             callback: () {
                                                              if (surveyProvider.surveyData[index].checkTarget == false) {
                                                               //alert(surveyList[index]);
@@ -1510,14 +1557,17 @@ Widget getFilterBarUI(int numItemFounded) {
                                                                 animationController!,
                                                             date: ChangeDateTime(surveyProvider.surveyData[index].survey.date),
                                                           );*/
-                                                        },
-                                                      ):   !surveyProvider.isLoading ? Container() : NoData().showNoData(context),
-                                                    )
-                                                  ,
-                                            ),
-                                          ))),
-                            ],
-                          ),
+                                                   },
+                                                 ):   !surveyProvider.isSearch ? Container() : NoData().showNoData(context),
+                                               )
+                                               ,
+                                             ),
+                                           ))
+                                ) ,
+
+                              ],
+                            
+                          ) ,
                         ),
                          surveyProvider.isHavePlanting && surveyProvider.isLoading ? _createSurveybutton(surveyProvider) : Container(),
                       ],
@@ -1742,7 +1792,7 @@ Widget getFilterBarUI(int numItemFounded) {
     );
   }
 
-  Widget shimmerLoading() {
+  /*Widget shimmerLoading() {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -1765,7 +1815,7 @@ Widget getFilterBarUI(int numItemFounded) {
         },
       ),
     );
-  }
+  }*/
 
   Future<bool> onBackButtonPressed(BuildContext context) async {
     bool? exitApp = await showCupertinoDialog<bool>(

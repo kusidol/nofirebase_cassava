@@ -59,10 +59,10 @@ class SurveyProvider with ChangeNotifier {
   void reset() {
     isLoading = false;
 
-    if(!isFetch()){
+    //if(!isFetch()){
       surveyData.clear();
 
-    }
+    //}
 
     //notifyListeners();
     _date = DateTime.now().millisecondsSinceEpoch;
@@ -76,18 +76,20 @@ class SurveyProvider with ChangeNotifier {
    // surveyData.clear();
     //notifyListeners();
   }
-  bool _fetch = false ;
+  /*bool _fetch = false ;
 
   bool isFetch(){
     return _fetch ;
-  }
+  }*/
 
-  setFetch(bool fetch){
+  /*setFetch(bool fetch){
     this._fetch = fetch ;
     //notifyListeners();
-  }
+  }*/
 
   int count = -1 ;
+
+
 
 
   Future<void> fetchData() async {
@@ -103,7 +105,7 @@ class SurveyProvider with ChangeNotifier {
 
     if(numberAllSurveys == 0 || numberAllSurveys == surveyData.length || (surveyData.length > 0 && surveyData.last.isLoading)){
 
-      setFetch(false);
+      //setFetch(false);
       notifyListeners();
       return ;
     }
@@ -118,11 +120,15 @@ class SurveyProvider with ChangeNotifier {
 
     int index = ((_page-1) * _value) ;
 
+
+
     String none = "" ;
 
     Survey sv = Survey(0, 0, 0, none, none, 0, 0, none, none, none, none, none, none, none, none, 0, 0, 0, none, 0, none, none, 0, 0, 0, 0, none, none, none) ;
 
     int dummySize = surveyData.length + _value < numberAllSurveys ? _value : numberAllSurveys - surveyData.length  ;
+
+    
     //print("Dummy ${dummySize}");
     for(int i = 0 ; i < dummySize ; i++){
       surveyData.add(SurveyData(0,none,none,none,none,none,none,none,none,false,none,sv,true));
@@ -133,6 +139,8 @@ class SurveyProvider with ChangeNotifier {
     await surveyService.getSurveysWithPlantingAndLocationAndOwner(
         token.toString(), _page, _value).then((value) async {
 
+
+
           if(value != null){
 
               for (Map<String, dynamic> data in value) {
@@ -141,6 +149,10 @@ class SurveyProvider with ChangeNotifier {
                     .checkSurveyTargetBySurveyId(token.toString(), data['surveyId']) ;
 
                 Survey survey = await surveyService.getSurveyByID(token.toString(), data['surveyId']) as Survey;
+
+
+                if(surveyData.isEmpty)
+                  return ;
 
                 surveyData[index].id = data['surveyId'] ;
                 surveyData[index].plantingName = data['plantingName'] ;
@@ -168,7 +180,7 @@ class SurveyProvider with ChangeNotifier {
               }
               _page = (surveyData.length ~/ _value) + 1;
 
-              setFetch(false);
+             // setFetch(false);
           }
 
     });
@@ -198,7 +210,7 @@ class SurveyProvider with ChangeNotifier {
     numberAllSurveys = await surveyService.countSurveysByPlantingId(token.toString(), plantingId);
 
     if(numberAllSurveys == 0 || numberAllSurveys == surveyData.length) {
-      setFetch(false);
+      //setFetch(false);
       notifyListeners();
       return ;
     }
@@ -230,7 +242,8 @@ class SurveyProvider with ChangeNotifier {
 
         Survey survey = await surveyService.getSurveyByID(token.toString(), data['surveyId']) as Survey;
 
-
+        if(surveyData.isEmpty)
+          return ;
 
         surveyData[index].id = data['surveyId'] ;
         surveyData[index].plantingName = data['plantingName'] ;
@@ -258,7 +271,7 @@ class SurveyProvider with ChangeNotifier {
       }
 
       _page = (surveyData.length ~/ _value) + 1;
-      setFetch(false);
+      //setFetch(false);
 
     });
 
@@ -283,7 +296,6 @@ class SurveyProvider with ChangeNotifier {
     UserService userService = UserService();
     SurveyService surveyService = SurveyService();
     numberAllSurveys = surveys.length;
-
 
     String none = "" ;
     Survey sv = Survey(0, 0, 0, none, none, 0, 0, none, none, none, none, none, none, none, none, 0, 0, 0, none, 0, none, none, 0, 0, 0, 0, none, none, none) ;
@@ -327,6 +339,8 @@ class SurveyProvider with ChangeNotifier {
             0,
             RequestInfoStatus.No) ;
       }*/
+      if(surveyData.isEmpty)
+        return ;
 
       surveyData[index].id = data['surveyId'] ;
       surveyData[index].plantingName = data['plantingName'] ;

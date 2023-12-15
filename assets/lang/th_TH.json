@@ -18,6 +18,7 @@
   "selected-planting-label": "การเพาะปลูกที่เลือก ",
   "update-planting-label": "แก้ไขการเพาะปลูก",
   "survey-label": "สำรวจ",
+  "item-label": "รายการ",
   "survey-more-detail-label": "ข้อมูลการสำรวจ",
   "planting-more-detail-label": "ข้อมูลการเพาะปลูก",
   "point-detail-label": "ข้อมูลจุดสำรวจ",
@@ -56,8 +57,9 @@
   "platings-founded-label": "การเพาะปลูกทั้งหมดที่พบ",
   "platings-founded-id-label": "การเพาะปลูกที่พบในแปลง",
   "field-more-detail-label": "ข้อมูลแปลง",
-  "surveys-founded-label": "การสำรวจทั้งหมดที่พบ",
-  "surveys-founded-id-label": "การสำรวจที่พบในการเพาะปลูก",
+
+  "surveys-founded-label": "พบ",
+  "surveys-founded-id-label": "การเพาะปลูก",
   "any-label": "อื่นๆ",
   "choose-date-label": "เลือกวันที่",
   "Choose-Stem-Source": "เลือกแหล่งที่มาของลำต้น",
@@ -196,6 +198,7 @@
   "pest-survey-point": "จุดสำรวจศัตรูพืชจุดที่",
   "type-something": "พิมพ์บางอย่าง...",
   "point": "จุดที่",
+  "status": "สถานะ",
   "point-status": "สถานะจุดที่",
   "button": "ปุ่ม",
   "confirm-deletion": "ยืนยันการลบ",
@@ -216,11 +219,11 @@
   "plant-start-date": "วันเพาะปลูกเริ่มต้น",
   "survey-end-date": "วันสำรวจสิ้นสุด",
   "survey-start-date": "วันสำรวจเริ่มต้น",
-  "adding-data": "กำลังเพิ่ม",
+  "adding-data": "อยู่ระหว่างการสำรวจ",
   "confirm-data": "ยืนยันความถูกต้องของข้อมูลสำรวจแล้ว",
   "not-confirm-data": "ไม่ยืนยันความถูกต้องของข้อมูลสำรวจ",
   
-  "adding-complete": "เพิ่มข้อมูลแล้ว",
+  "adding-complete": "ดำเนินการสำรวจเสร็จสิ้น",
   
   "agencies": "หน่วยงานที่เกี่ยวข้อง",
 
@@ -232,7 +235,6 @@
   "planting-address":"ที่อยู่แปลงเพาะปลูก",
   "field-address":"ที่อยู่แปลง",
 
-  "adding-complete": "เพิ่มข้อมูลแล้ว",
 
   "agencies": "หน่วยงานที่เกี่ยวข้อง",
   "planting-address": "ที่อยู่แปลงเพาะปลูก",

@@ -5,16 +5,17 @@ import 'package:localization/src/localization_extension.dart';
 import 'package:mun_bot/controller/survey_service.dart';
 import 'package:mun_bot/controller/survey_target_point.dart';
 import 'package:mun_bot/entities/survey.dart';
-import 'package:mun_bot/entities/surveypoint.dart';
-import 'package:mun_bot/entities/targetofsurvey.dart';
 import 'package:mun_bot/env.dart';
 import 'package:mun_bot/main.dart';
+import 'package:mun_bot/providers/survey_point_provider.dart';
 import 'package:mun_bot/screen/survey/survey_target/survey_target_point/stp_point_detail.dart';
 import 'package:mun_bot/screen/widget/no_data.dart';
 import 'package:mun_bot/util/change_date_time.dart';
 import 'package:mun_bot/util/size_config.dart';
 import 'package:mun_bot/screen/login/login_screen.dart';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
+import 'package:mun_bot/util/ui/survey_theme.dart';
+import 'package:provider/provider.dart';
 
 class BaseSurveyPoint extends StatefulWidget {
   Survey survey;
@@ -24,26 +25,27 @@ class BaseSurveyPoint extends StatefulWidget {
   State<StatefulWidget> createState() => _BaseSurveyPoint();
 }
 
+enum SurveyPointStutus { edit, complete }
+
 class _BaseSurveyPoint extends State<BaseSurveyPoint> {
   List<bool> pointStatus = [false, false, false, false, false];
-  bool isLoading = false;
+  //bool isLoading = false;
   List<int> pointNo = [];
   bool surveyStatus = false;
   String? status;
 
-  List<Map<String, dynamic>> surveyPointList = [];
-  String? token;
+  //List<Map<String, dynamic>> surveyPointList = [];
+  ///String? token;
   @override
   void initState() {
     super.initState();
-    token = tokenFromLogin?.token;
-    getAllsurveyStatus();
-    reFreshstatus();
+    //token = tokenFromLogin?.token;
+   // getAllsurveyStatus();
+    //reFreshstatus();
+
   }
 
-  void reFreshstatus() {
-    getAllsurveyStatus();
-  }
+
 
   /*Future<void> asyncFunction() async {
     String? token = tokenFromLogin?.token;
@@ -101,20 +103,31 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
     }
   }*/
 
-  Future<void> getAllsurveyStatus() async {
-    var bodyValue;
+  /*Future<void> getAllsurveyStatus() async {
+
     var surveyService = SurveyService();
     List<Map<String, dynamic>> surveyPointListAdd =
         await surveyService.getSurveyPoint(token!, widget.survey.surveyID);
-    surveyPointList = surveyPointListAdd;
+    //surveyPointList = surveyPointListAdd;
     setState(() {
-      surveyPointList.forEach((item) {
-        pointStatus[item['pointNo']] =
+      surveyPointListAdd.forEach((item) {
+
+        //print("${item['pointNo']}          ${item['status']}") ;
+        int i = item['pointNo'] ;
+        pointStatus[i] =
             item['status'] == "Complete" ? true : false;
+        int k = pointStatus[i] == true ? 1 : 0 ;
+        //_selectedStatus[item['pointNo']][i] = true ;
+
+        for (int j = 0; j < _selectedStatus[i].length; j++) {
+          _selectedStatus[i][j] = j  == k;
+
+        }
+
       });
     });
     isLoading = true;
-  }
+  }*/
 
   List<String> diseaseList = [];
   Future<String?> countDiseaseBySurveyId(int id) async {
@@ -525,7 +538,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                   await updateSurveyStatus().then((value) {
                     if (value) {
                       setState(() {
-                        widget.survey.status = statusList[index];
+                        widget.survey.status = _statusList[index];
                       });
                     }
                   });
@@ -555,7 +568,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
   }
 
   Widget surveyBoxSwitch(
-      int point, AnimatedToggleSwitch switchWidget, bool status) {
+      int point, Widget switchWidget, bool status) {
     return Padding(
       padding: EdgeInsets.only(bottom: sizeHeight(8, context)),
       child: GestureDetector(
@@ -582,34 +595,76 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
               borderRadius: BorderRadius.circular(sizeHeight(15, context)),
             ),
             child: Container(
-              width: sizeWidth(360, context),
-              height: sizeHeight(80, context),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              width: sizeWidth(MediaQuery.of(context).size.width * 0.925, context),
+              height: sizeHeight(MediaQuery.of(context).size.height * 0.125 , context),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: sizeWidth(20, context)),
-                    child: Text(
-                      status == true
-                          ? "point-status".i18n() + " " + (point + 1).toString()
-                          : "point-status".i18n() +
+
+                  Row(
+                    children: [
+                      Padding(
+
+                        padding: EdgeInsets.only(left: sizeWidth(MediaQuery.of(context).size.width * 0.045, context)),
+                        child: Text(
+                          status == true
+                              ? "point".i18n() + " " + (point + 1).toString()
+                              : "point".i18n() +
                               " " +
                               (point + 1).toString(),
-                      style: TextStyle(fontSize: sizeHeight(20, context)),
-                    ),
+                          style: TextStyle(fontSize: sizeHeight(19, context)),
+                        ),
+                      ),
+
+                      Padding(
+                        padding: EdgeInsets.only(left: sizeWidth(MediaQuery.of(context).size.width * 0.295, context)),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(4),
+                        child: switchWidget,
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(right: sizeWidth(8, context)),
-                    child: switchWidget,
-                  ),
+                  SizedBox(height: 10,),
+                  //Divider(indent: 0, thickness: 1,),
+
+                  Row(
+                    children: [
+                      Padding(
+                          padding: EdgeInsets.only(left: sizeWidth(MediaQuery.of(context).size.width * 0.045, context)),
+                      child:Text(
+                        "status".i18n() + ":",
+                        style: TextStyle(fontSize: sizeHeight(16, context) ,fontWeight: FontWeight.bold),
+                       )
+                      ),
+                      Padding(
+
+                        padding: EdgeInsets.only(left: sizeWidth(MediaQuery.of(context).size.width * 0.025, context)),
+
+                        child: Text(
+                          !status
+                              ? "adding-data".i18n()
+                              : "adding-complete".i18n() ,
+                          style: TextStyle(fontSize: sizeHeight(15, context)),
+                        ),
+                      ),
+                    ],
+                  )
+
+
+                  // switchWidget
+
+
                 ],
               ),
             ),
-          )),
+          )
+      ),
     );
   }
 
-  bool switchValue(point, bool valuep) {
+
+  /*bool switchValue(point, bool valuep) {
     if (surveyPointList.isNotEmpty) {
       if (surveyPointList[point]['status'] == 'Complete') {
         return valuep = true;
@@ -619,7 +674,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
     } else {
       return valuep;
     }
-  }
+  }*/
 
   double showEnemyHeight = 0;
   bool isShowEnemy = false;
@@ -666,14 +721,85 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
     );
   }
 
-  List<String> statusList = ["Editing", "Complete"];
+  //List<String> txtList = ["","","","",""];
+  //final List<bool> _selectedStatus = <bool>[true, false];
 
-  List<Widget> getCompleteBox() {
+
+
+  final List<String> _statusList = ["Editing","Complete"];
+
+  List<Widget> getCompleteBox(SurveyPointProvider surveyPointProvider) {
+
     List<Widget> completeBoxes = [];
     for (int i = 0; i < 5; i++) {
-      completeBoxes.add(surveyBoxSwitch(
+      completeBoxes.add(
+
+          surveyBoxSwitch(
           i,
-          AnimatedToggleSwitch<bool>.dual(
+              ToggleButtons(
+                isSelected: surveyPointProvider.selectedStatus[i],
+                children: [
+                  Icon(Icons.edit_outlined,),
+                  Icon(Icons.task_alt_outlined),
+                //  Container(width: (MediaQuery.of(context).size.width - 22)/2.25, child: new Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[new Icon(Icons.edit,size: 16.0,color: Colors.red,),new SizedBox(width: 4.0,), Text('adding-data'.i18n(),style: TextStyle(color: Colors.red),)],)),
+                //  Container(width: (MediaQuery.of(context).size.width - 22)/2.25, child: new Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[new Icon(Icons.task_alt_outlined,size: 16.0,color: Colors.green[800],),new SizedBox(width: 4.0,), Text('adding-complete'.i18n(),)],)),
+                ],
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                selectedBorderColor: !surveyPointProvider.pointStatus[i] ? Colors.amber[400] : Colors.green[400] ,
+                selectedColor: Colors.white,
+                fillColor: surveyPointProvider.pointStatus[i] ? Colors.green[400] : Colors.amber[400] ,
+                color: !surveyPointProvider.pointStatus[i] ? Colors.green[400] : Colors.amber[400] ,
+                onPressed: (int index)  async {
+                  setState(()  {
+                    // The button that is tapped is set to true, and the others to false.
+                    for (int j = 0; j < surveyPointProvider.selectedStatus[i].length; j++) {
+                      surveyPointProvider.setSelectedStatus(i, j, j  == index) ;
+                    }
+
+
+                  });
+
+                  await surveyPointProvider.updateSelectedStatus(widget.survey.surveyID, i, index).then((value) {
+
+                    if(value){
+                     // isInit = true ;
+                      surveyPointProvider.fetchData(widget.survey.surveyID);
+                    }
+
+                  });
+                  //surveyPointProvider.pointStatus[]
+                  //pointStatus[i] = !pointStatus[i] ;
+
+                  /*showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) => LoadingWidget(
+                      message: "Submitting",
+                    ),
+                  );*/
+
+                  /*await putPointStatus(widget.survey.surveyID, i, _statusList[index])
+                      .then((value) {
+                    ////print(value);
+
+                    if (value) {
+
+                      reFreshstatus();
+                      pointStatus[i] = !pointStatus[i];
+
+                    }
+                  });
+
+                  await Future.delayed(Duration(milliseconds: 500));
+
+                  Navigator.pop(context);*/
+                },
+                constraints: const BoxConstraints(
+                  minHeight: 40.0,
+                  minWidth: 80.0,
+                ),
+              ),
+          /*AnimatedToggleSwitch<bool>.dual(
             current: pointStatus[i],
             first: false,
             second: true,
@@ -729,59 +855,104 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
             textBuilder: (value) => value == false
                 ? Center(child: Text('adding-data'.i18n()))
                 : Center(child: Text('adding-complete'.i18n())),
-          ),
-          pointStatus[i]));
+          ),*/
+              surveyPointProvider.pointStatus[i]));
     }
     return completeBoxes;
   }
 
-  Widget allSurveyBoxSwitch() {
-    return Column(children: getCompleteBox());
+  Widget allSurveyBoxSwitch(surveyPointProvider) {
+    return SingleChildScrollView(
+      child:
+
+      Column(
+
+        children: getCompleteBox(surveyPointProvider)
+      ));
   }
 
+  bool isInit = true ;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
-        appBar: PreferredSize(
-          preferredSize:
-              Size.fromHeight(MediaQuery.of(context).size.height * 0.085),
-          child: getAppBarUI(),
-        ),
-        body: ListView(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height * 0.915,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.white,
-                    theme_color3.withOpacity(.4),
-                    theme_color4.withOpacity(1),
-                  ],
-                ),
-              ),
-              child: isLoading
-                  ? Column(children: [
-                      allSummaryBox(),
-                      showEnemy(),
-                      surveySwitch(),
-                      SizedBox(
-                        height: sizeHeight(16, context),
-                      ),
-                      Column(
-                        children: [allSurveyBoxSwitch()],
-                      )
-                    ])
-                  : Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+    return Theme( data: HotelAppTheme.buildLightTheme(),
+
+                child: Scaffold(
+                    appBar: PreferredSize(
+                      preferredSize:
+                      Size.fromHeight(MediaQuery.of(context).size.height * 0.085),
+                      child: getAppBarUI(),
+                    ),
+                    body: Container(
+                      child: MultiProvider(
+
+                        providers: [
+                          ChangeNotifierProvider(
+                            create: (context) {
+                              return SurveyPointProvider();
+                            },
+                          ),
+                        ],
+
+                        child: Consumer<SurveyPointProvider>(
+                        builder: (context, surveyProvider, index) {
+                          if(isInit){
+                            isInit = !isInit ;
+                            surveyProvider.fetchData(widget.survey.surveyID);
+                          }
+
+                          return Container(
+                            child: ListView(
+                              children: [
+                                Container(
+                                    height: MediaQuery.of(context).size.height * 0.915,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        colors: [
+                                          Colors.white,
+                                          theme_color3.withOpacity(.4),
+                                          theme_color4.withOpacity(1),
+                                        ],
+                                      ),
+                                    ),
+                                    child: Column(children: [
+                                      allSummaryBox(),
+                                      showEnemy(),
+                                      surveySwitch(),
+                                      SizedBox(
+                                        height: sizeHeight(16, context),
+                                      ),
+                                      Container(
+                                        height: MediaQuery.of(context).size.height * 0.55,
+                                        child: allSurveyBoxSwitch(surveyProvider),
+                                      )
+                                    ])
+                                  /*: Center(
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                            ),
+                          ),*/
+                                )
+                              ],
+                            ),
+                          ) ;
+                        })
+
+
+                         ,
+
                       ),
                     ),
-            )
-          ],
-        ));
+
+                    )
+
+
+      ) ;
+
+
+
+
   }
 }
