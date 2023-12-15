@@ -106,13 +106,18 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
   onfirst() async {
     String? token = tokenFromLogin?.token;
     FieldService fieldService = FieldService();
+
+    if(!mounted)
+      return ;
+
     checkCreateField = await fieldService.checkFieldRegistrar(token.toString());
     if (mounted) {
       setState(() {
         _istLoading = true;
       });
     }
-
+    if(!mounted)
+      return ;
     FieldProviders provider =
         Provider.of<FieldProviders>(context, listen: false);
     provider.reset();
@@ -122,6 +127,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
     SurveyProvider surveyProvider =
         Provider.of<SurveyProvider>(context, listen: false);
     surveyProvider.resetPlantingID();
+
     provider.fetchData();
     if (mounted) {
       setState(() {
@@ -615,6 +621,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
 
   void _handleSearchButton(FieldProviders provider) async {
     //call Service
+    provider.reset();
     Map<String, dynamic> jsonData = {
       "address": addressValue,
       "fieldName": fieldNameValue,
@@ -636,9 +643,13 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
 
   void _handleSearchByKeyButton(FieldProviders provider) async {
     //call Service
+
+    provider.reset();
     Map<String, dynamic> jsonData = {
       "key": fieldNameValue,
     };
+
+
 
     jsonData.removeWhere(
         (key, value) => value == null || value == '' || value == 0);
@@ -1031,7 +1042,9 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                                                               " จ." +
                                                               "${location.split(",").last}",
                                                           district: "ต." +
-                                                              "${location.split(",")[1]}",
+                                                              "${location.split(",").length < 2 ? "" : location.split(",")[1]}",
+
+
                                                           itemOwnerName:
                                                               "${owner.title} ${owner.firstName}",
                                                           itemOwnerLastName:
