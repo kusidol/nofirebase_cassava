@@ -101,9 +101,9 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
     }
 
     void _handleDeletion() async {
-      int statusCode =
+      bool isDeleted =
           await widget.plantingProvider.deletePlanting(widget.planting);
-      if (statusCode == 200) {
+      if (isDeleted) {
         Navigator.of(context).pop();
         Navigator.of(context).pop();
         Navigator.of(context).pop();

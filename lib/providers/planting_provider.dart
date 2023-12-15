@@ -66,6 +66,9 @@ class PlantingProvider with ChangeNotifier {
 
   void reset() {
     isLoading = false;
+    // if (!isFetch()) {
+    plantingData.clear();
+    // }
     // plantings = [];
     // owners = [];
     // fields = [];
@@ -78,7 +81,6 @@ class PlantingProvider with ChangeNotifier {
     // list_title = [];
     // list_firstName = [];
     // list_lastName = [];
-    plantingData.clear();
     _page = 1;
   }
 
@@ -107,12 +109,14 @@ class PlantingProvider with ChangeNotifier {
     // data = await plantingService.getPlanting(token.toString(), _page, _value);
     numberAllPlantings = countPlanting;
 
-    if (numberAllPlantings == 0 || numberAllPlantings == plantingData.length) {
+    if (numberAllPlantings == 0 ||
+        numberAllPlantings == plantingData.length ||
+        (plantingData.length > 0 && plantingData.last.isLoading)) {
       notifyListeners();
       return;
     }
 
-    _value = 10;
+    _value = 20;
 
     isLoading = false;
 
@@ -121,8 +125,6 @@ class PlantingProvider with ChangeNotifier {
     _value = numberAllPlantings < _value ? numberAllPlantings : _value;
 
     int index = ((_page - 1) * _value);
-
-    index = (index >= _value) ? index - 1 : index;
 
     String none = "";
 
@@ -173,7 +175,11 @@ class PlantingProvider with ChangeNotifier {
         0,
         0);
 
-    for (int i = 0; i < _value; i++) {
+    int dummySize = plantingData.length + _value < numberAllPlantings
+        ? _value
+        : numberAllPlantings - plantingData.length;
+
+    for (int i = 0; i < dummySize; i++) {
       plantingData.add(PlantingData(
           0, none, none, none, none, none, none, none, none, pt, true));
     }
@@ -184,11 +190,11 @@ class PlantingProvider with ChangeNotifier {
         .getPlantingsWithLocationAndOwner(token.toString(), _page, _value)
         .then((value) async {
       if (value != null) {
-        if (numberAllPlantings == plantingData.length) return;
-
         for (Map<String, dynamic> data in value) {
           Planting? planting = await plantingService.getPlantingByID(
               data['plantingId'], token.toString()) as Planting;
+
+          if (plantingData.isEmpty) return;
 
           plantingData[index].plantingId = data['plantingId'];
           plantingData[index].plantingName = data['plantingName'];
@@ -210,7 +216,7 @@ class PlantingProvider with ChangeNotifier {
 
         _page = (plantingData.length ~/ _value) + 1;
 
-        setFetch(false);
+        // setFetch(false);
       }
     });
     // for (Map<String, dynamic> data in detail) {
@@ -240,6 +246,8 @@ class PlantingProvider with ChangeNotifier {
     isLoading = true;
     if (count > 0) {
       isHaveField = true;
+    } else {
+      isHaveField = false;
     }
     notifyListeners();
   }
@@ -247,8 +255,12 @@ class PlantingProvider with ChangeNotifier {
   Future<void> fetchDataFromField() async {
     // print("LOADING PLANTING PROVIDER");
     // List<Planting> dataPlanting = [];
+    FieldService fieldService = FieldService();
     PlantingService plantingService = PlantingService();
     String? token = tokenFromLogin?.token;
+
+    int count = await fieldService.countFields(token.toString());
+
     // print("page : ${_page}");
     numberAllPlantings = await plantingService.countPlantingsByFieldId(
         token.toString(), fieldID);
@@ -258,7 +270,7 @@ class PlantingProvider with ChangeNotifier {
       return;
     }
 
-    _value = 5;
+    _value = 20;
 
     isLoading = false;
 
@@ -267,8 +279,6 @@ class PlantingProvider with ChangeNotifier {
     _value = numberAllPlantings < _value ? numberAllPlantings : _value;
 
     int index = ((_page - 1) * _value);
-
-    index = (index >= _value) ? index - 1 : index;
 
     String none = "";
 
@@ -333,6 +343,8 @@ class PlantingProvider with ChangeNotifier {
         Planting? planting = await plantingService.getPlantingByID(
             data['plantingId'], token.toString()) as Planting;
 
+        if (plantingData.isEmpty) return;
+
         plantingData[index].plantingId = data['plantingId'];
         plantingData[index].plantingName = data['plantingName'];
         plantingData[index].fieldName = data['fieldName'];
@@ -353,7 +365,7 @@ class PlantingProvider with ChangeNotifier {
 
       _page = (plantingData.length ~/ _value) + 1;
 
-      setFetch(false);
+      // setFetch(false);
     });
     // if (plantings.length % _value != 0) {
     //   // plantings.removeRange((_value*(_page-1))+1, plantings.length);
@@ -367,6 +379,12 @@ class PlantingProvider with ChangeNotifier {
     // }
 
     isLoading = true;
+    if (count > 0) {
+      isHaveField = true;
+    } else {
+      isHaveField = false;
+    }
+    notifyListeners();
   }
 
   // List<Planting> getPlantings() {
@@ -387,90 +405,38 @@ class PlantingProvider with ChangeNotifier {
 
     String? token = tokenFromLogin?.token;
 
-    Field? field;
     FieldService fieldService = FieldService();
-    field = await fieldService.getFieldByPlantingID(
-        data.plantingId, token.toString());
+    Field field = await fieldService.getFieldByPlantingID(
+        data.plantingId, token.toString()) as Field;
 
-    if (field != null) {
-      String fieldName = '';
-      String district = 'ไม่ระบุ';
-      String substrict = 'ไม่ระบุ';
-      String province = 'ไม่ระบุ';
-      String title = 'ไม่ระบุ';
-      String firstName = 'ไม่ระบุ';
-      String lastName = 'ไม่ระบุ';
-      // fields.insert(0, field);
-      firstName = fieldName;
-      // list_fieldName.insert(0, field.name);
-      int fieldID = field.fieldID;
+    String location = await fieldService.getLocationByFielID(
+        field.fieldID, token.toString()) as String;
+    // print("Location = ${location}");
 
-      String? location =
-          await fieldService.getLocationByFielID(fieldID, token.toString());
-      if (location != null) {
-        // locations.insert(0, location);
-        List<String> parts =
-            location.split(","); // แยกข้อความด้วยเครื่องหมาย ','
+    List<String> parts = location.split(","); // แยกข้อความด้วยเครื่องหมาย ','
 
-        district = parts[0];
-        substrict = parts[1];
-        province = parts[2];
-        // list_district.insert(0, parts[0]);
-        // list_substrict.insert(0, parts[1]);
-        // list_province.insert(0, parts[2]);
-      }
-      // else {
-      //   locations.insert(0, "");
-      //   list_district.insert(0, "ไม่ระบุ");
-      //   list_substrict.insert(0, "ไม่ระบุ");
-      //   list_province.insert(0, "ไม่ระบุ");
-      // }
-
-      UserService userService = UserService();
-      User? user =
-          await userService.getUserByFieldID(fieldID, token.toString());
-      if (user != null) {
-        // owners.insert(0, user);
-        title = user.title;
-        fieldName = user.firstName;
-        lastName = user.lastName;
-        // list_title.insert(0, user.title);
-        // list_firstName.insert(0, user.firstName);
-        // list_lastName.insert(0, user.lastName);
-      }
-      // else {
-      // owners.insert(
-      //     0,
-      //     User(
-      //         -1,
-      //         "service null",
-      //         "service null",
-      //         "service null",
-      //         "service null",
-      //         "service null",
-      //         UserStatus.invalid,
-      //         0,
-      //         RequestInfoStatus.No));
-      //   list_title.insert(0, "ไม่ระบุ");
-      //   list_firstName.insert(0, "ไม่ระบุ");
-      //   list_lastName.insert(0, "ไม่ระบุ");
-      // }
-
-      PlantingData newPlantingData = PlantingData(
-          data.plantingId,
-          data.name,
-          fieldName,
-          substrict,
-          district,
-          province,
-          title,
-          firstName,
-          lastName,
-          data,
-          false);
-
-      plantingData.insert(0, newPlantingData);
+    UserService userService = UserService();
+    User? user = await userService.getUserByFieldID(
+        field.fieldID, token.toString()) as User;
+    if (user == null) {
+      user = User(-1, "undefined", "undefined", "undefined", "undefined",
+          "undefined", UserStatus.invalid, 0, RequestInfoStatus.No);
     }
+
+    PlantingData newPlantingData = PlantingData(
+        data.plantingId,
+        data.name,
+        field.name,
+        parts[1],
+        parts[0],
+        parts[2],
+        user.title,
+        user.firstName,
+        user.lastName,
+        data,
+        false);
+
+    plantingData.insert(0, newPlantingData);
 
     notifyListeners();
   }
@@ -480,20 +446,22 @@ class PlantingProvider with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  Future<int> deletePlanting(Planting planting) async {
+  Future<bool> deletePlanting(Planting planting) async {
     PlantingService plantingService = PlantingService();
     String? token = tokenFromLogin?.token;
     int statusCode =
         await plantingService.deletePlanting(token.toString(), planting);
 
-    for (int i = 0; i < plantingData.length; i++) {
-      if (planting.plantingId == plantingData[i].plantingId) {
-        plantingData.removeAt(i);
-        break;
+    if (statusCode == 200) {
+      for (int i = 0; i < plantingData.length; i++) {
+        if (planting.plantingId == plantingData[i].plantingId) {
+          plantingData.removeAt(i);
+          notifyListeners();
+          return true;
+        }
       }
     }
-    notifyListeners();
-    return statusCode;
+    return false;
   }
 
   Future<void> _doSearch(List<Map<String, dynamic>> plantings, index) async {
@@ -551,7 +519,7 @@ class PlantingProvider with ChangeNotifier {
         0,
         0);
 
-    for (int i = 0; i < _value; i++) {
+    for (int i = 0; i < numberAllPlantings; i++) {
       plantingData.add(PlantingData(
           0, none, none, none, none, none, none, none, none, pt, true));
     }
@@ -559,6 +527,8 @@ class PlantingProvider with ChangeNotifier {
     for (Map<String, dynamic> data in plantings) {
       Planting? planting = await plantingService.getPlantingByID(
           data['plantingId'], token.toString()) as Planting;
+
+      if (plantingData.isEmpty) return;
 
       plantingData[index].plantingId = data['plantingId'];
       plantingData[index].plantingName = data['plantingName'];
@@ -588,102 +558,79 @@ class PlantingProvider with ChangeNotifier {
     reset();
     PlantingService plantingService = PlantingService();
     String? token = tokenFromLogin?.token;
-    // await plantingService
-    //     .searchPlantingByKey2(data, token.toString())
-    //     .then((value) async {
-    //   if (value != null) {
-    //     await _doSearch(value, 0);
-    //   }
-    // });
-    List<Planting> searchPlantings =
-        await plantingService.searchPlantingByKey2(data, token.toString());
-    // List<Planting> plant = this.plantings;
 
-    for (int i = 0; i < searchPlantings.length; i++) {
-      String? token = tokenFromLogin?.token;
-
-      Field? field;
-      FieldService fieldService = FieldService();
-      field = await fieldService.getFieldByPlantingID(
-          searchPlantings[i].plantingId, token.toString());
-
-      if (field != null) {
-        String fieldName = '';
-        String district = 'ไม่ระบุ';
-        String substrict = 'ไม่ระบุ';
-        String province = 'ไม่ระบุ';
-        String title = 'ไม่ระบุ';
-        String firstName = 'ไม่ระบุ';
-        String lastName = 'ไม่ระบุ';
-        // fields.add(field);
-        // list_fieldName.add(field.name);
-        fieldName = field.name;
-        int fieldID = field.fieldID;
-
-        String? location =
-            await fieldService.getLocationByFielID(fieldID, token.toString());
-        if (location != null) {
-          // locations.add(location);
-          List<String> parts =
-              location.split(","); // แยกข้อความด้วยเครื่องหมาย ','
-
-          district = parts[0];
-          substrict = parts[1];
-          province = parts[2];
-          // list_district.insert(0, parts[0]);
-          // list_substrict.insert(0, parts[1]);
-          // list_province.insert(0, parts[2]);
-        }
-        // else {
-        //   locations.add("");
-        //   list_district.add("ไม่ระบุ");
-        //   list_substrict.add("ไม่ระบุ");
-        //   list_province.add("ไม่ระบุ");
-        // }
-
-        UserService userService = UserService();
-        User? user =
-            await userService.getUserByFieldID(fieldID, token.toString());
-        if (user != null) {
-          // owners.add(user);
-          title = user.title;
-          firstName = user.firstName;
-          lastName = user.lastName;
-          // list_title.insert(0, user.title);
-          // list_firstName.insert(0, user.firstName);
-          // list_lastName.insert(0, user.lastName);
-        }
-        // else {
-        //   owners.add(User(
-        //       -1,
-        //       "service null",
-        //       "service null",
-        //       "service null",
-        //       "service null",
-        //       "service null",
-        //       UserStatus.invalid,
-        //       0,
-        //       RequestInfoStatus.No));
-        //   list_title.add("ไม่ระบุ");
-        //   list_firstName.add("ไม่ระบุ");
-        //   list_lastName.add("ไม่ระบุ");
-        // }
-        PlantingData newPlantingData = PlantingData(
-            searchPlantings[i].plantingId,
-            searchPlantings[i].name,
-            fieldName,
-            substrict,
-            district,
-            province,
-            title,
-            firstName,
-            lastName,
-            searchPlantings[i],
-            false);
-
-        plantingData.add(newPlantingData);
-      }
+    if (fieldID != 0) {
+      data["fieldId"] = fieldID.toString();
     }
+
+    await plantingService
+        .searchPlantingByKey2(data, token.toString())
+        .then((value) async {
+      if (value != null) {
+        print(value);
+        await _doSearch(value, 0);
+      }
+    });
+    // List<Planting> searchPlantings =
+    //     await plantingService.searchPlantingByKey2(data, token.toString());
+
+    // for (int i = 0; i < searchPlantings.length; i++) {
+    //   String? token = tokenFromLogin?.token;
+
+    //   Field? field;
+    //   FieldService fieldService = FieldService();
+    //   field = await fieldService.getFieldByPlantingID(
+    //       searchPlantings[i].plantingId, token.toString());
+
+    //   if (field != null) {
+    //     String fieldName = '';
+    //     String district = 'ไม่ระบุ';
+    //     String substrict = 'ไม่ระบุ';
+    //     String province = 'ไม่ระบุ';
+    //     String title = 'ไม่ระบุ';
+    //     String firstName = 'ไม่ระบุ';
+    //     String lastName = 'ไม่ระบุ';
+
+    //     fieldName = field.name;
+    //     int fieldID = field.fieldID;
+
+    //     String? location =
+    //         await fieldService.getLocationByFielID(fieldID, token.toString());
+    //     if (location != null) {
+    //       // locations.add(location);
+    //       List<String> parts =
+    //           location.split(","); // แยกข้อความด้วยเครื่องหมาย ','
+
+    //       district = parts[0];
+    //       substrict = parts[1];
+    //       province = parts[2];
+    //     }
+
+    //     UserService userService = UserService();
+    //     User? user =
+    //         await userService.getUserByFieldID(fieldID, token.toString());
+    //     if (user != null) {
+    //       // owners.add(user);
+    //       title = user.title;
+    //       firstName = user.firstName;
+    //       lastName = user.lastName;
+    //     }
+    //     PlantingData newPlantingData = PlantingData(
+    //         searchPlantings[i].plantingId,
+    //         searchPlantings[i].name,
+    //         fieldName,
+    //         substrict,
+    //         district,
+    //         province,
+    //         title,
+    //         firstName,
+    //         lastName,
+    //         searchPlantings[i],
+    //         false);
+
+    //     plantingData.add(newPlantingData);
+    //   }
+    // }
     isLoading = true;
     numberAllPlantings = plantingData.length;
     notifyListeners();
@@ -694,39 +641,37 @@ class PlantingProvider with ChangeNotifier {
     PlantingService plantingService = PlantingService();
     String? token = tokenFromLogin?.token;
 
-    // List<Planting> plantingTemp = [];
-    List<Map<String, dynamic>> detail =
-        await plantingService.search(data, _page, _value, token.toString());
-
-    for (Map<String, dynamic> data in detail) {
-      // Planting? source = await plantingService.getPlantingByID(
-      //     data['plantingId'], token.toString());
-      // plantingTemp.add(source!);
-      // list_fieldName.add(data['fieldName']);
-      // list_substrict.add(data['substrict']);
-      // list_district.add(data['district']);
-      // list_province.add(data['province']);
-      // list_title.add(data['title']);
-      // list_firstName.add(data['firstName']);
-      // list_lastName.add(data['lastName']);
-      Planting? planting = await plantingService.getPlantingByID(
-          data['plantingId'], token.toString());
-      if (planting != null) {
-        plantingData.add(PlantingData(
-            data['plantingId'],
-            data['plantingName'],
-            data['fieldName'],
-            data['substrict'],
-            data['district'],
-            data['province'],
-            data['title'],
-            data['firstName'],
-            data['lastName'],
-            planting,
-            false));
-      }
+    if (fieldID != 0) {
+      data["fieldId"] = fieldID.toString();
     }
-    // this.plantings = plantingTemp;
+
+    await plantingService.search(data, token.toString()).then((value) async {
+      if (value != null) {
+        await _doSearch(value, 0);
+      }
+    });
+
+    // List<Map<String, dynamic>> detail =
+    //     await plantingService.search(data, _page, _value, token.toString());
+
+    // for (Map<String, dynamic> data in detail) {
+    //   Planting? planting = await plantingService.getPlantingByID(
+    //       data['plantingId'], token.toString());
+    //   if (planting != null) {
+    //     plantingData.add(PlantingData(
+    //         data['plantingId'],
+    //         data['plantingName'],
+    //         data['fieldName'],
+    //         data['substrict'],
+    //         data['district'],
+    //         data['province'],
+    //         data['title'],
+    //         data['firstName'],
+    //         data['lastName'],
+    //         planting,
+    //         false));
+    //   }
+    // }
     numberAllPlantings = plantingData.length;
     isLoading = true;
     notifyListeners();
