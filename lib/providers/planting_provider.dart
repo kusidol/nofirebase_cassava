@@ -446,7 +446,7 @@ class PlantingProvider with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  Future<int> deletePlanting(Planting planting) async {
+  Future<bool> deletePlanting(Planting planting) async {
     PlantingService plantingService = PlantingService();
     String? token = tokenFromLogin?.token;
     int statusCode =
@@ -457,11 +457,11 @@ class PlantingProvider with ChangeNotifier {
         if (planting.plantingId == plantingData[i].plantingId) {
           plantingData.removeAt(i);
           notifyListeners();
-          return statusCode;
+          return true;
         }
       }
     }
-    return statusCode;
+    return false;
   }
 
   Future<void> _doSearch(List<Map<String, dynamic>> plantings, index) async {

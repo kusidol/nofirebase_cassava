@@ -144,8 +144,8 @@ class _PlantingMoreDetailScreen extends State<PlantingMoreDetailScreen>
   }
 
   void _handleDeletion() async {
-    int statusCode = await widget.provider.deletePlanting(widget.plantings);
-    if (statusCode == 200) {
+    bool isDelete = await widget.provider.deletePlanting(widget.plantings);
+    if (isDelete == 200) {
       // Navigator.of(context).pop();
     } else {}
   }

@@ -54,8 +54,8 @@
   "have-a-good-day-label": "ขอให้เป็นวันที่ดี",
   "more-filer-label": "ตัวกรองเพิ่มเติม",
   "fields-founded-label": "แปลงเพาะปลูกทั้งหมดที่พบ",
-  "platings-founded-label": "การเพาะปลูกทั้งหมดที่พบ",
-  "platings-founded-id-label": "การเพาะปลูกที่พบในแปลง",
+  "platings-founded-label": "พบ",
+  "platings-founded-id-label": "แปลง",
   "field-more-detail-label": "ข้อมูลแปลง",
 
   "surveys-founded-label": "พบ",

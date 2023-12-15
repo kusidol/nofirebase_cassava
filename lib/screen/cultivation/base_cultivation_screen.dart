@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -644,15 +645,22 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                       children: [
                         Expanded(
                           child: Center(
-                            child: Text(
+                            child: ExpandableText(
                               fieldName == ""
+                                  ? 'platings-founded-label'.i18n() +
+                                      ' ${numItemFounded} ' +
+                                      'item-label'.i18n()
+                                  : 'platings-founded-id-label'.i18n() +
+                                      " ${fieldName} " +
+                                      'platings-founded-label'.i18n() +
+                                      ' ${numItemFounded} ' +
+                                      'item-label'.i18n(),
+                              expandText: fieldName == ""
                                   ? 'platings-founded-label'.i18n() +
                                       ' ${numItemFounded}'
                                   : 'platings-founded-id-label'.i18n() +
-                                      " ${fieldName}" +
                                       ' (${numItemFounded})',
-                              maxLines: 2,
-                              overflow: TextOverflow.fade,
+                              collapseText: 'show less',
                               style: TextStyle(
                                 fontWeight: FontWeight.w300,
                                 fontSize:
