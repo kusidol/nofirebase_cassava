@@ -471,9 +471,9 @@ class SearchSurveyFieldScreenState extends State<SearchSurveyFieldScreen> {
                         
                    
                     },
-                    padding: EdgeInsets.all(sizeHeight(10, context)),
+                    padding: EdgeInsets.all(sizeHeight(0, context)),
                     color: theme_color2,
-                    textColor: Colors.black,
+                    textColor: Colors.white,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -539,11 +539,11 @@ class SearchSurveyFieldScreenState extends State<SearchSurveyFieldScreen> {
           'more-filer-label'.i18n(),
           style: GoogleFonts.poppins(
             color: Colors.black,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w600,
             fontSize: sizeHeight(24, context),
           ),
         ),
-        backgroundColor: theme_color,
+        backgroundColor: Colors.white,
         elevation: 0,
         actions: <Widget>[
           Padding(
