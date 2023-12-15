@@ -47,12 +47,77 @@ class FieldProviders with ChangeNotifier {
     _page = 1;
   }
 
+  void _doSearchField(List fields,int index) async {
+
+    String none = "";
+    FieldService fieldService = FieldService();
+    String? token = tokenFromLogin?.token;
+    Field fv = Field(0, 0, none, none, none, none, none, none, 0, none, 0, 0, 0,
+        0, none, 0, 0, 0, 0, false);
+    User os = User(0, none, none, none, none, none, UserStatus.invalid, 0,
+        RequestInfoStatus.No);
+
+    int dummySize = fieldData.length + _value < numberAllFields
+        ? _value
+        : numberAllFields - fieldData.length;
+
+    for (int i = 0; i < fields.length; i++) {
+      fieldData.add(FieldData(fv, os, none, null, true));
+    }
+
+    for (Field data in fields) {
+      int fieldID = data.fieldID;
+
+      if (fieldData.isEmpty) return;
+      // Image
+      ImageData? fetchedImages =
+      await fieldService.fetchImages(token.toString(), fieldID);
+
+      if (fetchedImages == null) {
+        fetchedImages = null;
+      }
+
+      // Location
+      String? location =
+      await fieldService.getLocationByFielID(fieldID, token.toString());
+      if (location == null) {
+        location = "";
+      }
+
+      // Owner
+      UserService userService = UserService();
+      User? user =
+      await userService.getUserByFieldID(fieldID, token.toString());
+      if (user == null) {
+        user = User(
+            -1,
+            "service null",
+            "service null",
+            "service null",
+            "service null",
+            "service null",
+            UserStatus.invalid,
+            0,
+            RequestInfoStatus.No);
+      }
+      fieldData[index].field = data;
+      fieldData[index].image = fetchedImages;
+      fieldData[index].location = location;
+      fieldData[index].owner = user;
+      fieldData[index].isLoading = false;
+      new Future.delayed(const Duration(seconds: 2), () {});
+
+      index++;
+    }
+    isLoading = true;
+    numberAllFields = fieldData.length;
+    notifyListeners();
+  }
+
   Future<void> fetchData() async {
     // List<Field> data = [];
     FieldService fieldService = FieldService();
     String? token = tokenFromLogin?.token;
-
-    print("token : ${token}");
 
     numberAllFields = await fieldService.countFields(token.toString());
 
@@ -88,14 +153,16 @@ class FieldProviders with ChangeNotifier {
     for (int i = 0; i < dummySize; i++) {
       fieldData.add(FieldData(fv, os, none, null, true));
     }
-    await fieldService
-        .getFields(token.toString(), _page, _value)
+
+    await fieldService.getFields(token.toString(), _page, _value)
         .then((value) async {
       if (value != null) {
         for (Field data in value) {
           int fieldID = data.fieldID;
 
-          if (fieldData.isEmpty) return;
+          if (!(index < fieldData.length)) {
+            return ;
+          };
           // Image
           ImageData? fetchedImages =
               await fieldService.fetchImages(token.toString(), fieldID);
@@ -127,14 +194,21 @@ class FieldProviders with ChangeNotifier {
                 0,
                 RequestInfoStatus.No);
           }
+
+          if (!(index < fieldData.length)) {
+            return ;
+          };
+
           fieldData[index].field = data;
           fieldData[index].image = fetchedImages;
           fieldData[index].location = location;
           fieldData[index].owner = user;
           fieldData[index].isLoading = false;
-          new Future.delayed(const Duration(seconds: 2), () {});
+          notifyListeners();
+         // new Future.delayed(const Duration(seconds: 2), () {});
 
           index++;
+
         }
         _page = (fieldData.length ~/ _value) + 1;
       }
@@ -192,8 +266,9 @@ class FieldProviders with ChangeNotifier {
     //         RequestInfoStatus.No));
     //   }
     // }
-    notifyListeners();
+
     isLoading = true;
+    notifyListeners();
   }
 
   void search(Map<String, dynamic> data) async {
@@ -249,54 +324,11 @@ class FieldProviders with ChangeNotifier {
         .searchFieldsByKey2(data, token.toString())
         .then((value) async {
       if (value != null) {
-        for (Field data in value) {
-          int fieldID = data.fieldID;
-
-          if (fieldData.isEmpty) return;
-          // Image
-          ImageData? fetchedImages =
-              await fieldService.fetchImages(token.toString(), fieldID);
-
-          if (fetchedImages == null) {
-            fetchedImages = null;
-          }
-
-          // Location
-          String? location =
-              await fieldService.getLocationByFielID(fieldID, token.toString());
-          if (location == null) {
-            location = "";
-          }
-
-          // Owner
-          UserService userService = UserService();
-          User? user =
-              await userService.getUserByFieldID(fieldID, token.toString());
-          if (user == null) {
-            user = User(
-                -1,
-                "service null",
-                "service null",
-                "service null",
-                "service null",
-                "service null",
-                UserStatus.invalid,
-                0,
-                RequestInfoStatus.No);
-          }
-          fieldData[index].field = data;
-          fieldData[index].image = fetchedImages;
-          fieldData[index].location = location;
-          fieldData[index].owner = user;
-          fieldData[index].isLoading = false;
-          new Future.delayed(const Duration(seconds: 2), () {});
-
-          index++;
+              _doSearchField(value, 0) ;
         }
-      }
     });
     isLoading = true;
-    numberAllFields = fieldData.length;
+    //numberAllFields = fieldData.length;
     notifyListeners();
   }
 
@@ -350,8 +382,20 @@ class FieldProviders with ChangeNotifier {
     // }
 
     int index = 0;
-    await fieldService.search(data, token.toString()).then((value) async {
+
+    await fieldService
+        .search(data, token.toString())
+        .then((value) async {
       if (value != null) {
+        _doSearchField(value, 0) ;
+      }
+    });
+    /*await fieldService.search(data, token.toString()).then((value) async {
+      if (value != null) {
+
+
+
+
         for (Field data in value) {
           int fieldID = data.fieldID;
 
@@ -397,10 +441,8 @@ class FieldProviders with ChangeNotifier {
           index++;
         }
       }
-    });
-    isLoading = true;
-    numberAllFields = fieldData.length;
-    notifyListeners();
+    });*/
+
   }
 
   void searchNull(Map<String, dynamic> data) async {
