@@ -120,13 +120,25 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('no'.i18n()),
+                child: Text(
+                  'no'.i18n(),
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
               ),
               CupertinoDialogAction(
                 onPressed: () {
                   _handleDeletion();
                 },
-                child: Text('yes'.i18n()),
+                child: Text(
+                  'yes'.i18n(),
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
               ),
             ],
           ),

@@ -713,9 +713,9 @@ class _MenuScreen extends State<MenuScreen>
               Navigator.of(context).pop(false);
             },
             child: Text(
-              'No',
+              'no'.i18n(),
               style: TextStyle(
-                color: Colors.red,
+                color: Colors.blue,
                 fontWeight: FontWeight.w400,
               ),
             ),
@@ -726,9 +726,9 @@ class _MenuScreen extends State<MenuScreen>
               SystemNavigator.pop();
             },
             child: Text(
-              'Yes',
+              'yes'.i18n(),
               style: TextStyle(
-                color: Colors.blue,
+                color: Colors.red,
                 fontWeight: FontWeight.w400,
               ),
             ),

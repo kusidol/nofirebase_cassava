@@ -1828,8 +1828,8 @@ Widget getFilterBarUI(int numItemFounded) {
             onPressed: () {
               Navigator.of(context).pop(false);
             },
-            child: Text('No', style: TextStyle(
-              color: Colors.red,
+            child: Text('no'.i18n(), style: TextStyle(
+              color: Colors.blue,
               fontWeight: FontWeight.w400,
             ),),
           ),
@@ -1838,8 +1838,8 @@ Widget getFilterBarUI(int numItemFounded) {
               Navigator.of(context).pop(true);
               SystemNavigator.pop();
             },
-            child: Text('Yes', style: TextStyle(
-              color: Colors.blue,
+            child: Text('yes'.i18n(), style: TextStyle(
+              color: Colors.red,
               fontWeight: FontWeight.w400,
             ),),
           ),
