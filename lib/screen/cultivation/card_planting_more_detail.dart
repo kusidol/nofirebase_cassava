@@ -110,7 +110,7 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
       } else {}
     }
 
-    showDeleteDialog(context) => showCupertinoDialog<void>(
+    _deleteConfirmation(context) => showCupertinoDialog<void>(
           context: context,
           barrierDismissible: false,
           builder: (BuildContext context) => CupertinoAlertDialog(
@@ -143,31 +143,6 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
             ],
           ),
         );
-    void _deleteConfirmation() {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('confirm-deletion'.i18n()),
-            //content: Text("Are you sure you want to delete the question?"),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('no'.i18n()),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              FlatButton(
-                child: Text('yes'.i18n()),
-                onPressed: () {
-                  _handleDeletion();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
 
     Widget buildTopic(
         String label1, String value1, String label2, String value2, IconData) {
@@ -321,7 +296,7 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
                                   ),
                                   onTap: () {
                                     // _deleteConfirmation();
-                                    showDeleteDialog(context);
+                                    _deleteConfirmation(context);
                                   },
                                 ),
                               ],

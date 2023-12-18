@@ -581,116 +581,130 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
     }
   }
 
-  void alertAll2(BuildContext context, int surveyPoint, int numStart) {
-    showDialog(
+  alert(BuildContext context, int surveyPoint, int number, int point) =>
+      showCupertinoDialog<void>(
         context: context,
-        builder: (BuildContext context) {
-          return CupertinoAlertDialog(
-            title: Text(
-              'alert'.i18n(),
-              style: TextStyle(fontSize: 15, color: Colors.black),
-            ),
-            content: Text(
-              'survey-point-delete-all'.i18n(),
-              style: TextStyle(fontSize: 15, color: Colors.black),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text(
-                  'no'.i18n(),
-                  style: TextStyle(color: Colors.blue),
+        barrierDismissible: false,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: Text(
+            'confirm-delete'.i18n(),
+          ),
+          content: Column(
+            children: [
+              Text(
+                'survey-point-delete'.i18n(),
+                style: TextStyle(fontSize: 15, color: Colors.black),
+              ),
+            ],
+          ),
+          actions: <CupertinoDialogAction>[
+            CupertinoDialogAction(
+              onPressed: () {
+                setState(() {
+                  isComplete[number * 5 + point] = true;
+                  isCompleteAll[number] = true;
+                });
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'no'.i18n(),
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
-              TextButton(
-                onPressed: () {
+            ),
+            CupertinoDialogAction(
+              onPressed: () {
+                resetValue(surveyPoint, number * 5 + point);
+                setState(() {
+                  setState(() {
+                    imageList[number * 5 + point] = 0;
+                  });
+
+                  status = "Editing";
+                  isComplete[number * 5 + point] = false;
+                  bool isCompleteAllCheck = false;
+                  int countTrue = 0;
                   for (int i = 0; i <= 4; i++) {
-                    resetValue(widget.surveyPoint, (numStart * 5) + i);
-                    setState(() {
-                      imageList[(numStart * 5) + i] = 0;
-                      isComplete[(numStart * 5) + i] = false;
-                      isCompleteAll[numStart] = false;
-                    });
+                    if (isComplete[number * 5 + i] == true) {
+                      isCompleteAllCheck = true;
+                      countTrue++;
+                    }
                   }
-                  Navigator.of(context).pop();
-                },
-                child: Text(
-                  'yes'.i18n(),
-                  style: TextStyle(color: Colors.blue),
-                ),
-              ),
-            ],
-          );
-        });
 
-    //
-  }
-
-  void alert(BuildContext context, int surveyPoint, int number, int point) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return CupertinoAlertDialog(
-            title: Text(
-              'alert'.i18n(),
-              style: TextStyle(fontSize: 15, color: Colors.black),
-            ),
-            content: Text(
-              'survey-point-delete'.i18n(),
-              style: TextStyle(fontSize: 15, color: Colors.black),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    isComplete[number * 5 + point] = true;
+                  if (isCompleteAllCheck) {
                     isCompleteAll[number] = true;
-                  });
-                  Navigator.of(context).pop();
-                },
-                child: Text(
-                  'no'.i18n(),
-                  style: TextStyle(color: Colors.blue),
+                  } else {
+                    isCompleteAll[number] = false;
+                  }
+                });
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'yes'.i18n(),
+                style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
-              TextButton(
-                onPressed: () {
-                  resetValue(surveyPoint, number * 5 + point);
-                  setState(() {
-                    setState(() {
-                      imageList[number * 5 + point] = 0;
-                    });
+            ),
+          ],
+        ),
+      );
 
-                    status = "Editing";
-                    isComplete[number * 5 + point] = false;
-                    bool isCompleteAllCheck = false;
-                    int countTrue = 0;
-                    for (int i = 0; i <= 4; i++) {
-                      if (isComplete[number * 5 + i] == true) {
-                        isCompleteAllCheck = true;
-                        countTrue++;
-                      }
-                    }
-
-                    if (isCompleteAllCheck) {
-                      isCompleteAll[number] = true;
-                    } else {
-                      isCompleteAll[number] = false;
-                    }
-                  });
-                  Navigator.of(context).pop();
-                },
-                child: Text(
-                  'yes'.i18n(),
-                  style: TextStyle(color: Colors.blue),
-                ),
+  alertAll2(BuildContext context, int surveyPoint, int numStart) =>
+      showCupertinoDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: Text(
+            'confirm-delete'.i18n(),
+          ),
+          content: Column(
+            children: [
+              Text(
+                'survey-point-delete-all'.i18n(),
+                style: TextStyle(fontSize: 15, color: Colors.black),
               ),
             ],
-          );
-        });
-  }
+          ),
+          actions: <CupertinoDialogAction>[
+            CupertinoDialogAction(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'no'.i18n(),
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+            CupertinoDialogAction(
+              onPressed: () {
+                for (int i = 0; i <= 4; i++) {
+                  resetValue(widget.surveyPoint, (numStart * 5) + i);
+                  setState(() {
+                    imageList[(numStart * 5) + i] = 0;
+                    isComplete[(numStart * 5) + i] = false;
+                    isCompleteAll[numStart] = false;
+                  });
+                }
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'yes'.i18n(),
+                style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
 
   Widget surveyListTile(int number, int point) {
     return GestureDetector(

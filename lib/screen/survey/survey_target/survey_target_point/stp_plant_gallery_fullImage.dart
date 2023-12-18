@@ -70,80 +70,86 @@ class _FullScreenImageState extends State<FullScreenImage> {
       try {
         final imageId = widget.images[currentIndex].imageId;
 
-        showDialog(
+        showCupertinoDialog<void>(
           context: context,
-          builder: (BuildContext context) {
-            return CupertinoAlertDialog(
-              title: Text(
-                'confirm-delete'.i18n(),
-                style: TextStyle(fontSize: 15, color: Colors.black),
-              ),
-              content: Text(
-                'Do-you-want-to-delete-this-image'.i18n(),
-                style: TextStyle(fontSize: 15, color: Colors.black),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(
-                    'cancel'.i18n(),
-                    style: TextStyle(fontSize: 15, color: Colors.black),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () async {
-                    ProgressDialog progressDialog = ProgressDialog(context);
-                    progressDialog.style(
-                      message: "uploading".i18n(),
-                      progressWidget: Container(
-                          padding: EdgeInsets.all(12.0),
-                          child: CircularProgressIndicator(
-                            color: theme_color,
-                          )),
-                      maxProgress: 100.0,
-                      progressTextStyle: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w400),
-                      messageTextStyle: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600),
-                    );
-                    progressDialog.show();
-
-                    int? status = await imageService.deleteImage(
-                        widget.targetpointId, imageId, token.toString());
-                    //Navigator.of(context).pop();
-                    bool serviceFinished = false;
-
-                    while (!serviceFinished) {
-                      await Future.delayed(Duration(seconds: 1));
-                      if (status == 200) {
-                        serviceFinished = true;
-                        Navigator.of(context).pop();
-                        setState(() {
-                          widget.images.removeAt(currentIndex);
-                          if (currentIndex >= widget.images.length) {
-                            currentIndex--;
-                          }
-                        });
-                      } else {
-                        serviceFinished = false;
-                      }
-                    }
-                    progressDialog.hide();
-                  },
-                  child: Text(
-                    'deleted'.i18n(),
-                    style: TextStyle(fontSize: 15, color: Colors.red),
-                  ),
+          barrierDismissible: false,
+          builder: (BuildContext context) => CupertinoAlertDialog(
+            title: Text('confirm-delete'.i18n()),
+            content: Column(
+              children: [
+                Text(
+                  'Do-you-want-to-delete-this-image'.i18n(),
+                  style: TextStyle(fontSize: 15, color: Colors.black),
                 ),
               ],
-            );
-          },
+            ),
+            actions: <CupertinoDialogAction>[
+              CupertinoDialogAction(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'no'.i18n(),
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+              CupertinoDialogAction(
+                onPressed: () async {
+                  ProgressDialog progressDialog = ProgressDialog(context);
+                  progressDialog.style(
+                    message: "uploading".i18n(),
+                    progressWidget: Container(
+                        padding: EdgeInsets.all(12.0),
+                        child: CircularProgressIndicator(
+                          color: theme_color,
+                        )),
+                    maxProgress: 100.0,
+                    progressTextStyle: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400),
+                    messageTextStyle: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600),
+                  );
+                  progressDialog.show();
+
+                  int? status = await imageService.deleteImage(
+                      widget.targetpointId, imageId, token.toString());
+                  //Navigator.of(context).pop();
+                  bool serviceFinished = false;
+
+                  while (!serviceFinished) {
+                    await Future.delayed(Duration(seconds: 1));
+                    if (status == 200) {
+                      serviceFinished = true;
+                      Navigator.of(context).pop();
+                      setState(() {
+                        widget.images.removeAt(currentIndex);
+                        if (currentIndex >= widget.images.length) {
+                          currentIndex--;
+                        }
+                      });
+                    } else {
+                      serviceFinished = false;
+                    }
+                  }
+                  progressDialog.hide();
+                },
+                child: Text(
+                  'yes'.i18n(),
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+            ],
+          ),
         );
       } catch (error) {
         //print('Error deleting image: $error');

@@ -145,49 +145,58 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
     }
   }
 
-  void alert() {
-    showDialog(
+  showAlertDialog(context) => showCupertinoDialog<void>(
         context: context,
-        builder: (BuildContext context) {
-          return CupertinoAlertDialog(
-            title: Text(
-              'alert'.i18n(),
-              style: TextStyle(fontSize: 15, color: Colors.black),
-            ),
-            content: Text(
-              'survey-point-delete'.i18n(),
-              style: TextStyle(fontSize: 15, color: Colors.black),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text(
-                  'no'.i18n(),
-                  style: TextStyle(color: Colors.blue),
-                ),
+        barrierDismissible: false,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: Text('alert'.i18n()),
+          content: Column(
+            children: [
+              Text(
+                'survey-point-create1'.i18n(),
+                style: TextStyle(fontSize: 15, color: Colors.black),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        maintainState: false,
-                        builder: (context) =>
-                            new BaseSurveyDetailInfo(widget.survey, false)),
-                  );
-                },
-                child: Text(
-                  'yes'.i18n(),
-                  style: TextStyle(color: Colors.blue),
-                ),
+              Text(
+                'survey-point-create2'.i18n(),
+                style: TextStyle(fontSize: 15, color: Colors.black),
               ),
             ],
-          );
-        });
-  }
+          ),
+          actions: <CupertinoDialogAction>[
+            CupertinoDialogAction(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'no'.i18n(),
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+            CupertinoDialogAction(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      maintainState: false,
+                      builder: (context) =>
+                          new BaseSurveyDetailInfo(widget.survey, false)),
+                );
+              },
+              child: Text(
+                'yes'.i18n(),
+                style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
 
   Widget _buildSurveyBtn() {
     return Container(
@@ -212,7 +221,7 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
               ),
             );
           } else {
-            alert();
+            showAlertDialog(context);
           }
         },
         padding: EdgeInsets.all(10.0),
@@ -303,32 +312,48 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
     } else {}
   }
 
-  void _deleteConfirmation() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
+  _deleteConfirmation(context) => showCupertinoDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => CupertinoAlertDialog(
           title: Text("Confirm Deletion"),
-          //content: Text("Are you sure you want to delete the question?"),
-          actions: <Widget>[
-            FlatButton(
-              child: Text("No"),
+          content: Column(
+            children: [
+              Text(
+                'survey-point-delete1'.i18n(),
+                style: TextStyle(fontSize: 15, color: Colors.black),
+              ),
+            ],
+          ),
+          actions: <CupertinoDialogAction>[
+            CupertinoDialogAction(
               onPressed: () {
                 Navigator.of(context).pop();
               },
+              child: Text(
+                'no'.i18n(),
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
             ),
-            FlatButton(
-              child: Text("Yes"),
+            CupertinoDialogAction(
               onPressed: () {
                 _handleDeletion();
                 Navigator.of(context).pop();
               },
+              child: Text(
+                'yes'.i18n(),
+                style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
             ),
           ],
-        );
-      },
-    );
-  }
+        ),
+      );
 
   Widget buildFourTextTwoRow(
       String label1,

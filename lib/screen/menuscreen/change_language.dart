@@ -12,62 +12,58 @@ class ChangeLanguage extends StatefulWidget {
 }
 
 class _ChangeLanguage extends State<ChangeLanguage> {
-
-  List colors = [Colors.white,Colors.white] ;
-  List lang = ["ไทย (Thai)","English (United States)"] ;
+  List colors = [Colors.white, Colors.white];
+  List lang = ["ไทย (Thai)", "English (United States)"];
 
   int selectedLanguage = 0;
 
   @override
   void initState() {
-
     _selectedLanguage(appSetting!.local);
   }
 
-  void _selectedLanguage(int k){
-    selectedLanguage = k ;
-    for(int i = 0 ; i < colors.length ; i++){
-      colors[i] = i == k ? Colors.black : Colors.white ;
+  void _selectedLanguage(int k) {
+    selectedLanguage = k;
+    for (int i = 0; i < colors.length; i++) {
+      colors[i] = i == k ? Colors.black : Colors.white;
     }
   }
 
-  List<Widget> makeLanguageList(){
-    List<Widget> list = [] ;
+  List<Widget> makeLanguageList() {
+    List<Widget> list = [];
 
-    for(int i = 0 ; i < colors.length ; i++){
-      list.add(
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(0),
-            ),
-            child: ListTile(
-              leading: Text(
-                (i+1).toString(),
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: MediaQuery.of(context).size.width * 0.05),
-              ),
-              trailing: Icon(
-                Icons.check,
-                color: colors[i],
-              ),
-              title: Text(
-                lang[i],
-                style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.05),
-              ),
-              onTap: () {
-                setState(() {
-                  _selectedLanguage(i);
-                  //colors[i] = Colors.black ;
-                });
-              },
-            ),
-          )
-      );
+    for (int i = 0; i < colors.length; i++) {
+      list.add(Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(0),
+        ),
+        child: ListTile(
+          leading: Text(
+            (i + 1).toString(),
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: MediaQuery.of(context).size.width * 0.05),
+          ),
+          trailing: Icon(
+            Icons.check,
+            color: colors[i],
+          ),
+          title: Text(
+            lang[i],
+            style:
+                TextStyle(fontSize: MediaQuery.of(context).size.width * 0.05),
+          ),
+          onTap: () {
+            setState(() {
+              _selectedLanguage(i);
+              //colors[i] = Colors.black ;
+            });
+          },
+        ),
+      ));
     }
-    return list ;
+    return list;
   }
 
   Widget _ChangeLan() {
@@ -176,19 +172,18 @@ class _ChangeLanguage extends State<ChangeLanguage> {
       ),
       onPressed: () {
         setState(() {
-
-          switch(selectedLanguage){
+          switch (selectedLanguage) {
             case 0:
               final myApp = context.findAncestorStateOfType<MyAppState>()!;
               myApp.changeLocale(Locale('th', 'TH'));
-              break ;
+              break;
             case 1:
               final myApp = context.findAncestorStateOfType<MyAppState>()!;
               myApp.changeLocale(Locale('en', 'US'));
-              break ;
+              break;
           }
-          appSetting!.local = selectedLanguage ;
-          save("app_setting",appSetting);
+          appSetting!.local = selectedLanguage;
+          save("app_setting", appSetting);
         });
         Navigator.pop(context);
       },
@@ -208,13 +203,13 @@ class _ChangeLanguage extends State<ChangeLanguage> {
           children: [
             getAppBarUI(),
             Padding(padding: EdgeInsets.all(10)),
-            Container(
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: Text(
-                  'Description-ChangeLanguage'.i18n(),
-                  style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width * 0.04),
-                )),
+            // Container(
+            //     width: MediaQuery.of(context).size.width * 0.9,
+            //     child: Text(
+            //       'Description-ChangeLanguage'.i18n(),
+            //       style: TextStyle(
+            //           fontSize: MediaQuery.of(context).size.width * 0.04),
+            //     )),
             Padding(padding: EdgeInsets.all(10)),
             _ChangeLan(),
             button()
