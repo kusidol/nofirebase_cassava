@@ -220,32 +220,38 @@ class _SurveyTable extends State<SurveyTable>
 
 
 
-
-  void alert(Survey survey) {
-    showDialog(
+  alert(Survey survey) =>
+      showCupertinoDialog<void>(
         context: context,
-        builder: (BuildContext context) {
-          return CupertinoAlertDialog(
-            title: Text(
-              'alert'.i18n(),
-              style: TextStyle(fontSize: 15, color: Colors.black),
-            ),
-            content: Text(
-              'survey-point-delete'.i18n(),
-              style: TextStyle(fontSize: 15, color: Colors.black),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text(
-                  'no'.i18n(),
-                  style: TextStyle(color: Colors.blue),
+        barrierDismissible: false,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: Text(
+           'alert'.i18n(),
+          ),
+          content: Column(
+            children: [
+              Text(
+                'survey-point-delete'.i18n(),
+                style: TextStyle(fontSize: 15, color: Colors.black),
+              ),
+            ],
+          ),
+          actions: <CupertinoDialogAction>[
+            CupertinoDialogAction(
+              onPressed: () {
+               
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'no'.i18n(),
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
-              TextButton(
-                onPressed: () {
+            ),
+            CupertinoDialogAction(
+              onPressed: () {
                   Navigator.of(context).pop();
               Navigator.push(
                context,
@@ -262,16 +268,19 @@ class _SurveyTable extends State<SurveyTable>
                       builder: (context) => SurveyTable(_mainTapController!,widget.surveyProvider)));
             }
           });
-                },
-                child: Text(
-                  'yes'.i18n(),
-                  style: TextStyle(color: Colors.blue),
+              },
+              child: Text(
+                'yes'.i18n(),
+                style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
-            ],
-          );
-        });
-  }
+            ),
+          ],
+        ),
+      );
+ 
   Widget getAppBarUI() {
     return Container(
       decoration: BoxDecoration(

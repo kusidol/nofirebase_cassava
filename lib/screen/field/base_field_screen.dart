@@ -1020,18 +1020,6 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                                                           ? mockShimmer(context)
                                                           : AnimatedListItem(
                                                               callback: () {
-                                                                Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder: (context) => FieldMoreDetailScreen(
-                                                                          field,
-                                                                          owner,
-                                                                          location,
-                                                                          image,
-                                                                          fieldProvder)),
-                                                                );
-                                                              },
-                                                              callback2: () {
                                                                 widget
                                                                     .mainTapController
                                                                     .animateTo(
@@ -1050,6 +1038,18 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                                                                         .fieldID;
                                                                 provider.fieldName =
                                                                     field.name;
+                                                              },
+                                                              callback2: () {
+                                                                Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder: (context) => FieldMoreDetailScreen(
+                                                                          field,
+                                                                          owner,
+                                                                          location,
+                                                                          image,
+                                                                          fieldProvder)),
+                                                                );
                                                               },
                                                               field: field,
                                                               owner: owner,

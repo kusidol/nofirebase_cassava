@@ -199,32 +199,48 @@ class _SurveyMoreDetailScreen extends State<SurveyMoreDetailScreen>
     } else {}
   }
 
-  void _deleteConfirmation() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Confirm Deletion"),
-          //content: Text("Are you sure you want to delete the question?"),
-          actions: <Widget>[
-            FlatButton(
-              child: Text("No"),
+  _deleteConfirmation(context) => showCupertinoDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: Text("confirm-delete".i18n()),
+          content: Column(
+            children: [
+              Text(
+                'Do-you-want-to-delete-this-survey'.i18n(),
+                style: TextStyle(fontSize: 15, color: Colors.black),
+              ),
+            ],
+          ),
+          actions: <CupertinoDialogAction>[
+            CupertinoDialogAction(
               onPressed: () {
                 Navigator.of(context).pop();
               },
+              child: Text(
+                'no'.i18n(),
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
             ),
-            FlatButton(
-              child: Text("Yes"),
+            CupertinoDialogAction(
               onPressed: () {
                 _handleDeletion();
                 Navigator.of(context).pop();
               },
+              child: Text(
+                'yes'.i18n(),
+                style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
             ),
           ],
-        );
-      },
-    );
-  }
+        ),
+      );
 
   Widget getAppBarUI() {
     return Container(
@@ -364,7 +380,7 @@ class _SurveyMoreDetailScreen extends State<SurveyMoreDetailScreen>
                                     ),
                                   ),
                                   onTap: () {
-                                    _deleteConfirmation();
+                                    _deleteConfirmation(context);
                                   },
                                 ),
                               ],

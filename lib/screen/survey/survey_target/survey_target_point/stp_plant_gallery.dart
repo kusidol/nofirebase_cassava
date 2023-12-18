@@ -91,29 +91,38 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
             return CupertinoAlertDialog(
               title: Text(
                 'confirm-upload'.i18n(),
-                style: TextStyle(fontSize: 15, color: Colors.black),
               ),
-              content: Text(
-                'Do-you-want-to-upload-this-picture'.i18n(),
-                style: TextStyle(fontSize: 15, color: Colors.black),
+              content: Column(
+                children: [
+                  Text(
+                    'Do-you-want-to-upload-this-picture'.i18n(),
+                    style: TextStyle(fontSize: 15, color: Colors.black),
+                  ),
+                ],
               ),
-              actions: [
-                TextButton(
+              actions: <CupertinoDialogAction>[
+                CupertinoDialogAction(
                   onPressed: () {
                     Navigator.of(context).pop(false);
                   },
                   child: Text(
                     'cancel'.i18n(),
-                    style: TextStyle(fontSize: 15, color: Colors.red),
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
-                TextButton(
+                CupertinoDialogAction(
                   onPressed: () {
                     Navigator.of(context).pop(true);
                   },
                   child: Text(
                     'upload'.i18n(),
-                    style: TextStyle(fontSize: 15, color: Colors.blue),
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
               ],
