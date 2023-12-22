@@ -49,9 +49,9 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
   @override
   void initState() {
     super.initState();
-    countDiseaseBySurveyId(widget.survey.surveyID);
-    countNaturalEnemyBySurveyId(widget.survey.surveyID);
-    countPestPhaseSurveyBySurveyId(widget.survey.surveyID);
+   // countDiseaseBySurveyId(widget.survey.surveyID);
+   // countNaturalEnemyBySurveyId(widget.survey.surveyID);
+   // countPestPhaseSurveyBySurveyId(widget.survey.surveyID);
 
     _animationController = AnimationController(
       vsync:
@@ -66,7 +66,7 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
     super.dispose();
   }
 
-  Future<void> checkCountSurveyNull() async {
+  /*Future<void> checkCountSurveyNull() async {
     log("CountDis : ${countDis}, ${countNatural}, ${countPest}");
     if (countDis.toString() == '0' &&
         countNatural.toString() == '0' &&
@@ -81,12 +81,12 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
         IsCountNull = false;
       });
     }
-  }
+  }*/
 
-  Future<String?> countDiseaseBySurveyId(int id) async {
+ /* Future<String?> countDiseaseBySurveyId(int id) async {
     try {
       String? token = tokenFromLogin?.token;
-      SurveyTargetPoint surveyTarget = SurveyTargetPoint();
+      SurveyTargetPointService surveyTarget = SurveyTargetPointService();
       final countDiseases =
           await surveyTarget.countDiseaseBySurveyId(id, token.toString());
       if (countDiseases != null) {
@@ -101,12 +101,12 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
     } catch (e) {
       //print(e);
     }
-  }
+  }*/
 
-  Future<String?> countNaturalEnemyBySurveyId(int id) async {
+ /* Future<String?> countNaturalEnemyBySurveyId(int id) async {
     try {
       String? token = tokenFromLogin?.token;
-      SurveyTargetPoint surveyTarget = SurveyTargetPoint();
+      SurveyTargetPointService surveyTarget = SurveyTargetPointService();
       final countNaturalEnemy =
           await surveyTarget.countNaturalEnemy(id, token.toString());
       if (countNaturalEnemy != null) {
@@ -122,81 +122,62 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
     } catch (e) {
       //print(e);
     }
-  }
+  }*/
 
-  Future<String?> countPestPhaseSurveyBySurveyId(int id) async {
-    try {
-      String? token = tokenFromLogin?.token;
-      SurveyTargetPoint surveyTarget = SurveyTargetPoint();
-      final countPestPhaseSurvey =
-          await surveyTarget.countPestPhaseSurvey(id, token.toString());
-      if (countPestPhaseSurvey != null) {
-        setState(() {
-          countPest = countPestPhaseSurvey["count"].toString();
-          checkCountSurveyNull();
-        });
-        return countPestPhaseSurvey["count"].toString();
-      }
-      //print("countPestPhaseSurvey");
-      //print(countPestPhaseSurvey);
-      return "0";
-    } catch (e) {
-      //print(e);
-    }
-  }
+
 
   showAlertDialog(context) => showCupertinoDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) => CupertinoAlertDialog(
-          title: Text('alert'.i18n()),
-          content: Column(
-            children: [
-              Text(
-                'survey-point-create1'.i18n(),
-                style: TextStyle(fontSize: 15, color: Colors.black),
-              ),
-              Text(
-                'survey-point-create2'.i18n(),
-                style: TextStyle(fontSize: 15, color: Colors.black),
-              ),
-            ],
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) => CupertinoAlertDialog(
+      title: Text('alert'.i18n()),
+      content: Column(
+        children: [
+          Text(
+            'survey-point-create1'.i18n(),
+            style: TextStyle(fontSize: 15, color: Colors.black),
           ),
-          actions: <CupertinoDialogAction>[
-            CupertinoDialogAction(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(
-                'no'.i18n(),
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
+          Text(
+            'survey-point-create2'.i18n(),
+            style: TextStyle(fontSize: 15, color: Colors.black),
+          ),
+        ],
+      ),
+      actions: <CupertinoDialogAction>[
+        CupertinoDialogAction(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text(
+            'no'.i18n(),
+            style: TextStyle(
+              color: Colors.blue,
+              fontWeight: FontWeight.w400,
             ),
-            CupertinoDialogAction(
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      maintainState: false,
-                      builder: (context) =>
-                          new BaseSurveyDetailInfo(widget.survey, false)),
-                );
-              },
-              child: Text(
-                'yes'.i18n(),
-                style: TextStyle(
-                  color: Colors.red,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
-      );
+        CupertinoDialogAction(
+          onPressed: () {
+            Navigator.of(context).pop();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  maintainState: false,
+                  builder: (context) =>
+                  new BaseSurveyDetailInfo(widget.survey, false)),
+            );
+          },
+          child: Text(
+            'yes'.i18n(),
+            style: TextStyle(
+              color: Colors.red,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 
   Widget _buildSurveyBtn() {
     return Container(
@@ -305,55 +286,54 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
     //print("widget.survey : ${widget.survey}");
     bool isDeleted = await widget.surveyProvider.deleteSurvey(widget.survey);
     if (isDeleted) {
-      //alert
-      //print("delete success");
+
       Navigator.of(context).pop();
       Navigator.of(context).pop();
     } else {}
   }
 
   _deleteConfirmation(context) => showCupertinoDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) => CupertinoAlertDialog(
-          title: Text("Confirm Deletion"),
-          content: Column(
-            children: [
-              Text(
-                'survey-point-delete1'.i18n(),
-                style: TextStyle(fontSize: 15, color: Colors.black),
-              ),
-            ],
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) => CupertinoAlertDialog(
+      title: Text("Confirm Deletion"),
+      content: Column(
+        children: [
+          Text(
+            'survey-point-delete1'.i18n(),
+            style: TextStyle(fontSize: 15, color: Colors.black),
           ),
-          actions: <CupertinoDialogAction>[
-            CupertinoDialogAction(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(
-                'no'.i18n(),
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
+        ],
+      ),
+      actions: <CupertinoDialogAction>[
+        CupertinoDialogAction(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text(
+            'no'.i18n(),
+            style: TextStyle(
+              color: Colors.blue,
+              fontWeight: FontWeight.w400,
             ),
-            CupertinoDialogAction(
-              onPressed: () {
-                _handleDeletion();
-                Navigator.of(context).pop();
-              },
-              child: Text(
-                'yes'.i18n(),
-                style: TextStyle(
-                  color: Colors.red,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
-      );
+        CupertinoDialogAction(
+          onPressed: () {
+            _handleDeletion();
+            Navigator.of(context).pop();
+          },
+          child: Text(
+            'yes'.i18n(),
+            style: TextStyle(
+              color: Colors.red,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 
   Widget buildFourTextTwoRow(
       String label1,
