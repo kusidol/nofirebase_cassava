@@ -28,9 +28,9 @@ class BaseSurveyPoint extends StatefulWidget {
 enum SurveyPointStutus { edit, complete }
 
 class _BaseSurveyPoint extends State<BaseSurveyPoint> {
-  List<bool> pointStatus = [false, false, false, false, false];
+  //List<bool> pointStatus = [false, false, false, false, false];
   //bool isLoading = false;
-  List<int> pointNo = [];
+  //List<int> pointNo = [];
   bool surveyStatus = false;
   String? status;
 
@@ -133,7 +133,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
   Future<String?> countDiseaseBySurveyId(int id) async {
     try {
       String? token = tokenFromLogin?.token;
-      SurveyTargetPoint surveyTarget = SurveyTargetPoint();
+      SurveyTargetPointService surveyTarget = SurveyTargetPointService();
       final countDiseases =
           await surveyTarget.countDiseaseBySurveyId(id, token.toString());
       if (countDiseases != null) {
@@ -152,7 +152,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
   Future<String?> countNaturalEnemyBySurveyId(int id) async {
     try {
       String? token = tokenFromLogin?.token;
-      SurveyTargetPoint surveyTarget = SurveyTargetPoint();
+      SurveyTargetPointService surveyTarget = SurveyTargetPointService();
       final countNaturalEnemy =
           await surveyTarget.countNaturalEnemy(id, token.toString());
       if (countNaturalEnemy != null) {
@@ -172,7 +172,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
   Future<String?> countPestPhaseSurveyBySurveyId(int id) async {
     try {
       String? token = tokenFromLogin?.token;
-      SurveyTargetPoint surveyTarget = SurveyTargetPoint();
+      SurveyTargetPointService surveyTarget = SurveyTargetPointService();
       final countPestPhaseSurvey =
           await surveyTarget.countPestPhaseSurvey(id, token.toString());
       if (countPestPhaseSurvey != null) {
@@ -335,13 +335,13 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
               FutureBuilder<String?>(
                 future: countDiseaseBySurveyId(widget.survey.surveyID),
                 builder: (context, snapshot) {
-                  if (true) {
+
                     String countData = '';
                     countData =
                         snapshot.data == null ? '' : snapshot.data.toString();
 
                     return summaryBox(
-                        "PestPhase".i18n(),
+                        "Disease".i18n(),
                         Icons.grass,
                         countData,
                         Colors.purple,
@@ -349,18 +349,13 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                         Colors.purpleAccent.shade100,
                         100,
                         diseaseList);
-                  } else {
-                    return Container(
-                      width: 0,
-                      height: 0,
-                    );
-                  }
+
                 },
               ),
               FutureBuilder<String?>(
                 future: countNaturalEnemyBySurveyId(widget.survey.surveyID),
                 builder: (context, snapshot) {
-                  if (true) {
+
                     String countData = '';
 
                     countData =
@@ -375,24 +370,19 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                         Colors.orangeAccent.shade100,
                         130,
                         naturalEnemyList);
-                  } else {
-                    return Container(
-                      width: 0,
-                      height: 0,
-                    );
-                  }
+
                 },
               ),
               FutureBuilder<String?>(
                 future: countPestPhaseSurveyBySurveyId(widget.survey.surveyID),
                 builder: (context, snapshot) {
-                  if (true) {
+
                     String countData = '';
                     countData =
                         snapshot.data == null ? '' : snapshot.data.toString();
 
                     return summaryBox(
-                        "Disease".i18n(),
+                        "PestPhase".i18n(),
                         Icons.bug_report_outlined,
                         countData,
                         Colors.blue,
@@ -400,12 +390,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                         Colors.blueAccent.shade100,
                         100,
                         pestPhaseList);
-                  } else {
-                    return Container(
-                      width: 0,
-                      height: 0,
-                    );
-                  }
+
                 },
               ),
             ],
