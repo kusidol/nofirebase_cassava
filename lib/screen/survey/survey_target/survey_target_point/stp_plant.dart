@@ -109,7 +109,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
 
   Future<bool> submitFunction() async {
     String? token = tokenFromLogin?.token;
-    SurveyTargetPoint surveyTargetPoint = SurveyTargetPoint();
+    SurveyTargetPointService surveyTargetPoint = SurveyTargetPointService();
     List<Map<String, dynamic>> updateDisease = [];
     List<Map<String, dynamic>> updateNatural = [];
     List<Map<String, dynamic>> updatePest = [];
@@ -225,7 +225,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
     usedController = 0;
     //print("${widget.survey.surveyID} + "" +  ${widget.point} + "" + ${widget.number}");
     String? token = tokenFromLogin?.token;
-    SurveyTargetPoint surveyTargetPoint = SurveyTargetPoint();
+    SurveyTargetPointService surveyTargetPoint = SurveyTargetPointService();
     stpsDisease = await surveyTargetPoint.surveyTargetPointDiseaseBySurveyId(
         token.toString(), widget.survey.surveyID, widget.point, widget.number);
     stpsNatural = await surveyTargetPoint.surveyTargetPointNaturalBySurveyId(
@@ -712,7 +712,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                                         if (mounted) {
                                           Navigator.of(context,
                                                   rootNavigator: true)
-                                              .pop();
+                                              .pop(true);
                                         }
                                       }
                                     });
