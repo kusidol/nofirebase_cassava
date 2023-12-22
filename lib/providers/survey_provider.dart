@@ -96,7 +96,7 @@ class SurveyProvider with ChangeNotifier {
 
     SurveyService surveyService = SurveyService();
     PlantingService plantingService = PlantingService();
-    SurveyTargetPoint surveyTargetPointService = SurveyTargetPoint();
+    SurveyTargetPointService surveyTargetPointService = SurveyTargetPointService();
     String? token = tokenFromLogin?.token;
     if(count == -1)
       count = await plantingService.countPlantings(token.toString());
@@ -201,7 +201,7 @@ class SurveyProvider with ChangeNotifier {
 
     PlantingService plantingService = PlantingService();
 
-    SurveyTargetPoint surveyTargetPointService = SurveyTargetPoint();
+    SurveyTargetPointService surveyTargetPointService = SurveyTargetPointService();
 
     String? token = tokenFromLogin?.token;
 
@@ -289,7 +289,7 @@ class SurveyProvider with ChangeNotifier {
 
   Future<void> _doSearch(List<Map<String, dynamic>> surveys,index) async {
     String? token = tokenFromLogin?.token;
-    SurveyTargetPoint surveyTargetPointService = SurveyTargetPoint();
+    SurveyTargetPointService surveyTargetPointService = SurveyTargetPointService();
 
     PlantingService plantingService = PlantingService();
     FieldService fieldService = FieldService();
@@ -405,7 +405,7 @@ class SurveyProvider with ChangeNotifier {
 
     reset();
     String? token = tokenFromLogin?.token;
-    SurveyTargetPoint surveyTargetPointService = SurveyTargetPoint();
+    SurveyTargetPointService surveyTargetPointService = SurveyTargetPointService();
     SurveyService surveyService = SurveyService();
 
 
@@ -511,7 +511,7 @@ class SurveyProvider with ChangeNotifier {
 
     String? token = tokenFromLogin?.token;
     //bool checkTarget = false;
-    SurveyTargetPoint surveyTargetPointService = SurveyTargetPoint();
+    SurveyTargetPointService surveyTargetPointService = SurveyTargetPointService();
     SurveyService surveyService = SurveyService();
     bool checkTarget = await surveyTargetPointService.checkSurveyTargetBySurveyId(token.toString(), data.surveyID);
     //list_check_target.add(checkTarget);
