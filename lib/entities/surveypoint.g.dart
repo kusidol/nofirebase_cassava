@@ -16,7 +16,7 @@ SurveyPoint _$SurveyPointFromJson(Map<String, dynamic> json) => SurveyPoint(
 Map<String, dynamic> _$SurveyPointToJson(SurveyPoint instance) =>
     <String, dynamic>{
       'surveyTargetPointId': instance.surveyTargetPointId,
-      'surveyTargetID': instance.pointNumber,
-      'pointNumber': instance.itemNumber,
-      'amount': instance.value,
+      'pointNumber': instance.pointNumber,
+      'itemNumber': instance.itemNumber,
+      'value': instance.value,
     };
