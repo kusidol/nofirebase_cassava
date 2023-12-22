@@ -292,7 +292,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
       progressDialog.show();
 
       int? status;
-      status = await imageService.deleteImage(
+      status = await imageService.deleteImageByID(
           widget.targetpointId, imageId, token.toString());
 
       bool serviceFinished = false;
@@ -387,7 +387,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
       progressDialog.show();
 
       for (int i = 0; i < images.length; i++) {
-        await imageService.deleteImage(
+        await imageService.deleteImageByID(
             widget.targetpointId, images[i].imageId, token.toString());
       }
       setState(() {
