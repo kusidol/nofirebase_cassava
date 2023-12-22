@@ -75,7 +75,8 @@ class ImageTagetpointService {
     }
   }
 
-  Future<int?> deleteImage(int targetpointId,int id, String token) async {
+  Future<int?> deleteImageByID(int targetpointId,int id, String token) async {
+   // final url = Uri.parse('$LOCAL_SERVER_IP_URL/survey/surveytargetpoint/$targetpointId/images');
     final url = Uri.parse('$LOCAL_SERVER_IP_URL/survey/surveytargetpoint/$targetpointId/images/$id');
     final headers = {'Authorization': 'Bearer $token'};
 
@@ -90,4 +91,40 @@ class ImageTagetpointService {
       //throw Exception('Failed to delete image');
     }
   }
+
+  Future<int?> deleteImageByTargetpointId(int targetpointId, String token) async {
+     final url = Uri.parse('$LOCAL_SERVER_IP_URL/survey/surveytargetpoint/$targetpointId/images');
+    //final url = Uri.parse('$LOCAL_SERVER_IP_URL/survey/surveytargetpoint/$targetpointId/images/$id');
+    final headers = {'Authorization': 'Bearer $token'};
+
+    final response = await http.delete(url, headers: headers);
+
+    if (response.statusCode == 200) {
+      print("Image deleted successfully");
+      return response.statusCode;
+    }
+    else {
+      return response.statusCode;
+      //throw Exception('Failed to delete image');
+    }
+  }
+
+
+  Future<int?> deleteAllImage(int targetpointId, String token) async {
+    // final url = Uri.parse('$LOCAL_SERVER_IP_URL/survey/surveytargetpoint/$targetpointId/images');
+    final url = Uri.parse('$LOCAL_SERVER_IP_URL/survey/surveytargetpoint/$targetpointId/images');
+    final headers = {'Authorization': 'Bearer $token'};
+
+    final response = await http.delete(url, headers: headers);
+
+    if (response.statusCode == 200) {
+      print("Image deleted successfully");
+      return response.statusCode;
+    }
+    else {
+      return response.statusCode;
+      //throw Exception('Failed to delete image');
+    }
+  }
+
 }
