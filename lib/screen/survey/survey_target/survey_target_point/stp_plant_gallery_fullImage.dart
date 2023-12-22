@@ -118,7 +118,7 @@ class _FullScreenImageState extends State<FullScreenImage> {
                   );
                   progressDialog.show();
 
-                  int? status = await imageService.deleteImage(
+                  int? status = await imageService.deleteImageByID(
                       widget.targetpointId, imageId, token.toString());
                   //Navigator.of(context).pop();
                   bool serviceFinished = false;
