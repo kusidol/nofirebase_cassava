@@ -7,14 +7,18 @@ import 'package:mun_bot/entities/surveypoint.dart';
 import 'package:mun_bot/env.dart';
 import 'dart:developer';
 
-class SurveyTargetPoint {
+import 'package:mun_bot/providers/targetpoint_provider.dart';
+
+class SurveyTargetPointService {
   Future<List<SurveyTargetPointValue>> surveyTargetPointDiseaseBySurveyId(
       String token, int surveyId, int pointNumber, int itemNumber) async {
     List<SurveyTargetPointValue> stps = [];
     Service surveyService = new Service();
+    //print("${LOCAL_SERVER_IP_URL}/surveytargetpoint/surveyId/${surveyId}/disease/${pointNumber}/item/${itemNumber}");
     var response = await surveyService.doGet(
         "${LOCAL_SERVER_IP_URL}/surveytargetpoint/surveyId/${surveyId}/disease/${pointNumber}/item/${itemNumber}",
         token);
+
 
     if (response.statusCode == 200) {
       stps = ObjectList<SurveyTargetPointValue>.fromJson(
@@ -26,6 +30,25 @@ class SurveyTargetPoint {
       print("error with out statusCode");
     }
     return stps;
+  }
+
+  Future<bool> updateSurveyTargetPoint(int surveyTargetPointID,SurveyPoint surveyPoint,String token) async {
+
+    Service service = new Service();
+
+    var encodeData = jsonEncode(surveyPoint);
+
+    try{
+      var response =
+      await service.update("${LOCAL_SERVER_IP_URL}/surveytargetpoint/${surveyTargetPointID}", token, encodeData);
+      if (response.statusCode == 200) {
+        return true ;
+      }
+      return false ;
+    }catch(e) {
+      print(e);
+    };
+    return false;
   }
 
   Future<Map<String, dynamic>?> countDiseaseBySurveyId(
@@ -99,6 +122,7 @@ class SurveyTargetPoint {
       String token, int surveyId, int pointNumber, int itemNumber) async {
     List<SurveyTargetPointValue> stps = [];
     Service surveyService = new Service();
+   // print("${LOCAL_SERVER_IP_URL}/surveytargetpoint/surveyId/${surveyId}/naturalenemy/${pointNumber}/item/${itemNumber}");
     var response = await surveyService.doGet(
         "${LOCAL_SERVER_IP_URL}/surveytargetpoint/surveyId/${surveyId}/naturalenemy/${pointNumber}/item/${itemNumber}",
         token);
@@ -202,6 +226,31 @@ class SurveyTargetPoint {
     return checkTarget;
   }
 
+  Future<int> countImages( String token, int surveyId, int itemNumber, int pointNumber) async {
+
+    Service service = Service();
+
+    //print("${LOCAL_SERVER_IP_URL}/surveytargetpoint/surveyid/${surveyId}/pointnumber/${pointNumber}/itemnumber/${itemNumber}/images");
+    //print("${token}");
+    try{
+      var response = await service.doGet(
+          "${LOCAL_SERVER_IP_URL}/surveytargetpoint/surveyid/${surveyId}/pointnumber/${pointNumber}/itemnumber/${itemNumber}/images/count",
+          token.toString());
+
+      if (response.statusCode == 200) {
+        var responseBody = json.decode(response.data);
+        if (responseBody['status'] == 200) {
+          var surveyPoint = responseBody['body'];
+          return surveyPoint['amountOfImage'] ;
+        }
+      }
+    }catch(e){
+      print(e);
+    }
+
+    return 0;
+  }
+
   Future<Map<String, dynamic>>
       findBySurveyIdAndPointNumberAndItemNumberAndApprovedStatus(
           String token, int surveyId, int itemNumber, int pointNumber) async {
@@ -245,19 +294,29 @@ class SurveyTargetPoint {
       // Check if the 'body' key exists and is a list
       if (responseBody.containsKey('body') && responseBody['body'] is List) {
         // Extract the list of surveyTargetPoints for each object in 'body'
+        //print(" ${responseBody}");
         final List<dynamic> bodyList = responseBody['body'];
 
         // Initialize a list to store all surveyTargetPoints
         final List<SurveyPoint> allSurveyTargetPoints = [];
+
+
+
+       // print(bodyList.length);
 
         // Iterate through each object in 'body'
         for (final surveyTarget in bodyList) {
           // Check if 'surveyTargetPoints' is a list in the current object
           if (surveyTarget.containsKey('surveyTargetPoints') &&
               surveyTarget['surveyTargetPoints'] is List) {
+
+
+
             // Extract the list of surveyTargetPoints for the current object
             final List<dynamic> surveyTargetPoints =
                 surveyTarget['surveyTargetPoints'];
+
+
 
             // Parse the list of SurveyPoint objects and add them to the result list
             final List<SurveyPoint> surveyTargetPointList = surveyTargetPoints
