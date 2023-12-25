@@ -1751,7 +1751,7 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                       ),
                                     ),
                                     SizedBox(
-                                      width: sizeWidth(170, context),
+                                      width: sizeWidth(163, context),
                                       child: ExpandableText(
                                         '${widget.itemName} (${itemNameShow})',
                                         expandText: '${widget.itemName}',
