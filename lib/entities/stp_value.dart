@@ -7,13 +7,13 @@ part 'stp_value.g.dart';
 class SurveyTargetPointValue {
   int surveyTargetId;
   String surveyTargetName;
-  SurveyPoint surveyTargetPoints;
+  SurveyPoint surveyTargetPoint;
 
 
   SurveyTargetPointValue(
     this.surveyTargetId,
     this.surveyTargetName,
-    this.surveyTargetPoints,
+    this.surveyTargetPoint,
 
   );
   factory SurveyTargetPointValue.fromJson(Map<String, dynamic> json) =>
