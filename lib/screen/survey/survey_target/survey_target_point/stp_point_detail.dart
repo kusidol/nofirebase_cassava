@@ -1,14 +1,9 @@
-import 'dart:io';
-import 'dart:math';
 
-import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/rendering.dart';
 import 'package:localization/src/localization_extension.dart';
-import 'package:mun_bot/controller/survey_target_point.dart';
-import 'package:mun_bot/controller/tagerpoint_image_service.dart';
-import 'package:mun_bot/entities/stp_value.dart';
+
 import 'package:mun_bot/entities/survey.dart';
-import 'package:mun_bot/entities/surveypoint.dart';
+
 import 'package:mun_bot/main.dart';
 import 'package:mun_bot/providers/targetpoint_provider.dart';
 import 'package:mun_bot/screen/widget/no_data.dart';
@@ -22,12 +17,9 @@ import 'package:flutter/material.dart';
 //import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:mun_bot/entities/enemy.dart';
 
-import 'package:image_picker/image_picker.dart';
-import 'package:mun_bot/util/ui/multi_search_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:gallery_saver/gallery_saver.dart';
+
 import 'package:mun_bot/env.dart';
-import 'package:mun_bot/screen/login/login_screen.dart';
 
 final _colorBase = Color(0xFF645CAA);
 TextEditingController humidityController = TextEditingController();
@@ -378,13 +370,16 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
     return GestureDetector(
         onTap: () {
 
+         // print("${spotIndex}  +  ${pointIndex} ${targetPointProvider.getPointAt(spotIndex, pointIndex).}");
+
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => BaseSurveyScreenEnemy(
                       widget.surveyPoint,
                       spotIndex * 5 + pointIndex,
-                      widget.survey))).then((value) {
+                      widget.survey.surveyID,targetPointProvider.diseaseSize,targetPointProvider.enemySize,targetPointProvider.pestSize))).then((value) {
+
             if (value == true) {
               Navigator.pushReplacement(
                   context,
@@ -540,8 +535,8 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                         width: sizeWidth(65, context),
                           child: Row(
                             children: [
-                              Text(targetPointProvider.surveyPointData.targetPoints[spotIndex * 5 + pointIndex].pests.toString() ),
-                              Text( "/${targetPointProvider.pestSize}",style: TextStyle(fontSize: 12), ),
+                              Text(targetPointProvider.surveyPointData.targetPoints[spotIndex * 5 + pointIndex].enemies.toString() ),
+                              Text( "/${targetPointProvider.enemySize}",style: TextStyle(fontSize: 12), ),
                             ],
                           )
                       ),
@@ -578,8 +573,8 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                         width: sizeWidth(65, context),
                           child: Row(
                             children: [
-                              Text(targetPointProvider.surveyPointData.targetPoints[spotIndex * 5 + pointIndex].enemies.toString() ),
-                              Text( "/${targetPointProvider.enemySize}",style: TextStyle(fontSize: 12), ),
+                              Text(targetPointProvider.surveyPointData.targetPoints[spotIndex * 5 + pointIndex].pests.toString() ),
+                              Text( "/${targetPointProvider.pestSize}",style: TextStyle(fontSize: 12), ),
                             ],
                           )
                       ),
