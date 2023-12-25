@@ -10,6 +10,7 @@ import 'dart:developer';
 import 'package:mun_bot/providers/targetpoint_provider.dart';
 
 class SurveyTargetPointService {
+
   Future<List<SurveyTargetPointValue>> surveyTargetPointDiseaseBySurveyId(
       String token, int surveyId, int pointNumber, int itemNumber) async {
     List<SurveyTargetPointValue> stps = [];
@@ -159,20 +160,19 @@ class SurveyTargetPointService {
     return stps;
   }
 
-  Future<int> updateSurveyTargetPointDisease(String token, int pointNumber,
+  Future<bool> updateSurveyTargetPointDisease(String token, int pointNumber,
       int itemNumber, var surveyTargetPoint) async {
     Service service = new Service();
     var response = await service.doPostWithFormData(
-        "${LOCAL_SERVER_IP_URL}/surveytargetpoint/disease/${pointNumber}/item/${itemNumber}",
-        token,
-        surveyTargetPoint);
+        "${LOCAL_SERVER_IP_URL}/surveytargetpoint/disease/${pointNumber}/item/${itemNumber}", token,  surveyTargetPoint);
     if (response.statusCode == 200) {
+      return true ;
     } else if (response.statusCode == 401) {
       print('error statusCode 401');
     } else {
       print("error with out statusCode");
     }
-    return response.statusCode;
+    return false;
   }
 
   Future<int> updateSurveyTargetPointNatural(String token, int pointNumber,
