@@ -19,9 +19,7 @@ class SurveyPointData{
 class SurveyTargetPoint{
   int surveyTargetPointID ;
   int value ;
-
   SurveyTargetPoint(this.surveyTargetPointID,this.value);
-
 }
 
 class TargetPoint{
@@ -69,6 +67,7 @@ class TargetPointProvider with ChangeNotifier {
       await surveyTargetPointService.updateSurveyTargetPoint( e.surveyTargetPointID, sp, token.toString()).then((value) {
 
         if(value){
+
           imageService.deleteImageByTargetpointId(e.surveyTargetPointID, token.toString());
         }
 
@@ -93,6 +92,10 @@ class TargetPointProvider with ChangeNotifier {
 
     spots[spotIndex][0] = isEmptySpot ;
     notifyListeners();
+  }
+
+  TargetPoint getPointAt(int spotIndex,int pointIndex){
+    return surveyPointData.targetPoints[spotIndex*5+pointIndex] ;
   }
 
   bool isSpotComplete(int spotIndex){
@@ -125,18 +128,6 @@ class TargetPointProvider with ChangeNotifier {
     super.dispose();
   }
 
-  Future<void> resetDataAt(int pointIndex) async {
-    //TargetPoint tp = surveyPointData.targetPoints[pointIndex];
-    //surveyPointData.targetPoints[pointIndex] = TargetPoint(tp.surveyID,tp.point) ;
-
-    //for(int i = 0 ; i < 20 ; i++){
-    //  print("index ${i} pointIndex- ${pointIndex}    ${surveyPointData.targetPoints[i].surveyTargetPoints}");
-   // }
-
-
-   // notifyListeners();
-  }
-
   Future<void> fetchData(int surveyID,int point) async {
 
     String? token = tokenFromLogin?.token;
@@ -148,6 +139,8 @@ class TargetPointProvider with ChangeNotifier {
     }
 
     surveyTargetPointService.surveyPointPestphaseBySurveyId(token.toString(), surveyID, point).then((value) {
+
+
 
       if(value != null){
        // print(value.length);
@@ -166,6 +159,7 @@ class TargetPointProvider with ChangeNotifier {
             if(surveyPointData.targetPoints[i%20].surveyTargetPoints==null){
               surveyPointData.targetPoints[i%20].surveyTargetPoints = [];
             }
+
             surveyPointData.targetPoints[i%20].surveyTargetPoints!.add(SurveyTargetPoint(value[i].surveyTargetPointId, value[i].value)) ;
             //surveyPointData.targetPoints[i%20].targetPointID = value[i].surveyTargetPointId ;
             if(surveyPointData.targetPoints[i % 20].points[0]){
