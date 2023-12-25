@@ -11,7 +11,7 @@ SurveyTargetPointValue _$SurveyTargetPointValueFromJson(
     SurveyTargetPointValue(
       json['surveyTargetId'] as int,
       json['surveyTargetName'] == "" ? "" : json['surveyTargetName'] as String,
-      json['surveyTargetPoints'] =
+      json['surveyTargetPoint'] =
           SurveyPoint.fromJson(json['surveyTargetPoints']),
     );
 
@@ -20,5 +20,5 @@ Map<String, dynamic> _$SurveyTargetPointValueToJson(
     <String, dynamic>{
       'surveyTargetId': instance.surveyTargetId,
       'surveyTargetName': instance.surveyTargetName,
-      'surveyTargetPoints': instance.surveyTargetPoints,
+      'surveyTargetPoint': instance.surveyTargetPoint,
     };
