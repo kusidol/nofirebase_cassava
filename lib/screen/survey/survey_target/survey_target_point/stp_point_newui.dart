@@ -130,6 +130,8 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
   }*/
 
   List<String> diseaseList = [];
+
+
   Future<String?> countDiseaseBySurveyId(int id) async {
     try {
       String? token = tokenFromLogin?.token;
