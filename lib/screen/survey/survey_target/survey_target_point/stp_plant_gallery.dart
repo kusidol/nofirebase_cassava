@@ -141,7 +141,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
                   child: Text(
                     'cancel'.i18n(),
                     style: TextStyle(
-                      color: Colors.blue,
+                      color: Colors.red,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -153,7 +153,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
                   child: Text(
                     'upload'.i18n(),
                     style: TextStyle(
-                      color: Colors.red,
+                      color: Colors.blue,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
