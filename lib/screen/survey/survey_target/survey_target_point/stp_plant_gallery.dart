@@ -29,6 +29,10 @@ class Gallery extends StatefulWidget {
 class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
   final ImageTagetpointService imageService = ImageTagetpointService();
 
+  bool _isStoragePermissionReady = false;
+
+  bool _isCameraPermissionReady = false;
+
   String? token;
   List<ImageData> images = [];
   bool isLoading = true;
@@ -42,7 +46,28 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
     WidgetsBinding.instance!.addObserver(this);
     token = tokenFromLogin?.token;
     //print(widget.targetpointId);
+    _checkPermission();
     _fetchImages();
+  }
+
+  Future<void> _checkPermission() async {
+    final storageGranted = await Permission.storage.isGranted;
+
+    if (storageGranted) {
+      setState(() {
+        _isStoragePermissionReady = true;
+      });
+    }
+
+    final cameraGranted = await Permission.camera.isGranted;
+
+    if (cameraGranted) {
+      setState(() {
+        _isCameraPermissionReady = true;
+      });
+    }
+
+
   }
 
   @override
@@ -53,16 +78,22 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
 
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
+
+      if(_isCameraPermissionReady || _isStoragePermissionReady){
+         return ;
+      }
+
       final camera_granted = await Permission.camera.isGranted;
       final storage_granted = await Permission.storage.isGranted;
       if (camera_granted) {
-        // //print("Resume with Camera");
-        Navigator.of(context).pop();
+        _isCameraPermissionReady = true ;
+     //   Navigator.of(context).pop();
       }
       if (storage_granted) {
-        // //print("Resume with Storage");
-        Navigator.of(context).pop();
+        _isStoragePermissionReady = true ;
+
       }
+      Navigator.of(context).pop();
     }
   }
 
@@ -82,8 +113,10 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
   Future<void> _uploadImage(BuildContext context, ImageSource source) async {
     try {
       final picker = ImagePicker();
+     // final storage_granted = await Permission.storage.isGranted;
       final pickedFile = await picker.pickImage(source: source);
-      //print("PICKEDFILE : ${pickedFile}");
+
+     // print("PICKEDFILE :${_isCameraPermissionReady} ${pickedFile!.path}");
       if (pickedFile != null) {
         final shouldUpload = await showDialog(
           context: context,
@@ -150,18 +183,20 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
           List<int> imageBytes = await pickedFile.readAsBytes();
           String base64Image = base64Encode(imageBytes);
 
-          int? status;
-          status = await imageService.uploadImage(
+          //print(base64Image) ;
+          var resp;
+          resp = await imageService.uploadImage(
             base64Image,
             token.toString(),
             widget.targetpointId,
           );
 
           bool serviceFinished = false;
-
+        //  var parsed = json.decode(resp);
+          print(resp);
           while (!serviceFinished) {
             await Future.delayed(Duration(seconds: 1));
-            if (status == 200) {
+            if (resp.statusCode == 200) {
               serviceFinished = true;
             } else {
               serviceFinished = false;
@@ -538,7 +573,11 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
             label: 'Gallery'.i18n(),
             labelStyle: TextStyle(fontSize: 20, color: Colors.black),
             onTap: () {
-              _uploadImage(context, ImageSource.gallery);
+              if(_isStoragePermissionReady){
+                _uploadImage(context, ImageSource.gallery);
+              }else{
+                showAlertDialog_Photos(context);
+              }
             },
           ),
           SpeedDialChild(
@@ -547,7 +586,12 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
             label: 'Camera'.i18n(),
             labelStyle: TextStyle(fontSize: 20, color: Colors.black),
             onTap: () {
-              _uploadImage(context, ImageSource.camera);
+              if(_isCameraPermissionReady){
+                _uploadImage(context, ImageSource.camera);
+              }else{
+                showAlertDialog_Camera(context) ;
+              }
+
             },
           ),
         ],
@@ -570,3 +614,5 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
     );
   }
 }
+
+
