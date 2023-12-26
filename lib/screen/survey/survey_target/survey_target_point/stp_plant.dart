@@ -217,7 +217,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                                                             ),
                                                             onPressed: () {
                                                               Navigator.of(context)
-                                                                  .pop();
+                                                                  .pop(true);
                                                             },
                                                           ),
                                                         ),
@@ -637,7 +637,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                                   MaterialPageRoute(
                                       maintainState: false,
                                       //builder: (context) => Gallerys(1, 1,widget.survey)),
-                                      builder: (context) => Gallery(surveyTargetPointProvider.diseases[i].stp.surveyTargetId)),
+                                      builder: (context) => Gallery(surveyTargetPointProvider.diseases[i].stp.surveyTargetPoint.surveyTargetPointId)),
                                 );
                               },
                             ),
