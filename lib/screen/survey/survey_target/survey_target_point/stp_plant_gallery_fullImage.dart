@@ -157,9 +157,19 @@ class _FullScreenImageState extends State<FullScreenImage> {
     }
 
     return Scaffold(
-      extendBodyBehindAppBar: true,
+      //extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.black,
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop(false);
+          },
+        ),
         elevation: 0,
         actions: [
           IconButton(
