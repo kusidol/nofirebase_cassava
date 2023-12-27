@@ -16,7 +16,7 @@ import 'stp_plant_gallery_fullImage.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:mun_bot/screen/login/login_screen.dart';
+import 'package:mun_bot/entities/response.dart' as EntityResponse;
 
 class Gallery extends StatefulWidget {
   late int targetpointId;
@@ -46,6 +46,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
     WidgetsBinding.instance!.addObserver(this);
     token = tokenFromLogin?.token;
     //print(widget.targetpointId);
+    print("load");
     _checkPermission();
     _fetchImages();
   }
@@ -184,26 +185,36 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
           String base64Image = base64Encode(imageBytes);
 
           //print(base64Image) ;
-          var resp;
-          resp = await imageService.uploadImage(
+          ImageData imageData = await imageService.uploadImage(
             base64Image,
             token.toString(),
             widget.targetpointId,
-          );
+          ) as ImageData;
 
-          bool serviceFinished = false;
+          if(imageData != null){
+
+            setState(() {
+              images.add(imageData);
+            });
+          }
+
+         // bool serviceFinished = false;
         //  var parsed = json.decode(resp);
-          print(resp);
-          while (!serviceFinished) {
+          //print("--> ${resp}");
+          //print("--> ${resp['message']}");
+         // EntityResponse.Response<ImageData> imageData =EntityResponse.Response<ImageData>.fromJson(
+            //  jsonDecode(resp), (body) => ImageData.fromJson(body));
+
+         /* while (!serviceFinished) {
             await Future.delayed(Duration(seconds: 1));
             if (resp.statusCode == 200) {
               serviceFinished = true;
             } else {
               serviceFinished = false;
             }
-          }
+          }*/
 
-          _fetchImages();
+          //_fetchImages();
 
           progressDialog.hide();
         }
@@ -351,6 +362,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
 
   void _viewImage(BuildContext context, ImageData image) {
     final imageIndex = images.indexOf(image);
+
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -449,7 +461,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
             color: Colors.black,
           ),
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pop(false);
           },
         ),
         title: Text(
