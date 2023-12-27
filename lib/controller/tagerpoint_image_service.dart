@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:dio/dio.dart';
+import 'package:mun_bot/entities/response.dart' as EntityResponse;
 
 import '../env.dart';
 
@@ -45,7 +46,7 @@ class ImageTagetpointService {
     }
   }
 
-  Future<dynamic> uploadImage(
+  Future<ImageData?> uploadImage(
       String imageFile, String token, int targetpointId) async {
     final url = '$LOCAL_SERVER_IP_URL/survey/surveytargetpoint/$targetpointId/images';
     //final url = '$LOCAL_SERVER_IP_URL/survey/uploadimage/$targetpointId';
@@ -69,14 +70,19 @@ class ImageTagetpointService {
       //print(response.data);
       if (response.statusCode == 200) {
        // print("Image uploaded successfully"+ "${response}");
-        return response;
+        print(response.data);
+        Map apiResponse = response.data;
+        ImageData imageData = ImageData(imageId: apiResponse["body"]["imageId"], imgBase64: apiResponse["body"]["imgBase64"].toString());
+
+
+        return imageData;
       } else {
-        print('Failed to upload image');
-        return response;
+        //print('Failed to upload image');
+        return null;
       }
     } catch (e) {
-      print('Error uploading image: $e');
-      throw Exception('Failed to upload image');
+      //print('Error uploading image: $e');
+      return null;
     }
   }
 
