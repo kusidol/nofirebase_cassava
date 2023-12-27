@@ -76,8 +76,8 @@ class _DropdownForFieldState extends State<DropdownForField> {
   late Survey survey;
   late TargetOfSurvey targetOfsurvey;
   late UserInField typeOwner;
-  String selectedOwnerName = "เจ้าของแปลง";
-  String selectedFieldName = "ชื่อแปลง";
+  String selectedOwnerName = "owner".i18n();
+  String selectedFieldName = "name-field-label".i18n();
   String selectedfieldSubdistrict = "ตำบล";
   String selectedAddress = "ที่อยู่แปลง";
   String selectedplantingItems = "ชื่อการเพาะปลูก";
@@ -230,7 +230,7 @@ class _DropdownForFieldState extends State<DropdownForField> {
                               TextFormField(
                                 controller: ownerController,
                                 decoration: InputDecoration(
-                                  labelText: 'ชื่อแปลง',
+                                  labelText: 'name-field-label'.i18n(),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
@@ -245,7 +245,7 @@ class _DropdownForFieldState extends State<DropdownForField> {
                               TextFormField(
                                 // controller: locationController,
                                 decoration: InputDecoration(
-                                  labelText: 'เจ้าของแปลง',
+                                  labelText: 'owner'.i18n(),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
@@ -324,8 +324,8 @@ class _DropdownForFieldState extends State<DropdownForField> {
                                     ],
                                   ),
                                   child: ListTile(
-                                    title: Text(
-                                        "ชื่อแปลง : ${dropdownfield.fieldString[index]}"),
+                                    title: Text('name-field-label'.i18n() +
+                                        " : ${dropdownfield.fieldString[index]}"),
                                     // subtitle:
                                     // Text('ID : ${dropdownfield.items[index].id}'),
                                     onTap: () {

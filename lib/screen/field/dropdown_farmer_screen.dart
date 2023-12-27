@@ -303,8 +303,8 @@ class _DropdownForFarmerState extends State<DropdownForFarmer> {
                                     ],
                                   ),
                                   child: ListTile(
-                                    title: Text(
-                                        "เจ้าของแปลง : ${dropdownFarmer.farmerString[index]}"),
+                                    title: Text('owner'.i18n() +
+                                        " : ${dropdownFarmer.farmerString[index]}"),
                                     // subtitle:
                                     // Text('ID : ${dropdownFarmer.items[index].id}'),
                                     onTap: () {

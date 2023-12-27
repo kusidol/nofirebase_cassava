@@ -79,7 +79,7 @@ class _DropdownForPlantingState extends State<DropdownForPlanting> {
   late TargetOfSurvey targetOfsurvey;
   late UserInField typeOwner;
   String selectedPlantingName = "ชื่อการเพาะปลูก";
-  String selectedfieldName = "ชื่อแปลง";
+  String selectedfieldName = "name-field-label".i18n();
   String selectedAddress = "ที่อยู่การเพาะปลูก";
   String selectedOwnerName = "เจ้าของการเพาะปลูก";
   String selectedplantingItems = "ชื่อการเพาะปลูก";
@@ -395,7 +395,7 @@ class _DropdownForPlantingState extends State<DropdownForPlanting> {
                               TextFormField(
                                 controller: ownerController,
                                 decoration: InputDecoration(
-                                  labelText: 'ชื่อแปลง',
+                                  labelText: 'name-field-label'.i18n(),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),

@@ -157,6 +157,7 @@
   "code-field-label": "รหัสแปลง",
   "name-field-label": "ชื่อแปลง",
   "owner": "เจ้าของแปลง",
+  "owner-name": "ชื่อเจ้าของแปลง",
   "please-select-owner": "โปรดเลือกเจ้าของแปลง",
   "moo": "หมู่",
   "road": "ถนน",
@@ -308,5 +309,13 @@
   "selectprovince": " เลือกจังหวัด",
   "selectdistrict": " เลือกอำเภอ",
   "selectsubdistrict": " เลือกตำบล",
-  "fillphone": "(กรุณากรอกเบอร์ให้ครบสิบหลัก)"
+  "fillphone": "(กรุณากรอกเบอร์ให้ครบสิบหลัก)",
+  "field-code": "รหัสแปลง",
+  "first-page": "หน้าแรก",
+  "second-page": "หน้าสอง",
+  "third-page": "หน้าสาม",
+  "insert-field-name": "กรอกชื่อแปลง",
+  "insert-field-code": "กรอก Code แปลง",
+  "select-district-info": "เลือกข้อมูลอำเภอ",
+  "must-select-district-first": "ต้องเลือกอำเภอก่อน"
 }

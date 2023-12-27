@@ -122,7 +122,8 @@
   "id-field-label": "Field ID",
   "code-field-label": "Field Code",
   "name-field-label": "Field Name",
-  "owner": "Owner name",
+  "owner": "Owner",
+  "owner-name": "Owner name",
   "moo": "Moo",
   "road": "Road",
   "province": "Province",
@@ -301,5 +302,13 @@
   "selectprovince": " select province",
   "selectdistrict": " select dsitrict",
   "selectsubdistrict": " select subdistrict",
-  "fillphone": "(Please fill in all ten digits of your phone number)"
+  "fillphone": "(Please fill in all ten digits of your phone number)",
+  "field-code": "Field code",
+  "first-page": "First page",
+  "second-page": "Second page",
+  "third-page": "Third page",
+  "insert-field-name": "Insert field name",
+  "insert-field-code": "Insert field code",
+  "select-district-info": "Select district information",
+  "must-select-district-first": "Must choose a district first"
 }

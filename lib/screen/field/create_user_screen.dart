@@ -323,7 +323,7 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
           Container(
             width: SizeConfig.screenWidth,
             alignment: Alignment.center,
-            child: Text("หน้าแรก",
+            child: Text("first-page".i18n(),
                 style: TextStyle(
                     fontSize: sizeHeight(20, context),
                     fontWeight: FontWeight.bold)),
@@ -457,7 +457,7 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
           Container(
             width: SizeConfig.screenWidth,
             alignment: Alignment.center,
-            child: Text("หน้าสอง",
+            child: Text("second-page".i18n(),
                 style: TextStyle(
                     fontSize: sizeHeight(20, context),
                     fontWeight: FontWeight.bold)),
@@ -534,7 +534,7 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "อำเภอ" + "*",
+                      "district".i18n() + "*",
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'OpenSans',
@@ -581,7 +581,7 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                           //     ? _selectPreviousPlant
                           //     : planting.previousPlant,
                           selectedItem: selectedDistrict_value == ""
-                              ? "เลือกข้อมูลอำเภอ"
+                              ? "select-district-info".i18n()
                               : selectedDistrict_value,
                           showSearchBox: true,
                           searchFieldProps: const TextFieldProps(
@@ -593,7 +593,7 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                           ),
                           validator: (value) =>
                               InputCodeValidator.validateDropDown(
-                                  value, "เลือกข้อมูลอำเภอ"),
+                                  value, "select-district-info".i18n()),
                         )
                       : Container(
                           child: Center(
@@ -667,7 +667,7 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                         )
                       : Container(
                           child: Center(
-                            child: Text("ต้องเลือกอำเภอก่อน"),
+                            child: Text("must-select-district-first".i18n()),
                           ),
                         ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),

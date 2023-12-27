@@ -546,10 +546,10 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                         Expanded(
                           child: Center(
                             child: ExpandableText(
-                              'surveys-founded-label'.i18n() +
+                              'platings-founded-label'.i18n() +
                                   ' ${numItemFounded} ' +
                                   'item-label'.i18n(),
-                              expandText: 'surveys-founded-id-label'.i18n() +
+                              expandText: 'platings-founded-id-label'.i18n() +
                                   ' (${numItemFounded})',
                               collapseText: 'show less',
                               style: TextStyle(
@@ -1195,7 +1195,7 @@ Shimmer mockShimmer(BuildContext context) {
                                 color: Colors.white,
                               ),
                               Text(
-                                ' ชื่อแปลง',
+                                ' ' + 'name-field-label'.i18n(),
                                 style: TextStyle(
                                     fontSize: sizeHeight(16, context),
                                     fontWeight: FontWeight.w600),
@@ -1257,7 +1257,9 @@ Shimmer mockShimmer(BuildContext context) {
                                     Row(
                                       children: [
                                         Text(
-                                          ' รหัสแปลง : รหัสแปลง',
+                                          'field-code'.i18n() +
+                                              " : " +
+                                              'field-code'.i18n(),
                                           style: TextStyle(
                                             fontSize: sizeHeight(14, context),
                                           ),
@@ -1285,7 +1287,9 @@ Shimmer mockShimmer(BuildContext context) {
                                           color: Colors.red,
                                         ),
                                         Text(
-                                          'อำเภอ, จังหวัด',
+                                          'district'.i18n() +
+                                              ', ' +
+                                              'province'.i18n(),
                                           style: TextStyle(
                                             fontSize: sizeHeight(14, context),
                                           ),
@@ -1320,7 +1324,7 @@ Shimmer mockShimmer(BuildContext context) {
                                       size: sizeHeight(20, context),
                                     ),
                                     Text(
-                                      " เจ้าของแปลง",
+                                      " " + "owner".i18n(),
                                       style: TextStyle(
                                         fontWeight: FontWeight.w400,
                                         fontSize: sizeHeight(14, context),

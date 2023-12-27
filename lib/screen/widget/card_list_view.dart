@@ -2,6 +2,7 @@ import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:localization/src/localization_extension.dart';
 import 'package:mun_bot/controller/field_service.dart';
 import 'package:mun_bot/entities/planting.dart';
 
@@ -164,7 +165,7 @@ class CardItem extends StatelessWidget {
                                           ),
                                         ),
                                         Text(
-                                          '(เจ้าของแปลง)',
+                                          '(' + 'owner'.i18n() + ')',
                                           style: TextStyle(
                                               fontSize: 14,
                                               color:
@@ -443,7 +444,7 @@ class CardItemWithOutImage_Planting_Calendar extends StatelessWidget {
                                           size: sizeHeight(20, context),
                                         ),
                                         Text(
-                                          " เจ้าของแปลง",
+                                          ' ' + "owner".i18n(),
                                           style: TextStyle(
                                             fontWeight: FontWeight.w400,
                                             fontSize: sizeHeight(14, context),
@@ -709,7 +710,7 @@ class CardItemWithOutImage_Planting extends StatelessWidget {
                                           size: sizeHeight(20, context),
                                         ),
                                         Text(
-                                          " เจ้าของแปลง",
+                                          ' ' + "owner".i18n(),
                                           style: TextStyle(
                                             fontWeight: FontWeight.w400,
                                             fontSize: sizeHeight(14, context),
@@ -946,7 +947,7 @@ class CardItemWithOutImage_Calendar extends StatelessWidget {
                                           size: sizeHeight(20, context),
                                         ),
                                         Text(
-                                          " เจ้าของแปลง",
+                                          ' ' + "owner".i18n(),
                                           style: TextStyle(
                                             fontWeight: FontWeight.w400,
                                             fontSize: sizeHeight(14, context),
@@ -1183,7 +1184,7 @@ class CardItemWithOutImage extends StatelessWidget {
                                           size: sizeHeight(20, context),
                                         ),
                                         Text(
-                                          " เจ้าของแปลง",
+                                          ' ' + "owner".i18n(),
                                           style: TextStyle(
                                             fontWeight: FontWeight.w400,
                                             fontSize: sizeHeight(14, context),
@@ -1496,7 +1497,7 @@ class CardItemForFieldNoImage extends StatelessWidget {
                                               size: sizeHeight(20, context),
                                             ),
                                             Text(
-                                              " เจ้าของแปลง",
+                                              ' ' + "owner".i18n(),
                                               style: TextStyle(
                                                 fontWeight: FontWeight.w400,
                                                 fontSize:
@@ -1771,7 +1772,7 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                       size: sizeHeight(20, context),
                                     ),
                                     Text(
-                                      " เจ้าของแปลง",
+                                      ' ' + "owner".i18n(),
                                       style: TextStyle(
                                         fontWeight: FontWeight.w400,
                                         fontSize: sizeHeight(14, context),
@@ -2030,7 +2031,7 @@ class _AnimatedListItemState_Planting extends State<AnimatedListItem_Planting> {
                                       size: sizeHeight(20, context),
                                     ),
                                     Text(
-                                      " เจ้าของแปลง",
+                                      ' ' + "owner".i18n(),
                                       style: TextStyle(
                                         fontWeight: FontWeight.w400,
                                         fontSize: sizeHeight(14, context),

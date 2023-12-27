@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:localization/src/localization_extension.dart';
 import 'package:mun_bot/entities/survey.dart';
 import 'package:mun_bot/util/ui/survey_theme.dart';
 
@@ -117,7 +118,7 @@ class CardItem extends StatelessWidget {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '  (เจ้าของแปลง)',
+                                                  '  (' + 'owner'.i18n() + ')',
                                                   style: TextStyle(
                                                       fontSize: 14,
                                                       color: Colors.grey

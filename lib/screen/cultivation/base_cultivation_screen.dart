@@ -93,14 +93,14 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
   }
 
   String selectedPlantingName = "ชื่อการเพาะปลูก";
-  String selectedfieldName = "ชื่อแปลง";
+  String selectedfieldName = "name-field-label".i18n();
   String selectedAddress = "ที่อยู่การเพาะปลูก";
   String selectedOwnerName = "เจ้าของการเพาะปลูก";
   String selectedplantingItems = "ชื่อการเพาะปลูก";
   String selectedplantingCode = "รหัสการเพาะปลูก";
   String selectedplantingDate = "ปีที่เพาะปลูก";
   String selectedsurveyDate = "วันที่สำรวจ";
-  String selectedFieldName = "ชื่อแปลง";
+  String selectedFieldName = "name-field-label".i18n();
   @override
   void dispose() {
     animationController?.dispose();
@@ -570,7 +570,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                 TextFormField(
                   controller: ownerController,
                   decoration: InputDecoration(
-                    labelText: 'ชื่อแปลง',
+                    labelText: 'name-field-label'.i18n(),
                     border: OutlineInputBorder(
                       borderRadius:
                           BorderRadius.circular(sizeHeight(10, context)),
@@ -586,7 +586,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                 TextFormField(
                   // controller: locationController,
                   decoration: InputDecoration(
-                    labelText: 'เจ้าของแปลง',
+                    labelText: 'owner'.i18n(),
                     border: OutlineInputBorder(
                       borderRadius:
                           BorderRadius.circular(sizeHeight(10, context)),
@@ -1575,7 +1575,8 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                       Row(
                                         children: [
                                           Text(
-                                            ' แปลง : ชื่อแปลง',
+                                            ' แปลง : ' +
+                                                'name-field-label'.i18n(),
                                             style: TextStyle(
                                               fontSize: sizeHeight(14, context),
                                             ),
@@ -1604,7 +1605,9 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                             color: Colors.red,
                                           ),
                                           Text(
-                                            'อำเภอ, จังหวัด',
+                                            'district'.i18n() +
+                                                ', ' +
+                                                'province'.i18n(),
                                             style: TextStyle(
                                               fontSize: sizeHeight(14, context),
                                             ),
@@ -1639,7 +1642,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                         size: 20,
                                       ),
                                       Text(
-                                        " เจ้าของแปลง",
+                                        ' ' + "owner".i18n(),
                                         style: TextStyle(
                                           fontWeight: FontWeight.w400,
                                           fontSize: sizeHeight(14, context),

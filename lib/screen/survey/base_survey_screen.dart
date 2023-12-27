@@ -679,7 +679,7 @@ class _SurveyTable extends State<SurveyTable>
                 TextFormField(
                   controller: ownerController,
                   decoration: InputDecoration(
-                    labelText: 'ชื่อแปลง',
+                    labelText: 'name-field-label'.i18n(),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
@@ -694,7 +694,7 @@ class _SurveyTable extends State<SurveyTable>
                 TextFormField(
                   // controller: locationController,
                   decoration: InputDecoration(
-                    labelText: 'เจ้าของแปลง',
+                    labelText: 'owner'.i18n(),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
@@ -1727,7 +1727,8 @@ Widget getFilterBarUI(int numItemFounded) {
                                             color: Colors.red,
                                           ),
                                           Text(
-                                            'อำเภอ, จังหวัด',
+                                            'district'.i18n() + ', ' + 
+                                            'province'.i18n(),
                                             style: TextStyle(
                                               fontSize: sizeHeight(14, context),
                                             ),
@@ -1762,7 +1763,8 @@ Widget getFilterBarUI(int numItemFounded) {
                                         size: sizeHeight(20, context),
                                       ),
                                       Text(
-                                        " เจ้าของแปลง",
+                                        ' '+
+                                        "owner".i18n(),
                                         style: TextStyle(
                                           fontWeight: FontWeight.w400,
                                           fontSize: sizeHeight(14, context),

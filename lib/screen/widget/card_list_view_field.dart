@@ -2,6 +2,7 @@ import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:localization/src/localization_extension.dart';
 import 'package:mun_bot/controller/field_service.dart';
 import 'package:mun_bot/entities/field.dart';
 
@@ -204,7 +205,7 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                 child: Row(
                                   children: [
                                     Text(
-                                      '     รหัสแปลง: ',
+                                      '     ' + 'field-code'.i18n() + ': ',
                                       style: TextStyle(
                                         fontSize: sizeHeight(14, context),
                                       ),
@@ -231,7 +232,7 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                       size: sizeHeight(20, context),
                                     ),
                                     Text(
-                                      " เจ้าของแปลง",
+                                      ' ' + "owner".i18n(),
                                       style: TextStyle(
                                         fontWeight: FontWeight.w400,
                                         fontSize: sizeHeight(14, context),

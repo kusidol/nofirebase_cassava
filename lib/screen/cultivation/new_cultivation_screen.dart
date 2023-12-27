@@ -84,10 +84,10 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
   int? _stemSource = 1;
   int lastFieldID = 0;
   String areaSize = "";
-  String selectedfieldName = "ชื่อแปลง";
+  String selectedfieldName = "name-field-label".i18n();
   String selectedfieldCode = "รหัส (แปลง)";
   String selectedfieldLocation = "ที่อยู่";
-  String selectedfieldOwner = "เจ้าของแปลง";
+  String selectedfieldOwner = "owner".i18n();
   String? selectBesidePlant = "เลือกชนิดพืชแปลงข้างเคียง";
   String? _selectChemical1 = "เลือกสารเคมีที่ใช้";
   String? _selectChemical2 = "เลือกสารเคมีที่ใช้";
@@ -2514,7 +2514,8 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                                             child: Row(
                                               children: [
                                                 Text(
-                                                  "ชื่อแปลง ",
+                                                  'name-field-label'.i18n() +
+                                                      " ",
                                                   style: TextStyle(
                                                     fontSize:
                                                         sizeHeight(18, context),

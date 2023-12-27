@@ -576,7 +576,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
           Container(
             width: SizeConfig.screenWidth,
             alignment: Alignment.center,
-            child: Text("หน้าแรก",
+            child: Text("first-page".i18n(),
                 style: TextStyle(
                     fontSize: sizeHeight(20, context),
                     fontWeight: FontWeight.bold)),
@@ -606,7 +606,9 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                       if (text.isEmpty || (text == null) || (text == ""))
                         {field.code = save_Code}
                     },
-                    labelText: field.code == "" ? "กรอก Code แปลง" : field.code,
+                    labelText: field.code == ""
+                        ? "insert-field-code".i18n()
+                        : field.code,
                     successText: "",
                     inputIcon: Icon(Icons.eco_sharp),
                     validator1: (value) =>
@@ -617,7 +619,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "ชื่อแปลง" + "*",
+                      "name-field-label".i18n() + "*",
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'OpenSans',
@@ -633,7 +635,9 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                       if (text.isEmpty || (text == null) || (text == ""))
                         {field.name = save_Name}
                     },
-                    labelText: field.name == "" ? "กรอกชื่อแปลง" : field.name,
+                    labelText: field.name == ""
+                        ? "insert-field-name".i18n()
+                        : field.name,
                     successText: "",
                     inputIcon: Icon(Icons.eco_sharp),
                     validator1: (value) =>
@@ -644,7 +648,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "เจ้าของแปลง*",
+                      'owner'.i18n() + "*",
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'OpenSans',
@@ -720,9 +724,9 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                                 });
                               }
                             },
-                            hint: const Center(
+                            hint: Center(
                                 child: Text(
-                              'กรุณาเลือกเจ้าของแปลง',
+                              "please-select-owner".i18n(),
                               style: TextStyle(color: Colors.black),
                             )),
                             // Hide the default underline
@@ -745,7 +749,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                                         child: Row(
                                           children: [
                                             Text(
-                                              "ชื่อเจ้าของแปลง ",
+                                              'owner-name'.i18n() + " ",
                                               style: TextStyle(
                                                 fontSize:
                                                     sizeHeight(18, context),
@@ -776,7 +780,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                                 dropdownForShow
                                     .map((e) => Center(
                                           child: Text(
-                                            "เจ้าของแปลง : ${e}",
+                                            'owner'.i18n() + " : ${e}",
                                             style: TextStyle(
                                                 fontSize:
                                                     sizeHeight(18, context),
@@ -898,7 +902,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
           Container(
             width: SizeConfig.screenWidth,
             alignment: Alignment.center,
-            child: Text("หน้าสอง",
+            child: Text("second-page".i18n(),
                 style: TextStyle(
                     fontSize: sizeHeight(20, context),
                     fontWeight: FontWeight.bold)),
@@ -974,7 +978,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "อำเภอ" + "*",
+                      "district".i18n() + "*",
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'OpenSans',
@@ -1018,7 +1022,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                             await createSubistrictDropdown();
                           },
                           selectedItem: selectedDistrict_value == ""
-                              ? "เลือกข้อมูลอำเภอ"
+                              ? "select-district-info".i18n()
                               : selectedDistrict_value,
                           showSearchBox: true,
                           searchFieldProps: const TextFieldProps(
@@ -1030,7 +1034,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                           ),
                           validator: (value) =>
                               InputCodeValidator.validateDropDown(
-                                  value, "เลือกข้อมูลอำเภอ"),
+                                  value, "select-district-info".i18n()),
                         )
                       : Container(
                           child: Center(
@@ -1098,7 +1102,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                         )
                       : Container(
                           child: Center(
-                            child: Text("ต้องเลือกอำเภอก่อน"),
+                            child: Text("must-select-district-first".i18n()),
                           ),
                         ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
@@ -1179,7 +1183,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
           Container(
             width: SizeConfig.screenWidth,
             alignment: Alignment.center,
-            child: Text("หน้าสาม",
+            child: Text("third-page".i18n(),
                 style: TextStyle(
                     fontSize: sizeHeight(20, context),
                     fontWeight: FontWeight.bold)),
