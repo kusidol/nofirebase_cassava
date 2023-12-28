@@ -1099,7 +1099,8 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                                             child: Row(
                                               children: [
                                                 Text(
-                                                  "การเพาะปลูก ",
+                                                  'plantings-label'.i18n() +
+                                                      " ",
                                                   style: TextStyle(
                                                     fontSize:
                                                         sizeHeight(18, context),
@@ -1578,7 +1579,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
         value: 3,
         groupValue: _plantPeriodvalue,
         leading: _plantPeriodvalue == 3 ? '/' : 'x',
-        title: Text('ไม่มีพืชในแปลงปลูก',
+        title: Text('no-plants-in-field'.i18n(),
             style: TextStyle(fontSize: sizeHeight(20, context))),
         onChanged: (value) {
           ////print(value);
@@ -1586,7 +1587,6 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
         },
       ),
     ];
-    //List<String> plantPeriod = ["อายุพืช", "ระหว่างเก็บเกี่ยวม","ไม่มีพืชปลูกในแปลง"] ;
 
     return Container(
         height: SizeConfig.screenHeight! * 0.2,
@@ -2132,11 +2132,11 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
             ? percentDamageFromHerbicide
             : surveying.percentDamageFromHerbicide,
         showSearchBox: true,
-        searchFieldProps: const TextFieldProps(
+        searchFieldProps: TextFieldProps(
           cursorColor: Colors.blue,
           autofillHints: [AutofillHints.name],
           decoration: InputDecoration(
-            hintText: 'ค้นหา',
+            hintText: 'search'.i18n(),
           ),
         ),
         validator: (value) =>

@@ -170,9 +170,8 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
     LocationPermission permission;
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-              'ระบบ GPS ปิดอยู่, กรุณาเปิดการทำงานระบบ GPS สำหรับการอัปเดตค่าละติจูดและลองจิจูด')));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('gps-off-alert'.i18n())));
       return false;
     }
     permission = await Geolocator.checkPermission();

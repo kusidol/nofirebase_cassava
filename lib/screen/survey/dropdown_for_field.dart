@@ -57,9 +57,9 @@ class _DropdownForFieldState extends State<DropdownForField> {
   final List<String> fieldItems = [];
   final List<String> fieldCode = [];
   final List<String> surveyItems = [
-    'แปลงที่ 1',
-    'แปลงที่ 2',
-    'แปลงที่ 3',
+    'field-no.'.i18n() + ' 1',
+    'field-no.'.i18n() + ' 2',
+    'field-no.'.i18n() + ' 3',
   ];
   final List<String> surveyDateItems = [];
   final List<String> farmerItems = [];
@@ -78,12 +78,12 @@ class _DropdownForFieldState extends State<DropdownForField> {
   late UserInField typeOwner;
   String selectedOwnerName = "owner".i18n();
   String selectedFieldName = "name-field-label".i18n();
-  String selectedfieldSubdistrict = "ตำบล";
-  String selectedAddress = "ที่อยู่แปลง";
-  String selectedplantingItems = "ชื่อการเพาะปลูก";
-  String selectedplantingCode = "รหัสการเพาะปลูก";
-  String selectedplantingDate = "ปีที่เพาะปลูก";
-  String selectedsurveyDate = "วันที่สำรวจ";
+  String selectedfieldSubdistrict = "sub-district".i18n();
+  String selectedAddress = "field-address".i18n();
+  String selectedplantingItems = "name-planting-label".i18n();
+  String selectedplantingCode = "code-planting-label".i18n();
+  String selectedplantingDate = "planting-year".i18n();
+  String selectedsurveyDate = "survey-date".i18n();
   bool checkField = false;
   bool checkPlanting = true;
   bool checkSubdistrict = true;
@@ -189,7 +189,7 @@ class _DropdownForFieldState extends State<DropdownForField> {
                   ExpansionTile(
                       textColor: Colors.black,
                       iconColor: theme_color2,
-                      title: Text('ค้นหาเพิ่มเติม',
+                      title: Text('search-more'.i18n(),
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold)),
                       onExpansionChanged: (bool isExpanded) {
@@ -215,7 +215,7 @@ class _DropdownForFieldState extends State<DropdownForField> {
                               TextFormField(
                                 // controller: codeNameController,
                                 decoration: InputDecoration(
-                                  labelText: 'ที่อยู่แปลง',
+                                  labelText: 'field-address'.i18n(),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
@@ -278,7 +278,7 @@ class _DropdownForFieldState extends State<DropdownForField> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "ค้นหา",
+                                  "search".i18n(),
                                   style: TextStyle(fontSize: 20),
                                 ),
                                 SizedBox(width: 5.0),

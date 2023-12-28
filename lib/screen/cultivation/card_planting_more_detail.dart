@@ -1432,28 +1432,28 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
               "havest-date-label".i18n(),
               ChangeDateTime(widget.planting.primaryPlantHarvestDate) ==
                       "1 ม.ค. 2513"
-                  ? "ไม่ระบุ"
+                  ? "no-specified".i18n()
                   : ChangeDateTime(widget.planting.primaryPlantHarvestDate),
               Icons.eco_sharp,
               context),
           buildFourText(
               "secondary-plant-type-label".i18n(),
               widget.planting.secondaryPlantType.toString() == ""
-                  ? "ไม่ระบุ"
+                  ? "no-specified".i18n()
                   : widget.planting.secondaryPlantType.toString(),
               "secondary-plant-variety-label".i18n(),
               widget.planting.secondaryPlantVariety.toString() == ""
-                  ? "ไม่ระบุ"
+                  ? "no-specified".i18n()
                   : widget.planting.secondaryPlantVariety.toString(),
               "planting-date-label".i18n(),
               ChangeDateTime(widget.planting.secondaryPlantPlantingDate) ==
                       "1 ม.ค. 2513"
-                  ? "ไม่ระบุ"
+                  ? "no-specified".i18n()
                   : ChangeDateTime(widget.planting.secondaryPlantPlantingDate),
               "havest-date-label".i18n(),
               ChangeDateTime(widget.planting.secondaryPlantHarvestDate) ==
                       "1 ม.ค. 2513"
-                  ? "ไม่ระบุ"
+                  ? "no-specified".i18n()
                   : ChangeDateTime(widget.planting.secondaryPlantHarvestDate),
               Icons.eco_sharp),
           buildFiveText(
@@ -1467,70 +1467,70 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
                   : widget.planting.soilAmendments.toString(),
               "disease-management-label".i18n(),
               widget.planting.diseaseManagement.toString() == ""
-                  ? "ไม่ระบุ"
+                  ? "no-specified".i18n()
                   : widget.planting.diseaseManagement.toString(),
               "pest-management-label".i18n(),
               widget.planting.pestManagement.toString() == ""
-                  ? "ไม่ระบุ"
+                  ? "no-specified".i18n()
                   : widget.planting.pestManagement.toString(),
               Icons.emoji_nature_sharp),
           buildThreeTextTwoRow(
               "filling-temp-1-label".i18n(),
               ChangeDateTime(widget.planting.fertilizerDate1) == "1 ม.ค. 2513"
-                  ? "ไม่ระบุ"
+                  ? "no-specified".i18n()
                   : ChangeDateTime(widget.planting.fertilizerDate1),
               "filling-soil-label".i18n(),
               (widget.planting.fertilizerFormular1.toString() == ""
-                  ? "ไม่ระบุ"
+                  ? "no-specified".i18n()
                   : widget.planting.fertilizerFormular1.toString()),
               "filling-temp-2-label".i18n(),
               ChangeDateTime(widget.planting.fertilizerDate2) == "1 ม.ค. 2513"
-                  ? "ไม่ระบุ"
+                  ? "no-specified".i18n()
                   : ChangeDateTime(widget.planting.fertilizerDate2),
               "filling-soil-label".i18n(),
               widget.planting.fertilizerFormular2.toString() == ""
-                  ? "ไม่ระบุ"
+                  ? "no-specified".i18n()
                   : widget.planting.fertilizerFormular2.toString(),
               "filling-temp-3-label".i18n(),
               ChangeDateTime(widget.planting.fertilizerDate3) == "1 ม.ค. 2513"
-                  ? "ไม่ระบุ"
+                  ? "no-specified".i18n()
                   : ChangeDateTime(widget.planting.fertilizerDate3),
               "filling-soil-label".i18n(),
               widget.planting.fertilizerFormular3.toString() == ""
-                  ? "ไม่ระบุ"
+                  ? "no-specified".i18n()
                   : widget.planting.fertilizerFormular3.toString(),
               Icons.filter_hdr_sharp),
           buildSixText(
               "month-of-weeding-1-label".i18n(),
               widget.planting.weedingMonth1.toString() == "0"
-                  ? "ไม่ระบุ"
+                  ? "no-specified".i18n()
                   : widget.planting.weedingMonth1.toString(),
               "chemicals-used-label".i18n(),
               widget.planting.weedingChemicalOther1.toString() == ""
                   ? (widget.planting.herbicideByWeedingChemical1 == -1
-                      ? "ไม่ระบุ"
+                      ? "no-specified".i18n()
                       : weedingChemicalName[
                           widget.planting.herbicideByWeedingChemical1 - 1])
                   : widget.planting.weedingChemicalOther1.toString(),
               "month-of-weeding-2-label".i18n(),
               widget.planting.weedingMonth2.toString() == "0"
-                  ? "ไม่ระบุ"
+                  ? "no-specified".i18n()
                   : widget.planting.weedingMonth2.toString(),
               "chemicals-used-label".i18n(),
               widget.planting.weedingChemicalOther2.toString() == ""
                   ? (widget.planting.herbicideByWeedingChemical2 == -1
-                      ? "ไม่ระบุ"
+                      ? "no-specified".i18n()
                       : weedingChemicalName[
                           widget.planting.herbicideByWeedingChemical2 - 1])
                   : widget.planting.weedingChemicalOther2.toString(),
               "month-of-weeding-3-label".i18n(),
               widget.planting.weedingMonth3.toString() == "0"
-                  ? "ไม่ระบุ"
+                  ? "no-specified".i18n()
                   : widget.planting.weedingMonth3.toString(),
               "chemicals-used-label".i18n(),
               widget.planting.weedingChemicalOther3.toString() == ""
                   ? (widget.planting.herbicideByWeedingChemical3 == -1
-                      ? "ไม่ระบุ"
+                      ? "no-specified".i18n()
                       : weedingChemicalName[
                           widget.planting.herbicideByWeedingChemical3 - 1])
                   : widget.planting.weedingChemicalOther3.toString(),
@@ -1538,7 +1538,7 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
           buildOneText(
               "note-label".i18n(),
               widget.planting.note.toString() == ""
-                  ? "ไม่ระบุ"
+                  ? "no-specified".i18n()
                   : widget.planting.note.toString(),
               Icons.event_note_sharp),
         ],

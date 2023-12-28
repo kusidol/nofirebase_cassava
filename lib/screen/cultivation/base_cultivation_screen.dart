@@ -92,14 +92,14 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
     onfirstLoadData();
   }
 
-  String selectedPlantingName = "ชื่อการเพาะปลูก";
+  String selectedPlantingName = "name-planting-label".i18n();
   String selectedfieldName = "name-field-label".i18n();
-  String selectedAddress = "ที่อยู่การเพาะปลูก";
-  String selectedOwnerName = "เจ้าของการเพาะปลูก";
-  String selectedplantingItems = "ชื่อการเพาะปลูก";
-  String selectedplantingCode = "รหัสการเพาะปลูก";
-  String selectedplantingDate = "ปีที่เพาะปลูก";
-  String selectedsurveyDate = "วันที่สำรวจ";
+  String selectedAddress = "field-address-label".i18n();
+  String selectedOwnerName = "planting-owner".i18n();
+  String selectedplantingItems = "name-planting-label".i18n();
+  String selectedplantingCode = "code-planting-label".i18n();
+  String selectedplantingDate = "planting-year".i18n();
+  String selectedsurveyDate = "survey-date".i18n();
   String selectedFieldName = "name-field-label".i18n();
   @override
   void dispose() {
@@ -527,7 +527,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
     return ExpansionTile(
         textColor: Colors.black,
         iconColor: theme_color2,
-        title: Text('ค้นหาเพิ่มเติม',
+        title: Text('search-more'.i18n(),
             style: TextStyle(
               fontSize: sizeHeight(18, context),
             )),
@@ -554,7 +554,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                 TextFormField(
                   // controller: codeNameController,
                   decoration: InputDecoration(
-                    labelText: 'ที่อยู่แปลง',
+                    labelText: 'field-address'.i18n(),
                     border: OutlineInputBorder(
                       borderRadius:
                           BorderRadius.circular(sizeHeight(10, context)),
@@ -1516,7 +1516,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                   color: Colors.white,
                                 ),
                                 Text(
-                                  ' การเพาะปลูก',
+                                  ' ' + 'plantings-label'.i18n(),
                                   style: TextStyle(
                                       fontSize: sizeHeight(16, context),
                                       fontWeight: FontWeight.w600),
@@ -1575,7 +1575,9 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                       Row(
                                         children: [
                                           Text(
-                                            ' แปลง : ' +
+                                            ' ' +
+                                                'field-label'.i18n() +
+                                                ' : ' +
                                                 'name-field-label'.i18n(),
                                             style: TextStyle(
                                               fontSize: sizeHeight(14, context),

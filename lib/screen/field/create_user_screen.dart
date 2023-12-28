@@ -418,7 +418,7 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "ที่อยู่" + "*",
+                      "address".i18n() + "*",
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'OpenSans',
@@ -437,7 +437,8 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                     validator1: (value) =>
                         InputCodeValidator.validateNotSpecialCharacter(
                             value, address),
-                    labelText: address == "" ? "กรอกที่อยู่" : address,
+                    labelText:
+                        address == "" ? "insert-address".i18n() : address,
                     successText: "",
                     inputIcon: Icon(Icons.eco_sharp),
                   ),
@@ -471,7 +472,7 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "จังหวัด" + "*",
+                      "province".i18n() + "*",
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'OpenSans',
@@ -517,18 +518,18 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                     //     ? _selectPreviousPlant
                     //     : planting.previousPlant,
                     selectedItem: selectedProvince_value == ""
-                        ? "เลือกข้อมูลจังหวัด"
+                        ? "select-province-info".i18n()
                         : selectedProvince_value,
                     showSearchBox: true,
-                    searchFieldProps: const TextFieldProps(
+                    searchFieldProps: TextFieldProps(
                       cursorColor: Colors.blue,
                       autofillHints: [AutofillHints.name],
                       decoration: InputDecoration(
-                        hintText: 'ค้นหา',
+                        hintText: 'search'.i18n(),
                       ),
                     ),
                     validator: (value) => InputCodeValidator.validateDropDown(
-                        value, "เลือกข้อมูลจังหวัด"),
+                        value, "select-province-info".i18n()),
                   ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   Container(
@@ -584,11 +585,11 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                               ? "select-district-info".i18n()
                               : selectedDistrict_value,
                           showSearchBox: true,
-                          searchFieldProps: const TextFieldProps(
+                          searchFieldProps: TextFieldProps(
                             cursorColor: Colors.blue,
                             autofillHints: [AutofillHints.name],
                             decoration: InputDecoration(
-                              hintText: 'ค้นหา',
+                              hintText: 'search'.i18n(),
                             ),
                           ),
                           validator: (value) =>
@@ -597,14 +598,14 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                         )
                       : Container(
                           child: Center(
-                            child: Text("ต้องเลือกจังหวัดก่อน"),
+                            child: Text("must-select-province-first".i18n()),
                           ),
                         ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "ตำบล" + "*",
+                      "sub-district".i18n() + "*",
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'OpenSans',
@@ -651,19 +652,19 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                           //     ? _selectPreviousPlant
                           //     : planting.previousPlant,
                           selectedItem: selectedSubdistrict_value == ""
-                              ? "เลือกข้อมูลตำบล"
+                              ? "select-sub-district-info".i18n()
                               : selectedSubdistrict_value,
                           showSearchBox: true,
-                          searchFieldProps: const TextFieldProps(
+                          searchFieldProps: TextFieldProps(
                             cursorColor: Colors.blue,
                             autofillHints: [AutofillHints.name],
                             decoration: InputDecoration(
-                              hintText: 'ค้นหา',
+                              hintText: 'search'.i18n(),
                             ),
                           ),
                           validator: (value) =>
                               InputCodeValidator.validateDropDown(
-                                  value, "เลือกข้อมูลตำบล"),
+                                  value, "select-sub-district-info".i18n()),
                         )
                       : Container(
                           child: Center(

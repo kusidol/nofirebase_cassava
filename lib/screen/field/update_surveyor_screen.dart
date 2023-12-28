@@ -35,8 +35,8 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
   // SET UP FOR PAGE
   String? token = tokenFromLogin?.token;
   bool updateStatus = true;
-  String selectedFirstName = "ชื่อจริง";
-  String selectedLastName = "นามสกุล";
+  String selectedFirstName = "first-name".i18n();
+  String selectedLastName = "last-name".i18n();
 
   // Staff Data
   bool isLoadingStaff = false;
@@ -649,7 +649,7 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
     return ExpansionTile(
         textColor: Colors.black,
         iconColor: theme_color2,
-        title: Text('ค้นหาเพิ่มเติม',
+        title: Text('search-more'.i18n(),
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
         onExpansionChanged: (bool isExpanded) {
           if (!isExpanded) {
@@ -719,7 +719,7 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "ค้นหา",
+                    "search".i18n(),
                     style: TextStyle(fontSize: 20),
                   ),
                   SizedBox(width: 5.0),
@@ -779,7 +779,7 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
     return ExpansionTile(
         textColor: Colors.black,
         iconColor: theme_color2,
-        title: Text('ค้นหาเพิ่มเติม',
+        title: Text('search-more'.i18n(),
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
         onExpansionChanged: (bool isExpanded) {
           if (!isExpanded) {
@@ -846,7 +846,7 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "ค้นหา",
+                    "search".i18n(),
                     style: TextStyle(fontSize: 20),
                   ),
                   SizedBox(width: 5.0),

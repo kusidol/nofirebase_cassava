@@ -344,7 +344,9 @@ class CardItemWithOutImage_Planting_Calendar extends StatelessWidget {
                                       Expanded(
                                         flex: 10,
                                         child: Text(
-                                          '  การเพาะปลูก : ${itemID}',
+                                          '  ' +
+                                              'plantings-label'.i18n() +
+                                              ' : ${itemID}',
                                           maxLines: 1,
                                           overflow: TextOverflow.fade,
                                           softWrap: false,
@@ -415,7 +417,7 @@ class CardItemWithOutImage_Planting_Calendar extends StatelessWidget {
                                     child: Row(
                                       children: [
                                         Text(
-                                          '     แปลง: ',
+                                          '     ' + 'field-label'.i18n() + ': ',
                                           style: TextStyle(
                                             fontSize: sizeHeight(14, context),
                                           ),
@@ -611,7 +613,9 @@ class CardItemWithOutImage_Planting extends StatelessWidget {
                                       Expanded(
                                         flex: 10,
                                         child: Text(
-                                          '  การเพาะปลูก : ${itemID}',
+                                          '  ' +
+                                              'plantings-label'.i18n() +
+                                              ' : ${itemID}',
                                           maxLines: 1,
                                           overflow: TextOverflow.fade,
                                           softWrap: false,
@@ -681,7 +685,7 @@ class CardItemWithOutImage_Planting extends StatelessWidget {
                                     child: Row(
                                       children: [
                                         Text(
-                                          '     แปลง: ',
+                                          '     ' + 'field-label'.i18n() + ': ',
                                           style: TextStyle(
                                             fontSize: sizeHeight(14, context),
                                           ),
@@ -921,7 +925,9 @@ class CardItemWithOutImage_Calendar extends StatelessWidget {
                                     child: Row(
                                       children: [
                                         Text(
-                                          '     เพาะปลูก: ',
+                                          '     ' +
+                                              'planting-label'.i18n() +
+                                              ': ',
                                           style: TextStyle(
                                             fontSize: sizeHeight(14, context),
                                           ),
@@ -1158,7 +1164,9 @@ class CardItemWithOutImage extends StatelessWidget {
                                     child: Row(
                                       children: [
                                         Text(
-                                          '     เพาะปลูก: ',
+                                          '     ' +
+                                              'planting-label'.i18n() +
+                                              ': ',
                                           style: TextStyle(
                                             fontSize: sizeHeight(14, context),
                                           ),
@@ -1419,7 +1427,9 @@ class CardItemForFieldNoImage extends StatelessWidget {
                                             Row(
                                               children: [
                                                 Text(
-                                                  ' แปลง : ',
+                                                  ' ' +
+                                                      'field-label'.i18n() +
+                                                      ' : ',
                                                   style: TextStyle(
                                                     fontSize:
                                                         sizeHeight(14, context),
@@ -1746,7 +1756,7 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                 child: Row(
                                   children: [
                                     Text(
-                                      '     เพาะปลูก: ',
+                                      '     ' + 'planting-label'.i18n() + ': ',
                                       style: TextStyle(
                                         fontSize: sizeHeight(14, context),
                                       ),
@@ -1956,7 +1966,9 @@ class _AnimatedListItemState_Planting extends State<AnimatedListItem_Planting> {
                                     size: sizeHeight(25, context),
                                   ),
                                   Text(
-                                    '  การเพาะปลูก : ${widget.itemID}',
+                                    '  ' +
+                                        'plantings-label'.i18n() +
+                                        ' : ${widget.itemID}',
                                     style: TextStyle(
                                         fontSize: sizeHeight(16, context),
                                         fontWeight: FontWeight.w600),
@@ -2005,7 +2017,7 @@ class _AnimatedListItemState_Planting extends State<AnimatedListItem_Planting> {
                                 child: Row(
                                   children: [
                                     Text(
-                                      '     แปลง: ',
+                                      '     ' + 'field-label'.i18n() + ': ',
                                       style: TextStyle(
                                         fontSize: sizeHeight(14, context),
                                       ),

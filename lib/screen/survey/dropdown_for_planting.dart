@@ -59,9 +59,9 @@ class _DropdownForPlantingState extends State<DropdownForPlanting> {
   final List<String> fieldItems = [];
   final List<String> fieldCode = [];
   final List<String> surveyItems = [
-    'แปลงที่ 1',
-    'แปลงที่ 2',
-    'แปลงที่ 3',
+    'field-no.'.i18n() + ' 1',
+    'field-no.'.i18n() + ' 2',
+    'field-no.'.i18n() + ' 3',
   ];
   final List<String> surveyDateItems = [];
   final List<String> farmerItems = [];
@@ -78,14 +78,14 @@ class _DropdownForPlantingState extends State<DropdownForPlanting> {
   late Survey survey;
   late TargetOfSurvey targetOfsurvey;
   late UserInField typeOwner;
-  String selectedPlantingName = "ชื่อการเพาะปลูก";
+  String selectedPlantingName = "name-planting-label".i18n();
   String selectedfieldName = "name-field-label".i18n();
-  String selectedAddress = "ที่อยู่การเพาะปลูก";
-  String selectedOwnerName = "เจ้าของการเพาะปลูก";
-  String selectedplantingItems = "ชื่อการเพาะปลูก";
-  String selectedplantingCode = "รหัสการเพาะปลูก";
-  String selectedplantingDate = "ปีที่เพาะปลูก";
-  String selectedsurveyDate = "วันที่สำรวจ";
+  String selectedAddress = "planting-address-label".i18n();
+  String selectedOwnerName = "planting-owner".i18n();
+  String selectedplantingItems = "name-planting-label".i18n();
+  String selectedplantingCode = "code-planting-label".i18n();
+  String selectedplantingDate = "planting-year".i18n();
+  String selectedsurveyDate = "survey-date".i18n();
   bool checkField = false;
   bool checkPlanting = true;
   bool checkSubdistrict = true;
@@ -343,7 +343,7 @@ class _DropdownForPlantingState extends State<DropdownForPlanting> {
         builder: (context, dropdownplanting, index) {
           return Scaffold(
             appBar: AppBar(
-              title: Text('เลือกเพาะปลูก'),
+              title: Text('select-planting-label'.i18n()),
               backgroundColor: theme_color2,
             ),
             body: Container(
@@ -360,7 +360,7 @@ class _DropdownForPlantingState extends State<DropdownForPlanting> {
                   ExpansionTile(
                       textColor: Colors.black,
                       iconColor: theme_color2,
-                      title: Text('ค้นหาเพิ่มเติม',
+                      title: Text('search-more'.i18n(),
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold)),
                       leading: Icon(Icons.perm_contact_calendar_outlined),
@@ -380,7 +380,7 @@ class _DropdownForPlantingState extends State<DropdownForPlanting> {
                               TextFormField(
                                 controller: codeNameController,
                                 decoration: InputDecoration(
-                                  labelText: 'ที่อยู่การเพาะปลูก',
+                                  labelText: 'planting-address-label'.i18n(),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
@@ -410,7 +410,7 @@ class _DropdownForPlantingState extends State<DropdownForPlanting> {
                               TextFormField(
                                 controller: locationController,
                                 decoration: InputDecoration(
-                                  labelText: 'เจ้าของการเพาะปลูก',
+                                  labelText: 'planting-owner'.i18n(),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
@@ -425,7 +425,7 @@ class _DropdownForPlantingState extends State<DropdownForPlanting> {
                               TextFormField(
                                 controller: cultivationController,
                                 decoration: InputDecoration(
-                                  labelText: 'ชื่อการเพาะปลูก',
+                                  labelText: 'name-planting-label'.i18n(),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
@@ -547,7 +547,7 @@ class _DropdownForPlantingState extends State<DropdownForPlanting> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "ค้นหา",
+                                  "search".i18n(),
                                   style: TextStyle(fontSize: 20),
                                 ),
                                 SizedBox(width: 5.0),

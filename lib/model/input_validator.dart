@@ -1,3 +1,4 @@
+import 'package:localization/src/localization_extension.dart';
 import 'package:mun_bot/entities/planting.dart';
 
 class InputCodeValidator {
@@ -109,12 +110,11 @@ class InputCodeValidator {
         return null;
     }
     return value == null || value.isEmpty
-        ? "กรุณากรอกข้อมูลตัวเลขหรืออักษร"
+        ? "please-insert-number-char".i18n()
         : null;
   }
 
   static String? validateNumber(String? value, String input) {
-    print("VALIDATE |||||| VALUE : ${value}, INPUT : ${input}");
     RegExp regex = new RegExp(r'(^[0-9]*)([.]{0,1})([0-9]*$)');
     if (input == "0.0") {
       if (value != "") {
@@ -183,7 +183,6 @@ class InputCodeValidator {
   }
 
   static String? validateBoxNumber(String? value, String input) {
-    print("VALIDATE |||||| VALUE : ${value}, INPUT : ${input}");
     RegExp regex = new RegExp(r'(^[0-9]*)([.]{0,1})([0-9]*$)');
     if (input == "0.0") {
       if (value != "") {
@@ -252,7 +251,6 @@ class InputCodeValidator {
   }
 
   static String? validateBoxHumidity(String? value, String input) {
-    print("VALIDATE |||||| VALUE : ${value}, INPUT : ${input}");
     RegExp regex = new RegExp(r'(^[0-9]*)([.]{0,1})([0-9]*$)');
     if (input == "0.0") {
       if (value != "") {
@@ -329,19 +327,18 @@ class InputCodeValidator {
 
   static String? validateMyRadioListTile(int? value, int input) {
     if (value == null && input == 0) {
-      return 'กรุณาเลือก Option ที่มีอยู่';
+      return 'please-select-option'.i18n();
     }
     return null;
   }
 
   static String? validateDropdownProvider(String? value) {
-    print("VALIDATE IS WORKING : ${value}");
     if (value == "เพิ่มเติม") {
-      return 'กรุณาเลือก Option ที่มีอยู่';
-    } else if (value == "เพิ่มเติม / เพิ่มเกษตรใหม่") {
-      return 'กรุณาเลือก Option ที่มีอยู่';
+      return 'please-select-option'.i18n();
+    } else if (value == 'add-new-agriculture'.i18n()) {
+      return 'please-select-option'.i18n();
     } else if (value == null || value.isEmpty) {
-      return 'กรุณาเลือก Option ที่มีอยู่';
+      return 'please-select-option'.i18n();
     }
     return null;
   }

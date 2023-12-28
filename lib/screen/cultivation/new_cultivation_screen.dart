@@ -85,10 +85,10 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
   int lastFieldID = 0;
   String areaSize = "";
   String selectedfieldName = "name-field-label".i18n();
-  String selectedfieldCode = "รหัส (แปลง)";
-  String selectedfieldLocation = "ที่อยู่";
+  String selectedfieldCode = "code-field".i18n();
+  String selectedfieldLocation = "address".i18n();
   String selectedfieldOwner = "owner".i18n();
-  String? selectBesidePlant = "เลือกชนิดพืชแปลงข้างเคียง";
+  String? selectBesidePlant = "select-beside-plant-label".i18n();
   String? _selectChemical1 = "เลือกสารเคมีที่ใช้";
   String? _selectChemical2 = "เลือกสารเคมีที่ใช้";
   String? _selectChemical3 = "เลือกสารเคมีที่ใช้";
@@ -96,7 +96,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
   String? _selectPestManagement = "เลือกวิธีการจัดการแมลง";
   String? _selectPreviousPlant = "เลือกพืชที่ปลูกก่อนหน้า";
   String? _selectSoakingStemChemical = "เลือกสารเคมีกำจัดแมลง";
-  String? _selectNumTillage = "เลือกจำนวนครั้งการไถเตรียมแปลง";
+  String? _selectNumTillage = "select-number-plow".i18n();
   String? _selectSoilAmendments = "เลือกวัสดุปรับปรุงดิน";
   String? _selectWeedingMonth1 = "เลือกเดือน";
   String? _selectWeedingMonth2 = "เลือกเดือน";
@@ -952,11 +952,11 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                       ? _selectPreviousPlant
                       : planting.previousPlant,
                   showSearchBox: true,
-                  searchFieldProps: const TextFieldProps(
+                  searchFieldProps: TextFieldProps(
                     cursorColor: Colors.blue,
                     autofillHints: [AutofillHints.name],
                     decoration: InputDecoration(
-                      hintText: 'ค้นหา',
+                      hintText: 'search'.i18n(),
                     ),
                   ),
                   validator: (value) => InputCodeValidator.validateDropDown(
@@ -1012,7 +1012,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                         width: sizeWidth(2, context),
                       ),
                     ),
-                    hintText: "ชนิดพืชแปลงข้างเคียง",
+                    hintText: "beside-plant-label".i18n(),
                   ),
                   popupItemDisabled: isItemDisabled,
                   onChanged: (value) {
@@ -1025,15 +1025,15 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                       ? selectBesidePlant
                       : planting.besidePlant,
                   showSearchBox: true,
-                  searchFieldProps: const TextFieldProps(
+                  searchFieldProps: TextFieldProps(
                     cursorColor: Colors.blue,
                     autofillHints: [AutofillHints.name],
                     decoration: InputDecoration(
-                      hintText: 'ค้นหา',
+                      hintText: 'search'.i18n(),
                     ),
                   ),
                   validator: (value) => InputCodeValidator.validateDropDown(
-                      value, "เลือกชนิดพืชแปลงข้างเคียง"),
+                      value, "select-beside-plant-label".i18n()),
                 ),
                 selectBesidePlant == "อื่นๆ"
                     ? AnimTFF(
@@ -1675,11 +1675,11 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                 },
                 selectedItem: _selectWeedingMonth1,
                 showSearchBox: true,
-                searchFieldProps: const TextFieldProps(
+                searchFieldProps: TextFieldProps(
                   cursorColor: Colors.blue,
                   autofillHints: [AutofillHints.name],
                   decoration: InputDecoration(
-                    hintText: 'ค้นหา',
+                    hintText: 'search'.i18n(),
                   ),
                 ),
                 validator: (value) {
@@ -1736,11 +1736,11 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
               },
               selectedItem: _selectChemical1,
               showSearchBox: true,
-              searchFieldProps: const TextFieldProps(
+              searchFieldProps: TextFieldProps(
                 cursorColor: Colors.blue,
                 autofillHints: [AutofillHints.name],
                 decoration: InputDecoration(
-                  hintText: 'ค้นหา',
+                  hintText: 'search'.i18n(),
                 ),
               ),
               validator: (value) {
@@ -1809,11 +1809,11 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                 },
                 selectedItem: _selectWeedingMonth2,
                 showSearchBox: true,
-                searchFieldProps: const TextFieldProps(
+                searchFieldProps: TextFieldProps(
                   cursorColor: Colors.blue,
                   autofillHints: [AutofillHints.name],
                   decoration: InputDecoration(
-                    hintText: 'ค้นหา',
+                    hintText: 'search'.i18n(),
                   ),
                 ),
                 validator: (value) {
@@ -1869,11 +1869,11 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
               },
               selectedItem: _selectChemical2,
               showSearchBox: true,
-              searchFieldProps: const TextFieldProps(
+              searchFieldProps: TextFieldProps(
                 cursorColor: Colors.blue,
                 autofillHints: [AutofillHints.name],
                 decoration: InputDecoration(
-                  hintText: 'ค้นหา',
+                  hintText: 'search'.i18n(),
                 ),
               ),
               validator: (value) {
@@ -1942,12 +1942,10 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                 },
                 selectedItem: _selectWeedingMonth3,
                 showSearchBox: true,
-                searchFieldProps: const TextFieldProps(
+                searchFieldProps: TextFieldProps(
                   cursorColor: Colors.blue,
                   autofillHints: [AutofillHints.name],
-                  decoration: InputDecoration(
-                    hintText: 'ค้นหา',
-                  ),
+                  decoration: InputDecoration(hintText: 'search'.i18n()),
                 ),
                 validator: (value) {
                   if (value == null) {
@@ -2002,11 +2000,11 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
               },
               selectedItem: _selectChemical3,
               showSearchBox: true,
-              searchFieldProps: const TextFieldProps(
+              searchFieldProps: TextFieldProps(
                 cursorColor: Colors.blue,
                 autofillHints: [AutofillHints.name],
                 decoration: InputDecoration(
-                  hintText: 'ค้นหา',
+                  hintText: 'search'.i18n(),
                 ),
               ),
               validator: (value) {
@@ -2375,8 +2373,8 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                             ? Column(
                                 children: [
                                   Container(
-                                    child: Text(
-                                        "แปลงที่เลือก ${fieldNameByPassingValue}"),
+                                    child: Text("selected-field".i18n() +
+                                        " ${fieldNameByPassingValue}"),
                                   ),
                                   Container(
                                     child: ExpansionTile(
@@ -2488,9 +2486,9 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                                     });
                                   }
                                 },
-                                hint: const Center(
+                                hint: Center(
                                     child: Text(
-                                  'กรุณาเลือกแปลง',
+                                  'please-select-field'.i18n(),
                                   style: TextStyle(color: Colors.black),
                                 )),
                                 // Hide the default underline
@@ -2547,7 +2545,8 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                                     dropdownForShow
                                         .map((e) => Center(
                                               child: Text(
-                                                "แปลงที่เลือก : ${e}",
+                                                'selected-field'.i18n() +
+                                                    " : ${e}",
                                                 style: TextStyle(
                                                     fontSize:
                                                         sizeHeight(18, context),
@@ -2626,8 +2625,9 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                 validator1: (value) =>
                     InputCodeValidator.validateNotSpecialCharacter(
                         value, planting.code),
-                labelText:
-                    planting.code == "" ? "กรอกรหัสการเพาะปลูก" : planting.code,
+                labelText: planting.code == ""
+                    ? "insert-planting-code".i18n()
+                    : planting.code,
                 successText: "",
                 inputIcon: Icon(Icons.code_sharp),
               ),
@@ -2655,8 +2655,9 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                 validator1: (value) =>
                     InputCodeValidator.validateNotSpecialCharacter(
                         value, planting.name),
-                labelText:
-                    planting.name == "" ? "กรอกชื่อการเพาะปลูก" : planting.name,
+                labelText: planting.name == ""
+                    ? "insert-planting-name".i18n()
+                    : planting.name,
                 successText: "",
                 inputIcon: Icon(Icons.eco_sharp),
               ),
@@ -2832,11 +2833,11 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                       ? _selectSoakingStemChemical
                       : planting.soakingStemChemical,
                   showSearchBox: true,
-                  searchFieldProps: const TextFieldProps(
+                  searchFieldProps: TextFieldProps(
                     cursorColor: Colors.blue,
                     autofillHints: [AutofillHints.name],
                     decoration: InputDecoration(
-                      hintText: 'ค้นหา',
+                      hintText: 'search'.i18n(),
                     ),
                   ),
                   validator: (value) => InputCodeValidator.validateDropDown(
@@ -2875,7 +2876,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                         width: sizeWidth(2, context),
                       ),
                     ),
-                    hintText: "จำนวนครั้งการไถเตรียมแปลง",
+                    hintText: "number-tillage-label".i18n(),
                   ),
                   popupItemDisabled: isItemDisabled,
                   onChanged: (value) {
@@ -2888,15 +2889,15 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                       ? _selectNumTillage
                       : planting.numTillage,
                   showSearchBox: true,
-                  searchFieldProps: const TextFieldProps(
+                  searchFieldProps: TextFieldProps(
                     cursorColor: Colors.blue,
                     autofillHints: [AutofillHints.name],
                     decoration: InputDecoration(
-                      hintText: 'ค้นหา',
+                      hintText: 'search'.i18n(),
                     ),
                   ),
                   validator: (value) => InputCodeValidator.validateDropDown(
-                      value, "เลือกจำนวนครั้งการไถเตรียมแปลง"),
+                      value, "select-number-plow".i18n()),
                 ),
                 SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                 Container(
@@ -2930,7 +2931,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                         width: sizeWidth(2, context),
                       ),
                     ),
-                    hintText: "จำนวนครั้งการไถเตรียมแปลง",
+                    hintText: "number-tillage-label".i18n(),
                   ),
                   popupItemDisabled: isItemDisabled,
                   onChanged: (value) {
@@ -2943,11 +2944,11 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                       ? _selectSoilAmendments
                       : planting.soilAmendments,
                   showSearchBox: true,
-                  searchFieldProps: const TextFieldProps(
+                  searchFieldProps: TextFieldProps(
                     cursorColor: Colors.blue,
                     autofillHints: [AutofillHints.name],
                     decoration: InputDecoration(
-                      hintText: 'ค้นหา',
+                      hintText: 'search'.i18n(),
                     ),
                   ),
                   validator: (value) => InputCodeValidator.validateDropDown(
@@ -3015,11 +3016,11 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                   selectedItem: _selectDisManangement,
 
                   showSearchBox: true,
-                  searchFieldProps: const TextFieldProps(
+                  searchFieldProps: TextFieldProps(
                     cursorColor: Colors.blue,
                     autofillHints: [AutofillHints.name],
                     decoration: InputDecoration(
-                      hintText: 'ค้นหา',
+                      hintText: 'search'.i18n(),
                     ),
                   ),
                   // validator: (value) {
@@ -3071,11 +3072,11 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                   },
                   selectedItem: _selectPestManagement,
                   showSearchBox: true,
-                  searchFieldProps: const TextFieldProps(
+                  searchFieldProps: TextFieldProps(
                     cursorColor: Colors.blue,
                     autofillHints: [AutofillHints.name],
                     decoration: InputDecoration(
-                      hintText: 'ค้นหา',
+                      hintText: 'search'.i18n(),
                     ),
                   ),
                 ),

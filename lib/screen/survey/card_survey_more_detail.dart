@@ -49,9 +49,9 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
   @override
   void initState() {
     super.initState();
-   // countDiseaseBySurveyId(widget.survey.surveyID);
-   // countNaturalEnemyBySurveyId(widget.survey.surveyID);
-   // countPestPhaseSurveyBySurveyId(widget.survey.surveyID);
+    // countDiseaseBySurveyId(widget.survey.surveyID);
+    // countNaturalEnemyBySurveyId(widget.survey.surveyID);
+    // countPestPhaseSurveyBySurveyId(widget.survey.surveyID);
 
     _animationController = AnimationController(
       vsync:
@@ -83,7 +83,7 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
     }
   }*/
 
- /* Future<String?> countDiseaseBySurveyId(int id) async {
+  /* Future<String?> countDiseaseBySurveyId(int id) async {
     try {
       String? token = tokenFromLogin?.token;
       SurveyTargetPointService surveyTarget = SurveyTargetPointService();
@@ -103,7 +103,7 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
     }
   }*/
 
- /* Future<String?> countNaturalEnemyBySurveyId(int id) async {
+  /* Future<String?> countNaturalEnemyBySurveyId(int id) async {
     try {
       String? token = tokenFromLogin?.token;
       SurveyTargetPointService surveyTarget = SurveyTargetPointService();
@@ -124,60 +124,58 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
     }
   }*/
 
-
-
   showAlertDialog(context) => showCupertinoDialog<void>(
-    context: context,
-    barrierDismissible: false,
-    builder: (BuildContext context) => CupertinoAlertDialog(
-      title: Text('alert'.i18n()),
-      content: Column(
-        children: [
-          Text(
-            'survey-point-create1'.i18n(),
-            style: TextStyle(fontSize: 15, color: Colors.black),
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: Text('alert'.i18n()),
+          content: Column(
+            children: [
+              Text(
+                'survey-point-create1'.i18n(),
+                style: TextStyle(fontSize: 15, color: Colors.black),
+              ),
+              Text(
+                'survey-point-create2'.i18n(),
+                style: TextStyle(fontSize: 15, color: Colors.black),
+              ),
+            ],
           ),
-          Text(
-            'survey-point-create2'.i18n(),
-            style: TextStyle(fontSize: 15, color: Colors.black),
-          ),
-        ],
-      ),
-      actions: <CupertinoDialogAction>[
-        CupertinoDialogAction(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text(
-            'no'.i18n(),
-            style: TextStyle(
-              color: Colors.blue,
-              fontWeight: FontWeight.w400,
+          actions: <CupertinoDialogAction>[
+            CupertinoDialogAction(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'no'.i18n(),
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
             ),
-          ),
-        ),
-        CupertinoDialogAction(
-          onPressed: () {
-            Navigator.of(context).pop();
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  maintainState: false,
-                  builder: (context) =>
-                  new BaseSurveyDetailInfo(widget.survey, false)),
-            );
-          },
-          child: Text(
-            'yes'.i18n(),
-            style: TextStyle(
-              color: Colors.red,
-              fontWeight: FontWeight.w400,
+            CupertinoDialogAction(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      maintainState: false,
+                      builder: (context) =>
+                          new BaseSurveyDetailInfo(widget.survey, false)),
+                );
+              },
+              child: Text(
+                'yes'.i18n(),
+                style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
             ),
-          ),
+          ],
         ),
-      ],
-    ),
-  );
+      );
 
   Widget _buildSurveyBtn() {
     return Container(
@@ -286,54 +284,53 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
     //print("widget.survey : ${widget.survey}");
     bool isDeleted = await widget.surveyProvider.deleteSurvey(widget.survey);
     if (isDeleted) {
-
       Navigator.of(context).pop();
       Navigator.of(context).pop();
     } else {}
   }
 
   _deleteConfirmation(context) => showCupertinoDialog<void>(
-    context: context,
-    barrierDismissible: false,
-    builder: (BuildContext context) => CupertinoAlertDialog(
-      title: Text("Confirm Deletion"),
-      content: Column(
-        children: [
-          Text(
-            'survey-point-delete1'.i18n(),
-            style: TextStyle(fontSize: 15, color: Colors.black),
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: Text("Confirm Deletion"),
+          content: Column(
+            children: [
+              Text(
+                'survey-point-delete1'.i18n(),
+                style: TextStyle(fontSize: 15, color: Colors.black),
+              ),
+            ],
           ),
-        ],
-      ),
-      actions: <CupertinoDialogAction>[
-        CupertinoDialogAction(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text(
-            'no'.i18n(),
-            style: TextStyle(
-              color: Colors.blue,
-              fontWeight: FontWeight.w400,
+          actions: <CupertinoDialogAction>[
+            CupertinoDialogAction(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'no'.i18n(),
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
             ),
-          ),
-        ),
-        CupertinoDialogAction(
-          onPressed: () {
-            _handleDeletion();
-            Navigator.of(context).pop();
-          },
-          child: Text(
-            'yes'.i18n(),
-            style: TextStyle(
-              color: Colors.red,
-              fontWeight: FontWeight.w400,
+            CupertinoDialogAction(
+              onPressed: () {
+                _handleDeletion();
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'yes'.i18n(),
+                style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
             ),
-          ),
+          ],
         ),
-      ],
-    ),
-  );
+      );
 
   Widget buildFourTextTwoRow(
       String label1,
@@ -761,15 +758,15 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
                         buidThreeText(
                             "beside-plant-label".i18n(),
                             widget.survey.besidePlant.toString() == ""
-                                ? "ไม่ระบุ"
+                                ? "no-specified".i18n()
                                 : widget.survey.besidePlant.toString(),
                             "primary-weed-label".i18n(),
                             widget.survey.weed.toString() == ""
-                                ? "ไม่ระบุ"
+                                ? "no-specified".i18n()
                                 : widget.survey.weed.toString(),
                             "soil-type".i18n(),
                             widget.survey.soilType.toString() == ""
-                                ? "ไม่ระบุ"
+                                ? "no-specified".i18n()
                                 : widget.survey.soilType.toString(),
                             Icons.landscape_sharp),
                         SizedBox(
@@ -781,14 +778,14 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
                             "picture-owner".i18n(),
                             widget.survey.imgOwner.toString() == "0" ||
                                     widget.survey.imgOwner.toString().isEmpty
-                                ? "ไม่ระบุ"
+                                ? "no-specified".i18n()
                                 : widget.survey.imgOwner.toString(),
                             "photographer".i18n(),
                             widget.survey.imgPhotographer.toString() == "0" ||
                                     widget.survey.imgPhotographer
                                         .toString()
                                         .isEmpty
-                                ? "ไม่ระบุ"
+                                ? "no-specified".i18n()
                                 : widget.survey.imgPhotographer.toString(),
                             Icons.camera_alt_sharp),
                         SizedBox(
@@ -873,15 +870,15 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
                         buidThreeText(
                             "beside-plant-label".i18n(),
                             widget.survey.besidePlant.toString() == ""
-                                ? "ไม่ระบุ"
+                                ? "no-specified".i18n()
                                 : widget.survey.besidePlant.toString(),
                             "primary-weed-label".i18n(),
                             widget.survey.weed.toString() == ""
-                                ? "ไม่ระบุ"
+                                ? "no-specified".i18n()
                                 : widget.survey.weed.toString(),
                             "soil-type".i18n(),
                             widget.survey.soilType.toString() == ""
-                                ? "ไม่ระบุ"
+                                ? "no-specified".i18n()
                                 : widget.survey.soilType.toString(),
                             Icons.landscape_sharp),
                         SizedBox(
@@ -893,14 +890,14 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
                             "picture-owner".i18n(),
                             widget.survey.imgOwner.toString() == "0" ||
                                     widget.survey.imgOwner.toString().isEmpty
-                                ? "ไม่ระบุ"
+                                ? "no-specified".i18n()
                                 : widget.survey.imgOwner.toString(),
                             "photographer".i18n(),
                             widget.survey.imgPhotographer.toString() == "0" ||
                                     widget.survey.imgPhotographer
                                         .toString()
                                         .isEmpty
-                                ? "ไม่ระบุ"
+                                ? "no-specified".i18n()
                                 : widget.survey.imgPhotographer.toString(),
                             Icons.camera_alt_sharp),
                         SizedBox(

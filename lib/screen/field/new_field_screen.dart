@@ -230,9 +230,8 @@ class _NewFieldScreenState extends State<NewFieldScreen>
     // FOR GET LOCATION GPS
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-              'ระบบ GPS ปิดอยู่, กรุณาเปิดการทำงานระบบ GPS สำหรับการอัปเดตค่าละติจูดและลองจิจูด')));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('gps-off-alert'.i18n())));
     }
 
     if (widget.fieldFromPassPage == null) {
@@ -566,7 +565,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
 
   Widget _buildCreateFieldFirstPage(DropdownFarmer dropdownFarmer) {
     List<String> dropdownForShow = dropdownFarmer.farmerString;
-    dropdownForShow.add("เพิ่มเติม / เพิ่มเกษตรใหม่");
+    dropdownForShow.add('add-new-agriculture'.i18n());
 
     return Container(
       height: SizeConfig.screenHeight! * 0.57,
@@ -671,7 +670,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                                     value),
                             value: selectedValue,
                             onChanged: (value) {
-                              if (value == "เพิ่มเติม / เพิ่มเกษตรใหม่") {
+                              if (value == 'add-new-agriculture'.i18n()) {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (BuildContext context) => Provider(
@@ -810,7 +809,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "ที่อยู่" + "*",
+                      "address".i18n() + "*",
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'OpenSans',
@@ -827,7 +826,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                         {field.address = save_Address}
                     },
                     labelText: field.address == ""
-                        ? "กรอกที่อยู่ของแปลง"
+                        ? "insert-field-address-label".i18n()
                         : field.address,
                     successText: "",
                     inputIcon: Icon(Icons.eco_sharp),
@@ -839,7 +838,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "หมู่",
+                      "moo".i18n(),
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'OpenSans',
@@ -856,7 +855,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                         {field.moo = save_Moo}
                     },
                     labelText:
-                        field.moo == "" ? "กรอกหมู่ที่อยู่ของแปลง" : field.moo,
+                        field.moo == "" ? "insert-field-moo".i18n() : field.moo,
                     successText: "",
                     inputIcon: Icon(Icons.eco_sharp),
                   ),
@@ -864,7 +863,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "ถนน",
+                      "road".i18n(),
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'OpenSans',
@@ -880,8 +879,9 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                       if (text.isEmpty || (text == null) || (text == ""))
                         {field.road = save_Road}
                     },
-                    labelText:
-                        field.road == "" ? "กรอกถนนที่อยู่ของแปลง" : field.road,
+                    labelText: field.road == ""
+                        ? "insert-field-road".i18n()
+                        : field.road,
                     successText: "",
                     inputIcon: Icon(Icons.eco_sharp),
                   ),
@@ -916,7 +916,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "จังหวัด" + "*",
+                      "province".i18n() + "*",
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'OpenSans',
@@ -961,18 +961,18 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                       await createDistrictDropdown();
                     },
                     selectedItem: selectedProvince_value == ""
-                        ? "เลือกข้อมูลจังหวัด"
+                        ? "select-province-info".i18n()
                         : selectedProvince_value,
                     showSearchBox: true,
-                    searchFieldProps: const TextFieldProps(
+                    searchFieldProps: TextFieldProps(
                       cursorColor: Colors.blue,
                       autofillHints: [AutofillHints.name],
                       decoration: InputDecoration(
-                        hintText: 'ค้นหา',
+                        hintText: 'search'.i18n(),
                       ),
                     ),
                     validator: (value) => InputCodeValidator.validateDropDown(
-                        value, "เลือกข้อมูลจังหวัด"),
+                        value, "select-province-info".i18n()),
                   ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   Container(
@@ -1025,11 +1025,11 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                               ? "select-district-info".i18n()
                               : selectedDistrict_value,
                           showSearchBox: true,
-                          searchFieldProps: const TextFieldProps(
+                          searchFieldProps: TextFieldProps(
                             cursorColor: Colors.blue,
                             autofillHints: [AutofillHints.name],
                             decoration: InputDecoration(
-                              hintText: 'ค้นหา',
+                              hintText: 'search'.i18n(),
                             ),
                           ),
                           validator: (value) =>
@@ -1038,14 +1038,14 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                         )
                       : Container(
                           child: Center(
-                            child: Text("ต้องเลือกจังหวัดก่อน"),
+                            child: Text("must-select-province-first".i18n()),
                           ),
                         ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "ตำบล" + "*",
+                      "sub-district".i18n() + "*",
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'OpenSans',
@@ -1086,19 +1086,19 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                             });
                           },
                           selectedItem: selectedSubdistrict_value == ""
-                              ? "เลือกข้อมูลตำบล"
+                              ? "select-sub-district-info".i18n()
                               : selectedSubdistrict_value,
                           showSearchBox: true,
-                          searchFieldProps: const TextFieldProps(
+                          searchFieldProps: TextFieldProps(
                             cursorColor: Colors.blue,
                             autofillHints: [AutofillHints.name],
                             decoration: InputDecoration(
-                              hintText: 'ค้นหา',
+                              hintText: 'search'.i18n(),
                             ),
                           ),
                           validator: (value) =>
                               InputCodeValidator.validateDropDown(
-                                  value, "เลือกข้อมูลตำบล"),
+                                  value, "select-sub-district-info".i18n()),
                         )
                       : Container(
                           child: Center(
@@ -1109,7 +1109,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "ขนาดพื้นที่(ไร่)" + "*",
+                      "area-size-rai".i18n() + "*",
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'OpenSans',
@@ -1145,7 +1145,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "จุดสังเกตแปลง",
+                      "landmark-plots".i18n(),
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'OpenSans',
@@ -1162,7 +1162,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                         {field.landmark = save_Landmark}
                     },
                     labelText: field.landmark == ""
-                        ? "กรอกจุดสังเกตแปลง"
+                        ? "insert-landmark-plots".i18n()
                         : field.landmark,
                     successText: "",
                     inputIcon: Icon(Icons.eco_sharp),
@@ -1197,7 +1197,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "ละติจูด" + "*",
+                      "latitude".i18n() + "*",
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'OpenSans',
@@ -1266,7 +1266,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "ลองจิจูด" + "*",
+                      "longtitude".i18n() + "*",
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'OpenSans',
@@ -1337,7 +1337,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "ความสูงจากระดับน้ำทะเล",
+                      "sea-level".i18n(),
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'OpenSans',

@@ -1290,29 +1290,29 @@ class _PlantingMoreDetailScreen extends State<PlantingMoreDetailScreen>
                             "havest-date-label".i18n(),
                             ChangeDateTime(widget.plantings.primaryPlantHarvestDate) ==
                                     "01-01-1970"
-                                ? "ไม่ระบุ"
+                                ? "no-specified".i18n()
                                 : ChangeDateTime(
                                     widget.plantings.primaryPlantHarvestDate),
                             "secondary-plant-type-label".i18n(),
                             widget.plantings.secondaryPlantType.toString() == ""
-                                ? "ไม่ระบุ"
+                                ? "no-specified".i18n()
                                 : widget.plantings.secondaryPlantType
                                     .toString(),
                             "secondary-plant-variety-label".i18n(),
                             widget.plantings.secondaryPlantVariety.toString() == ""
-                                ? "ไม่ระบุ"
+                                ? "no-specified".i18n()
                                 : widget.plantings.secondaryPlantVariety
                                     .toString(),
                             "planting-date-label".i18n(),
                             ChangeDateTime(widget.plantings.secondaryPlantPlantingDate) ==
                                     "01-01-1970"
-                                ? "ไม่ระบุ"
+                                ? "no-specified".i18n()
                                 : ChangeDateTime(widget
                                     .plantings.secondaryPlantPlantingDate),
                             "havest-date-label".i18n(),
                             ChangeDateTime(widget.plantings.secondaryPlantHarvestDate) ==
                                     "01-01-1970"
-                                ? "ไม่ระบุ"
+                                ? "no-specified".i18n()
                                 : ChangeDateTime(
                                     widget.plantings.secondaryPlantHarvestDate),
                             "number-tillage-label".i18n(),
@@ -1327,45 +1327,45 @@ class _PlantingMoreDetailScreen extends State<PlantingMoreDetailScreen>
                             "filling-temp-1-label".i18n(),
                             ChangeDateTime(widget.plantings.fertilizerDate1) ==
                                     "01-01-1970"
-                                ? "ไม่ระบุ"
+                                ? "no-specified".i18n()
                                 : ChangeDateTime(
                                     widget.plantings.fertilizerDate1),
                             "filling-soil-label".i18n(),
                             widget.plantings.fertilizerFormular1.toString() == ""
-                                ? "ไม่ระบุ"
+                                ? "no-specified".i18n()
                                 : widget.plantings.fertilizerFormular1
                                     .toString()),
                         _buildTextTwo(
                           "filling-temp-2-label".i18n(),
                           ChangeDateTime(widget.plantings.fertilizerDate2) ==
                                   "01-01-1970"
-                              ? "ไม่ระบุ"
+                              ? "no-specified".i18n()
                               : ChangeDateTime(
                                   widget.plantings.fertilizerDate2),
                           "filling-soil-label".i18n(),
                           widget.plantings.fertilizerFormular2.toString() == ""
-                              ? "ไม่ระบุ"
+                              ? "no-specified".i18n()
                               : widget.plantings.fertilizerFormular2.toString(),
                           "filling-temp-3-label".i18n(),
                           ChangeDateTime(widget.plantings.fertilizerDate3) ==
                                   "01-01-1970"
-                              ? "ไม่ระบุ"
+                              ? "no-specified".i18n()
                               : ChangeDateTime(
                                   widget.plantings.fertilizerDate3),
                           "filling-soil-label".i18n(),
                           widget.plantings.fertilizerFormular3.toString() == ""
-                              ? "ไม่ระบุ"
+                              ? "no-specified".i18n()
                               : widget.plantings.fertilizerFormular3.toString(),
                           "month-of-weeding-1-label".i18n(),
                           widget.plantings.weedingMonth1.toString() == "0"
-                              ? "ไม่ระบุ"
+                              ? "no-specified".i18n()
                               : widget.plantings.weedingMonth1.toString(),
                           "chemicals-used-label".i18n(),
                           widget.plantings.weedingChemicalOther1.toString() ==
                                   ""
                               ? (widget.plantings.herbicideByWeedingChemical1 ==
                                       -1
-                                  ? "ไม่ระบุ"
+                                  ? "no-specified".i18n()
                                   : weedingChemicalName[widget.plantings
                                           .herbicideByWeedingChemical1 -
                                       1])
@@ -1373,14 +1373,14 @@ class _PlantingMoreDetailScreen extends State<PlantingMoreDetailScreen>
                                   .toString(),
                           "month-of-weeding-2-label".i18n(),
                           widget.plantings.weedingMonth2.toString() == "0"
-                              ? "ไม่ระบุ"
+                              ? "no-specified".i18n()
                               : widget.plantings.weedingMonth2.toString(),
                           "chemicals-used-label".i18n(),
                           widget.plantings.weedingChemicalOther2.toString() ==
                                   ""
                               ? (widget.plantings.herbicideByWeedingChemical2 ==
                                       -1
-                                  ? "ไม่ระบุ"
+                                  ? "no-specified".i18n()
                                   : weedingChemicalName[widget.plantings
                                           .herbicideByWeedingChemical2 -
                                       1])
@@ -1388,14 +1388,14 @@ class _PlantingMoreDetailScreen extends State<PlantingMoreDetailScreen>
                                   .toString(),
                           "month-of-weeding-3-label".i18n(),
                           widget.plantings.weedingMonth3.toString() == "0"
-                              ? "ไม่ระบุ"
+                              ? "no-specified".i18n()
                               : widget.plantings.weedingMonth3.toString(),
                           "chemicals-used-label".i18n(),
                           widget.plantings.weedingChemicalOther3.toString() ==
                                   ""
                               ? (widget.plantings.herbicideByWeedingChemical3 ==
                                       -1
-                                  ? "ไม่ระบุ"
+                                  ? "no-specified".i18n()
                                   : weedingChemicalName[widget.plantings
                                           .herbicideByWeedingChemical3 -
                                       1])
@@ -1403,15 +1403,15 @@ class _PlantingMoreDetailScreen extends State<PlantingMoreDetailScreen>
                                   .toString(),
                           "disease-management-label".i18n(),
                           widget.plantings.diseaseManagement.toString() == ""
-                              ? "ไม่ระบุ"
+                              ? "no-specified".i18n()
                               : widget.plantings.diseaseManagement.toString(),
                           "pest-management-label".i18n(),
                           widget.plantings.pestManagement.toString() == ""
-                              ? "ไม่ระบุ"
+                              ? "no-specified".i18n()
                               : widget.plantings.pestManagement.toString(),
                           "note-label".i18n(),
                           widget.plantings.note.toString() == ""
-                              ? "ไม่ระบุ"
+                              ? "no-specified".i18n()
                               : widget.plantings.note.toString(),
                         ),
                       ],

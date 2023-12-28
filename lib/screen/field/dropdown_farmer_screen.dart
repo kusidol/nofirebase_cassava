@@ -23,9 +23,9 @@ class DropdownForFarmer extends StatefulWidget {
 
 class _DropdownForFarmerState extends State<DropdownForFarmer> {
   // SET UP
-  String selectedFirstName = "ชื่อจริง";
-  String selectedLastName = "นามสกุล";
-  String selectedProvinceAddress = "จังหวัดที่อยู่";
+  String selectedFirstName = "first-name".i18n();
+  String selectedLastName = "last-name".i18n();
+  String selectedProvinceAddress = "province-address".i18n();
   String firstNameValue = '';
   String lastNameValue = '';
   String provinceAddressValue = '';
@@ -172,7 +172,7 @@ class _DropdownForFarmerState extends State<DropdownForFarmer> {
                   ExpansionTile(
                       textColor: Colors.black,
                       iconColor: theme_color2,
-                      title: Text('ค้นหาเพิ่มเติม',
+                      title: Text('search-more'.i18n(),
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold)),
                       onExpansionChanged: (bool isExpanded) {
@@ -257,7 +257,7 @@ class _DropdownForFarmerState extends State<DropdownForFarmer> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "ค้นหา",
+                                  "search".i18n(),
                                   style: TextStyle(fontSize: 20),
                                 ),
                                 SizedBox(width: 5.0),

@@ -637,7 +637,7 @@ class _SurveyTable extends State<SurveyTable>
     return ExpansionTile(
         textColor: Colors.black,
         iconColor: theme_color2,
-        title: Text('ค้นหาเพิ่มเติม',
+        title: Text('search-more'.i18n(),
             style: TextStyle(
               fontSize: sizeHeight(18, context),
             )),
@@ -664,7 +664,7 @@ class _SurveyTable extends State<SurveyTable>
                 TextFormField(
                   // controller: codeNameController,
                   decoration: InputDecoration(
-                    labelText: 'ที่อยู่แปลง',
+                    labelText: 'field-address'.i18n(),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
@@ -1698,7 +1698,8 @@ Widget getFilterBarUI(int numItemFounded) {
                                       Row(
                                         children: [
                                           Text(
-                                            ' การเพาะปลูก : ชื่อการเพาะปลูก',
+                                            ' '+
+                                            'plantings-label'.i18n()+' : '+ 'name-planting-label'.i18n(),
                                             style: TextStyle(
                                               fontSize: sizeHeight(14, context),
                                             ),
