@@ -1155,7 +1155,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                       if (data.plantingData.length ==
                                           data.numberAllPlantings) {
                                         showToastMessage(
-                                            "ข้อมูลแสดงครบทั้งหมดเป็นที่เรียบร้อยแล้ว");
+                                            "all-information".i18n());
                                       }
                                     }
                                     return true;

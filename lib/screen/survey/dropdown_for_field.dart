@@ -299,8 +299,7 @@ class _DropdownForFieldState extends State<DropdownForField> {
                             dropdownfield.isScroll = true;
                           }
                           if (dropdownfield.isAllItem) {
-                            showToastMessage(
-                                "ข้อมูลแสดงครบทั้งหมดเป็นที่เรียบร้อยแล้ว");
+                            showToastMessage("all-information".i18n());
                           }
                         }
                         return true;

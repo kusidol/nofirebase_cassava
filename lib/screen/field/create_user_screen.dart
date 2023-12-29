@@ -337,7 +337,7 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "คำนำหน้า" + "*",
+                      "prefix".i18n() + "*",
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'OpenSans',
@@ -356,7 +356,7 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                     validator1: (value) =>
                         InputCodeValidator.validateNotSpecialCharacter(
                             value, title),
-                    labelText: title == "" ? "กรอกคำนำหน้า" : title,
+                    labelText: title == "" ? "insert-prefix".i18n() : title,
                     successText: "",
                     inputIcon: Icon(Icons.eco_sharp),
                   ),
@@ -364,7 +364,7 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "ชื่อ" + "*",
+                      "Name".i18n() + "*",
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'OpenSans',
@@ -383,7 +383,8 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                     validator1: (value) =>
                         InputCodeValidator.validateNotSpecialCharacter(
                             value, firstname),
-                    labelText: firstname == "" ? "กรอกชื่อ" : firstname,
+                    labelText:
+                        firstname == "" ? "insert-name".i18n() : firstname,
                     successText: "",
                     inputIcon: Icon(Icons.eco_sharp),
                   ),
@@ -391,7 +392,7 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "นามสกุล" + "*",
+                      "last-name".i18n() + "*",
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'OpenSans',
@@ -410,7 +411,8 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                     validator1: (value) =>
                         InputCodeValidator.validateNotSpecialCharacter(
                             value, lastname),
-                    labelText: lastname == "" ? "กรอกนามสกุล" : lastname,
+                    labelText:
+                        lastname == "" ? "insert-last-name".i18n() : lastname,
                     successText: "",
                     inputIcon: Icon(Icons.eco_sharp),
                   ),
@@ -675,7 +677,7 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "เบอร์โทรศัพท์" + "*",
+                      "telphone-number".i18n() + "*",
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'OpenSans',
@@ -694,7 +696,9 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                     validator1: (value) =>
                         InputCodeValidator.validateNotSpecialCharacter(
                             value, telphone),
-                    labelText: telphone == "" ? "กรอกเบอร์โทรศัพท์" : telphone,
+                    labelText: telphone == ""
+                        ? "insert-telphone-number".i18n()
+                        : telphone,
                     successText: "",
                     inputIcon: Icon(Icons.eco_sharp),
                   ),

@@ -77,7 +77,7 @@ List<String> weedingChemicalName = [
   "กลูโฟซิเนตแอมโมเนิยม",
   "ไตยูรอน",
   "ใช้แรงงาน",
-  "อื่นฯ",
+  "อื่นๆ",
 ];
 
 @JsonSerializable()

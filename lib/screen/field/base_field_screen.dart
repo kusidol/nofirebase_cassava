@@ -921,7 +921,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                                         if (fieldProvder.fieldData.length ==
                                             fieldProvder.numberAllFields) {
                                           showToastMessage(
-                                              "ข้อมูลแสดงครบทั้งหมดเป็นที่เรียบร้อยแล้ว");
+                                              "all-information".i18n());
                                         }
                                       }
 

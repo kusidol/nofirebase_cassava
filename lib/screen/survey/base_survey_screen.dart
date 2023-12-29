@@ -1384,7 +1384,7 @@ Widget getFilterBarUI(int numItemFounded) {
                                                if (surveyProvider.surveyData.length ==
                                                    surveyProvider.numberAllSurveys) {
                                                  showToastMessage(
-                                                     "ข้อมูลแสดงครบทั้งหมดเป็นที่เรียบร้อยแล้ว");
+                                                     "all-information".i18n());
                                                }
                                              }
                                              return true;

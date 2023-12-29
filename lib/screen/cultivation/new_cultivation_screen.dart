@@ -89,19 +89,19 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
   String selectedfieldLocation = "address".i18n();
   String selectedfieldOwner = "owner".i18n();
   String? selectBesidePlant = "select-beside-plant-label".i18n();
-  String? _selectChemical1 = "เลือกสารเคมีที่ใช้";
-  String? _selectChemical2 = "เลือกสารเคมีที่ใช้";
-  String? _selectChemical3 = "เลือกสารเคมีที่ใช้";
-  String? _selectDisManangement = "เลือกวิธีการจัดการโรค";
-  String? _selectPestManagement = "เลือกวิธีการจัดการแมลง";
-  String? _selectPreviousPlant = "เลือกพืชที่ปลูกก่อนหน้า";
-  String? _selectSoakingStemChemical = "เลือกสารเคมีกำจัดแมลง";
+  String? _selectChemical1 = "select-cheimcals-used".i18n();
+  String? _selectChemical2 = "select-cheimcals-used".i18n();
+  String? _selectChemical3 = "select-cheimcals-used".i18n();
+  String? _selectDisManangement = "select-disease-management-method".i18n();
+  String? _selectPestManagement = "select-pest-management".i18n();
+  String? _selectPreviousPlant = "select-previous-plant".i18n();
+  String? _selectSoakingStemChemical = "select-chem-kill-insects".i18n();
   String? _selectNumTillage = "select-number-plow".i18n();
-  String? _selectSoilAmendments = "เลือกวัสดุปรับปรุงดิน";
-  String? _selectWeedingMonth1 = "เลือกเดือน";
-  String? _selectWeedingMonth2 = "เลือกเดือน";
-  String? _selectWeedingMonth3 = "เลือกเดือน";
-  String? _selectMainPlating = "เลือกชนิดพันธุ์หลัก";
+  String? _selectSoilAmendments = "select-soil-amendments".i18n();
+  String? _selectWeedingMonth1 = "select-weeding-month".i18n();
+  String? _selectWeedingMonth2 = "select-weeding-month".i18n();
+  String? _selectWeedingMonth3 = "select-weeding-month".i18n();
+  String? _selectMainPlating = "select-main-species".i18n();
   int _selectStemSource = 0;
   String ownerFieldByPassingValue = "";
   String fieldNameByPassingValue = "";
@@ -253,7 +253,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                   DateTime.fromMillisecondsSinceEpoch(
                       planting.primaryPlantHarvestDate)) ==
               "01-01-1970"
-          ? "Pick Date"
+          ? "pick-date".i18n()
           : majorHavestDateController.text = DateFormat("dd-MM-yyyy").format(
               DateTime.fromMillisecondsSinceEpoch(
                   planting.primaryPlantHarvestDate));
@@ -262,7 +262,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                   DateTime.fromMillisecondsSinceEpoch(
                       planting.secondaryPlantPlantingDate)) ==
               "01-01-1970"
-          ? "Pick Date"
+          ? "pick-date".i18n()
           : cultivattionMinorDateController.text = DateFormat("dd-MM-yyyy")
               .format(DateTime.fromMillisecondsSinceEpoch(
                   planting.secondaryPlantPlantingDate));
@@ -270,7 +270,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                   DateTime.fromMillisecondsSinceEpoch(
                       planting.secondaryPlantHarvestDate)) ==
               "01-01-1970"
-          ? "Pick Date"
+          ? "pick-date".i18n()
           : minorHavestDateController.text = DateFormat("dd-MM-yyyy").format(
               DateTime.fromMillisecondsSinceEpoch(
                   planting.secondaryPlantHarvestDate));
@@ -279,36 +279,36 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                   DateTime.fromMillisecondsSinceEpoch(
                       planting.fertilizerDate1)) ==
               "01-01-1970"
-          ? "Pick Date"
+          ? "pick-date".i18n()
           : _conDateFertilizer1.text = DateFormat("dd-MM-yyyy").format(
               DateTime.fromMillisecondsSinceEpoch(planting.fertilizerDate1));
       _conDateFertilizer2.text = DateFormat("dd-MM-yyyy").format(
                   DateTime.fromMillisecondsSinceEpoch(
                       planting.fertilizerDate2)) ==
               "01-01-1970"
-          ? "Pick Date"
+          ? "pick-date".i18n()
           : _conDateFertilizer2.text = DateFormat("dd-MM-yyyy").format(
               DateTime.fromMillisecondsSinceEpoch(planting.fertilizerDate2));
       _conDateFertilizer3.text = DateFormat("dd-MM-yyyy").format(
                   DateTime.fromMillisecondsSinceEpoch(
                       planting.fertilizerDate3)) ==
               "01-01-1970"
-          ? "Pick Date"
+          ? "pick-date".i18n()
           : _conDateFertilizer3.text = DateFormat("dd-MM-yyyy").format(
               DateTime.fromMillisecondsSinceEpoch(planting.fertilizerDate3));
 
       if (planting.weedingMonth1.toString() == "0") {
-        _selectWeedingMonth1 = "เลือกเดือน";
+        _selectWeedingMonth1 = "select-weeding-month".i18n();
       } else {
         _selectWeedingMonth1 = planting.weedingMonth1.toString();
       }
       if (planting.weedingMonth2.toString() == "0") {
-        _selectWeedingMonth2 = "เลือกเดือน";
+        _selectWeedingMonth2 = "select-weeding-month".i18n();
       } else {
         _selectWeedingMonth2 = planting.weedingMonth2.toString();
       }
       if (planting.weedingMonth3.toString() == "0") {
-        _selectWeedingMonth3 = "เลือกเดือน";
+        _selectWeedingMonth3 = "select-weeding-month".i18n();
       } else {
         _selectWeedingMonth3 = planting.weedingMonth3.toString();
       }
@@ -316,9 +316,9 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
       // New Dropdown
       if (planting.herbicideByWeedingChemical1 == -1) {
         if (planting.weedingChemicalOther1 == "") {
-          _selectChemical1 = "เลือกสารเคมีที่ใช้";
+          _selectChemical1 = "select-cheimcals-used".i18n();
         } else {
-          _selectChemical1 = "อื่นฯ";
+          _selectChemical1 = "อื่นๆ";
         }
       } else {
         _selectChemical1 =
@@ -328,9 +328,9 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
 
       if (planting.herbicideByWeedingChemical2 == -1) {
         if (planting.weedingChemicalOther2 == "") {
-          _selectChemical2 = "เลือกสารเคมีที่ใช้";
+          _selectChemical2 = "select-cheimcals-used".i18n();
         } else {
-          _selectChemical2 = "อื่นฯ";
+          _selectChemical2 = "อื่นๆ";
         }
       } else {
         _selectChemical2 =
@@ -340,9 +340,9 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
 
       if (planting.herbicideByWeedingChemical3 == -1) {
         if (planting.weedingChemicalOther3 == "") {
-          _selectChemical3 = "เลือกสารเคมีที่ใช้";
+          _selectChemical3 = "select-cheimcals-used".i18n();
         } else {
-          _selectChemical3 = "อื่นฯ";
+          _selectChemical3 = "อื่นๆ";
         }
       } else {
         _selectChemical3 =
@@ -358,12 +358,12 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
       if (planting.diseaseManagement != "") {
         _selectDisManangement = planting.diseaseManagement;
       } else {
-        _selectDisManangement = "เลือกวิธีการจัดการโรค";
+        _selectDisManangement = "select-disease-management-method".i18n();
       }
       if (planting.pestManagement != "") {
         _selectPestManagement = planting.pestManagement;
       } else {
-        _selectPestManagement = "เลือกวิธีการจัดการแมลง";
+        _selectPestManagement = "select-pest-management".i18n();
       }
       ////   print("testtest ------ : ${_selectStemSource}");
     }
@@ -960,7 +960,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                     ),
                   ),
                   validator: (value) => InputCodeValidator.validateDropDown(
-                      value, "เลือกพืชที่ปลูกก่อนหน้า"),
+                      value, "select-previous-plant".i18n()),
                 ),
                 _selectPreviousPlant == "อื่นๆ"
                     ? AnimTFF(
@@ -1501,10 +1501,10 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
 
                         SizedBox(
                             height: SizeConfig.screenHeight! * 0.02194644482),
-                        _buildMajorCultivationDate("Pick Date"),
+                        _buildMajorCultivationDate("pick-date".i18n()),
                         SizedBox(
                             height: SizeConfig.screenHeight! * 0.02194644482),
-                        _buildMajorHavestDate("pick Date"),
+                        _buildMajorHavestDate("pick-date".i18n()),
                       ],
                     ),
                   ),
@@ -1529,7 +1529,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
           scrollDirection: Axis.vertical,
           children: [
             SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
-            _dateFertilizer1("Pick Date"),
+            _dateFertilizer1("pick-date".i18n()),
             SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
             Container(
               alignment: Alignment.topLeft,
@@ -1556,13 +1556,13 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                         InputCodeValidator.validateFertilizerFormular(
                             value, planting.fertilizerFormular1),
                     labelText: planting.fertilizerFormular1 == ""
-                        ? "กรอกปุ๋ยที่ใช้"
+                        ? "insert-fertilizer-used".i18n()
                         : planting.fertilizerFormular1,
                     successText: "",
                     inputIcon: Icon(Icons.person),
                   ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
-                  _dateFertilizer2("Pick Date"),
+                  _dateFertilizer2("pick-date".i18n()),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   Container(
                     alignment: Alignment.topLeft,
@@ -1585,13 +1585,13 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                         InputCodeValidator.validateFertilizerFormular(
                             value, planting.fertilizerFormular2),
                     labelText: planting.fertilizerFormular2 == ""
-                        ? "กรอกปุ๋ยที่ใช้"
+                        ? "insert-fertilizer-used".i18n()
                         : planting.fertilizerFormular2,
                     successText: "",
                     inputIcon: Icon(Icons.person),
                   ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
-                  _dateFertilizer3("Pick Date"),
+                  _dateFertilizer3("pick-date".i18n()),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   Container(
                     alignment: Alignment.topLeft,
@@ -1614,7 +1614,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                         InputCodeValidator.validateFertilizerFormular(
                             value, planting.fertilizerFormular3),
                     labelText: planting.fertilizerFormular3 == ""
-                        ? "กรอกปุ๋ยที่ใช้"
+                        ? "insert-fertilizer-used".i18n()
                         : planting.fertilizerFormular3,
                     successText: "",
                     inputIcon: Icon(Icons.person),
@@ -1663,7 +1663,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                       width: sizeWidth(2, context),
                     ),
                   ),
-                  hintText: "เลือกเดือน",
+                  hintText: "select-weeding-month".i18n(),
                 ),
                 popupItemDisabled: isItemDisabled,
                 onChanged: (value) {
@@ -1684,7 +1684,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                 ),
                 validator: (value) {
                   if (value == null) {
-                    return 'เลือกเดือน';
+                    return "select-weeding-month".i18n();
                   }
                 },
               ),
@@ -1749,7 +1749,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                 }
               },
             ),
-            _selectChemical1 == "อื่นฯ"
+            _selectChemical1 == "อื่นๆ"
                 ? AnimTFF(
                     (text) => {
                       setState(() {
@@ -1760,7 +1760,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                     //     InputCodeValidator.validateFertilizerFormular(
                     //         value, planting.fertilizerFormular2),
                     labelText: planting.weedingChemicalOther1 == ""
-                        ? "กรอกสารเคมีที่ใช้"
+                        ? "insert-chemical-used".i18n()
                         : planting.weedingChemicalOther1,
                     successText: "",
                     inputIcon: Icon(Icons.person),
@@ -1797,7 +1797,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                       width: sizeWidth(2, context),
                     ),
                   ),
-                  hintText: "เลือกเดือน",
+                  hintText: "select-weeding-month".i18n(),
                 ),
                 popupItemDisabled: isItemDisabled,
                 onChanged: (value) {
@@ -1818,7 +1818,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                 ),
                 validator: (value) {
                   if (value == null) {
-                    return 'เลือกเดือน';
+                    return "select-weeding-month".i18n();
                   }
                 },
               ),
@@ -1882,7 +1882,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                 }
               },
             ),
-            _selectChemical2 == "อื่นฯ"
+            _selectChemical2 == "อื่นๆ"
                 ? AnimTFF(
                     (text) => {
                       setState(() {
@@ -1893,7 +1893,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                     //     InputCodeValidator.validateFertilizerFormular(
                     //         value, planting.fertilizerFormular2),
                     labelText: planting.weedingChemicalOther2 == ""
-                        ? "กรอกสารเคมีที่ใช้"
+                        ? "insert-chemical-used".i18n()
                         : planting.weedingChemicalOther2,
                     successText: "",
                     inputIcon: Icon(Icons.person),
@@ -1930,7 +1930,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                       width: sizeWidth(2, context),
                     ),
                   ),
-                  hintText: "เลือกเดือน",
+                  hintText: "select-weeding-month".i18n(),
                 ),
                 popupItemDisabled: isItemDisabled,
                 onChanged: (value) {
@@ -1949,7 +1949,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                 ),
                 validator: (value) {
                   if (value == null) {
-                    return 'เลือกเดือน';
+                    return "select-weeding-month".i18n();
                   }
                 },
               ),
@@ -2013,7 +2013,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                 }
               },
             ),
-            _selectChemical3 == "อื่นฯ"
+            _selectChemical3 == "อื่นๆ"
                 ? AnimTFF(
                     (text) => {
                       setState(() {
@@ -2024,7 +2024,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                     //     InputCodeValidator.validateFertilizerFormular(
                     //         value, planting.fertilizerFormular2),
                     labelText: planting.weedingChemicalOther3 == ""
-                        ? "กรอกสารเคมีที่ใช้"
+                        ? "insert-chemical-used".i18n()
                         : planting.weedingChemicalOther3,
                     successText: "",
                     inputIcon: Icon(Icons.person),
@@ -2048,7 +2048,8 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                   planting.note = text;
                 }),
               },
-              labelText: planting.note == "" ? "หมายเหตุ" : planting.note,
+              labelText:
+                  planting.note == "" ? "note-label".i18n() : planting.note,
               successText: "",
               inputIcon: Icon(Icons.person),
             ),
@@ -2302,7 +2303,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                 InputCodeValidator.validatePlantSecondaryType(
                     value, planting.secondaryPlantType),
             labelText: planting.secondaryPlantType == ""
-                ? "กรอกชนิดพืชรอง"
+                ? "insert-secondary-plant".i18n()
                 : planting.secondaryPlantType,
             successText: "",
             inputIcon: Icon(Icons.person),
@@ -2328,16 +2329,16 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
             validator1: (value) => InputCodeValidator.validatePlantVariety(
                 value, planting.secondaryPlantType),
             labelText: planting.secondaryPlantVariety == ""
-                ? "กรอกชนิดพันธุ์รอง"
+                ? "insert-secondary-species".i18n()
                 : planting.secondaryPlantVariety,
             successText: "",
             inputIcon: Icon(Icons.person),
           ),
 
           SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
-          _buildMinorCultivationDate("Pick Date"),
+          _buildMinorCultivationDate("pick-date".i18n()),
           SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
-          _buildMinorHavestDate("Pick Date"),
+          _buildMinorHavestDate("pick-date".i18n()),
           SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
           // _buildSurveyDate(),
         ],
@@ -2347,7 +2348,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
 
   Widget _buildSelectedField(Dropdownfield dropdownfield) {
     List<String> dropdownForShow = dropdownfield.fieldString;
-    dropdownForShow.add("เพิ่มเติม");
+    dropdownForShow.add("other".i18n());
 
     return Column(
       children: [
@@ -2418,7 +2419,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                                         value),
                                 value: selectedValue,
                                 onChanged: (value) {
-                                  if (value == "เพิ่มเติม") {
+                                  if (value == "other".i18n()) {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (BuildContext context) =>
@@ -2841,7 +2842,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                     ),
                   ),
                   validator: (value) => InputCodeValidator.validateDropDown(
-                      value, "เลือกสารเคมีกำจัดแมลง"),
+                      value, "select-chem-kill-insects".i18n()),
                 ),
                 SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
 
@@ -2952,7 +2953,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                     ),
                   ),
                   validator: (value) => InputCodeValidator.validateDropDown(
-                      value, "เลือกวัสดุปรับปรุงดิน"),
+                      value, "select-soil-amendments".i18n()),
                 ),
                 _selectSoilAmendments == "อื่นๆ"
                     ? AnimTFF(

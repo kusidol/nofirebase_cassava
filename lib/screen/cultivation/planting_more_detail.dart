@@ -1288,8 +1288,7 @@ class _PlantingMoreDetailScreen extends State<PlantingMoreDetailScreen>
                             ChangeDateTime(
                                 widget.plantings.primaryPlantPlantingDate),
                             "havest-date-label".i18n(),
-                            ChangeDateTime(widget.plantings.primaryPlantHarvestDate) ==
-                                    "01-01-1970"
+                            ChangeDateTime(widget.plantings.primaryPlantHarvestDate) == "01-01-1970"
                                 ? "no-specified".i18n()
                                 : ChangeDateTime(
                                     widget.plantings.primaryPlantHarvestDate),
@@ -1304,14 +1303,12 @@ class _PlantingMoreDetailScreen extends State<PlantingMoreDetailScreen>
                                 : widget.plantings.secondaryPlantVariety
                                     .toString(),
                             "planting-date-label".i18n(),
-                            ChangeDateTime(widget.plantings.secondaryPlantPlantingDate) ==
-                                    "01-01-1970"
+                            ChangeDateTime(widget.plantings.secondaryPlantPlantingDate) == "01-01-1970"
                                 ? "no-specified".i18n()
                                 : ChangeDateTime(widget
                                     .plantings.secondaryPlantPlantingDate),
                             "havest-date-label".i18n(),
-                            ChangeDateTime(widget.plantings.secondaryPlantHarvestDate) ==
-                                    "01-01-1970"
+                            ChangeDateTime(widget.plantings.secondaryPlantHarvestDate) == "01-01-1970"
                                 ? "no-specified".i18n()
                                 : ChangeDateTime(
                                     widget.plantings.secondaryPlantHarvestDate),
@@ -1325,16 +1322,14 @@ class _PlantingMoreDetailScreen extends State<PlantingMoreDetailScreen>
                             "soaking-stem-chemical-label".i18n(),
                             widget.plantings.soakingStemChemical.toString(),
                             "filling-temp-1-label".i18n(),
-                            ChangeDateTime(widget.plantings.fertilizerDate1) ==
-                                    "01-01-1970"
+                            ChangeDateTime(widget.plantings.fertilizerDate1) == "01-01-1970"
                                 ? "no-specified".i18n()
                                 : ChangeDateTime(
                                     widget.plantings.fertilizerDate1),
                             "filling-soil-label".i18n(),
                             widget.plantings.fertilizerFormular1.toString() == ""
                                 ? "no-specified".i18n()
-                                : widget.plantings.fertilizerFormular1
-                                    .toString()),
+                                : widget.plantings.fertilizerFormular1.toString()),
                         _buildTextTwo(
                           "filling-temp-2-label".i18n(),
                           ChangeDateTime(widget.plantings.fertilizerDate2) ==

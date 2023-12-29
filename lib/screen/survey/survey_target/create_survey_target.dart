@@ -656,7 +656,7 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
           ),
           Container(
             child: Text(
-              "เลือกทั้งหมด",
+              "select-all".i18n(),
               style: TextStyle(
                   color: _userNameColor,
                   fontWeight: FontWeight.normal,
@@ -765,7 +765,7 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
           ),
           Container(
             child: Text(
-              "เลือกทั้งหมด",
+              "select-all".i18n(),
               style: TextStyle(
                   color: _userNameColor,
                   fontWeight: FontWeight.normal,
@@ -878,7 +878,7 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
           ),
           Container(
             child: Text(
-              "เลือกทั้งหมด",
+              "select-all".i18n(),
               style: TextStyle(
                   color: _userNameColor,
                   fontWeight: FontWeight.normal,

@@ -58,7 +58,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
 
   StepperType stepperType = StepperType.horizontal;
   String dateOfSurvey = "";
-  String? percentDamageFromHerbicide = "เลือก (%) ความเสียหาย";
+  String? percentDamageFromHerbicide = "choose-damage".i18n();
   List<String> plantingItem = [];
   bool isSelectfieldID = false;
   // Adding by ChanakanNewSurveyScreen
@@ -2140,7 +2140,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
           ),
         ),
         validator: (value) =>
-            InputCodeValidator.validateDropDown(value, "เลือก (%) ความเสียหาย"),
+            InputCodeValidator.validateDropDown(value, "choose-damage".i18n()),
       ),
       SizedBox(
         height: SizeConfig.screenHeight! * 0.025,
@@ -2165,7 +2165,8 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                 }),
               },
           inputIcon: Icon(Icons.event_note_rounded),
-          labelText: surveying.note == "" ? "note" : surveying.note,
+          labelText:
+              surveying.note == "" ? "note-label".i18n() : surveying.note,
           successText: ""),
     ];
     return Container(

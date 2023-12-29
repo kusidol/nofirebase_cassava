@@ -24,16 +24,16 @@ class InputCodeValidator {
       } else
         return null;
     }
-    return value == null || value.isEmpty ? "กรุณากรอกข้อมูล" : null;
+    return value == null || value.isEmpty ? 'please-insert-info'.i18n() : null;
   }
 
   static String? validateMultiSelect(List<String>? value) {
     if (value!.length == 0) {
-      return "กรุณากรอกข้อมูล";
+      return 'please-insert-info'.i18n();
     } else {
       return null;
     }
-    return value == null || value.isEmpty ? "กรุณากรอกข้อมูล" : null;
+    return value == null || value.isEmpty ? 'please-insert-info'.i18n() : null;
   }
 
   static String? validateFieldSize(String? value, String input) {
@@ -56,7 +56,7 @@ class InputCodeValidator {
       } else
         return null;
     }
-    return value == null || value.isEmpty ? "กรุณากรอกข้อมูล" : null;
+    return value == null || value.isEmpty ? 'please-insert-info'.i18n() : null;
   }
 
   static String? validatePlantSecondaryType(String? value, String input) {
@@ -67,7 +67,7 @@ class InputCodeValidator {
       } else
         return null;
     }
-    return value == null || value.isEmpty ? "กรุณากรอกข้อมูล" : null;
+    return value == null || value.isEmpty ? 'please-insert-info'.i18n() : null;
   }
 
   static String? validateFertilizerFormular(String? value, String input) {
@@ -78,21 +78,23 @@ class InputCodeValidator {
       } else
         return null;
     }
-    return value == null || value.isEmpty ? "กรุณากรอกข้อมูล" : null;
+    return value == null || value.isEmpty ? 'please-insert-info'.i18n() : null;
   }
 
   static String? validateDropDown(String? value, String input) {
     if (value == input) {
-      return "กรุณากรอกข้อมูล ${input}";
+      return 'please-insert-info'.i18n() + " ${input}";
     }
-    return value == input || value!.isEmpty ? "กรุณากรอกข้อมูล" : null;
+    return value == input || value!.isEmpty
+        ? 'please-insert-info'.i18n()
+        : null;
   }
 
   static String? validateRadioItem(String? value, String input) {
     if (value == null) {
-      return "กรุณากรอกข้อมูล";
+      return 'please-insert-info'.i18n();
     }
-    return value == null || value.isEmpty ? "กรุณากรอกข้อมูล" : null;
+    return value == null || value.isEmpty ? 'please-insert-info'.i18n() : null;
   }
 
   static String? validateNotSpecialCharacter(String? value, String input) {
@@ -124,7 +126,7 @@ class InputCodeValidator {
             if (valueDouble < 0) {
               return 'ค่าข้อมูลไม่สามารถติดลบได้';
             } else {
-              return 'กรุณากรอกข้อมูลตัวเลข (ทศนิยมและจำนวนเต็ม)';
+              return 'please-insert-numerical'.i18n();
             }
           } else {
             double valueDouble = double.parse(input);
@@ -134,10 +136,10 @@ class InputCodeValidator {
             return null;
           }
         } else {
-          return 'กรุณากรอกข้อมูลตัวเลข (ทศนิยมและจำนวนเต็ม)';
+          return 'please-insert-numerical'.i18n();
         }
       } else {
-        return 'กรุณากรอกข้อมูลตัวเลข (ทศนิยมและจำนวนเต็ม)';
+        return 'please-insert-numerical'.i18n();
       }
     } else if (value == input) {
       if (value != null) {
@@ -146,7 +148,7 @@ class InputCodeValidator {
           if (valueDouble < 0) {
             return 'ค่าข้อมูลไม่สามารถติดลบได้';
           } else {
-            return 'กรุณากรอกข้อมูลตัวเลข (ทศนิยมและจำนวนเต็ม)';
+            return 'please-insert-numerical'.i18n();
           }
         } else {
           double valueDouble = double.parse(input);
@@ -156,7 +158,7 @@ class InputCodeValidator {
           return null;
         }
       } else {
-        return 'กรุณากรอกข้อมูลตัวเลข (ทศนิยมและจำนวนเต็ม)';
+        return 'please-insert-numerical'.i18n();
       }
     } else if (value != input) {
       if (value != null) {
@@ -165,7 +167,7 @@ class InputCodeValidator {
           if (valueDouble < 0) {
             return 'ค่าข้อมูลไม่สามารถติดลบได้';
           } else {
-            return 'กรุณากรอกข้อมูลตัวเลข (ทศนิยมและจำนวนเต็ม)';
+            return 'please-insert-numerical'.i18n();
           }
         } else {
           double valueDouble = double.parse(input);
@@ -175,10 +177,10 @@ class InputCodeValidator {
           return null;
         }
       } else {
-        return 'กรุณากรอกข้อมูลตัวเลข (ทศนิยมและจำนวนเต็ม)';
+        return 'please-insert-numerical'.i18n();
       }
     } else {
-      return 'กรุณากรอกข้อมูลตัวเลข (ทศนิยมและจำนวนเต็ม)';
+      return 'please-insert-numerical'.i18n();
     }
   }
 
@@ -202,10 +204,10 @@ class InputCodeValidator {
             return null;
           }
         } else {
-          return 'กรุณากรอกข้อมูลตัวเลข (ทศนิยมและจำนวนเต็ม)';
+          return 'please-insert-numerical'.i18n();
         }
       } else {
-        return 'กรุณากรอกข้อมูลตัวเลข (ทศนิยมและจำนวนเต็ม)';
+        return 'please-insert-numerical'.i18n();
       }
     } else if (value == input) {
       if (value != null) {
@@ -224,7 +226,7 @@ class InputCodeValidator {
           return null;
         }
       } else {
-        return 'กรุณากรอกข้อมูลตัวเลข (ทศนิยมและจำนวนเต็ม)';
+        return 'please-insert-numerical'.i18n();
       }
     } else if (value != input) {
       if (value != null) {
@@ -243,10 +245,10 @@ class InputCodeValidator {
           return null;
         }
       } else {
-        return 'กรุณากรอกข้อมูลตัวเลข (ทศนิยมและจำนวนเต็ม)';
+        return 'please-insert-numerical'.i18n();
       }
     } else {
-      return 'กรุณากรอกข้อมูลตัวเลข (ทศนิยมและจำนวนเต็ม)';
+      return 'please-insert-numerical'.i18n();
     }
   }
 
@@ -260,7 +262,7 @@ class InputCodeValidator {
             if (valueDouble < 0) {
               return 'ค่าข้อมูลไม่สามารถติดลบได้';
             } else {
-              return 'กรุณากรอกข้อมูลตัวเลข (ทศนิยมและจำนวนเต็ม)';
+              return 'please-insert-numerical'.i18n();
             }
           } else {
             double valueDouble = double.parse(input);
@@ -270,10 +272,10 @@ class InputCodeValidator {
             return null;
           }
         } else {
-          return 'กรุณากรอกข้อมูลตัวเลข (ทศนิยมและจำนวนเต็ม)';
+          return 'please-insert-numerical'.i18n();
         }
       } else {
-        return 'กรุณากรอกข้อมูลตัวเลข (ทศนิยมและจำนวนเต็ม)';
+        return 'please-insert-numerical'.i18n();
       }
     } else if (value == input) {
       if (value != null) {
@@ -282,7 +284,7 @@ class InputCodeValidator {
           if (valueDouble < 0) {
             return 'ค่าข้อมูลไม่สามารถติดลบได้';
           } else {
-            return 'กรุณากรอกข้อมูลตัวเลข (ทศนิยมและจำนวนเต็ม)';
+            return 'please-insert-numerical'.i18n();
           }
         } else {
           double valueDouble = double.parse(input);
@@ -292,7 +294,7 @@ class InputCodeValidator {
           return null;
         }
       } else {
-        return 'กรุณากรอกข้อมูลตัวเลข (ทศนิยมและจำนวนเต็ม)';
+        return 'please-insert-numerical'.i18n();
       }
     } else if (value != input) {
       if (value != null) {
@@ -301,7 +303,7 @@ class InputCodeValidator {
           if (valueDouble < 0) {
             return 'ค่าข้อมูลไม่สามารถติดลบได้';
           } else {
-            return 'กรุณากรอกข้อมูลตัวเลข (ทศนิยมและจำนวนเต็ม)';
+            return 'please-insert-numerical'.i18n();
           }
         } else {
           double valueDouble = double.parse(input);
@@ -311,16 +313,16 @@ class InputCodeValidator {
           return null;
         }
       } else {
-        return 'กรุณากรอกข้อมูลตัวเลข (ทศนิยมและจำนวนเต็ม)';
+        return 'please-insert-numerical'.i18n();
       }
     } else {
-      return 'กรุณากรอกข้อมูลตัวเลข (ทศนิยมและจำนวนเต็ม)';
+      return 'please-insert-numerical'.i18n();
     }
   }
 
   static String? validateDate(String? value) {
     if (value == null || value.isEmpty) {
-      return 'กรุณาเลือกวันที่';
+      return 'please-select-date'.i18n();
     }
     return null;
   }
@@ -333,7 +335,7 @@ class InputCodeValidator {
   }
 
   static String? validateDropdownProvider(String? value) {
-    if (value == "เพิ่มเติม") {
+    if (value == "other".i18n()) {
       return 'please-select-option'.i18n();
     } else if (value == 'add-new-agriculture'.i18n()) {
       return 'please-select-option'.i18n();

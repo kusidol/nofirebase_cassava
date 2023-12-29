@@ -285,7 +285,7 @@ class _DropdownForPlantingState extends State<DropdownForPlanting> {
           Icons.calendar_today_rounded,
           color: _startDateUserNameColor,
         ),
-        hintText: 'Pick Start Date',
+        hintText: 'pick-start-date'.i18n(),
         hintStyle: kHintTextStyle,
       ),
     );
@@ -326,7 +326,7 @@ class _DropdownForPlantingState extends State<DropdownForPlanting> {
           Icons.calendar_today_rounded,
           color: _startDateUserNameColor,
         ),
-        hintText: 'Pick End Date',
+        hintText: 'pick-end-date'.i18n(),
         hintStyle: kHintTextStyle,
       ),
     );
@@ -568,8 +568,7 @@ class _DropdownForPlantingState extends State<DropdownForPlanting> {
                             dropdownplanting.isScroll = true;
                           }
                           if (dropdownplanting.isAllItem) {
-                            showToastMessage(
-                                "ข้อมูลแสดงครบทั้งหมดเป็นที่เรียบร้อยแล้ว");
+                            showToastMessage("all-information".i18n());
                           }
                         }
                         return true;
