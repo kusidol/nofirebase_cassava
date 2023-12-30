@@ -146,7 +146,9 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Text(
           'LOGIN',
           style: TextStyle(
-            color: Color(0xFF527DAA),
+            //color: Color(0xFF527DAA),
+            color: Color(0xFF4D4D4D),
+
             letterSpacing: 1.5,
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
@@ -259,8 +261,9 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             Utils.getButton(
                 text: '  Sign in with Google',
-                color: Colors.white,
-                bgColor: HexColor('#4D4D4D'),
+                color: theme_color3,
+                // bgColor: HexColor('#4D4D4D'),
+                bgColor: Colors.white,
                 mini: false,
                 fontScale: 0.025,
                 height: 65,
@@ -279,12 +282,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
             Utils.getButton(
                 text: '  Sign in with Apple ID',
-                color: Colors.white,
-                bgColor: HexColor('#4D4D4D'),
+                color: theme_color3,
+                //bgColor: HexColor('#4D4D4D'),
+                bgColor: theme_color_text,
                 mini: false,
                 fontScale: 0.025,
                 height: 65,
                 shape: RoundedRectangleBorder(
+                  // side: BorderSide(color: theme_color2),
                   borderRadius: BorderRadius.circular(15),
                 ),
                 icon: Image.asset('assets/images/apple.png', width: 37),
@@ -545,16 +550,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: double.infinity,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xFF61F4BC),
-                      Color(0xFF66F6E2),
-                      Color(0xFF38EED5),
-                      Color(0xFf1DD1B8),
-                    ],
-                    stops: [0.1, 0.4, 0.7, 0.9],
+                  image: DecorationImage(
+                    // image: AssetImage(
+                    //     'assets/images/Login_Bg1.png'),
+                    image: AssetImage(
+                        'assets/images/Login_Bg2.png'), // Replace with your image path
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
@@ -588,7 +589,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text(
                         'Sign In / Sign Up',
                         style: TextStyle(
-                          color: Colors.white,
+                          // color: Colors.white,
+                          color: theme_color2,
                           fontFamily: 'OpenSans',
                           fontSize: 28.0,
                           fontWeight: FontWeight.bold,
@@ -597,9 +599,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       // SizedBox(height: 30.0),
                       // _buildEmailTF(),
                       SizedBox(
-                        height: 50.0,
+                        height: 100,
                       ),
-                      JustLogIn(),
+
                       //_buildForgotPasswordBtn(),
                       //_buildRememberMeCheckbox(),
                       //_buildLoginBtn(),

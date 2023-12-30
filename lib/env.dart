@@ -10,7 +10,8 @@ const theme_color = Color(0xFF61F4BC);
 const theme_color2 = Color(0xFf1DD1B8);
 const theme_color3 = Color(0xFF38EED5);
 const theme_color4 = Color(0xFf1DD1B8);
-const theme_color5 = Color(0xFf698269);
+const theme_color5 = Color(0xFF38A596);
+const theme_color_text = Color(0xFF328177);
 const cultivation_theme_color = Colors.lightBlueAccent;
 
 //Color(0xFF61F4BC),
