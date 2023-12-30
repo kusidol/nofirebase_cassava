@@ -261,13 +261,14 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             Utils.getButton(
                 text: '  Sign in with Google',
-                color: theme_color3,
-                // bgColor: HexColor('#4D4D4D'),
-                bgColor: Colors.white,
+                color: Colors.white,
+                //bgColor: HexColor('#4D4D4D'),
+                bgColor: theme_color2,
                 mini: false,
                 fontScale: 0.025,
                 height: 65,
                 shape: RoundedRectangleBorder(
+                  side: BorderSide(color: theme_color2, width: 3),
                   borderRadius: BorderRadius.circular(15),
                 ),
                 icon: Image.asset('assets/images/google_new.png', width: 37),
@@ -282,14 +283,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
             Utils.getButton(
                 text: '  Sign in with Apple ID',
-                color: theme_color3,
+                color: Colors.white,
                 //bgColor: HexColor('#4D4D4D'),
-                bgColor: theme_color_text,
+                bgColor: theme_color2,
                 mini: false,
                 fontScale: 0.025,
                 height: 65,
                 shape: RoundedRectangleBorder(
-                  // side: BorderSide(color: theme_color2),
+                  side: BorderSide(color: theme_color2, width: 3),
                   borderRadius: BorderRadius.circular(15),
                 ),
                 icon: Image.asset('assets/images/apple.png', width: 37),
@@ -554,7 +555,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     // image: AssetImage(
                     //     'assets/images/Login_Bg1.png'),
                     image: AssetImage(
-                        'assets/images/Login_Bg2.png'), // Replace with your image path
+                        'assets/images/Login_Bg3.png'), // Replace with your image path
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -565,14 +566,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   physics: AlwaysScrollableScrollPhysics(),
                   padding: EdgeInsets.symmetric(
                     horizontal: 40.0,
-                    vertical: 120.0,
+                    vertical: 140.0,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Container(
-                        width: 200,
-                        height: 200,
+                        width: 250,
+                        height: 250,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           // borderRadius: BorderRadius.circular(20),
@@ -581,10 +582,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             fit: BoxFit.cover,
                           ),
                         ),
-                      ),
-
-                      SizedBox(
-                        height: 50.0,
                       ),
                       Text(
                         'Sign In / Sign Up',
@@ -598,9 +595,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       // SizedBox(height: 30.0),
                       // _buildEmailTF(),
-                      SizedBox(
-                        height: 100,
-                      ),
 
                       //_buildForgotPasswordBtn(),
                       //_buildRememberMeCheckbox(),
