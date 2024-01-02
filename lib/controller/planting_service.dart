@@ -253,12 +253,13 @@ class PlantingService {
     return plantings;
   }
 
-  Future<List<Map<String, dynamic>>> searchPlantingByKey2(
-      Map<String, dynamic> data, String token) async {
+  Future<List<Map<String, dynamic>>> searchFilter(
+      Map<String, dynamic> data, String token,{int page = 1, int value = 1000}) async {
     List<Map<String, dynamic>> datas = [];
     Service plantingsService = new Service();
+    int date = DateTime.now().millisecondsSinceEpoch;
     var response = await plantingsService.doPostWithFormData(
-        "${LOCAL_SERVER_IP_URL}/planting/search", token, data);
+        "${LOCAL_SERVER_IP_URL}/planting/search/page/$page/value/$value/date/$date", token, data);
 
     if (response.statusCode == 200) {
       Map<String, dynamic> res = jsonDecode(response.data);
