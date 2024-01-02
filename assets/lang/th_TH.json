@@ -156,6 +156,7 @@
   "add-id-field-label": "ป้อนรหัสแปลงที่ต้องการ",
 
   "code-field-label": "รหัสแปลง",
+  "name-field-label": "ชื่อแปลง",
   "name-code-field-label": "ชื่อแปลง หรือ รหัสแปลง",
   "owner": "เจ้าของแปลง",
   "owner-name": "ชื่อเจ้าของแปลง",
