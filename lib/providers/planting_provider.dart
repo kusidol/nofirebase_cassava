@@ -531,13 +531,13 @@ class PlantingProvider with ChangeNotifier {
       if (plantingData.isEmpty) return;
 
       plantingData[index].plantingId = data['plantingId'];
-      plantingData[index].plantingName = data['plantingName'];
-      plantingData[index].fieldName = data['fieldName'];
-      plantingData[index].substrict = data['substrict'];
-      plantingData[index].district = data['district'];
-      plantingData[index].province = data['province'];
-      plantingData[index].firstName = data['firstName'];
-      plantingData[index].lastName = data['lastName'];
+      plantingData[index].plantingName = data['plantingName'] == null ? "": data['plantingName'];
+      plantingData[index].fieldName = data['fieldName'] == null ? "": data['fieldName'];
+      plantingData[index].substrict = data['substrict']== null ? "": data['substrict'];
+      plantingData[index].district = data['district']== null ? "": data['district'];
+      plantingData[index].province = data['province']== null ? "": data['province'];
+      plantingData[index].firstName = data['firstName']== null ? "": data['firstName'];
+      plantingData[index].lastName = data['lastName']== null ? "": data['lastName'];
       plantingData[index].planting = planting;
       plantingData[index].isLoading = false;
 
@@ -546,7 +546,6 @@ class PlantingProvider with ChangeNotifier {
       new Future.delayed(const Duration(seconds: 2), () {
         // deleayed code here
       });
-
       index++;
     }
     isLoading = true;
@@ -554,7 +553,7 @@ class PlantingProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void search(Map<String, dynamic> data) async {
+  void searchFilter(Map<String, dynamic> data) async {
     reset();
     PlantingService plantingService = PlantingService();
     String? token = tokenFromLogin?.token;
@@ -564,11 +563,11 @@ class PlantingProvider with ChangeNotifier {
     }
 
     await plantingService
-        .searchPlantingByKey2(data, token.toString())
-        .then((value) async {
+        .searchFilter(data, token.toString())
+        .then((value) {
       if (value != null) {
-        print(value);
-        await _doSearch(value, 0);
+        //print(value);
+        _doSearch(value, 0);
       }
     });
     // List<Planting> searchPlantings =
