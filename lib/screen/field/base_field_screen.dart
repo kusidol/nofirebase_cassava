@@ -12,7 +12,6 @@ import 'package:mun_bot/providers/field_provider.dart';
 import 'package:mun_bot/providers/planting_provider.dart';
 import 'package:mun_bot/providers/survey_provider.dart';
 import 'package:mun_bot/screen/field/new_field_screen.dart';
-import 'package:mun_bot/screen/login/app_styles.dart';
 import 'package:mun_bot/screen/widget/card_list_view_field.dart';
 import 'package:mun_bot/screen/widget/no_data.dart';
 
@@ -23,7 +22,6 @@ import 'package:mun_bot/main.dart';
 import 'package:mun_bot/util/ui/calendar_popup_view.dart';
 import 'package:mun_bot/util/ui/survey_theme.dart';
 
-import 'package:mun_bot/screen/survey/create_survey_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
@@ -36,12 +34,12 @@ import 'package:mun_bot/util/change_date_time.dart';
 import 'package:provider/provider.dart';
 
 import 'package:shimmer/shimmer.dart';
-import 'package:mun_bot/screen/login/login_screen.dart';
 
 class BaseFieldScreen extends StatefulWidget {
   TabController mainTapController;
 
   BaseFieldScreen(this.mainTapController);
+
   @override
   State<StatefulWidget> createState() => _BaseFieldScreen();
 }
@@ -65,6 +63,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
 
   bool isShowbasicSearch = true;
   GlobalKey expansionTileKey = GlobalKey();
+
   //--------------------serach more
 
   AnimationController? animationController;
@@ -80,6 +79,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
 
   // checking checkfieldregistrar
   bool checkCreateField = false;
+
   @override
   void initState() {
     _scrollController.addListener(_scrollListener);
@@ -149,6 +149,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
   }
 
   String? locationFromField;
+
   Future<String?> getLocationByFielID(int id) async {
     try {
       String? token = tokenFromLogin?.token;
@@ -833,17 +834,11 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
 
   @override
   Widget build(BuildContext context) {
-    // final fieldProvider = Provider.of<FieldProviders>(context);
-    //print("Page Base Planting Context: $context");
     return Theme(
       data: HotelAppTheme.buildLightTheme(),
       child: Container(
         child:
             Consumer<FieldProviders>(builder: (context, fieldProvder, index) {
-          // List<User> owners = data.owner;
-          // List<Field> fields = data.fields;
-          // List<String> locations = data.locations;
-          // List<ImageData?> images = data.images;
           return WillPopScope(
             onWillPop: () => onBackButtonPressed(context),
             child: Scaffold(
@@ -899,7 +894,6 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                                             check = 0;
                                           } else if (check == 0) {
                                             fetchMoreData(context);
-
                                             check = 1;
                                           }
                                         }
@@ -916,7 +910,6 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                                           }
                                         }
                                       }
-
                                       if (check == 1) {
                                         if (fieldProvder.fieldData.length ==
                                             fieldProvder.numberAllFields) {
@@ -924,7 +917,6 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                                               "all-information".i18n());
                                         }
                                       }
-
                                       return true;
                                     },
                                     child: RefreshIndicator(
@@ -941,7 +933,11 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                                                         (BuildContext context,
                                                             int index) {
                                                   return Column(
-                                                    children: <Widget>[],
+                                                    children: <Widget>[
+                                                      SizedBox(
+                                                        height: 1,
+                                                      )
+                                                    ],
                                                   );
                                                 }, childCount: 1),
                                               ),
@@ -985,30 +981,6 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                                                           fieldProvder
                                                               .fieldData[index]
                                                               .image;
-                                                      // final int count =
-                                                      //     fieldProvder.fieldData
-                                                      //                 .length >
-                                                      //             10
-                                                      //         ? 10
-                                                      //         : fieldProvder
-                                                      //             .fieldData
-                                                      //             .length;
-                                                      // final Animation<
-                                                      //     double> animation = Tween<
-                                                      //             double>(
-                                                      //         begin: 0.0,
-                                                      //         end: 1.0)
-                                                      //     .animate(CurvedAnimation(
-                                                      //         parent:
-                                                      //             animationController!,
-                                                      //         curve: Interval(
-                                                      //             (1 / count) *
-                                                      //                 index,
-                                                      //             1.0,
-                                                      //             curve: Curves
-                                                      //                 .fastOutSlowIn)));
-                                                      // animationController
-                                                      //     ?.forward();
                                                       return fieldProvder
                                                                   .fieldData[
                                                                       index]
@@ -1384,6 +1356,7 @@ class ContestTabHeader extends SliverPersistentHeaderDelegate {
   ContestTabHeader(
     this.searchUI,
   );
+
   final Widget searchUI;
 
   @override
