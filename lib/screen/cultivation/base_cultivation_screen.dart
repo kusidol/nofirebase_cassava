@@ -768,7 +768,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
     setState(() {
       isShowbasicSearch = true;
     });
-    provider.search(jsonData);
+    provider.searchFilter(jsonData);
     isSearching = true;
   }
 
@@ -939,7 +939,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                       TextFormField(
                         controller: cultivationController,
                         decoration: InputDecoration(
-                          labelText: 'name-planting-label'.i18n(),
+                          labelText: 'name-code-planting-label'.i18n(),
                           border: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.circular(sizeHeight(10, context)),
