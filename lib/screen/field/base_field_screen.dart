@@ -635,7 +635,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
     );
   }
 
-  void _handleSearchButton(FieldProviders provider) async {
+  void _handleSearchFilterButton(FieldProviders provider) async {
     //call Service
     provider.reset();
     Map<String, dynamic> jsonData = {
@@ -653,7 +653,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
     setState(() {
       isShowbasicSearch = true;
     });
-    provider.search(jsonData);
+    provider.searchFilter(jsonData);
     isSearching = true;
   }
 
@@ -678,7 +678,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
     isSearching = true;
   }
 
-  void _handleSearch(FieldProviders provider) async {
+  /*void _handleSearch(FieldProviders provider) async {
     //call Service
     Map<String, dynamic> jsonData = {
       "address": addressValue,
@@ -697,7 +697,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
     });
     provider.searchNull(jsonData);
     isSearching = true;
-  }
+  }*/
 
   Widget searchMore1(FieldProviders provider) {
     var _startDateUserNameColor = Colors.black;
@@ -754,7 +754,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                       TextFormField(
                         controller: ownerController,
                         decoration: InputDecoration(
-                          labelText: "name-field-label".i18n(),
+                          labelText: "name-code-field-label".i18n(),
                           border: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.circular(sizeHeight(10, context)),
@@ -805,7 +805,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                           ownerNameValue == "") {
                         onfirst();
                       } else {
-                        _handleSearchButton(provider);
+                        _handleSearchFilterButton(provider);
                       }
                     },
                     padding: EdgeInsets.all(sizeHeight(10, context)),
