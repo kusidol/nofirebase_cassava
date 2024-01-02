@@ -122,6 +122,7 @@
   "All": "All",
   "id-field-label": "Field ID",
   "code-field-label": "Field Code",
+  "name-field-label": "Field Name",
   "name-code-field-label": "Field Name or Field Code",
   "owner": "Owner",
   "owner-name": "Owner name",
