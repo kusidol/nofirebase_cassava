@@ -80,7 +80,7 @@
   "env-cultivation-label": "สภาพแวดล้อม",
 
   "code-planting-label": "รหัสการเพาะปลูก",
-  "name-planting-label": "ชื่อการเพาะปลูก",
+  "name-code-planting-label": "ชื่อ หรือ รหัสการเพาะปลูก",
   "add-planting-label": "ป้อนการเพาะปลูกที่ต้องการ",
   "area-label": "พื้นที่ปลูก (ไร่)",
   "area-size": "ขนาดแปลง",
@@ -156,7 +156,7 @@
   "add-id-field-label": "ป้อนรหัสแปลงที่ต้องการ",
 
   "code-field-label": "รหัสแปลง",
-  "name-field-label": "ชื่อแปลง",
+  "name-code-field-label": "ชื่อแปลง หรือ รหัสแปลง",
   "owner": "เจ้าของแปลง",
   "owner-name": "ชื่อเจ้าของแปลง",
   "please-select-owner": "โปรดเลือกเจ้าของแปลง",
