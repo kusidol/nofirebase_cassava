@@ -324,12 +324,14 @@ class FieldService {
     return location;
   }
 
-  Future<List<Field>> searchFieldsByKey2(
-      Map<String, dynamic> data, String token) async {
+  Future<List<Field>> searchFilter(
+      Map<String, dynamic> data, String token,{int page = 1, int value = 20}) async {
     List<Field> fields = [];
+
+    int date = DateTime.now().millisecondsSinceEpoch;
     Service service = new Service();
     var response = await service.doPostWithFormData(
-        "${LOCAL_SERVER_IP_URL}/fields/search", token, data);
+        "${LOCAL_SERVER_IP_URL}/fields/search/page/$page/value/$value/date/$date", token, data);
 
     if (response.statusCode == 200) {
       fields = ObjectList<Field>.fromJson(
@@ -342,7 +344,7 @@ class FieldService {
     return fields;
   }
 
-  Future<List<Field>> search(Map<String, dynamic> data, String token) async {
+  Future<List<Field>> searchByKey(Map<String, dynamic> data, String token) async {
     List<Field> fields = [];
     int page = 1;
     int value = 100;
@@ -364,10 +366,10 @@ class FieldService {
     return fields;
   }
 
-  Future<List<Field>> searchNull(
-      Map<String, dynamic> data, int page, int value, String token) async {
+  /*Future<List<Field>> searchNull(
+      Map<String, dynamic> data,String token, {int page = 1, int value = 20}) async {
     List<Field> fields = [];
-    value = 10;
+  //  value = 10;
     int date = DateTime.now().millisecondsSinceEpoch;
     Service service = new Service();
     var response = await service.doPostWithFormData(
@@ -384,7 +386,7 @@ class FieldService {
       print("error with out statusCode");
     }
     return fields;
-  }
+  }*/
 
   Future<int> countFields(String token) async {
     int count = 0;
