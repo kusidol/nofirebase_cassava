@@ -272,58 +272,15 @@ class FieldProviders with ChangeNotifier {
     notifyListeners();
   }
 
-  void search(Map<String, dynamic> data) async {
+  void searchFilter(Map<String, dynamic> data) async {
     reset();
     FieldService fieldService = FieldService();
     String? token = tokenFromLogin?.token;
-    // fields = await fieldService.searchFieldsByKey2(data, token.toString());
 
-    // List<Field> data2 = this.fields;
-    // numberAllFields = this.fields.length;
-    // for (int i = 0; i < fields.length; i++) {
-    //   String? token = tokenFromLogin?.token;
-
-    //   int fieldID = fields[i].fieldID;
-
-    //   ImageData? fetchedImages =
-    //       await fieldService.fetchImages(token.toString(), fieldID);
-
-    //   if (fetchedImages != null) {
-    //     images.add(fetchedImages);
-    //   } else {
-    //     images.add(null);
-    //   }
-
-    //   String? location =
-    //       await fieldService.getLocationByFielID(fieldID, token.toString());
-    //   if (location != null) {
-    //     locations.add(location);
-    //   } else {
-    //     locations.add("");
-    //   }
-
-    //   UserService userService = UserService();
-    //   User? user = await userService.getUserByFieldID(
-    //       fields[i].fieldID, token.toString());
-    //   if (user != null) {
-    //     owner.add(user);
-    //   } else {
-    //     owner.add(User(
-    //         -1,
-    //         "service null",
-    //         "service null",
-    //         "service null",
-    //         "service null",
-    //         "service null",
-    //         UserStatus.invalid,
-    //         0,
-    //         RequestInfoStatus.No));
-    //   }
-    // }
     int index = 0;
     await fieldService
-        .searchFieldsByKey2(data, token.toString())
-        .then((value) async {
+        .searchFilter(data, token.toString())
+        .then((value)  {
       if (value != null) {
         _doSearchField(value, 0);
       }
@@ -337,54 +294,10 @@ class FieldProviders with ChangeNotifier {
     reset();
     FieldService fieldService = FieldService();
     String? token = tokenFromLogin?.token;
-    // fields = await fieldService.search(data, token.toString());
-
-    // List<Field> data2 = this.fields;
-    // numberAllFields = this.fields.length;
-    // for (int i = 0; i < fields.length; i++) {
-    //   String? token = tokenFromLogin?.token;
-
-    //   int fieldID = fields[i].fieldID;
-
-    //   ImageData? fetchedImages =
-    //       await fieldService.fetchImages(token.toString(), fieldID);
-
-    //   if (fetchedImages != null) {
-    //     images.add(fetchedImages);
-    //   } else {
-    //     images.add(null);
-    //   }
-
-    //   String? location =
-    //       await fieldService.getLocationByFielID(fieldID, token.toString());
-    //   if (location != null) {
-    //     locations.add(location);
-    //   } else {
-    //     locations.add("");
-    //   }
-
-    //   UserService userService = UserService();
-    //   User? user = await userService.getUserByFieldID(
-    //       fields[i].fieldID, token.toString());
-    //   if (user != null) {
-    //     owner.add(user);
-    //   } else {
-    //     owner.add(User(
-    //         -1,
-    //         "service null",
-    //         "service null",
-    //         "service null",
-    //         "service null",
-    //         "service null",
-    //         UserStatus.invalid,
-    //         0,
-    //         RequestInfoStatus.No));
-    //   }
-    // }
 
     int index = 0;
 
-    await fieldService.search(data, token.toString()).then((value) async {
+    await fieldService.searchByKey(data, token.toString()).then((value) async {
       if (value != null) {
         _doSearchField(value, 0);
       }
@@ -447,55 +360,10 @@ class FieldProviders with ChangeNotifier {
     reset();
     FieldService fieldService = FieldService();
     String? token = tokenFromLogin?.token;
-    // fields =
-    //     await fieldService.searchNull(data, _page, _value, token.toString());
 
-    // List<Field> data2 = this.fields;
-    // numberAllFields = this.fields.length;
-    // for (int i = 0; i < fields.length; i++) {
-    //   String? token = tokenFromLogin?.token;
-
-    //   int fieldID = fields[i].fieldID;
-
-    //   ImageData? fetchedImages =
-    //       await fieldService.fetchImages(token.toString(), fieldID);
-
-    //   if (fetchedImages != null) {
-    //     images.add(fetchedImages);
-    //   } else {
-    //     images.add(null);
-    //   }
-
-    //   String? location =
-    //       await fieldService.getLocationByFielID(fieldID, token.toString());
-    //   if (location != null) {
-    //     locations.add(location);
-    //   } else {
-    //     locations.add("");
-    //   }
-
-    //   UserService userService = UserService();
-    //   User? user = await userService.getUserByFieldID(
-    //       fields[i].fieldID, token.toString());
-    //   if (user != null) {
-    //     owner.add(user);
-    //   } else {
-    //     owner.add(User(
-    //         -1,
-    //         "service null",
-    //         "service null",
-    //         "service null",
-    //         "service null",
-    //         "service null",
-    //         UserStatus.invalid,
-    //         0,
-    //         RequestInfoStatus.No));
-    //   }
-    // }
     int index = 0;
     await fieldService
-        .searchNull(data, _page, _value, token.toString())
-        .then((value) async {
+        .searchFilter(data, token.toString(), page:  _page,  value:  _value).then((value) async {
       if (value != null) {
         for (Field data in value) {
           int fieldID = data.fieldID;
