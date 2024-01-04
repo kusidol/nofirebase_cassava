@@ -609,7 +609,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                         ? "insert-field-code".i18n()
                         : field.code,
                     successText: "",
-                    inputIcon: Icon(Icons.eco_sharp),
+                    inputIcon: Icon(Icons.code_sharp),
                     validator1: (value) =>
                         InputCodeValidator.validateNotSpecialCharacter(
                             value, field.code.toString()),
@@ -829,7 +829,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                         ? "insert-field-address-label".i18n()
                         : field.address,
                     successText: "",
-                    inputIcon: Icon(Icons.eco_sharp),
+                    inputIcon: Icon(Icons.house_rounded),
                     validator1: (value) =>
                         InputCodeValidator.validateNotSpecialCharacter(
                             value, field.address.toString()),
@@ -857,7 +857,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                     labelText:
                         field.moo == "" ? "insert-field-moo".i18n() : field.moo,
                     successText: "",
-                    inputIcon: Icon(Icons.eco_sharp),
+                    inputIcon: Icon(Icons.house_siding_rounded),
                   ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   Container(
@@ -883,7 +883,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                         ? "insert-field-road".i18n()
                         : field.road,
                     successText: "",
-                    inputIcon: Icon(Icons.eco_sharp),
+                    inputIcon: Icon(Icons.add_road_rounded),
                   ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                 ],
@@ -1165,7 +1165,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                         ? "insert-landmark-plots".i18n()
                         : field.landmark,
                     successText: "",
-                    inputIcon: Icon(Icons.eco_sharp),
+                    inputIcon: Icon(Icons.filter_center_focus_rounded),
                   ),
                 ],
               ))
@@ -1260,7 +1260,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                               : field.latitude.toString(),
                           successText: "",
                           isOnlyNumber: true,
-                          inputIcon: Icon(Icons.eco_sharp),
+                          inputIcon: Icon(Icons.map_rounded),
                         ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   Container(
@@ -1329,7 +1329,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                               : field.longtitude.toString(),
                           successText: "",
                           isOnlyNumber: true,
-                          inputIcon: Icon(Icons.eco_sharp),
+                          inputIcon: Icon(Icons.map_rounded),
                         ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   _isPassValueFromPage ? _buildUpdateGPSBtn() : Container(),
@@ -1369,7 +1369,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                         : field.metresAboveSeaLv.toString(),
                     successText: "",
                     isOnlyNumber: true,
-                    inputIcon: Icon(Icons.eco_sharp),
+                    inputIcon: Icon(Icons.water),
                   ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                 ],
