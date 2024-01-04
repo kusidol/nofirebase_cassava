@@ -28,18 +28,17 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'package:provider/provider.dart';
 
-
-
 class BaseSurveyScreenEnemy extends StatefulWidget {
   int surveyID;
   late int point;
   late int number;
-  int diseaseSize ;
-  int enemySize ;
-  int pestSize  ;
+  int diseaseSize;
+  int enemySize;
+  int pestSize;
 
   List<String> radioValue = [];
-  BaseSurveyScreenEnemy(this.point, this.number, this.surveyID,this.diseaseSize,this.enemySize,this.pestSize);
+  BaseSurveyScreenEnemy(this.point, this.number, this.surveyID,
+      this.diseaseSize, this.enemySize, this.pestSize);
   @override
   State<StatefulWidget> createState() => _BaseSurveyScreenEnemy();
 }
@@ -51,7 +50,6 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
   StepperType stepperType = StepperType.vertical;
 
   int usedController = 0;
-
 
   ScrollController? _scrollController;
 
@@ -108,13 +106,12 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
     });
   }
 
-
   int selectedValues = 1;
   int _tabIndex = 0;
 
   bool isInit = true;
 
-  void _initRadioRating(){
+  void _initRadioRating() {
     for (int i = 0; i < widget.diseaseSize; i++) {
       twoDList.add([
         CheckBoxState(),
@@ -128,7 +125,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
     }
 
     colors = List.generate(widget.diseaseSize,
-            (i) => List.generate(6 + 1, (j) => false, growable: false),
+        (i) => List.generate(6 + 1, (j) => false, growable: false),
         growable: false);
   }
 
@@ -148,200 +145,218 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
             }),
           ],
           child: Consumer<SurveyTargetPointProvider>(
-              builder:(context, surveyTargetPointProvider, index){
-
-                if(isInit) {
-                  isInit = !isInit ;
-                  _initRadioRating();
-                  surveyTargetPointProvider.fetchData(widget.surveyID, widget.point,widget.number);
-
-                }
-                return Scaffold(
-
-                    body: Stack(
-                      alignment: Alignment.topLeft,
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height,
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                          ),
+            builder: (context, surveyTargetPointProvider, index) {
+              if (isInit) {
+                isInit = !isInit;
+                _initRadioRating();
+                surveyTargetPointProvider.fetchData(
+                    widget.surveyID, widget.point, widget.number);
+              }
+              return Scaffold(
+                  body: Stack(
+                    alignment: Alignment.topLeft,
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
                         ),
-                        ListView(
-                          physics: const ClampingScrollPhysics(),
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: [
-                                    Colors.white38.withOpacity(1.0),
-                                    theme_color2.withOpacity(.9),
-                                    theme_color3.withOpacity(.8),
-                                    Colors.white.withOpacity(.8),
-                                    Colors.white.withOpacity(1),
-                                  ],
-                                ),
+                      ),
+                      ListView(
+                        physics: const ClampingScrollPhysics(),
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Colors.white38.withOpacity(1.0),
+                                  theme_color2.withOpacity(.9),
+                                  theme_color3.withOpacity(.8),
+                                  Colors.white.withOpacity(.8),
+                                  Colors.white.withOpacity(1),
+                                ],
                               ),
-                              child: SafeArea(
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding:
-                                      const EdgeInsets.symmetric(horizontal: 25.0),
-                                      child: Column(
-                                        children: [
-                                          SizedBox(
-                                            height: 10,
+                            ),
+                            child: SafeArea(
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 25.0),
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Container(
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Container(
+                                                        child: IconButton(
+                                                          icon: const Icon(
+                                                            Icons
+                                                                .arrow_back_ios,
+                                                            color: Colors.black,
+                                                          ),
+                                                          onPressed: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop(true);
+                                                          },
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                      width: sizeWidth(
+                                                          80, context)),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        "สิ่งสำรวจ",
+                                                        style: TextStyle(
+                                                            fontSize:
+                                                                sizeHeight(25,
+                                                                    context),
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w700),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 10),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Column(
+                                                    children: [
+                                                      const SizedBox(width: 90),
+                                                      Container(
+                                                        height: 45,
+                                                        child: TabBar(
+                                                          onTap: (value) {
+                                                            setState(() {
+                                                              //print("value${value}");
+                                                              _tabController!
+                                                                      .index =
+                                                                  value;
+                                                              _tabIndex = value;
+                                                            });
+                                                          },
+                                                          controller:
+                                                              _tabController,
+                                                          isScrollable: true,
+                                                          // labelPadding: EdgeInsets.symmetric(horizontal: 10.0),
+                                                          indicator:
+                                                              BoxDecoration(
+                                                            color: Colors.white,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        12.0),
+                                                          ),
+                                                          labelColor:
+                                                              Colors.black,
+                                                          unselectedLabelColor:
+                                                              Colors.white,
+                                                          labelStyle: TextStyle(
+                                                              fontSize: 18,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              color:
+                                                                  Colors.grey),
+                                                          tabs: [
+                                                            Tab(
+                                                              text: 'Disease'
+                                                                  .i18n(),
+                                                            ),
+                                                            Tab(
+                                                              text:
+                                                                  'NaturalEnermies'
+                                                                      .i18n(),
+                                                            ),
+                                                            Tab(
+                                                              text: 'PestPhase'
+                                                                  .i18n(),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              )
+                                            ],
                                           ),
-                                          Container(
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  Container(
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20),
+                                      ),
+                                      child: Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              1.26,
+                                          color: Colors.white,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 10, left: 10, right: 10),
                                             child: Column(
                                               children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                                  children: [
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                      children: [
-                                                        Container(
-                                                          child: IconButton(
-                                                            icon: const Icon(
-                                                              Icons.arrow_back_ios,
-                                                              color: Colors.black,
-                                                            ),
-                                                            onPressed: () {
-                                                              Navigator.of(context)
-                                                                  .pop(true);
-                                                            },
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    SizedBox(
-                                                        width: sizeWidth(80, context)),
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                      children: [
-                                                        Text(
-                                                          "สิ่งสำรวจ",
-                                                          style: TextStyle(
-                                                              fontSize: sizeHeight(
-                                                                  25, context),
-                                                              fontWeight:
-                                                              FontWeight.w700),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                                const SizedBox(height: 10),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                                  children: [
-                                                    Column(
-                                                      children: [
-                                                        const SizedBox(width: 90),
-                                                        Container(
-                                                          height: 45,
-                                                          child: TabBar(
-                                                            onTap: (value) {
-                                                              setState(() {
-                                                                //print("value${value}");
-                                                                _tabController!.index =
-                                                                    value;
-                                                                _tabIndex = value;
-                                                              });
-                                                            },
-                                                            controller: _tabController,
-                                                            isScrollable: true,
-                                                            // labelPadding: EdgeInsets.symmetric(horizontal: 10.0),
-                                                            indicator: BoxDecoration(
-                                                              color: Colors.white,
-                                                              borderRadius:
-                                                              BorderRadius.circular(
-                                                                  12.0),
-                                                            ),
-                                                            labelColor: Colors.black,
-                                                            unselectedLabelColor:
-                                                            Colors.white,
-                                                            labelStyle: TextStyle(
-                                                                fontSize: 18,
-                                                                fontWeight:
-                                                                FontWeight.w400,
-                                                                color: Colors.grey),
-                                                            tabs: [
-                                                              Tab(
-                                                                text: 'Disease'.i18n(),
-                                                              ),
-                                                              Tab(
-                                                                text: 'NaturalEnermies'
-                                                                    .i18n(),
-                                                              ),
-                                                              Tab(
-                                                                text:
-                                                                'PestPhase'.i18n(),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 15,
-                                    ),
-
-                                    Container(
-                                      child:ClipRRect(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(20),
-                                          topRight: Radius.circular(20),
-                                        ),
-                                        child: Container(
-                                            width: MediaQuery.of(context).size.width,
-                                            height:
-                                            MediaQuery.of(context).size.height / 1.26,
-                                            color: Colors.white,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 10, left: 10, right: 10),
-                                              child: Column(
-                                                children: [
-                                                  Expanded(
-                                                    child: TabBarView(
-                                                      controller: _tabController,
-                                                      children: [
-                                                        Container(
-                                                          child: ListView(
-                                                            physics:
-                                                            const BouncingScrollPhysics(),
-                                                            children: [
-                                                              AnimatedOpacity(
-                                                                opacity: _opacity,
-                                                                duration: Duration(
-                                                                    milliseconds: 500),
-                                                                child: Container(
-                                                                    padding:
-                                                                    const EdgeInsets
-                                                                        .only(top: 15),
-                                                                    child:/* !isLoading
-                                                                      ?*/ _buildListViewDisease(
-                                                                        surveyTargetPointProvider)
+                                                Expanded(
+                                                  child: TabBarView(
+                                                    controller: _tabController,
+                                                    children: [
+                                                      Container(
+                                                        child: ListView(
+                                                          physics:
+                                                              const BouncingScrollPhysics(),
+                                                          children: [
+                                                            AnimatedOpacity(
+                                                              opacity: _opacity,
+                                                              duration: Duration(
+                                                                  milliseconds:
+                                                                      500),
+                                                              child: Container(
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      top: 15),
+                                                                  child: /* !isLoading
+                                                                      ?*/
+                                                                      _buildListViewDisease(
+                                                                          surveyTargetPointProvider)
                                                                   /* : SizedBox(
                                                                     height: SizeConfig
                                                                         .screenHeight! *
@@ -358,27 +373,30 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                                                                       ),
                                                                     ),
                                                                   ),*/
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
+                                                                  ),
+                                                            ),
+                                                          ],
                                                         ),
-                                                        Container(
-                                                          child: ListView(
-                                                            physics:
-                                                            const BouncingScrollPhysics(),
-                                                            children: [
-                                                              AnimatedOpacity(
-                                                                opacity: _opacity,
-                                                                duration: Duration(
-                                                                    milliseconds: 500),
-                                                                child: Container(
-                                                                    padding:
-                                                                    const EdgeInsets
-                                                                        .only(top: 15),
-                                                                    child: /*!isLoading
-                                                                      ? */_buildListViewNaturalAndPest(
-                                                                        surveyTargetPointProvider,false)
+                                                      ),
+                                                      Container(
+                                                        child: ListView(
+                                                          physics:
+                                                              const BouncingScrollPhysics(),
+                                                          children: [
+                                                            AnimatedOpacity(
+                                                              opacity: _opacity,
+                                                              duration: Duration(
+                                                                  milliseconds:
+                                                                      500),
+                                                              child: Container(
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      top: 15),
+                                                                  child: /*!isLoading
+                                                                      ? */
+                                                                      _buildListViewNaturalAndPest(
+                                                                          surveyTargetPointProvider,
+                                                                          false)
                                                                   /* : SizedBox(
                                                                     height: SizeConfig
                                                                         .screenHeight! *
@@ -395,27 +413,30 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                                                                       ),
                                                                     ),
                                                                   ),*/
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
+                                                                  ),
+                                                            ),
+                                                          ],
                                                         ),
-                                                        Container(
-                                                          child: ListView(
-                                                            physics:
-                                                            const BouncingScrollPhysics(),
-                                                            children: [
-                                                              AnimatedOpacity(
-                                                                opacity: _opacity,
-                                                                duration: Duration(
-                                                                    milliseconds: 500),
-                                                                child: Container(
-                                                                    padding:
-                                                                    const EdgeInsets
-                                                                        .only(top: 15),
-                                                                    child: /*!isLoading
-                                                                      ?*/ _buildListViewNaturalAndPest(
-                                                                        surveyTargetPointProvider,true)
+                                                      ),
+                                                      Container(
+                                                        child: ListView(
+                                                          physics:
+                                                              const BouncingScrollPhysics(),
+                                                          children: [
+                                                            AnimatedOpacity(
+                                                              opacity: _opacity,
+                                                              duration: Duration(
+                                                                  milliseconds:
+                                                                      500),
+                                                              child: Container(
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      top: 15),
+                                                                  child: /*!isLoading
+                                                                      ?*/
+                                                                      _buildListViewNaturalAndPest(
+                                                                          surveyTargetPointProvider,
+                                                                          true)
                                                                   /*  : SizedBox(
                                                                     height: SizeConfig
                                                                         .screenHeight! *
@@ -432,134 +453,140 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                                                                       ),
                                                                     ),
                                                                   ),*/
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
+                                                                  ),
+                                                            ),
+                                                          ],
                                                         ),
-                                                      ],
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            )),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          )),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  floatingActionButton: !isLoading
+                      ? Row(
+                          //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                              SizedBox(
+                                width: sizeWidth(32, context),
+                              ),
+                              _tabIndex > 0
+                                  ? SizedBox(
+                                      width: sizeWidth(170, context),
+                                      height: sizeHeight(50, context),
+                                      child: FloatingActionButton(
+                                        backgroundColor: theme_color2,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              sizeHeight(18, context)),
+                                        ),
+                                        mini: true,
+                                        onPressed: () => {_toggleTabBack()},
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(Icons.navigate_before),
+                                            Text(
+                                              "previous-label".i18n(),
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      sizeHeight(18, context)),
+                                            ),
+                                          ],
+                                        ),
+                                        heroTag: "fab2",
                                       ),
                                     )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    floatingActionButton: !isLoading
-                        ? Row(
-                      //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          SizedBox(
-                            width: sizeWidth(32, context),
-                          ),
-                          _tabIndex > 0
-                              ? SizedBox(
-                            width: sizeWidth(170, context),
-                            height: sizeHeight(50, context),
-                            child: FloatingActionButton(
-                              backgroundColor: theme_color2,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    sizeHeight(18, context)),
-                              ),
-                              mini: true,
-                              onPressed: () => {_toggleTabBack()},
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.navigate_before),
-                                  Text(
-                                    "previous-label".i18n(),
-                                    style: TextStyle(
-                                        fontSize: sizeHeight(18, context)),
-                                  ),
-                                ],
-                              ),
-                              heroTag: "fab2",
-                            ),
-                          )
-                              : Container(
-                            width: 0,
-                            height: 0,
-                          ),
-                          Spacer(),
-                          _tabIndex <= 1
-                              ? SizedBox(
-                            width: _tabIndex == 0
-                                ? sizeWidth(350, context)
-                                : sizeWidth(170, context),
-                            height: sizeHeight(50, context),
-                            child: FloatingActionButton(
-                              backgroundColor: theme_color2,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    sizeHeight(18, context)),
-                              ),
-                              mini: true,
-                              onPressed: () => {_toggleTab()},
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "next-label".i18n(),
-                                    style: TextStyle(
-                                        fontSize: sizeHeight(18, context)),
-                                  ),
-                                  Icon(Icons.navigate_next),
-                                ],
-                              ),
-                              heroTag: "fab3",
-                            ),
-                          )
-                              : SizedBox(
-                            width: sizeWidth(170, context),
-                            height: sizeHeight(50, context),
-                            child: FloatingActionButton(
-                              backgroundColor: theme_color2,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    sizeHeight(18, context)),
-                              ),
-                              mini: true,
-                              onPressed: () {
-                               surveyTargetPointProvider.upDatesurveyTargetPoints(widget.point,widget.number).then((isCompleted) {
-                                 if(isCompleted){
-                                   if (mounted) {
-                                     Navigator.of(context,
-                                         rootNavigator: false)
-                                         .pop(true);
-                                   }
-                                 }
-                               });
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.check_box),
-                                  Text(
-                                    "save".i18n(),
-                                    style: TextStyle(
-                                        fontSize: sizeHeight(18, context)),
-                                  ),
-                                ],
-                              ),
-                              heroTag: "fab3",
-                            ),
-                          ),
-                        ])
-                        : Container()
-
-                );
-             },
-
+                                  : Container(
+                                      width: 0,
+                                      height: 0,
+                                    ),
+                              Spacer(),
+                              _tabIndex <= 1
+                                  ? SizedBox(
+                                      width: _tabIndex == 0
+                                          ? sizeWidth(350, context)
+                                          : sizeWidth(170, context),
+                                      height: sizeHeight(50, context),
+                                      child: FloatingActionButton(
+                                        backgroundColor: theme_color2,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              sizeHeight(18, context)),
+                                        ),
+                                        mini: true,
+                                        onPressed: () => {_toggleTab()},
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "next-label".i18n(),
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      sizeHeight(18, context)),
+                                            ),
+                                            Icon(Icons.navigate_next),
+                                          ],
+                                        ),
+                                        heroTag: "fab3",
+                                      ),
+                                    )
+                                  : SizedBox(
+                                      width: sizeWidth(170, context),
+                                      height: sizeHeight(50, context),
+                                      child: FloatingActionButton(
+                                        backgroundColor: theme_color2,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              sizeHeight(18, context)),
+                                        ),
+                                        mini: true,
+                                        onPressed: () {
+                                          surveyTargetPointProvider
+                                              .upDatesurveyTargetPoints(
+                                                  widget.point, widget.number)
+                                              .then((isCompleted) {
+                                            if (isCompleted) {
+                                              if (mounted) {
+                                                Navigator.of(context,
+                                                        rootNavigator: false)
+                                                    .pop(true);
+                                              }
+                                            }
+                                          });
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(Icons.check_box),
+                                            Text(
+                                              "save".i18n(),
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      sizeHeight(18, context)),
+                                            ),
+                                          ],
+                                        ),
+                                        heroTag: "fab3",
+                                      ),
+                                    ),
+                            ])
+                      : Container());
+            },
           ),
         ),
       ),
@@ -617,7 +644,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          buildRating(i,surveyTargetPointProvider),
+                          buildRating(i, surveyTargetPointProvider),
                           SizedBox(
                             width: MediaQuery.of(context).size.width / 30,
                           ),
@@ -637,7 +664,12 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                                   MaterialPageRoute(
                                       maintainState: false,
                                       //builder: (context) => Gallerys(1, 1,widget.survey)),
-                                      builder: (context) => Gallery(surveyTargetPointProvider.diseases[i].stp.surveyTargetPoint.surveyTargetPointId)),
+                                      builder: (context) => Gallery(
+                                          surveyTargetPointProvider
+                                              .diseases[i]
+                                              .stp
+                                              .surveyTargetPoint
+                                              .surveyTargetPointId)),
                                 );
                               },
                             ),
@@ -682,9 +714,12 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
   late List<RatingBar> ratingBars = [];
   late var colors;
 
-  Widget buildRating(int i,SurveyTargetPointProvider targetPointProvider) {
+  Widget buildRating(int i, SurveyTargetPointProvider targetPointProvider) {
     //widget.radioValue[i]v
-    int x = int.parse(targetPointProvider.diseases[i].stp.surveyTargetPoint.value.toInt().toString());
+    int x = int.parse(targetPointProvider
+        .diseases[i].stp.surveyTargetPoint.value
+        .toInt()
+        .toString());
 
     colors[i][x] = true;
     ratingBars.add((RatingBar.builder(
@@ -741,7 +776,6 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
           rating = rating - 1;
           if (rating == -1) {
             targetPointProvider.upDateDisease(i, -1);
-
           } else {
             targetPointProvider.upDateDisease(i, rating.toInt());
 
@@ -760,13 +794,15 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
     )));
 
     return ratingBars[i];
-
   }
 
-  _buildListViewNaturalAndPest(SurveyTargetPointProvider surveyTargetPointProvider,bool isPest) {
+  _buildListViewNaturalAndPest(
+      SurveyTargetPointProvider surveyTargetPointProvider, bool isPest) {
     List<Widget> widgetForShow = [];
     List<String> input = [];
-    List  surverTargetpoints = isPest ? surveyTargetPointProvider.pest : surveyTargetPointProvider.naturalEmemy ;
+    List surverTargetpoints = isPest
+        ? surveyTargetPointProvider.pest
+        : surveyTargetPointProvider.naturalEmemy;
 
     for (int i = 0; i < surverTargetpoints.length; i++) {
       input.add("");
@@ -804,21 +840,25 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                     width: MediaQuery.of(context).size.width / 2.5,
                     height: MediaQuery.of(context).size.height / 15,
                     child: AnimTFF(
-
                       (text) => {
                         setState(() {
                           try {
-                            surveyTargetPointProvider.upDatesurveyTargetPointAt(i, double.parse(text).toInt(), isPest) ;
-
+                            surveyTargetPointProvider.upDatesurveyTargetPointAt(
+                                i, double.parse(text).toInt(), isPest);
                           } catch (e) {
                             print(e);
-                            surveyTargetPointProvider.upDatesurveyTargetPointAt(i, 0, isPest) ;
+                            surveyTargetPointProvider.upDatesurveyTargetPointAt(
+                                i, 0, isPest);
                           }
                         }),
                       },
-                      labelText: surverTargetpoints[i].stp.surveyTargetPoint.value.toString(),
+                      labelText: surverTargetpoints[i]
+                          .stp
+                          .surveyTargetPoint
+                          .value
+                          .toString(),
                       successText: "",
-                      inputIcon: Icon(Icons.account_circle),
+                      inputIcon: Icon(Icons.bug_report),
                       isOnlyNumber: true,
                     ),
                   ),
@@ -831,12 +871,12 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
       );
     }
     return Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: widgetForShow.isEmpty ? [] : widgetForShow,
-            ),
-          );
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: widgetForShow.isEmpty ? [] : widgetForShow,
+      ),
+    );
   }
 
   bool isItemDisabled(String s) {
