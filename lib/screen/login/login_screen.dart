@@ -263,12 +263,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 text: '  Sign in with Google',
                 color: Colors.white,
                 //bgColor: HexColor('#4D4D4D'),
-                bgColor: theme_color2,
+                bgColor: Colors.black.withOpacity(0.7),
                 mini: false,
                 fontScale: 0.025,
                 height: 65,
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(color: theme_color2, width: 3),
+                  side: BorderSide(color: Colors.grey.shade400, width: 3),
                   borderRadius: BorderRadius.circular(15),
                 ),
                 icon: Image.asset('assets/images/google_new.png', width: 37),
@@ -285,12 +285,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 text: '  Sign in with Apple ID',
                 color: Colors.white,
                 //bgColor: HexColor('#4D4D4D'),
-                bgColor: theme_color2,
+                bgColor: Colors.black.withOpacity(0.7),
                 mini: false,
                 fontScale: 0.025,
                 height: 65,
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(color: theme_color2, width: 3),
+                  side: BorderSide(color: Colors.grey.shade400, width: 3),
                   borderRadius: BorderRadius.circular(15),
                 ),
                 icon: Image.asset('assets/images/apple.png', width: 37),
@@ -565,34 +565,42 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
                   padding: EdgeInsets.symmetric(
-                    horizontal: 40.0,
-                    vertical: 140.0,
+                    horizontal: 0,
+                    vertical: 143.0,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Container(
-                        width: 250,
-                        height: 250,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          // borderRadius: BorderRadius.circular(20),
-                          image: DecorationImage(
-                            image: AssetImage('assets/images/app_icons.png'),
-                            fit: BoxFit.cover,
+                      Padding(
+                        padding: EdgeInsets.only(right: 10),
+                        child: Container(
+                          width: 300,
+                          height: 300,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            // borderRadius: BorderRadius.circular(20),
+                            image: DecorationImage(
+                              image: AssetImage('assets/images/app_icons2.png'),
+                              fit: BoxFit.contain,
+                            ),
                           ),
                         ),
                       ),
-                      Text(
-                        'Sign In / Sign Up',
-                        style: TextStyle(
-                          // color: Colors.white,
-                          color: theme_color2,
-                          fontFamily: 'OpenSans',
-                          fontSize: 28.0,
-                          fontWeight: FontWeight.bold,
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Sign In / Sign Up',
+                          style: TextStyle(
+                            // color: Colors.white,
+                            // color: theme_color2,
+                            color: Colors.black.withOpacity(0.7),
+                            fontFamily: 'OpenSans',
+                            fontSize: 28.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
+
                       // SizedBox(height: 30.0),
                       // _buildEmailTF(),
 
@@ -600,7 +608,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       //_buildRememberMeCheckbox(),
                       //_buildLoginBtn(),
                       // _buildSignInWithText(),
-                      _buildSocialBtnRow(),
+                      Align(
+                        alignment: Alignment.center,
+                        child: _buildSocialBtnRow(),
+                      ),
                       //_buildSignupBtn(),
                     ],
                   ),
