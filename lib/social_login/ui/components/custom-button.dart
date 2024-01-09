@@ -95,7 +95,7 @@ class CustomSigInButton extends StatelessWidget {
                       ? text
                       : Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                               Padding(
                                 child: icon,
