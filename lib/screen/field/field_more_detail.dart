@@ -260,7 +260,7 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
         return Container(
           padding: EdgeInsets.all(sizeWidth(10, context)),
           width: SizeConfig.screenWidth,
-          height: SizeConfig.screenHeight! * 1.30,
+          height: SizeConfig.screenHeight! * 1.10,
           child: GestureDetector(
             onTap: () {},
             child: AspectRatio(
@@ -298,7 +298,7 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
                             color: theme_color4.withOpacity(0.9),
                             child: Container(
                               height: sizeHeight(114, context),
-                              width: sizeWidth(165, context),
+                              width: sizeWidth(160, context),
                               padding: EdgeInsets.all(sizeWidth(15, context)),
                               child: Column(
                                 children: [
@@ -336,7 +336,7 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
                             color: Colors.amber,
                             child: Container(
                               height: sizeHeight(114, context),
-                              width: sizeWidth(165, context),
+                              width: sizeWidth(160, context),
                               padding: EdgeInsets.all(sizeWidth(15, context)),
                               child: Column(
                                 children: [
@@ -384,7 +384,7 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
                             elevation: 8,
                             child: Container(
                               height: sizeHeight(114, context),
-                              width: sizeWidth(165, context),
+                              width: sizeWidth(160, context),
                               padding: EdgeInsets.all(sizeWidth(15, context)),
                               child: Column(
                                 children: [
@@ -426,7 +426,7 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
                             color: Colors.blue,
                             child: Container(
                               height: sizeHeight(114, context),
-                              width: sizeWidth(165, context),
+                              width: sizeWidth(160, context),
                               padding: EdgeInsets.all(sizeWidth(15, context)),
                               child: Column(
                                 children: [
@@ -657,8 +657,7 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
   }
 
   Widget _buildDetailField() {
-    return SingleChildScrollView(
-      child: Container(
+    return  Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
@@ -671,9 +670,8 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
             ),
           ),
           width: SizeConfig.screenWidth,
-          height: sizeHeight(680, context),
-          child: _buildListView()),
-    );
+          height: sizeHeight(653, context),
+          child: _buildListView());
   }
 
   Widget _buildUpdateGPSBtn() {
