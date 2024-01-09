@@ -139,8 +139,10 @@ class _NewFieldScreenState extends State<NewFieldScreen>
     LocationPermission permission;
 
     permission = await Geolocator.checkPermission();
+    //print(permission);
     if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
+
+
       if (permission == LocationPermission.denied) {
         // ScaffoldMessenger.of(context).showSnackBar(
         //     const SnackBar(content: Text('Location permissions are denied')));
@@ -156,7 +158,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
       var statusLocation = await Permission.location.status;
       //print("status : ${statusLocation}");
       if (statusLocation.isDenied) {
-        showAlertDialog_Location(context);
+      //  showAlertDialog_Location(context);
       }
       return false;
     }
@@ -183,15 +185,21 @@ class _NewFieldScreenState extends State<NewFieldScreen>
         ),
       );
   Future<void> _getCurrentLocation() async {
-    final hasPermission = await _handleLocationPermission();
+
+    bool hasPermission =  await _handleLocationPermission() ;
+
     if (!hasPermission) return;
 
     if (!hasPermission) return;
     Position position = await Geolocator.getCurrentPosition();
-    setState(() {
-      canUpdateGPS = true;
-      _currentPosition = position;
-    });
+
+    if(mounted){
+      setState(() {
+        canUpdateGPS = true;
+        _currentPosition = position;
+      });
+    }
+
   }
 
   List<String> createDropdown(List<Map<String, dynamic>> list) {
@@ -228,10 +236,21 @@ class _NewFieldScreenState extends State<NewFieldScreen>
 
   onLoadFirstFunction() async {
     // FOR GET LOCATION GPS
+
+    final grant = await Permission.location.request().isGranted;
+    //print(permission);
+    if (!grant) {
+      LocationPermission b = await Geolocator.requestPermission();
+    }
+
+
+
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
     if (!serviceEnabled) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('gps-off-alert'.i18n())));
+
     }
 
     if (widget.fieldFromPassPage == null) {
@@ -883,7 +902,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                         ? "insert-field-road".i18n()
                         : field.road,
                     successText: "",
-                    inputIcon: Icon(Icons.add_road_rounded),
+                    inputIcon: Icon(Icons.eco_sharp),
                   ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                 ],
@@ -1165,7 +1184,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                         ? "insert-landmark-plots".i18n()
                         : field.landmark,
                     successText: "",
-                    inputIcon: Icon(Icons.filter_center_focus_rounded),
+                    inputIcon: Icon(Icons.eco_sharp),
                   ),
                 ],
               ))
@@ -1380,20 +1399,34 @@ class _NewFieldScreenState extends State<NewFieldScreen>
   }
 
   Future<void> submitUpdateGPS() async {
-    await _getCurrentLocation();
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => LoadingWidget(),
+    );
+
+    await _getCurrentLocation().then((value) {
+
+      Navigator.pop(context);
+      if(mounted) {
+        if (canUpdateGPS) {
+          setState(() {
+            field.longtitude =
+                double.parse(_currentPosition!.longitude.toStringAsFixed(7));
+            field.latitude =
+                double.parse(_currentPosition!.latitude.toStringAsFixed(7));
+
+            longtitudeController.text = field.longtitude.toString();
+            latitudeController.text = field.latitude.toString();
+          });
+        }
+      }
+    });
 
     //print("Subdistrict : ${selectedSubistrictId}");
-    if (canUpdateGPS) {
-      setState(() {
-        field.longtitude =
-            double.parse(_currentPosition!.longitude.toStringAsFixed(7));
-        field.latitude =
-            double.parse(_currentPosition!.latitude.toStringAsFixed(7));
 
-        longtitudeController.text = field.longtitude.toString();
-        latitudeController.text = field.latitude.toString();
-      });
-    }
+
   }
 
   Future<bool> checkingOpenGPS() async {
