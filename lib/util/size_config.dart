@@ -7,7 +7,7 @@ class SizeConfig {
   static double? blockSizeHorizontal;
   static double? blockSizeVertical;
 
-  static double AlertfontSize = 15 ;
+  static double AlertfontSize = 15;
 
   void init(BuildContext context) {
     _mediaQueryData = MediaQuery.of(context);
@@ -20,6 +20,7 @@ class SizeConfig {
 
 //h/w=1.9
 //w/h=0.5
+
 double scale = SizeConfig.screenHeight! / SizeConfig.screenWidth!;
 double sizeHeight(double height, context) {
   if (scale >= 1.9) {

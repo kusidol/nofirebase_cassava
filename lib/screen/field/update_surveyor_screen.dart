@@ -190,25 +190,30 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
       ),
       child: Padding(
         padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top, left: 8, right: 8),
+            top: MediaQuery.of(context).padding.top,
+            left: sizeWidth(8, context),
+            right: sizeWidth(8, context)),
         child: Row(
           children: <Widget>[
             Container(
               alignment: Alignment.centerLeft,
-              width: AppBar().preferredSize.height + 40,
+              width: AppBar().preferredSize.height + sizeHeight(40, context),
               height: AppBar().preferredSize.height,
               child: Material(
                 color: Colors.transparent,
                 child: InkWell(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(32.0),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(sizeWidth(32, context)),
                   ),
                   onTap: () {
                     Navigator.pop(context);
                   },
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(Icons.arrow_back),
+                    padding: EdgeInsets.all(sizeWidth(8, context)),
+                    child: Icon(
+                      Icons.arrow_back,
+                      size: sizeHeight(25, context),
+                    ),
                   ),
                 ),
               ),
@@ -219,7 +224,7 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
                   'update-userSurvey-field-label'.i18n(),
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
-                    fontSize: sizeHeight(22, context),
+                    fontSize: sizeHeight(18, context),
                   ),
                 ),
               ),
@@ -234,12 +239,12 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
                   Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(32.0),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(sizeHeight(32, context)),
                       ),
                       onTap: () {},
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(sizeWidth(8, context)),
                         // child: Icon(Icons.map),
                       ),
                     ),
@@ -247,12 +252,12 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
                   Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(32.0),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(sizeHeight(32, context)),
                       ),
                       onTap: () {},
                       child: Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(sizeWidth(8, context)),
                         // child: Icon(FontAwesomeIcons.per,color: Colors.grey),
                       ),
                     ),
@@ -363,7 +368,10 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
                 SizedBox(
                   width: sizeWidth(8, context),
                 ),
-                Icon(Icons.person),
+                Icon(
+                  Icons.person,
+                  size: sizeHeight(25, context),
+                ),
                 SizedBox(
                   width: sizeWidth(8, context),
                 ),
@@ -371,11 +379,15 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("${farmers[i].firstName}"),
+                    Text(
+                      "${farmers[i].firstName}",
+                      style: TextStyle(fontSize: sizeHeight(16, context)),
+                    ),
                     SizedBox(
                       height: sizeHeight(8, context),
                     ),
-                    Text("${farmers[i].lastName}"),
+                    Text("${farmers[i].lastName}",
+                        style: TextStyle(fontSize: sizeHeight(16, context))),
                   ],
                 ),
                 Spacer(),
@@ -388,7 +400,7 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
                         borderColor: Colors.transparent,
                         borderWidth: sizeWidth(7, context),
                         height: sizeHeight(55, context),
-                        boxShadow: const [
+                        boxShadow: [
                           BoxShadow(
                             color: Colors.black26,
                             spreadRadius: 1,
@@ -427,21 +439,36 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
                             ? Icon(
                                 Icons.cancel,
                                 color: Colors.white,
+                                size: sizeHeight(25, context),
                               )
                             : Icon(
                                 Icons.check_circle,
                                 color: Colors.white,
+                                size: sizeHeight(25, context),
                               ),
                         textBuilder: (value) => value == false
-                            ? Center(child: Text('not-surveyor-label'.i18n()))
-                            : Center(child: Text('surveyor-label'.i18n())),
+                            ? Center(
+                                child: Text(
+                                'not-surveyor-label'.i18n(),
+                                style: TextStyle(
+                                    fontSize: sizeHeight(16, context)),
+                              ))
+                            : Center(
+                                child: Text(
+                                'surveyor-label'.i18n(),
+                                style: TextStyle(
+                                    fontSize: sizeHeight(16, context)),
+                              )),
                       )
                     : Container(
                         child: Padding(
-                          padding: const EdgeInsets.only(right: 20.0),
+                          padding:
+                              EdgeInsets.only(right: sizeWidth(20, context)),
                           child: Text(
                             'person-field-owner'.i18n(),
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: sizeHeight(16, context)),
                           ),
                         ),
                       )
@@ -467,7 +494,10 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
                 SizedBox(
                   width: sizeWidth(8, context),
                 ),
-                Icon(Icons.person),
+                Icon(
+                  Icons.person,
+                  size: sizeHeight(25, context),
+                ),
                 SizedBox(
                   width: sizeWidth(8, context),
                 ),
@@ -475,11 +505,17 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("${staffs[i].firstName}"),
+                    Text(
+                      "${staffs[i].firstName}",
+                      style: TextStyle(fontSize: sizeHeight(16, context)),
+                    ),
                     SizedBox(
                       height: sizeHeight(8, context),
                     ),
-                    Text("${staffs[i].lastName}"),
+                    Text(
+                      "${staffs[i].lastName}",
+                      style: TextStyle(fontSize: sizeHeight(16, context)),
+                    ),
                   ],
                 ),
                 Spacer(),
@@ -537,15 +573,28 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
                                 color: Colors.white,
                               ),
                         textBuilder: (value) => value == false
-                            ? Center(child: Text('not-surveyor-label'.i18n()))
-                            : Center(child: Text('surveyor-label'.i18n())),
+                            ? Center(
+                                child: Text(
+                                'not-surveyor-label'.i18n(),
+                                style: TextStyle(
+                                    fontSize: sizeHeight(16, context)),
+                              ))
+                            : Center(
+                                child: Text(
+                                'surveyor-label'.i18n(),
+                                style: TextStyle(
+                                    fontSize: sizeHeight(16, context)),
+                              )),
                       )
                     : Container(
                         child: Padding(
                           padding: const EdgeInsets.only(right: 20.0),
                           child: Text(
                             'person-responsible-field'.i18n(),
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: sizeHeight(16, context),
+                            ),
                           ),
                         ),
                       )
@@ -591,7 +640,7 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
                           ],
                         )
                       : Container(
-                          height: sizeHeight(602.5, context),
+                          height: SizeConfig.screenHeight! * 0.92,
                           child: Center(
                             child: CircularProgressIndicator(
                               valueColor:
@@ -650,7 +699,9 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
         textColor: Colors.black,
         iconColor: theme_color2,
         title: Text('search-more'.i18n(),
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            style: TextStyle(
+                fontSize: sizeHeight(20, context),
+                fontWeight: FontWeight.bold)),
         onExpansionChanged: (bool isExpanded) {
           if (!isExpanded) {
             //print('Hello World');
@@ -658,20 +709,29 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
             //print('Save Value');
           }
         },
-        leading: Icon(Icons.perm_contact_calendar_outlined),
-        subtitle: Text(selectedFirstName + " " + selectedLastName),
+        leading: Icon(
+          Icons.perm_contact_calendar_outlined,
+          size: sizeHeight(25, context),
+        ),
+        subtitle: Text(
+          selectedFirstName + " " + selectedLastName,
+          style: TextStyle(fontSize: sizeHeight(16, context)),
+        ),
         children: [
           Container(
             color: Colors.tealAccent[50],
-            padding: const EdgeInsets.all(20),
+            padding: EdgeInsets.all(sizeHeight(20, context)),
             child: Column(
               children: [
                 TextFormField(
                   controller: firstnameStaffController,
                   decoration: InputDecoration(
                     labelText: selectedFirstName,
+                    labelStyle: TextStyle(fontSize: sizeHeight(14, context)),
+                    contentPadding: EdgeInsets.all(sizeHeight(16, context)),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius:
+                          BorderRadius.circular(sizeHeight(10, context)),
                     ),
                   ),
                   onChanged: (value) {
@@ -680,13 +740,16 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
                     });
                   },
                 ),
-                SizedBox(height: 16.0),
+                SizedBox(height: sizeHeight(16, context)),
                 TextFormField(
                   controller: lastnameStaffController,
                   decoration: InputDecoration(
                     labelText: selectedLastName,
+                    labelStyle: TextStyle(fontSize: sizeHeight(14, context)),
+                    contentPadding: EdgeInsets.all(sizeHeight(16, context)),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius:
+                          BorderRadius.circular(sizeHeight(10, context)),
                     ),
                   ),
                   onChanged: (value) {
@@ -699,8 +762,12 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 2, left: 20, right: 20, bottom: 20),
-            height: 50.0,
+            margin: EdgeInsets.only(
+                top: sizeHeight(2, context),
+                left: sizeWidth(20, context),
+                right: sizeWidth(20, context),
+                bottom: sizeHeight(20, context)),
+            height: sizeHeight(50, context),
             child: RaisedButton(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18.0),
@@ -712,7 +779,7 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
                 });
                 _handleSearchButton_Staff();
               },
-              padding: EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(sizeHeight(10, context)),
               color: theme_color2,
               textColor: Colors.white,
               child: Row(
@@ -720,10 +787,13 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
                 children: [
                   Text(
                     "search".i18n(),
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: sizeHeight(16, context)),
                   ),
-                  SizedBox(width: 5.0),
-                  Icon(Icons.search),
+                  SizedBox(width: sizeWidth(5, context)),
+                  Icon(
+                    Icons.search,
+                    size: sizeHeight(20, context),
+                  ),
                 ],
               ),
             ),
@@ -758,7 +828,7 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
                           ],
                         )
                       : Container(
-                          height: sizeHeight(602.5, context),
+                          height: SizeConfig.screenHeight! * 0.92,
                           child: Center(
                             child: CircularProgressIndicator(
                               valueColor:
@@ -780,7 +850,9 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
         textColor: Colors.black,
         iconColor: theme_color2,
         title: Text('search-more'.i18n(),
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            style: TextStyle(
+                fontSize: sizeHeight(20, context),
+                fontWeight: FontWeight.bold)),
         onExpansionChanged: (bool isExpanded) {
           if (!isExpanded) {
             //print('Hello World');
@@ -788,20 +860,29 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
             //print('Save Value');
           }
         },
-        leading: Icon(Icons.perm_contact_calendar_outlined),
-        subtitle: Text(selectedFirstName + " " + selectedLastName),
+        leading: Icon(
+          Icons.perm_contact_calendar_outlined,
+          size: sizeHeight(25, context),
+        ),
+        subtitle: Text(
+          selectedFirstName + " " + selectedLastName,
+          style: TextStyle(fontSize: sizeHeight(16, context)),
+        ),
         children: [
           Container(
             color: Colors.tealAccent[50],
-            padding: const EdgeInsets.all(20),
+            padding: EdgeInsets.all(sizeWidth(20, context)),
             child: Column(
               children: [
                 TextFormField(
                   controller: firstnameFarmerController,
                   decoration: InputDecoration(
                     labelText: selectedFirstName,
+                    labelStyle: TextStyle(fontSize: sizeHeight(14, context)),
+                    contentPadding: EdgeInsets.all(sizeHeight(16, context)),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius:
+                          BorderRadius.circular(sizeHeight(10, context)),
                     ),
                   ),
                   onChanged: (value) {
@@ -810,13 +891,16 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
                     });
                   },
                 ),
-                SizedBox(height: 16.0),
+                SizedBox(height: sizeHeight(16, context)),
                 TextFormField(
                   controller: lastnameFarmerController,
                   decoration: InputDecoration(
                     labelText: selectedLastName,
+                    labelStyle: TextStyle(fontSize: sizeHeight(14, context)),
+                    contentPadding: EdgeInsets.all(sizeHeight(16, context)),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius:
+                          BorderRadius.circular(sizeWidth(10, context)),
                     ),
                   ),
                   onChanged: (value) {
@@ -829,17 +913,21 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 2, left: 20, right: 20, bottom: 20),
-            height: 50.0,
+            margin: EdgeInsets.only(
+                top: sizeHeight(2, context),
+                left: sizeWidth(20, context),
+                right: sizeWidth(20, context),
+                bottom: sizeHeight(20, context)),
+            height: sizeHeight(50, context),
             child: RaisedButton(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0),
+                borderRadius: BorderRadius.circular(sizeWidth(18, context)),
                 //side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))
               ),
               onPressed: () {
                 _handleSearchButton_Farmer();
               },
-              padding: EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(sizeHeight(10, context)),
               color: theme_color2,
               textColor: Colors.white,
               child: Row(
@@ -847,10 +935,13 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
                 children: [
                   Text(
                     "search".i18n(),
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: sizeHeight(16, context)),
                   ),
-                  SizedBox(width: 5.0),
-                  Icon(Icons.search),
+                  SizedBox(width: sizeWidth(5, context)),
+                  Icon(
+                    Icons.search,
+                    size: sizeHeight(20, context),
+                  ),
                 ],
               ),
             ),
@@ -903,13 +994,13 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize:
-              Size.fromHeight(MediaQuery.of(context).size.height * 0.085),
+              Size.fromHeight(MediaQuery.of(context).size.height * 0.08),
           child: getAppBarUI(),
         ),
         body: Column(
           children: [
             Container(
-              height: sizeHeight(652.5, context),
+              height: SizeConfig.screenHeight! * 0.92,
               child: Column(
                 children: [
                   Padding(
@@ -938,16 +1029,26 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
                                 labelColor: Colors.white,
                                 unselectedLabelColor: Colors.black,
                                 indicator: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                      sizeHeight(8, context),
-                                    ),
-                                    color: theme_color2),
+                                  borderRadius: BorderRadius.circular(
+                                      sizeHeight(8, context)),
+                                  color: theme_color2,
+                                ),
                                 tabs: [
                                   Tab(
-                                    text: ('officer-label'.i18n()),
+                                    child: Text(
+                                      'officer-label'.i18n(),
+                                      style: TextStyle(
+                                          fontSize: sizeHeight(16,
+                                              context)), // Set your desired font size
+                                    ),
                                   ),
                                   Tab(
-                                    text: ('farmer-label'.i18n()),
+                                    child: Text(
+                                      'farmer-label'.i18n(),
+                                      style: TextStyle(
+                                          fontSize: sizeHeight(16,
+                                              context)), // Set your desired font size
+                                    ),
                                   ),
                                 ],
                               ),
@@ -955,7 +1056,7 @@ class _UpdateSurveyorScreenState extends State<UpdateSurveyorScreen> {
                           ))),
                   // create widgets for each tab bar here
                   Container(
-                    height: sizeHeight(602.5, context),
+                    height: SizeConfig.screenHeight! * 0.92,
                     child: TabBarView(
                       children: [
                         // first tab bar view widget

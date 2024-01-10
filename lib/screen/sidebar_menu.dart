@@ -59,6 +59,8 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
     });
     // Request permission when the app starts
     _checkPermission();
+    print(SizeConfig.screenHeight);
+    print(SizeConfig.screenWidth);
   }
 
   @override
@@ -201,10 +203,18 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('แจ้งเตือน'),
-          content: values == true
-              ? Text('ต้องการที่จะเปิดการแจ้งเตือน?')
-              : Text('ต้องการที่จะปิดการแจ้งเตือน?'),
+          title: Text(
+            'แจ้งเตือน',
+            style: TextStyle(fontSize: sizeHeight(18, context)),
+          ),
+          content: Container(
+            width: sizeWidth(200, context), // Set your desired width
+            padding: EdgeInsets.all(
+                sizeWidth(16, context)), // Set your desired padding
+            child: values == true
+                ? Text('ต้องการที่จะเปิดการแจ้งเตือน?')
+                : Text('ต้องการที่จะปิดการแจ้งเตือน?'),
+          ),
           actions: [
             ElevatedButton(
               onPressed: () {
@@ -219,7 +229,6 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
               onPressed: () {
                 setState(() {
                   widget.notificationStatus = values;
-                  //print(widget.notificationStatus);
                   values == true
                       ? notificationColor = Colors.green
                       : notificationColor = Colors.grey.shade800;
@@ -287,47 +296,50 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
     return Drawer(
       child: ListView(
         children: [
-          UserAccountsDrawerHeader(
-            accountName: Text(loggedUser.email,
-                style: TextStyle(fontSize: sizeHeight(15, context))),
-            accountEmail: Text(loggedUser.email,
-                style: TextStyle(fontSize: sizeHeight(15, context))),
-            currentAccountPicture: CircleAvatar(
-                backgroundColor: Colors.transparent,
-                child: Container(
-                  width: sizeWidth(50, context),
-                  height: sizeHeight(50, context),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                        color: Colors.white, width: sizeWidth(2, context)),
-                    image: DecorationImage(
-                      image: (loggedUser.img_url == "")
-                          ? AssetImage('assets/images/no_profile_img.png')
-                              as ImageProvider
-                          : MemoryImage(
-                              Base64Decoder().convert(loggedUser.img_url)),
-                      fit: BoxFit.cover,
+          Container(
+            height: sizeHeight(190, context),
+            child: UserAccountsDrawerHeader(
+              accountName: Text(loggedUser.email,
+                  style: TextStyle(fontSize: sizeHeight(15, context))),
+              accountEmail: Text(loggedUser.email,
+                  style: TextStyle(fontSize: sizeHeight(15, context))),
+              currentAccountPicture: CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  child: Container(
+                    width: sizeWidth(50, context),
+                    height: sizeHeight(50, context),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                          color: Colors.white, width: sizeWidth(2, context)),
+                      image: DecorationImage(
+                        image: (loggedUser.img_url == "")
+                            ? AssetImage('assets/images/no_profile_img.png')
+                                as ImageProvider
+                            : MemoryImage(
+                                Base64Decoder().convert(loggedUser.img_url)),
+                        fit: BoxFit.cover,
+                      ),
                     ),
+                  ) /*ClipOval(
+                  child: Image.network(
+                    'https://oflutter.com/wp-content/uploads/2021/02/girl-profile.png',
+                    fit: BoxFit.cover,
+                    width: 90,
+                    height: 90,
                   ),
-                ) /*ClipOval(
-                child: Image.network(
-                  'https://oflutter.com/wp-content/uploads/2021/02/girl-profile.png',
-                  fit: BoxFit.cover,
-                  width: 90,
-                  height: 90,
-                ),
-              ),*/
+                ),*/
 
-                ),
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              image: DecorationImage(
-                fit: BoxFit.fill,
-                image: AssetImage("assets/images/Menupic/profilebg.jpg"),
-                colorFilter: ColorFilter.mode(
-                  Colors.blue.withOpacity(0.3),
-                  BlendMode.color,
+                  ),
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: AssetImage("assets/images/Menupic/profilebg.jpg"),
+                  colorFilter: ColorFilter.mode(
+                    Colors.blue.withOpacity(0.3),
+                    BlendMode.color,
+                  ),
                 ),
               ),
             ),
@@ -340,146 +352,166 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
             ),
             leading: Icon(Icons.settings, size: sizeHeight(25, context)),
             children: [
-              SwitchListTile(
-                activeColor: theme_color,
-                value: widget.notificationStatus,
-                onChanged: (bool values) {
-                  setState(() {
-                    widget.notificationStatus = values;
-                    //print(widget.notificationStatus);
-                    saveNotificationToStorage(widget.notificationStatus);
-                    values == true
-                        ? notificationColor = Colors.green
-                        : notificationColor = Colors.grey.shade800;
-                  });
-                  values == true
-                      ? showToastMessage("การแจ้งเตือนเปิดอยู่")
-                      : showToastMessage("การแจ้งเตือนปิด");
-                },
-                secondary: Icon(
-                  Icons.notifications,
-                  size: sizeHeight(25, context),
-                  color: notificationColor,
-                ),
-                title: Text(
-                  "notification-label".i18n(),
-                  style: TextStyle(
-                    fontSize: sizeHeight(18, context),
-                    color: notificationColor,
-                  ),
-                ),
-              ),
-              ListTile(
-                leading: Icon(Icons.language, size: sizeHeight(25, context)),
-                title: Text(
-                  'change-value'.i18n(),
-                  style: TextStyle(fontSize: sizeHeight(18, context)),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ChangeLanguage()),
-                  );
-                },
-              ),
-              SwitchListTile(
+              Padding(
+                padding: EdgeInsets.only(
+                    top: sizeHeight(8, context),
+                    bottom: sizeHeight(8, context)),
+                child: SwitchListTile(
                   activeColor: theme_color,
-                  value: appSetting!.signIn,
-                  onChanged: (bool values) async {
+                  value: widget.notificationStatus,
+                  onChanged: (bool values) {
                     setState(() {
-                      appSetting!.signIn = values;
-                      /* if (autoLogInStatus == false) {
-                        autoLogInStatus = true;
-                      } else {
-                        autoLogInStatus = false;
-                      }*/
-                      ////print(autoLogInStatus.toString());
-                      //sa(values);
-                      save("app_setting", appSetting);
-
+                      widget.notificationStatus = values;
+                      //print(widget.notificationStatus);
+                      saveNotificationToStorage(widget.notificationStatus);
                       values == true
-                          ? autoLoginColor = Colors.green
-                          : autoLoginColor = Colors.grey.shade800;
+                          ? notificationColor = Colors.green
+                          : notificationColor = Colors.grey.shade800;
                     });
                     values == true
-                        ? showToastMessage("เปิดการล็อคอินอัตโนมัติ")
-                        : showToastMessage("ปิดการล็อคอินอัตโนมัติ");
+                        ? showToastMessage("การแจ้งเตือนเปิดอยู่")
+                        : showToastMessage("การแจ้งเตือนปิด");
                   },
                   secondary: Icon(
-                    Icons.login,
+                    Icons.notifications,
                     size: sizeHeight(25, context),
-                    color: autoLoginColor,
+                    color: notificationColor,
                   ),
-                  title: Text('SignIn'.i18n(),
-                      style: TextStyle(
-                          fontSize: sizeHeight(18, context),
-                          color: autoLoginColor))),
-              ListTile(
-                leading: Icon(Icons.person, size: sizeHeight(25, context)),
-                title: Text(
-                  'delete-account'.i18n(),
-                  style: TextStyle(fontSize: sizeHeight(18, context)),
-                ),
-                onTap: () {
-                  showDialog<String>(
-                    context: context,
-                    builder: (context) => CupertinoAlertDialog(
-                      title: const Text('Delete Account'),
-                      content: Text(
-                        'delete-account-message'.i18n(),
-                        style: TextStyle(fontSize: 15),
-                      ),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () => {Navigator.pop(context, 'Cancel')},
-                          child: Text('cancle'.i18n(),
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: SizeConfig.AlertfontSize)),
-                        ),
-                        TextButton(
-                          onPressed: () async {
-                            // Show a loading dialog
-                            showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (context) => LoadingWidget(),
-                            );
-
-                            UserService uservice = UserService();
-
-                            uservice
-                                .deleteAccount(tokenFromLogin!.token)
-                                .then((value) async {
-                              if (value == true) {
-                                appSetting!.signIn = false;
-                                save("app_setting", appSetting);
-                                //saveAutoLogInStatusToStorage(false);
-
-                                await remove("user");
-
-                                await Future.delayed(Duration(seconds: 2));
-
-                                Navigator.pop(context);
-
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginScreen()),
-                                  (route) => false,
-                                );
-                              }
-                            });
-                          },
-                          child: Text(
-                            'delete'.i18n(),
-                            style: TextStyle(color: Colors.red, fontSize: 15),
-                          ),
-                        ),
-                      ],
+                  title: Text(
+                    "notification-label".i18n(),
+                    style: TextStyle(
+                      fontSize: sizeHeight(18, context),
+                      color: notificationColor,
                     ),
-                  );
-                },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    top: sizeHeight(8, context),
+                    bottom: sizeHeight(8, context)),
+                child: ListTile(
+                  leading: Icon(Icons.language, size: sizeHeight(25, context)),
+                  title: Text(
+                    'change-value'.i18n(),
+                    style: TextStyle(fontSize: sizeHeight(18, context)),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ChangeLanguage()),
+                    );
+                  },
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    top: sizeHeight(8, context),
+                    bottom: sizeHeight(8, context)),
+                child: SwitchListTile(
+                    activeColor: theme_color,
+                    value: appSetting!.signIn,
+                    onChanged: (bool values) async {
+                      setState(() {
+                        appSetting!.signIn = values;
+                        /* if (autoLogInStatus == false) {
+                          autoLogInStatus = true;
+                        } else {
+                          autoLogInStatus = false;
+                        }*/
+                        ////print(autoLogInStatus.toString());
+                        //sa(values);
+                        save("app_setting", appSetting);
+
+                        values == true
+                            ? autoLoginColor = Colors.green
+                            : autoLoginColor = Colors.grey.shade800;
+                      });
+                      values == true
+                          ? showToastMessage("เปิดการล็อคอินอัตโนมัติ")
+                          : showToastMessage("ปิดการล็อคอินอัตโนมัติ");
+                    },
+                    secondary: Icon(
+                      Icons.login,
+                      size: sizeHeight(25, context),
+                      color: autoLoginColor,
+                    ),
+                    title: Text('SignIn'.i18n(),
+                        style: TextStyle(
+                            fontSize: sizeHeight(18, context),
+                            color: autoLoginColor))),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    top: sizeHeight(8, context),
+                    bottom: sizeHeight(16, context)),
+                child: ListTile(
+                  leading: Icon(Icons.person, size: sizeHeight(25, context)),
+                  title: Text(
+                    'delete-account'.i18n(),
+                    style: TextStyle(fontSize: sizeHeight(18, context)),
+                  ),
+                  onTap: () {
+                    showDialog<String>(
+                      context: context,
+                      builder: (context) => CupertinoAlertDialog(
+                        title: const Text('Delete Account'),
+                        content: Text(
+                          'delete-account-message'.i18n(),
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => {Navigator.pop(context, 'Cancel')},
+                            child: Text('cancle'.i18n(),
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontSize: SizeConfig.AlertfontSize)),
+                          ),
+                          TextButton(
+                            onPressed: () async {
+                              // Show a loading dialog
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (context) => LoadingWidget(),
+                              );
+
+                              UserService uservice = UserService();
+
+                              uservice
+                                  .deleteAccount(tokenFromLogin!.token)
+                                  .then((value) async {
+                                if (value == true) {
+                                  appSetting!.signIn = false;
+                                  save("app_setting", appSetting);
+                                  //saveAutoLogInStatusToStorage(false);
+
+                                  await remove("user");
+
+                                  await Future.delayed(Duration(seconds: 2));
+
+                                  Navigator.pop(context);
+
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginScreen()),
+                                    (route) => false,
+                                  );
+                                }
+                              });
+                            },
+                            child: Text(
+                              'delete'.i18n(),
+                              style: TextStyle(color: Colors.red, fontSize: 15),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               )
             ],
           ),
@@ -549,6 +581,7 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
                   ),
                 );
               }),
+          Padding(padding: EdgeInsets.only(top: sizeHeight(12, context))),
           ListTile(
             title: Text(
               'back-to-main'.i18n(),

@@ -101,7 +101,8 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
         duration: 2,
         position: FlutterToastr.bottom,
         backgroundColor: theme_color,
-        textStyle: TextStyle(fontSize: 15, color: Colors.black));
+        textStyle:
+            TextStyle(fontSize: sizeHeight(15, context), color: Colors.black));
   }
 
   onfirst() async {
@@ -193,13 +194,14 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
 
   Widget getAppBarUI() {
     return Container(
+      height: sizeHeight(85, context),
       decoration: BoxDecoration(
         color: const Color(0xFFFFFFFF),
         boxShadow: <BoxShadow>[
           BoxShadow(
               color: Colors.grey.withOpacity(0.2),
               offset: const Offset(0, 2),
-              blurRadius: 8.0),
+              blurRadius: sizeHeight(8, context)),
         ],
       ),
       child: Padding(
@@ -211,7 +213,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
           children: <Widget>[
             Container(
               alignment: Alignment.centerLeft,
-              width: AppBar().preferredSize.height + 40,
+              width: AppBar().preferredSize.height + sizeHeight(40, context),
               height: AppBar().preferredSize.height,
               child: Material(
                 color: Colors.transparent,
@@ -238,7 +240,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                   children: [
                     Icon(
                       Icons.description,
-                      size: sizeHeight(20, context),
+                      size: sizeWidth(20, context),
                     ),
                     SizedBox(
                       width: sizeWidth(15, context),
@@ -247,7 +249,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                       'field-label'.i18n(),
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
-                        fontSize: MediaQuery.of(context).size.height * 0.029,
+                        fontSize: sizeHeight(20, context),
                       ),
                     ),
                   ],
@@ -255,7 +257,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
               ),
             ),
             Container(
-              width: AppBar().preferredSize.height + 40,
+              width: AppBar().preferredSize.height + sizeHeight(40, context),
               height: AppBar().preferredSize.height,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -470,7 +472,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                   decoration: BoxDecoration(
                     color: HotelAppTheme.buildLightTheme().primaryColor,
                     borderRadius: BorderRadius.all(
-                      Radius.circular(sizeHeight(38, context)),
+                      Radius.circular(sizeHeight(32, context)),
                     ),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
@@ -496,7 +498,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                       child: Padding(
                         padding: EdgeInsets.all(sizeWidth(16, context)),
                         child: Icon(FontAwesomeIcons.magnifyingGlass,
-                            size: MediaQuery.of(context).size.height * 0.025,
+                            size: sizeHeight(20, context),
                             color: HotelAppTheme.buildLightTheme()
                                 .backgroundColor),
                       ),
@@ -704,131 +706,153 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
     var _startDateUserNameColor = Colors.black;
     String _startDateTimeText = " Start Date";
 
-    return Column(
-      children: [
-        ListTile(
-          title: Text('search-more'.i18n()),
-          leading: Icon(
-            Icons.perm_contact_calendar_outlined,
-            color: isShowbasicSearch == false ? theme_color2 : Colors.grey,
-            size: sizeHeight(25, context),
+    return Padding(
+      padding: EdgeInsets.only(top: sizeHeight(8, context)),
+      child: Column(
+        children: [
+          ListTile(
+            title: Text(
+              'search-more'.i18n(),
+              style: TextStyle(fontSize: sizeHeight(20, context)),
+            ),
+            leading: Icon(
+              Icons.perm_contact_calendar_outlined,
+              color: isShowbasicSearch == false ? theme_color2 : Colors.grey,
+              size: sizeHeight(25, context),
+            ),
+            trailing: Icon(
+              isShowbasicSearch == false
+                  ? Icons.keyboard_arrow_up
+                  : Icons.keyboard_arrow_down,
+              color: isShowbasicSearch == false ? theme_color2 : Colors.grey,
+              size: sizeHeight(25, context),
+            ),
+            onTap: () {
+              setState(() {
+                isShowbasicSearch = !isShowbasicSearch;
+              });
+            },
           ),
-          trailing: Icon(
-            isShowbasicSearch == false
-                ? Icons.keyboard_arrow_up
-                : Icons.keyboard_arrow_down,
-            color: isShowbasicSearch == false ? theme_color2 : Colors.grey,
-            size: sizeHeight(25, context),
-          ),
-          onTap: () {
-            setState(() {
-              isShowbasicSearch = !isShowbasicSearch;
-            });
-          },
-        ),
-        if (!isShowbasicSearch)
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: sizeHeight(16, context)),
-            child: Column(
-              children: [
-                Container(
-                  color: Colors.tealAccent[50],
-                  padding: EdgeInsets.all(sizeHeight(20, context)),
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        controller: codeNameController,
-                        decoration: InputDecoration(
-                          labelText: "field-address".i18n(),
-                          border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(sizeHeight(10, context)),
-                          ),
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            addressValue = value;
-                          });
-                        },
-                      ),
-                      SizedBox(height: sizeHeight(16, context)),
-                      TextFormField(
-                        controller: ownerController,
-                        decoration: InputDecoration(
-                          labelText: "name-code-field-label".i18n(),
-                          border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(sizeHeight(10, context)),
-                          ),
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            fieldNameValue = value;
-                          });
-                        },
-                      ),
-                      SizedBox(height: sizeHeight(16, context)),
-                      TextFormField(
-                        controller: locationController,
-                        decoration: InputDecoration(
-                          labelText: 'owner'.i18n(),
-                          border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(sizeHeight(10, context)),
-                          ),
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            ownerNameValue = value;
-                          });
-                        },
-                      ),
-                      SizedBox(height: sizeHeight(16, context)),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(
-                      top: sizeHeight(2, context),
-                      left: sizeWidth(20, context),
-                      right: sizeWidth(20, context),
-                      bottom: sizeHeight(20, context)),
-                  height: sizeHeight(50, context),
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(sizeHeight(18, context)),
-                      //side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))
-                    ),
-                    onPressed: () {
-                      if (addressValue == "" &&
-                          fieldNameValue == "" &&
-                          ownerNameValue == "") {
-                        onfirst();
-                      } else {
-                        _handleSearchFilterButton(provider);
-                      }
-                    },
-                    padding: EdgeInsets.all(sizeHeight(10, context)),
-                    color: theme_color2,
-                    textColor: Colors.white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+          if (!isShowbasicSearch)
+            Padding(
+              padding:
+                  EdgeInsets.symmetric(horizontal: sizeHeight(16, context)),
+              child: Column(
+                children: [
+                  Container(
+                    color: Colors.tealAccent[50],
+                    padding: EdgeInsets.all(sizeHeight(20, context)),
+                    child: Column(
                       children: [
-                        Text(
-                          'search'.i18n(),
-                          style: TextStyle(fontSize: sizeHeight(20, context)),
+                        TextFormField(
+                          controller: codeNameController,
+                          decoration: InputDecoration(
+                            labelText: "field-address".i18n(),
+                            labelStyle:
+                                TextStyle(fontSize: sizeHeight(18, context)),
+                            contentPadding: EdgeInsets.all(sizeHeight(
+                                16, context)), // Set your desired padding
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(
+                                  sizeHeight(10, context)),
+                            ),
+                          ),
+                          onChanged: (value) {
+                            setState(() {
+                              addressValue = value;
+                            });
+                          },
                         ),
-                        SizedBox(width: sizeWidth(5, context)),
-                        Icon(Icons.search),
+                        SizedBox(height: sizeHeight(16, context)),
+                        TextFormField(
+                          controller: ownerController,
+                          decoration: InputDecoration(
+                            labelText: "name-code-field-label".i18n(),
+                            labelStyle:
+                                TextStyle(fontSize: sizeHeight(18, context)),
+                            contentPadding:
+                                EdgeInsets.all(sizeHeight(16, context)),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(
+                                  sizeHeight(10, context)),
+                            ),
+                          ),
+                          onChanged: (value) {
+                            setState(() {
+                              fieldNameValue = value;
+                            });
+                          },
+                        ),
+                        SizedBox(height: sizeHeight(16, context)),
+                        TextFormField(
+                          controller: locationController,
+                          decoration: InputDecoration(
+                            labelText: 'owner'.i18n(),
+                            labelStyle:
+                                TextStyle(fontSize: sizeHeight(18, context)),
+                            contentPadding:
+                                EdgeInsets.all(sizeHeight(16, context)),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(
+                                  sizeHeight(10, context)),
+                            ),
+                          ),
+                          onChanged: (value) {
+                            setState(() {
+                              ownerNameValue = value;
+                            });
+                          },
+                        ),
+                        SizedBox(height: sizeHeight(16, context)),
                       ],
                     ),
                   ),
-                )
-              ],
+                  Container(
+                    margin: EdgeInsets.only(
+                        top: sizeHeight(2, context),
+                        left: sizeWidth(20, context),
+                        right: sizeWidth(20, context),
+                        bottom: sizeHeight(20, context)),
+                    height: sizeHeight(50, context),
+                    child: RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(sizeHeight(18, context)),
+                        //side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))
+                      ),
+                      onPressed: () {
+                        if (addressValue == "" &&
+                            fieldNameValue == "" &&
+                            ownerNameValue == "") {
+                          onfirst();
+                        } else {
+                          _handleSearchFilterButton(provider);
+                        }
+                      },
+                      padding: EdgeInsets.all(sizeHeight(10, context)),
+                      color: theme_color2,
+                      textColor: Colors.white,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'search'.i18n(),
+                            style: TextStyle(fontSize: sizeHeight(20, context)),
+                          ),
+                          SizedBox(width: sizeWidth(5, context)),
+                          Icon(
+                            Icons.search,
+                            size: sizeHeight(20, context),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -859,7 +883,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                           Container(
                             height: isShowbasicSearch
                                 ? MediaQuery.of(context).size.height * 0.175
-                                : MediaQuery.of(context).size.height * 0.475,
+                                : MediaQuery.of(context).size.height * 0.5,
                             child: CustomScrollView(
                               slivers: [
                                 SliverList(

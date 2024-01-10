@@ -568,7 +568,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
     dropdownForShow.add('add-new-agriculture'.i18n());
 
     return Container(
-      height: SizeConfig.screenHeight! * 0.57,
+      height: SizeConfig.screenHeight! * 0.65,
       child: ListView(
         scrollDirection: Axis.vertical,
         children: [
@@ -585,7 +585,6 @@ class _NewFieldScreenState extends State<NewFieldScreen>
               autovalidateMode: autovidateDisable,
               child: Column(
                 children: [
-                  SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
@@ -609,7 +608,10 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                         ? "insert-field-code".i18n()
                         : field.code,
                     successText: "",
-                    inputIcon: Icon(Icons.eco_sharp),
+                    inputIcon: Icon(
+                      Icons.eco_sharp,
+                      size: sizeHeight(25, context),
+                    ),
                     validator1: (value) =>
                         InputCodeValidator.validateNotSpecialCharacter(
                             value, field.code.toString()),
@@ -638,7 +640,10 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                         ? "insert-field-name".i18n()
                         : field.name,
                     successText: "",
-                    inputIcon: Icon(Icons.eco_sharp),
+                    inputIcon: Icon(
+                      Icons.eco_sharp,
+                      size: sizeHeight(25, context),
+                    ),
                     validator1: (value) =>
                         InputCodeValidator.validateNotSpecialCharacter(
                             value, field.name.toString()),
@@ -726,7 +731,9 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                             hint: Center(
                                 child: Text(
                               "please-select-owner".i18n(),
-                              style: TextStyle(color: Colors.black),
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: sizeHeight(25, context)),
                             )),
                             // Hide the default underline
                             // underline: Container(),
@@ -734,8 +741,11 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                             dropdownColor: Colors.white,
                             icon: Padding(
                               padding: EdgeInsets.all(sizeHeight(8, context)),
-                              child: const Icon(Icons.arrow_downward,
-                                  color: Colors.black),
+                              child: Icon(
+                                Icons.arrow_downward,
+                                color: Colors.black,
+                                size: sizeHeight(25, context),
+                              ),
                             ),
                             isExpanded: true,
 
@@ -1542,111 +1552,134 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                                   secondary: Colors.green,
                                 ),
                           ),
-                          child: Stepper(
-                            physics: ScrollPhysics(),
-                            type: stepperType,
-                            currentStep: _currentStep,
-                            onStepTapped: (step) => tapped(step),
-                            onStepContinue: continued,
-                            onStepCancel: cancel,
-                            controlsBuilder: (context,
-                                {onStepCancel, onStepContinue}) {
-                              return Row(
-                                children: [
-                                  Expanded(
-                                    child: ElevatedButton(
-                                      child: Text('previous-label'.i18n()),
-                                      onPressed: cancel,
+                          child: Container(
+                            width: SizeConfig.screenWidth,
+                            child: Stepper(
+                              physics: ScrollPhysics(),
+                              type: stepperType,
+                              currentStep: _currentStep,
+                              onStepTapped: (step) => tapped(step),
+                              onStepContinue: continued,
+                              onStepCancel: cancel,
+                              controlsBuilder: (context,
+                                  {onStepCancel, onStepContinue}) {
+                                return Row(
+                                  children: [
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        child: Text(
+                                          'previous-label'.i18n(),
+                                          style: TextStyle(
+                                              fontSize:
+                                                  sizeHeight(16, context)),
+                                        ),
+                                        onPressed: cancel,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: sizeWidth(12, context),
-                                  ),
-                                  Expanded(
-                                    child: ElevatedButton(
-                                      child: isFinal()
-                                          ? _isPassValueFromPage
-                                              ? Text(
-                                                  'confirm-edit-label'.i18n())
-                                              : Text('create-new-field-label'
-                                                  .i18n())
-                                          : Text('next-label'.i18n()),
-                                      onPressed: isFinal()
-                                          ? submitFunction
-                                          : continued,
+                                    SizedBox(
+                                      width: sizeWidth(12, context),
                                     ),
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        child: isFinal()
+                                            ? _isPassValueFromPage
+                                                ? Text(
+                                                    'confirm-edit-label'.i18n(),
+                                                    style: TextStyle(
+                                                        fontSize: sizeHeight(
+                                                            16, context)),
+                                                  )
+                                                : Text(
+                                                    'create-new-field-label'
+                                                        .i18n(),
+                                                    style: TextStyle(
+                                                        fontSize: sizeHeight(
+                                                            16, context)),
+                                                  )
+                                            : Text(
+                                                'next-label'.i18n(),
+                                                style: TextStyle(
+                                                    fontSize: sizeHeight(
+                                                        16, context)),
+                                              ),
+                                        onPressed: isFinal()
+                                            ? submitFunction
+                                            : continued,
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                              steps: [
+                                Step(
+                                  title: GestureDetector(
+                                    child: new Text(''),
+                                    onTap: () {
+                                      setState(() {
+                                        _currentStep = 0;
+                                      });
+                                    },
                                   ),
-                                ],
-                              );
-                            },
-                            steps: [
-                              Step(
-                                title: GestureDetector(
-                                  child: new Text(''),
-                                  onTap: () {
-                                    setState(() {
-                                      _currentStep = 0;
-                                    });
-                                  },
+                                  content: Column(
+                                    children: <Widget>[
+                                      _buildCreateFieldFirstPage(
+                                          dropdownFarmer),
+                                      SizedBox(
+                                          height:
+                                              SizeConfig.screenHeight! * 0.025),
+                                    ],
+                                  ),
+                                  isActive: _currentStep >= 0,
+                                  state: _currentStep >= 0
+                                      ? StepState.complete
+                                      : StepState.disabled,
                                 ),
-                                content: Column(
-                                  children: <Widget>[
-                                    _buildCreateFieldFirstPage(dropdownFarmer),
-                                    SizedBox(
-                                        height:
-                                            SizeConfig.screenHeight! * 0.025),
-                                  ],
+                                Step(
+                                  title: GestureDetector(
+                                    child: new Text(''),
+                                    onTap: () {
+                                      setState(() {
+                                        _currentStep = 1;
+                                      });
+                                    },
+                                  ),
+                                  content: Column(
+                                    children: <Widget>[
+                                      _buildCreateFieldSecondPage(),
+                                      SizedBox(
+                                          height:
+                                              SizeConfig.screenHeight! * 0.025),
+                                    ],
+                                  ),
+                                  isActive: _currentStep >= 0,
+                                  state: _currentStep >= 1
+                                      ? StepState.complete
+                                      : StepState.disabled,
                                 ),
-                                isActive: _currentStep >= 0,
-                                state: _currentStep >= 0
-                                    ? StepState.complete
-                                    : StepState.disabled,
-                              ),
-                              Step(
-                                title: GestureDetector(
-                                  child: new Text(''),
-                                  onTap: () {
-                                    setState(() {
-                                      _currentStep = 1;
-                                    });
-                                  },
+                                Step(
+                                  title: GestureDetector(
+                                    child: new Text(''),
+                                    onTap: () {
+                                      setState(() {
+                                        _currentStep = 2;
+                                      });
+                                    },
+                                  ),
+                                  content: Column(
+                                    children: <Widget>[
+                                      _buildCreateFieldThirdPage(),
+                                      SizedBox(
+                                          height:
+                                              SizeConfig.screenHeight! * 0.025),
+                                    ],
+                                  ),
+                                  isActive: _currentStep >= 0,
+                                  state: _currentStep >= 2
+                                      ? StepState.complete
+                                      : StepState.disabled,
                                 ),
-                                content: Column(
-                                  children: <Widget>[
-                                    _buildCreateFieldSecondPage(),
-                                    SizedBox(
-                                        height:
-                                            SizeConfig.screenHeight! * 0.025),
-                                  ],
-                                ),
-                                isActive: _currentStep >= 0,
-                                state: _currentStep >= 1
-                                    ? StepState.complete
-                                    : StepState.disabled,
-                              ),
-                              Step(
-                                title: GestureDetector(
-                                  child: new Text(''),
-                                  onTap: () {
-                                    setState(() {
-                                      _currentStep = 2;
-                                    });
-                                  },
-                                ),
-                                content: Column(
-                                  children: <Widget>[
-                                    _buildCreateFieldThirdPage(),
-                                    SizedBox(
-                                        height:
-                                            SizeConfig.screenHeight! * 0.025),
-                                  ],
-                                ),
-                                isActive: _currentStep >= 0,
-                                state: _currentStep >= 2
-                                    ? StepState.complete
-                                    : StepState.disabled,
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),

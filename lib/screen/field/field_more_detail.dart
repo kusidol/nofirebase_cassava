@@ -260,7 +260,7 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
         return Container(
           padding: EdgeInsets.all(sizeWidth(10, context)),
           width: SizeConfig.screenWidth,
-          height: SizeConfig.screenHeight! * 1.30,
+          height: SizeConfig.screenHeight,
           child: GestureDetector(
             onTap: () {},
             child: AspectRatio(
@@ -273,18 +273,27 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
                     children: <Widget>[
                       pictureUI(widget.fields.fieldID),
                       SizedBox(
-                        height: sizeHeight(5, context),
+                        height: sizeHeight(10, context),
                       ),
                       buildReadOnlyField("code-field-label".i18n(),
                           widget.fields.code.toString(), Icons.vpn_key_sharp),
+                      SizedBox(
+                        height: sizeHeight(10, context),
+                      ),
                       buildReadOnlyField("name-field-label".i18n(),
                           widget.fields.name.toString(), Icons.grass),
+                      SizedBox(
+                        height: sizeHeight(10, context),
+                      ),
                       buildReadOnlyOwner(
                           "owner".i18n(), widget.owner, Icons.person),
+                      SizedBox(
+                        height: sizeHeight(10, context),
+                      ),
                       buildReadOnlyAddress("Address".i18n(), widget.location,
                           Icons.location_on_sharp),
                       SizedBox(
-                        height: sizeHeight(5, context),
+                        height: sizeHeight(10, context),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -349,7 +358,7 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
                                     ),
                                   ),
                                   SizedBox(
-                                    height: sizeHeight(5, context),
+                                    height: sizeHeight(10, context),
                                   ),
                                   Expanded(
                                     child: Center(
@@ -371,7 +380,7 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
                         ],
                       ),
                       SizedBox(
-                        height: sizeHeight(1, context),
+                        height: sizeHeight(10, context),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -671,7 +680,7 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
             ),
           ),
           width: SizeConfig.screenWidth,
-          height: sizeHeight(680, context),
+          height: SizeConfig.screenHeight! * 0.92,
           child: _buildListView()),
     );
   }
@@ -734,7 +743,7 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
       child: Container(
         child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: Size.fromHeight(sizeHeight(65, context)),
+            preferredSize: Size.fromHeight(SizeConfig.screenHeight! * 0.08),
             child: getAppBarUI(),
           ),
           body: Stack(
@@ -793,7 +802,10 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
                   },
                   child: Padding(
                     padding: EdgeInsets.all(sizeHeight(8, context)),
-                    child: Icon(Icons.arrow_back),
+                    child: Icon(
+                      Icons.arrow_back,
+                      size: sizeHeight(25, context),
+                    ),
                   ),
                 ),
               ),
@@ -826,69 +838,83 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
                           showModalBottomSheet(
                             context: context,
                             builder: (context) {
-                              return Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  ListTile(
-                                    leading: new Icon(
-                                      Icons.edit,
-                                      color: HotelAppTheme.buildLightTheme()
-                                          .shadowColor,
-                                    ),
-                                    title: new Text(
-                                      "update-field-label".i18n(),
-                                      style: TextStyle(
-                                        fontSize: sizeHeight(17, context),
-                                        fontWeight: kPoppinsRegular.fontWeight,
+                              return Container(
+                                height: sizeHeight(
+                                    150, context), // Set your desired height
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    ListTile(
+                                      leading: Icon(
+                                        Icons.edit,
                                         color: HotelAppTheme.buildLightTheme()
                                             .shadowColor,
+                                        size: sizeHeight(25, context),
                                       ),
-                                    ),
-                                    onTap: () {
-                                      // EDIT FIELD IN THE FUTURE
-                                      String valueField =
-                                          jsonEncode(widget.fields);
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
+                                      title: Text(
+                                        "update-field-label".i18n(),
+                                        style: TextStyle(
+                                          fontSize: sizeHeight(17, context),
+                                          fontWeight:
+                                              kPoppinsRegular.fontWeight,
+                                          color: HotelAppTheme.buildLightTheme()
+                                              .shadowColor,
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        // EDIT FIELD IN THE FUTURE
+                                        String valueField =
+                                            jsonEncode(widget.fields);
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
                                             builder: (context) =>
                                                 NewFieldScreen(
-                                                    widget.fields.fieldID,
-                                                    widget.fields,
-                                                    widget.owner,
-                                                    widget.location,
-                                                    widget.fieldProviders)),
-                                      );
-                                    },
-                                  ),
-                                  ListTile(
-                                    leading: new Icon(
-                                      Icons.people,
-                                      color: HotelAppTheme.buildLightTheme()
-                                          .shadowColor,
+                                              widget.fields.fieldID,
+                                              widget.fields,
+                                              widget.owner,
+                                              widget.location,
+                                              widget.fieldProviders,
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
-                                    title: new Text(
-                                      "update-userSurvey-field-label".i18n(),
-                                      style: TextStyle(
-                                        fontSize: sizeHeight(17, context),
-                                        fontWeight: kPoppinsRegular.fontWeight,
+                                    SizedBox(
+                                      height: sizeHeight(10, context),
+                                    ),
+                                    ListTile(
+                                      leading: Icon(
+                                        Icons.people,
                                         color: HotelAppTheme.buildLightTheme()
                                             .shadowColor,
+                                        size: sizeHeight(25, context),
                                       ),
-                                    ),
-                                    onTap: () {
-                                      // CLICK FOR CHANGE PAGE
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
+                                      title: Text(
+                                        "update-userSurvey-field-label".i18n(),
+                                        style: TextStyle(
+                                          fontSize: sizeHeight(17, context),
+                                          fontWeight:
+                                              kPoppinsRegular.fontWeight,
+                                          color: HotelAppTheme.buildLightTheme()
+                                              .shadowColor,
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        // CLICK FOR CHANGE PAGE
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
                                             builder: (context) =>
                                                 UpdateSurveyorScreen(
-                                                  widget.fields.fieldID,
-                                                )),
-                                      );
-                                    },
-                                  ),
-                                ],
+                                              widget.fields.fieldID,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
                               );
                             },
                           );
@@ -896,7 +922,10 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
                         child: editable
                             ? Padding(
                                 padding: EdgeInsets.all(sizeWidth(8, context)),
-                                child: Icon(Icons.edit),
+                                child: Icon(
+                                  Icons.edit,
+                                  size: sizeHeight(25, context),
+                                ),
                               )
                             : Container()),
                   ),

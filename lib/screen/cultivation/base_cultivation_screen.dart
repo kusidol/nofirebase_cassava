@@ -173,7 +173,8 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
         duration: 2,
         position: FlutterToastr.bottom,
         backgroundColor: theme_color,
-        textStyle: TextStyle(fontSize: 15, color: Colors.black));
+        textStyle:
+            TextStyle(fontSize: sizeHeight(15, context), color: Colors.black));
   }
 
   Future<void> _pullRefresh() async {}
@@ -187,6 +188,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
 
   Widget getAppBarUI() {
     return Container(
+      height: sizeHeight(85, context),
       decoration: BoxDecoration(
         color: const Color(0xFFFFFFFF),
         boxShadow: <BoxShadow>[
@@ -230,7 +232,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                   children: [
                     Icon(
                       Icons.image,
-                      size: sizeHeight(20, context),
+                      size: sizeWidth(20, context),
                     ),
                     SizedBox(
                       width: sizeWidth(15, context),
@@ -239,7 +241,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                       'planting-label'.i18n(),
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
-                        fontSize: MediaQuery.of(context).size.height * 0.029,
+                        fontSize: sizeHeight(20, context),
                       ),
                     ),
                   ],
@@ -523,87 +525,6 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
     isSearching = true;
   }
 
-  Widget ExpantionSearch() {
-    return ExpansionTile(
-        textColor: Colors.black,
-        iconColor: theme_color2,
-        title: Text('search-more'.i18n(),
-            style: TextStyle(
-              fontSize: sizeHeight(18, context),
-            )),
-        onExpansionChanged: (bool isExpanded) {
-          if (!isExpanded) {
-            // print('Hello World');
-            // dropdownfield.resetItemsAfterSearch();
-          } else {
-            // print('Save Value');
-          }
-        },
-        leading: Icon(Icons.perm_contact_calendar_outlined),
-        // subtitle: Text(selectedAddress +
-        //     " " +
-        //     selectedFieldName +
-        //     " " +
-        //     selectedOwnerName),
-        children: [
-          Container(
-            color: Colors.tealAccent[50],
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                TextFormField(
-                  // controller: codeNameController,
-                  decoration: InputDecoration(
-                    labelText: 'field-address'.i18n(),
-                    border: OutlineInputBorder(
-                      borderRadius:
-                          BorderRadius.circular(sizeHeight(10, context)),
-                    ),
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      addressValue = value;
-                    });
-                  },
-                ),
-                SizedBox(height: sizeHeight(16, context)),
-                TextFormField(
-                  controller: ownerController,
-                  decoration: InputDecoration(
-                    labelText: 'name-field-label'.i18n(),
-                    border: OutlineInputBorder(
-                      borderRadius:
-                          BorderRadius.circular(sizeHeight(10, context)),
-                    ),
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      fieldNameValue = value;
-                    });
-                  },
-                ),
-                SizedBox(height: sizeHeight(16, context)),
-                TextFormField(
-                  // controller: locationController,
-                  decoration: InputDecoration(
-                    labelText: 'owner'.i18n(),
-                    border: OutlineInputBorder(
-                      borderRadius:
-                          BorderRadius.circular(sizeHeight(10, context)),
-                    ),
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      ownerNameValue = value;
-                    });
-                  },
-                ),
-              ],
-            ),
-          ),
-        ]);
-  }
-
   Widget getFilterBarUI(int numItemFounded) {
     PlantingProvider plantingProvider =
         Provider.of<PlantingProvider>(context, listen: false);
@@ -731,7 +652,6 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                       padding: EdgeInsets.all(
                           MediaQuery.of(context).size.height * 0.0204),
                       child: Icon(FontAwesomeIcons.add,
-                          size: MediaQuery.of(context).size.height * 0.025,
                           color:
                               HotelAppTheme.buildLightTheme().backgroundColor),
                     ),
@@ -813,7 +733,11 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
       decoration: InputDecoration(
         border: InputBorder.none,
         contentPadding: EdgeInsets.only(top: sizeHeight(14, context)),
-        prefixIcon: Icon(Icons.calendar_today_rounded, color: Colors.white),
+        prefixIcon: Icon(
+          Icons.calendar_today_rounded,
+          color: Colors.white,
+          size: sizeHeight(25, context),
+        ),
         hintText: 'pick-start-date'.i18n(),
         hintStyle: kHintTextStyle,
       ),
@@ -859,7 +783,10 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
     return Column(
       children: [
         ListTile(
-          title: Text('search-more'.i18n()),
+          title: Text(
+            'search-more'.i18n(),
+            style: TextStyle(fontSize: sizeHeight(18, context)),
+          ),
           leading: Icon(
             Icons.perm_contact_calendar_outlined,
             color: isShowbasicSearch == false ? theme_color2 : Colors.grey,
@@ -892,6 +819,10 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                         controller: codeNameController,
                         decoration: InputDecoration(
                           labelText: 'planting-address'.i18n(),
+                          labelStyle:
+                              TextStyle(fontSize: sizeHeight(18, context)),
+                          contentPadding:
+                              EdgeInsets.all(sizeHeight(16, context)),
                           border: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.circular(sizeHeight(10, context)),
@@ -908,6 +839,10 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                         controller: ownerController,
                         decoration: InputDecoration(
                           labelText: "name-field-label".i18n(),
+                          labelStyle:
+                              TextStyle(fontSize: sizeHeight(18, context)),
+                          contentPadding:
+                              EdgeInsets.all(sizeHeight(16, context)),
                           border: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.circular(sizeHeight(10, context)),
@@ -924,6 +859,10 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                         controller: locationController,
                         decoration: InputDecoration(
                           labelText: "planting-owner".i18n(),
+                          labelStyle:
+                              TextStyle(fontSize: sizeHeight(18, context)),
+                          contentPadding:
+                              EdgeInsets.all(sizeHeight(16, context)),
                           border: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.circular(sizeHeight(10, context)),
@@ -940,6 +879,10 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                         controller: cultivationController,
                         decoration: InputDecoration(
                           labelText: 'name-code-planting-label'.i18n(),
+                          labelStyle:
+                              TextStyle(fontSize: sizeHeight(18, context)),
+                          contentPadding:
+                              EdgeInsets.all(sizeHeight(16, context)),
                           border: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.circular(sizeHeight(10, context)),
@@ -965,7 +908,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: sizeWidth(16, context)),
+                                      fontSize: sizeHeight(16, context)),
                                 ),
                                 SizedBox(height: sizeHeight(20, context)),
                                 Container(
@@ -1066,18 +1009,6 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
       data: HotelAppTheme.buildLightTheme(),
       child: Container(
         child: Consumer<PlantingProvider>(builder: (context, data, index) {
-          // List<Planting> plantings = data.plantings;
-          // List<User> owners = data.owners;
-          // List<Field> fields = data.fields;
-          // List<String> locations = data.locations;
-
-          // List<String> list_fieldName = data.list_fieldName;
-          // List<String> list_substrict = data.list_substrict;
-          // List<String> list_district = data.list_district;
-          // List<String> list_province = data.list_province;
-          // List<String> list_title = data.list_title;
-          // List<String> list_firstName = data.list_firstName;
-          // List<String> list_lastName = data.list_lastName;
           return WillPopScope(
             onWillPop: () => onBackButtonPressed(context),
             child: Scaffold(
@@ -1246,28 +1177,6 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                                       .plantingData[index]
                                                       .lastName;
 
-                                                  // final int count =
-                                                  //     data.plantingData.length >
-                                                  //             10
-                                                  //         ? 10
-                                                  //         : data.plantingData
-                                                  //             .length;
-                                                  // final Animation<
-                                                  //     double> animation = Tween<
-                                                  //             double>(
-                                                  //         begin: 0.0, end: 1.0)
-                                                  //     .animate(CurvedAnimation(
-                                                  //         parent:
-                                                  //             animationController!,
-                                                  //         curve: Interval(
-                                                  //             (1 / count) *
-                                                  //                 index,
-                                                  //             1.0,
-                                                  //             curve: Curves
-                                                  //                 .fastOutSlowIn)));
-                                                  // animationController
-                                                  //     ?.forward();
-
                                                   return data
                                                               .plantingData[
                                                                   index]
@@ -1336,73 +1245,6 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                                                   .planting
                                                                   .createDate),
                                                         );
-
-                                                  // CardItemWithOutImage_Planting(
-                                                  //     plantings: data
-                                                  //         .plantingData[
-                                                  //             index]
-                                                  //         .planting,
-                                                  //     provider: data,
-                                                  //     callback2: () {
-                                                  //       widget
-                                                  //           .mainTapController
-                                                  //           .animateTo(3);
-                                                  //       SurveyProvider
-                                                  //           surveyProvider =
-                                                  //           Provider.of<
-                                                  //                   SurveyProvider>(
-                                                  //               context,
-                                                  //               listen:
-                                                  //                   false);
-                                                  //       surveyProvider
-                                                  //               .plantingId =
-                                                  //           data
-                                                  //               .plantingData[
-                                                  //                   index]
-                                                  //               .planting
-                                                  //               .plantingId;
-                                                  //       surveyProvider
-                                                  //               .plantingName =
-                                                  //           data
-                                                  //               .plantingData[
-                                                  //                   index]
-                                                  //               .planting
-                                                  //               .name;
-                                                  //     },
-                                                  //     callback: () {
-                                                  //       // Navigator.push(
-                                                  //       //   context,
-                                                  //       //   MaterialPageRoute(
-                                                  //       //       builder: (context) =>
-                                                  //       //           PlantingMoreDetailScreen(
-                                                  //       //               planting,
-                                                  //       //               plantingProvider)),
-                                                  //       // );
-                                                  //     },
-                                                  //     itemName:
-                                                  //         "${fieldName}",
-                                                  //     itemID:
-                                                  //         "${plantingName}",
-                                                  //     city: "อ." +
-                                                  //         "${district}," +
-                                                  //         " จ." +
-                                                  //         "${province}",
-                                                  //     district: "ต." +
-                                                  //         "${substrict}",
-                                                  //     itemOwnerName:
-                                                  //         "${title} ${firstName}",
-                                                  //     itemOwnerLastName:
-                                                  //         "${lastName}",
-                                                  //     animation: animation,
-                                                  //     animationController:
-                                                  //         animationController!,
-                                                  //     date: ChangeDateTime(
-                                                  //         data
-                                                  //             .plantingData[
-                                                  //                 index]
-                                                  //             .planting
-                                                  //             .createDate),
-                                                  //   );
                                                 })
                                             : !data.isSearch
                                                 ? Container()
@@ -1466,25 +1308,6 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
     );
 
     return exitApp ?? false;
-  }
-
-  Widget _buildMultiSearchBar() {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.7,
-      height: MediaQuery.of(context).size.height * 0.07,
-      //height:MediaQuery.of(context).size.height*0.05,
-      child: new TextFormField(
-        decoration: new InputDecoration(
-          labelText: 'search'.i18n(),
-          fillColor: Colors.white,
-          border: new OutlineInputBorder(
-            borderRadius: new BorderRadius.circular(sizeHeight(25, context)),
-            borderSide: new BorderSide(),
-          ),
-          //fillColor: Colors.green
-        ),
-      ),
-    );
   }
 
   Shimmer mockShimmer() {

@@ -13,6 +13,7 @@ import 'package:mun_bot/screen/main_screen.dart';
 import 'package:mun_bot/screen/menuscreen/menu_screen.dart';
 import 'package:mun_bot/social_login/ui/auth-page.dart';
 import 'package:mun_bot/social_login/ui/utils.dart';
+import 'package:mun_bot/util/size_config.dart';
 import 'package:mun_bot/util/ui/survey_theme.dart';
 import '../../env.dart';
 import '../../main.dart';
@@ -26,16 +27,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:crypto/crypto.dart';
 import 'package:mun_bot/entities/response.dart' as EntityResponse;
-
-//RefreshToken? refreshToken;
-//GoogleSignInAccount? googleUser;
-
-//bool rememberMe = false;
-
-//final String tokenKey = 'user_token';
-//final String refreshtokenKey = 'refresh_token';
-//final String googleUserKey = 'google_user';
-//final String rememberMeKey = 'remember_me';
+import 'package:flutter/cupertino.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -51,53 +43,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-
-    /*getRefreshTokenFromStorage().then((storedRefreshToken) {
-      refreshToken =
-          storedRefreshToken != null ? RefreshToken(storedRefreshToken) : null;
-      if (storedRefreshToken != null) {
-        setState(() {
-          refreshToken = RefreshToken(storedRefreshToken);
-          //print('RefreshToken: ${refreshToken!.refreshtoken}');
-        });
-      } else {
-        //print('refreshTokenFromLogin is null.');
-      }
-    });*/
-    /*getTokenFromStorage().then((storedToken) async {
-      tokenFromLogin = storedToken != null ? Token(storedToken) : null;
-      if (storedToken != null) {
-        tokenFromLogin = Token(storedToken);
-        // Decode the token
-        Map<String, dynamic> decodedToken =
-            JwtDecoder.decode(tokenFromLogin!.token);
-        DateTime expirationDate =
-            DateTime.fromMillisecondsSinceEpoch(decodedToken['exp'] * 1000);
-        if (DateTime.now().isAfter(expirationDate)) {
-          UserService userService = UserService();
-          bool? checkRefreshtoken =
-              await userService.refreshTokentoLogin(refreshToken!.refreshtoken);
-          if (checkRefreshtoken == true) {
-            hasExpired = false;
-          } else {
-            hasExpired = true;
-          }
-        } else {
-          hasExpired = false;
-        }
-        // hasExpired = Jwt.isExpired(tokenFromLogin!.token);
-        //print('Token From API When open login page: ${tokenFromLogin!.token}');
-        //print('Token Expired status : ${hasExpired.toString()}');
-        ////print('RememberUser status : ${rememberMe.toString()}');
-        /*if (googleUser != null) {
-          //print(googleUser!.email);
-        } else {
-          //print('The user is not signed in.');
-        }*/
-      } else {
-        //print('TokenFromLogin is null.');
-      }
-    });*/
   }
 
   Widget JustLogIn() {
@@ -159,55 +104,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  /*Widget _buildLoginBtn() {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 25.0),
-      width: double.infinity,
-      child: RaisedButton(
-        elevation: 5.0,
-        onPressed: () async {
-          if (autoLogInStatus == true &&
-              hasExpired == false &&
-              rememberMe == true &&
-              tokenFromLogin != null) {
-            try {
-              showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (context) => LoadingWidget(),
-              );
-              googleUser = await GoogleSignIn().signIn();
-              //print('Token From API: ${tokenFromLogin?.token}');
-              await Future.delayed(Duration(seconds: 2));
-              Navigator.pop(context);
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => MainScreen()));
-            } catch (e) {
-              //print('Google Sign-In Error: $e');
-            }
-          } else {
-            logoutAndsignInWithGoogle();
-          }
-        },
-        padding: EdgeInsets.all(15.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-        color: Colors.white,
-        child: Text(
-          'LOGIN',
-          style: TextStyle(
-            color: Color(0xFF527DAA),
-            letterSpacing: 1.5,
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'OpenSans',
-          ),
-        ),
-      ),
-    );
-  }*/
-
   Widget _buildSignInWithText() {
     return Column(
       children: <Widget>[
@@ -228,35 +124,9 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  /*Widget _buildSocialBtn(Function onTap, AssetImage logo) {
-    return GestureDetector(
-      onTap: () async {
-        logoutAndsignInWithGoogle();
-      },
-      child: Container(
-        height: 60.0,
-        width: 60.0,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              offset: Offset(0, 2),
-              blurRadius: 6.0,
-            ),
-          ],
-          image: DecorationImage(
-            image: logo,
-          ),
-        ),
-      ),
-    );
-  }*/
-
   Widget _buildSocialBtnRow() {
     return Padding(
-        padding: EdgeInsets.symmetric(vertical: 30.0),
+        padding: EdgeInsets.symmetric(vertical: sizeHeight(30, context)),
         child: Column(
           children: [
             Utils.getButton(
@@ -266,12 +136,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 bgColor: Colors.black.withOpacity(0.7),
                 mini: false,
                 fontScale: 0.025,
-                height: 65,
+                height: sizeHeight(65, context),
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.grey.shade400, width: 3),
-                  borderRadius: BorderRadius.circular(15),
+                  side: BorderSide(
+                      color: Colors.grey.shade400,
+                      width: sizeWidth(3, context)),
+                  borderRadius: BorderRadius.circular(sizeWidth(15, context)),
                 ),
-                icon: Image.asset('assets/images/google_new.png', width: 37),
+                icon: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset('assets/images/google_new.png',
+                        width: sizeWidth(37, context)),
+                  ],
+                ),
                 onPressed: () {
                   Navigator.of(context).push(
                     FadeRoute1(AuthPage(
@@ -288,12 +166,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 bgColor: Colors.black.withOpacity(0.7),
                 mini: false,
                 fontScale: 0.025,
-                height: 65,
+                height: sizeHeight(65, context),
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.grey.shade400, width: 3),
-                  borderRadius: BorderRadius.circular(15),
+                  side: BorderSide(
+                      color: Colors.grey.shade400,
+                      width: sizeWidth(3, context)),
+                  borderRadius: BorderRadius.circular(sizeWidth(15, context)),
                 ),
-                icon: Image.asset('assets/images/apple.png', width: 37),
+                icon: Image.asset('assets/images/apple.png',
+                    width: sizeWidth(37, context)),
                 onPressed: () {
                   Navigator.of(context).push(
                     FadeRoute1(AuthPage(
@@ -312,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),*/
 
-            SizedBox(height: 25),
+            SizedBox(height: sizeHeight(25, context)),
 
             //Platform.isIOS ?
             /*AppleAuthButton(
@@ -330,20 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
           )//: Container(),
 */
           ],
-        )
-
-        /*Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          _buildSocialBtn(
-            () => //print('Login with Google'),
-            AssetImage(
-              'assets/images/google.jpg',
-            ),
-          ),
-        ],
-      ),*/
-        );
+        ));
   }
 
   AppleSignInSignUp() async {}
@@ -362,184 +230,9 @@ class _LoginScreenState extends State<LoginScreen> {
     return digest.toString();
   }
 
-  /*googleSignInSignUp() async {
-    await _googleSignIn.signOut();
-    saveTokenToStorage(null);
-    saveRefreshTokenToStorage(null);
-    saveRememberMeToStorage(false);
-    googleUser = null;
-    tokenFromLogin = null;
-    rememberMe = false;
-    try {
-      googleUser = await GoogleSignIn().signIn();
-      if (googleUser == null) {
-        //print('Google Sign-In Canceled');
-      } else {
-        final GoogleSignInAuthentication googleAuth =
-            await googleUser!.authentication;
-
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        );
-        final UserCredential userCredential =
-            await FirebaseAuth.instance.signInWithCredential(credential);
-        if (userCredential.user != null) {
-          // //printing the user token for demonstration purposes.
-          //print('User Token: ${googleAuth.accessToken}');
-          //print('User gmail: ${googleUser!.email}');
-          var accessToken = googleAuth.accessToken;
-          var userName = googleUser!.email;
-          UserService userService = UserService();
-          tokenFromLogin = await userService.login(userName, accessToken!);
-          googleUser = null;
-          if (messageCheckpermission == "OK") {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text("แจ้งเตือน"),
-                  content: Text("บัญชีนี้ได้ถูกลงทะเบียนแล้ว"),
-                  actions: [
-                    ElevatedButton(
-                      child: Text("OK"),
-                      onPressed: () {
-                        tokenFromLogin = null;
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
-            return;
-          } else {
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (context) => LoadingWidget(),
-            );
-            //print('Token From API: ${tokenFromLogin?.token}');
-            await Future.delayed(Duration(seconds: 2));
-            Navigator.pop(context);
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => QRCodeScannerScreen()));
-          }
-        } else {
-          //print('Google Sign-In Failed');
-        }
-      }
-    } catch (e) {
-      //print('Google Sign-In Error: $e');
-    }
-  }*/
-
-  /*Widget _buildSignupBtn() {
-    return GestureDetector(
-      onTap: () async {
-        // If a sign-in operation is already in progress, return early
-
-        await _googleSignIn.signOut();
-        saveTokenToStorage(null);
-        saveRefreshTokenToStorage(null);
-        saveRememberMeToStorage(false);
-        googleUser = null;
-        tokenFromLogin = null;
-        rememberMe = false;
-        try {
-          googleUser = await GoogleSignIn().signIn();
-          if (googleUser == null) {
-            //print('Google Sign-In Canceled');
-          } else {
-            final GoogleSignInAuthentication googleAuth =
-                await googleUser!.authentication;
-
-            final AuthCredential credential = GoogleAuthProvider.credential(
-              accessToken: googleAuth.accessToken,
-              idToken: googleAuth.idToken,
-            );
-            final UserCredential userCredential =
-                await FirebaseAuth.instance.signInWithCredential(credential);
-            if (userCredential.user != null) {
-              // //printing the user token for demonstration purposes.
-              //print('User Token: ${googleAuth.accessToken}');
-              //print('User gmail: ${googleUser!.email}');
-              var accessToken = googleAuth.accessToken;
-              var userName = googleUser!.email;
-              UserService userService = UserService();
-              tokenFromLogin = await userService.login(userName, accessToken!);
-              googleUser = null;
-              if (messageCheckpermission == "OK") {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text("แจ้งเตือน"),
-                      content: Text("บัญชีนี้ได้ถูกลงทะเบียนแล้ว"),
-                      actions: [
-                        ElevatedButton(
-                          child: Text("OK"),
-                          onPressed: () {
-                            tokenFromLogin = null;
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
-                return;
-              } else {
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (context) => LoadingWidget(),
-                );
-                //print('Token From API: ${tokenFromLogin?.token}');
-                await Future.delayed(Duration(seconds: 2));
-                Navigator.pop(context);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => QRCodeScannerScreen()));
-              }
-            } else {
-              //print('Google Sign-In Failed');
-            }
-          }
-        } catch (e) {
-          //print('Google Sign-In Error: $e');
-        }
-      },
-      child: RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: 'Don\'t have an Account? ',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            TextSpan(
-              text: 'Sign Up',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }*/
-
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
@@ -556,7 +249,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     //     'assets/images/Login_Bg1.png'),
                     image: AssetImage(
                         'assets/images/Login_Bg3.png'), // Replace with your image path
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),
@@ -566,16 +259,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   physics: AlwaysScrollableScrollPhysics(),
                   padding: EdgeInsets.symmetric(
                     horizontal: 0,
-                    vertical: 143.0,
+                    vertical: sizeHeight(143, context),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(right: 10),
+                        padding: EdgeInsets.only(right: sizeWidth(10, context)),
                         child: Container(
-                          width: 300,
-                          height: 300,
+                          width: sizeWidth(300, context),
+                          height: sizeHeight(300, context),
                           decoration: BoxDecoration(
                             shape: BoxShape.rectangle,
                             // borderRadius: BorderRadius.circular(20),
@@ -595,7 +288,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             // color: theme_color2,
                             color: Colors.black.withOpacity(0.7),
                             fontFamily: 'OpenSans',
-                            fontSize: 28.0,
+                            fontSize: sizeHeight(18, context),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -623,133 +316,8 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
-  /*Future<void> logoutAndsignInWithGoogle() async {
-    await _googleSignIn.signOut();
-    saveTokenToStorage(null);
-    saveRefreshTokenToStorage(null);
-    saveRememberMeToStorage(false);
-    googleUser = null;
-    tokenFromLogin = null;
-    rememberMe = false;
-    try {
-      googleUser = await GoogleSignIn().signIn();
-      if (googleUser == null) {
-        //print('Google Sign-In Canceled');
-      } else {
-        final GoogleSignInAuthentication googleAuth =
-            await googleUser!.authentication;
-
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        );
-        final UserCredential userCredential =
-            await FirebaseAuth.instance.signInWithCredential(credential);
-        if (userCredential.user != null) {
-          // //printing the user token for demonstration purposes.
-          //print('User Token: ${googleAuth.accessToken}');
-          //print('User gmail: ${googleUser!.email}');
-          var accessToken = googleAuth.accessToken;
-          var userName = googleUser!.email;
-          UserService userService = UserService();
-          tokenFromLogin = await userService.login(userName, accessToken!);
-          if (messageCheckpermission == "Anonymous User") {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text("แจ้งเตือน"),
-                  content: Text("บัญชีนี้ยังไม่ถูกลงทะเบียนในระบบ"),
-                  actions: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.grey,
-                      ),
-                      child: Text("OK"),
-                      onPressed: () {
-                        googleUser = null;
-                        tokenFromLogin = null;
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                    ElevatedButton(
-                      child: Text("Sign Up"),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        googleUser = null;
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => QRCodeScannerScreen()));
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
-            return;
-          } else {
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (context) => LoadingWidget(),
-            );
-            //print('Token From API: ${tokenFromLogin?.token}');
-            await Future.delayed(Duration(seconds: 2));
-            await saveTokenToStorage(tokenFromLogin!.token);
-            rememberMe = true;
-            await saveRememberMeToStorage(rememberMe);
-            Navigator.pop(context);
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => MainScreen()));
-          }
-        } else {
-          //print('Google Sign-In Failed');
-        }
-      }
-    } catch (e) {
-      //print('Google Sign-In Error: $e');
-    }
-  }*/
 }
 
-/*class UserProfileSscreen extends StatelessWidget {
-  //final GoogleSignInAccount googleUser;
-
-  //UserProfileScreen(this.googleUser);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('User Profile'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: NetworkImage("" ?? ''),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Email: ${"googleUser.email" ?? ''}',
-              style: TextStyle(fontSize: 20),
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Name: ${"googleUser.email" ?? ''}',
-              style: TextStyle(fontSize: 20),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-*/
 class LoadingWidget extends StatelessWidget {
   final String message;
 
@@ -770,7 +338,7 @@ class LoadingWidget extends StatelessWidget {
               message,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 16,
+                fontSize: sizeHeight(16, context),
               ),
             ),
           ],
