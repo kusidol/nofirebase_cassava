@@ -206,6 +206,7 @@
   "plant-start-date": "Plant Start Date",
   "survey-end-date": "Survey End Date",
   "survey-start-date": "Survey Start Date",
+  "validate-not-special-character": "Must be 2-25 characters long, the last character cannot be blank.",
 
   "comfirm": "Comfirm",
   "cancle": "Cancel",

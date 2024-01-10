@@ -98,9 +98,9 @@ class InputCodeValidator {
 
   static String? validateNotSpecialCharacter(String? value, String input) {
     if (input != "") {
-      RegExp regex = new RegExp(r'^([a-zA-Z0-9ก-๙ ]{2,25})([\S])$');
+      RegExp regex = new RegExp(r'^([a-zA-Z0-9ก-๙ ]{1,25})([\S])$');
       if (!regex.hasMatch(input)) {
-        return 'ต้องมีความยาวตั้งแต่ 2-25 ตัวอักษร, อักษรสุดท้ายห้ามเป็น เว้นว่าง';
+        return 'validate-not-special-character'.i18n();
       } else
         return null;
     }

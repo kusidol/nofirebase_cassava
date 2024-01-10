@@ -61,6 +61,7 @@
   "platings-founded-label": "พบ",
   "platings-founded-id-label": "แปลง",
   "field-more-detail-label": "ข้อมูลแปลง",
+  "validate-not-special-character": "ต้องมีความยาวตั้งแต่ 2-25 ตัวอักษร, อักษรสุดท้ายห้ามเป็น เว้นว่าง",
 
   "surveys-founded-label": "พบ",
   "surveys-founded-id-label": "การเพาะปลูก",
