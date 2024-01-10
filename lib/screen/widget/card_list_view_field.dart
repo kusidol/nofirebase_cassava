@@ -23,6 +23,7 @@ class AnimatedListItem extends StatefulWidget {
 
   final VoidCallback? callback;
   final VoidCallback? callback2;
+  final FieldData fieldData;
   final Field field;
   final User owner;
   final String location;
@@ -51,6 +52,7 @@ class AnimatedListItem extends StatefulWidget {
     this.district,
     this.callback2,
     this.callback,
+    required this.fieldData,
     this.date,
     required this.fieldProviders,
   }) : super(key: key);
@@ -176,7 +178,7 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                                   FieldMoreDetailScreen(
                                                       widget.field,
                                                       widget.owner,
-                                                      widget.location,
+                                                      widget.fieldData,
                                                       widget.image,
                                                       widget.fieldProviders)),
                                         ),

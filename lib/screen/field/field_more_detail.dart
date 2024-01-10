@@ -33,11 +33,11 @@ enum SampleItem { itemOne, itemTwo, itemThree }
 class FieldMoreDetailScreen extends StatefulWidget {
   final Field fields;
   final User owner;
-  final String location;
+  final FieldData fieldData;
   final ImageData? image;
   FieldProviders fieldProviders;
   FieldMoreDetailScreen(
-      this.fields, this.owner, this.location, this.image, this.fieldProviders);
+      this.fields, this.owner, this.fieldData, this.image, this.fieldProviders);
 
   @override
   State<StatefulWidget> createState() => _FieldMoreDetailScreen();
@@ -56,7 +56,6 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
   int page = 1;
   int check = 0;
   SampleItem? selectedMenu;
-
   // editable
   bool editable = false;
 
@@ -284,8 +283,8 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
                           widget.fields.name.toString(), Icons.grass),
                       buildReadOnlyOwner(
                           "owner".i18n(), widget.owner, Icons.person),
-                      buildReadOnlyAddress("Address".i18n(), widget.location,
-                          Icons.location_on_sharp),
+                      buildReadOnlyAddress("Address".i18n(),
+                          widget.fieldData.location, Icons.location_on_sharp),
                       SizedBox(
                         height: sizeHeight(5, context),
                       ),
@@ -857,7 +856,7 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
                                                     widget.fields.fieldID,
                                                     widget.fields,
                                                     widget.owner,
-                                                    widget.location,
+                                                    widget.fieldData,
                                                     widget.fieldProviders)),
                                       );
                                     },

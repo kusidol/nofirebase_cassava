@@ -29,15 +29,16 @@ import 'package:provider/provider.dart';
 import 'package:location/location.dart';
 
 import '../main_screen.dart';
+import 'field_more_detail.dart';
 
 class NewFieldScreen extends StatefulWidget {
   final int userId;
   final Field? fieldFromPassPage;
   final User? user;
-  final String? location;
+  final FieldData? fieldData;
   FieldProviders fieldProviders;
 
-  NewFieldScreen(this.userId, this.fieldFromPassPage, this.user, this.location,
+  NewFieldScreen(this.userId, this.fieldFromPassPage, this.user, this.fieldData,
       this.fieldProviders);
 
   @override
@@ -104,6 +105,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
   String save_Latitude = "";
   String save_Longtitude = "";
   String save_MetresAboveSeaLv = "";
+  String locationAddress = "";
 
   // Loading GPS
   bool canUpdateGPS = false;
@@ -232,7 +234,6 @@ class _NewFieldScreenState extends State<NewFieldScreen>
 
   onLoadFirstFunction() async {
     // FOR GET LOCATION GPS
-
     final grant = await Permission.location.request().isGranted;
     //print(permission);
     if (!grant) {
@@ -264,9 +265,9 @@ class _NewFieldScreenState extends State<NewFieldScreen>
 
       field = widget.fieldFromPassPage!;
       // //print("widget.location : ${widget.location!}");
-      selectedProvince_value = widget.location!.split(",").last;
-      selectedDistrict_value = widget.location!.split(",").first;
-      selectedSubdistrict_value = widget.location!.split(",")[1];
+      selectedProvince_value = widget.fieldData!.location.split(",").last;
+      selectedDistrict_value = widget.fieldData!.location.split(",").first;
+      selectedSubdistrict_value = widget.fieldData!.location.split(",")[1];
 
       // Province
       ProviceService provinceService = new ProviceService();
@@ -437,6 +438,11 @@ class _NewFieldScreenState extends State<NewFieldScreen>
       int statusUpdateField =
           await fieldService.updateField(token.toString(), updateData);
       if (statusUpdateField == 200) {
+        widget.fieldData!.location = selectedDistrict_value +
+            ',' +
+            selectedSubdistrict_value +
+            ',' +
+            selectedProvince_value;
         Navigator.pop(context);
         Navigator.pop(context);
         CustomLoading.showSuccess();
