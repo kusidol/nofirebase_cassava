@@ -320,14 +320,14 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
       child: ListView(
         scrollDirection: Axis.vertical,
         children: [
-          Container(
-            width: SizeConfig.screenWidth,
-            alignment: Alignment.center,
-            child: Text("first-page".i18n(),
-                style: TextStyle(
-                    fontSize: sizeHeight(20, context),
-                    fontWeight: FontWeight.bold)),
-          ),
+          // Container(
+          //   width: SizeConfig.screenWidth,
+          //   alignment: Alignment.center,
+          //   child: Text("first-page".i18n(),
+          //       style: TextStyle(
+          //           fontSize: sizeHeight(20, context),
+          //           fontWeight: FontWeight.bold)),
+          // ),
           Form(
               key: _formKeyPage1,
               autovalidateMode: autovidateDisable,
@@ -457,14 +457,14 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
       child: ListView(
         scrollDirection: Axis.vertical,
         children: [
-          Container(
-            width: SizeConfig.screenWidth,
-            alignment: Alignment.center,
-            child: Text("second-page".i18n(),
-                style: TextStyle(
-                    fontSize: sizeHeight(20, context),
-                    fontWeight: FontWeight.bold)),
-          ),
+          // Container(
+          //   width: SizeConfig.screenWidth,
+          //   alignment: Alignment.center,
+          //   child: Text("second-page".i18n(),
+          //       style: TextStyle(
+          //           fontSize: sizeHeight(20, context),
+          //           fontWeight: FontWeight.bold)),
+          // ),
           Form(
               key: _formKeyPage2,
               autovalidateMode: autovidateDisable,

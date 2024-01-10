@@ -141,8 +141,6 @@ class _NewFieldScreenState extends State<NewFieldScreen>
     permission = await Geolocator.checkPermission();
     //print(permission);
     if (permission == LocationPermission.denied) {
-
-
       if (permission == LocationPermission.denied) {
         // ScaffoldMessenger.of(context).showSnackBar(
         //     const SnackBar(content: Text('Location permissions are denied')));
@@ -158,7 +156,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
       var statusLocation = await Permission.location.status;
       //print("status : ${statusLocation}");
       if (statusLocation.isDenied) {
-      //  showAlertDialog_Location(context);
+        //  showAlertDialog_Location(context);
       }
       return false;
     }
@@ -185,21 +183,19 @@ class _NewFieldScreenState extends State<NewFieldScreen>
         ),
       );
   Future<void> _getCurrentLocation() async {
-
-    bool hasPermission =  await _handleLocationPermission() ;
+    bool hasPermission = await _handleLocationPermission();
 
     if (!hasPermission) return;
 
     if (!hasPermission) return;
     Position position = await Geolocator.getCurrentPosition();
 
-    if(mounted){
+    if (mounted) {
       setState(() {
         canUpdateGPS = true;
         _currentPosition = position;
       });
     }
-
   }
 
   List<String> createDropdown(List<Map<String, dynamic>> list) {
@@ -243,14 +239,11 @@ class _NewFieldScreenState extends State<NewFieldScreen>
       LocationPermission b = await Geolocator.requestPermission();
     }
 
-
-
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
 
     if (!serviceEnabled) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('gps-off-alert'.i18n())));
-
     }
 
     if (widget.fieldFromPassPage == null) {
@@ -439,12 +432,12 @@ class _NewFieldScreenState extends State<NewFieldScreen>
         "size": field.size,
         "status": field.status,
         "userinfields": widget.user!.userID,
+        "imgPath": field.imgPath,
       };
-      //print("UPDATE VALUE : ${updateData.toString()}");
       int statusUpdateField =
           await fieldService.updateField(token.toString(), updateData);
-      //print("NUMBER STATUS : ${statusUpdateField}");
       if (statusUpdateField == 200) {
+        Navigator.pop(context);
         Navigator.pop(context);
         CustomLoading.showSuccess();
       } else {
@@ -591,14 +584,14 @@ class _NewFieldScreenState extends State<NewFieldScreen>
       child: ListView(
         scrollDirection: Axis.vertical,
         children: [
-          Container(
-            width: SizeConfig.screenWidth,
-            alignment: Alignment.center,
-            child: Text("first-page".i18n(),
-                style: TextStyle(
-                    fontSize: sizeHeight(20, context),
-                    fontWeight: FontWeight.bold)),
-          ),
+          // Container(
+          //   width: SizeConfig.screenWidth,
+          //   alignment: Alignment.center,
+          //   child: Text("first-page".i18n(),
+          //       style: TextStyle(
+          //           fontSize: sizeHeight(20, context),
+          //           fontWeight: FontWeight.bold)),
+          // ),
           Form(
               key: _formKeyPage1,
               autovalidateMode: autovidateDisable,
@@ -918,14 +911,14 @@ class _NewFieldScreenState extends State<NewFieldScreen>
       child: ListView(
         scrollDirection: Axis.vertical,
         children: [
-          Container(
-            width: SizeConfig.screenWidth,
-            alignment: Alignment.center,
-            child: Text("second-page".i18n(),
-                style: TextStyle(
-                    fontSize: sizeHeight(20, context),
-                    fontWeight: FontWeight.bold)),
-          ),
+          // Container(
+          //   width: SizeConfig.screenWidth,
+          //   alignment: Alignment.center,
+          //   child: Text("second-page".i18n(),
+          //       style: TextStyle(
+          //           fontSize: sizeHeight(20, context),
+          //           fontWeight: FontWeight.bold)),
+          // ),
           Form(
               key: _formKeyPage2,
               autovalidateMode: autovidateDisable,
@@ -1139,8 +1132,8 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   AnimTFF(
                     (text) => {
                       setState(() {
-                        RegExp regex =
-                            new RegExp(r'(^[0-9]*)([.]{0,1})([0-9]*$)');
+                        RegExp regex = new RegExp(
+                            r'(^([-]{0,1})[0-9]*)([.]{0,1})([0-9]*$)');
                         if (regex.hasMatch(text.toString())) {
                           try {
                             field.size = double.parse(text);
@@ -1199,14 +1192,14 @@ class _NewFieldScreenState extends State<NewFieldScreen>
       child: ListView(
         scrollDirection: Axis.vertical,
         children: [
-          Container(
-            width: SizeConfig.screenWidth,
-            alignment: Alignment.center,
-            child: Text("third-page".i18n(),
-                style: TextStyle(
-                    fontSize: sizeHeight(20, context),
-                    fontWeight: FontWeight.bold)),
-          ),
+          // Container(
+          //   width: SizeConfig.screenWidth,
+          //   alignment: Alignment.center,
+          //   child: Text("third-page".i18n(),
+          //       style: TextStyle(
+          //           fontSize: sizeHeight(20, context),
+          //           fontWeight: FontWeight.bold)),
+          // ),
           Form(
               key: _formKeyPage3,
               autovalidateMode: autovidateDisable,
@@ -1243,8 +1236,8 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                           ),
                           onChanged: (value) {
                             setState(() {
-                              RegExp regex =
-                                  new RegExp(r'(^[0-9]*)([.]{0,1})([0-9]*$)');
+                              RegExp regex = new RegExp(
+                                  r'(^([-]{0,1})[0-9]*)([.]{0,1})([0-9]*$)');
                               if (regex.hasMatch(value.toString())) {
                                 try {
                                   field.latitude = double.parse(value);
@@ -1258,8 +1251,8 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                       : AnimTFF(
                           (text) => {
                             setState(() {
-                              RegExp regex =
-                                  new RegExp(r'(^[0-9]*)([.]{0,1})([0-9]*$)');
+                              RegExp regex = new RegExp(
+                                  r'(^([-]{0,1})[0-9]*)([.]{0,1})([0-9]*$)');
                               if (regex.hasMatch(text.toString())) {
                                 try {
                                   field.latitude = double.parse(text);
@@ -1312,8 +1305,8 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                           ),
                           onChanged: (value) {
                             setState(() {
-                              RegExp regex =
-                                  new RegExp(r'(^[0-9]*)([.]{0,1})([0-9]*$)');
+                              RegExp regex = new RegExp(
+                                  r'(^([-]{0,1})[0-9]*)([.]{0,1})([0-9]*$)');
                               if (regex.hasMatch(value.toString())) {
                                 try {
                                   field.longtitude = double.parse(value);
@@ -1327,8 +1320,8 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                       : AnimTFF(
                           (text) => {
                             setState(() {
-                              RegExp regex =
-                                  new RegExp(r'(^[0-9]*)([.]{0,1})([0-9]*$)');
+                              RegExp regex = new RegExp(
+                                  r'(^([-]{0,1})[0-9]*)([.]{0,1})([0-9]*$)');
                               if (regex.hasMatch(text.toString())) {
                                 try {
                                   field.longtitude = double.parse(text);
@@ -1367,8 +1360,8 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   AnimTFF(
                     (text) => {
                       setState(() {
-                        RegExp regex =
-                            new RegExp(r'(^[0-9]*)([.]{0,1})([0-9]*$)');
+                        RegExp regex = new RegExp(
+                            r'(^([-]{0,1})[0-9]*)([.]{0,1})([0-9]*$)');
                         if (regex.hasMatch(text.toString())) {
                           try {
                             field.metresAboveSeaLv = double.parse(text);
@@ -1399,7 +1392,6 @@ class _NewFieldScreenState extends State<NewFieldScreen>
   }
 
   Future<void> submitUpdateGPS() async {
-
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -1407,9 +1399,8 @@ class _NewFieldScreenState extends State<NewFieldScreen>
     );
 
     await _getCurrentLocation().then((value) {
-
       Navigator.pop(context);
-      if(mounted) {
+      if (mounted) {
         if (canUpdateGPS) {
           setState(() {
             field.longtitude =
@@ -1425,8 +1416,6 @@ class _NewFieldScreenState extends State<NewFieldScreen>
     });
 
     //print("Subdistrict : ${selectedSubistrictId}");
-
-
   }
 
   Future<bool> checkingOpenGPS() async {

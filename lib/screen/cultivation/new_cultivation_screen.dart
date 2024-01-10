@@ -973,7 +973,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                             InputCodeValidator.validateNotSpecialCharacter(
                                 value, planting.previousPlantOther.toString()),
                         labelText: planting.previousPlantOther == ""
-                            ? "Other_previousPlant"
+                            ? 'insert-other-previous-plant'.i18n()
                             : planting.previousPlantOther,
                         successText: "",
                         inputIcon: Icon(Icons.eco_sharp),
@@ -1046,7 +1046,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                             InputCodeValidator.validateNotSpecialCharacter(
                                 value, planting.besidePlantOther.toString()),
                         labelText: planting.besidePlantOther == ""
-                            ? "Other_besidePlant"
+                            ? 'insert-other-beside-plant'.i18n()
                             : planting.besidePlantOther,
                         successText: "",
                         inputIcon: Icon(Icons.eco_sharp),
@@ -2966,7 +2966,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                             InputCodeValidator.validateNotSpecialCharacter(
                                 value, planting.soilAmendmentsOther.toString()),
                         labelText: planting.soilAmendmentsOther == ""
-                            ? "Other_soilAmendmentsOther"
+                            ? 'insert-other-soil-amendments'.i18n()
                             : planting.soilAmendmentsOther,
                         successText: "",
                         inputIcon: Icon(Icons.landscape_sharp),

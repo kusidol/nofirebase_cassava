@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localization/src/localization_extension.dart';
 import 'package:mun_bot/env.dart';
 import 'package:mun_bot/util/size_config.dart';
 import 'package:mun_bot/util/ui/text_form_field.dart';
@@ -107,7 +108,6 @@ class _AnimTFFState extends State<AnimTFF> {
   }
 
   String? validator(String? text) {
-    //print("validate now");
     String? error;
     if (widget.validator1 == null) return null;
 
@@ -127,6 +127,43 @@ class _AnimTFFState extends State<AnimTFF> {
     }
 
     return showError;
+  }
+
+  bool defaultLabel(String? text) {
+    List<String> checkList = [
+      'insert-field-code'.i18n(),
+      'insert-field-name'.i18n(),
+      'insert-field-address-label'.i18n(),
+      'insert-field-moo'.i18n(),
+      'insert-field-road'.i18n(),
+      'insert-landmark-plots'.i18n(),
+      'insert-planting-code'.i18n(),
+      'insert-planting-name'.i18n(),
+      'insert-other-previous-plant'.i18n(),
+      'insert-other-beside-plant'.i18n(),
+      'insert-secondary-plant'.i18n(),
+      'insert-secondary-species'.i18n(),
+      'insert-other-soil-amendments'.i18n(),
+      'note-label'.i18n(),
+      'insert-fertilizer-used'.i18n(),
+      'insert-chemical-used'.i18n(),
+      'insert-beside-plant'.i18n(),
+      'insert-weed'.i18n(),
+      'insert-soil-type'.i18n(),
+      'insert-prefix'.i18n(),
+      'insert-name'.i18n(),
+      'insert-last-name'.i18n(),
+      'insert-address'.i18n(),
+      'insert-telphone-number'.i18n()
+    ];
+    bool result = false;
+    for (int i = 0; i < checkList.length; i++) {
+      if (text == checkList[i]) {
+        result = true;
+        break;
+      }
+    }
+    return result;
   }
 
   Border getBorder(Color color) {
@@ -198,6 +235,7 @@ class _AnimTFFState extends State<AnimTFF> {
                         widget.textInput(text);
                       },
                       onTap: () {
+                        fieldText.text = lableText.toString();
                         if (validator(text) != null) {
                           clearText();
                         }
@@ -221,6 +259,9 @@ class _AnimTFFState extends State<AnimTFF> {
                       onTap: () {
                         if (validator(text) != null) {
                           clearText();
+                        }
+                        if (!defaultLabel(text)) {
+                          fieldText.text = text!;
                         }
                       },
                       decoration: InputDecoration(

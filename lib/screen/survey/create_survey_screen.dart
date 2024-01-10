@@ -1198,6 +1198,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
               _buildSurveyDate(),
               SizedBox(height: SizeConfig.screenHeight! * 0.02),
               Container(
+                alignment: Alignment.topLeft,
                 child: Text(
                   "beside-plant-label".i18n(),
                   style: TextStyle(
@@ -1217,7 +1218,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                 },
                 errorText: errorText['code'],
                 labelText: surveying.besidePlant == ""
-                    ? "besidePlant"
+                    ? 'insert-beside-plant'.i18n()
                     : surveying.besidePlant,
                 successText: "",
                 inputIcon: Icon(Icons.park),
@@ -1445,7 +1446,8 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                 }),
               },
           inputIcon: Icon(Icons.grass_rounded),
-          labelText: surveying.weed == "" ? "WEED" : surveying.weed,
+          labelText:
+              surveying.weed == "" ? 'insert-weed'.i18n() : surveying.weed,
           successText: ""),
       // SizedBox(height: SizeConfig.screenHeight! * 0.02),
       // Container(
@@ -1497,7 +1499,9 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                 }),
               },
           inputIcon: Icon(Icons.landscape_rounded),
-          labelText: surveying.soilType == "" ? "soilType" : surveying.soilType,
+          labelText: surveying.soilType == ""
+              ? 'insert-soil-type'.i18n()
+              : surveying.soilType,
           successText: ""),
     ];
 

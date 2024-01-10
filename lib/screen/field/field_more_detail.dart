@@ -66,6 +66,9 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
   // Subdistrict ID
   int? subdistrictID;
 
+  // location
+  String location = "";
+
   // SETTING DEFAULT
   String? token = tokenFromLogin?.token;
   FieldService fieldService = FieldService();
@@ -657,21 +660,21 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
   }
 
   Widget _buildDetailField() {
-    return  Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.grey.withOpacity(0.1),
-                theme_color3.withOpacity(.4),
-                theme_color4.withOpacity(0.6),
-              ],
-            ),
+    return Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.grey.withOpacity(0.1),
+              theme_color3.withOpacity(.4),
+              theme_color4.withOpacity(0.6),
+            ],
           ),
-          width: SizeConfig.screenWidth,
-          height: sizeHeight(653, context),
-          child: _buildListView());
+        ),
+        width: SizeConfig.screenWidth,
+        height: sizeHeight(653, context),
+        child: _buildListView());
   }
 
   Widget _buildUpdateGPSBtn() {
@@ -725,8 +728,8 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
 
   @override
   Widget build(BuildContext context) {
-    print("height : ${MediaQuery.of(context).size.height} ");
-    print("width : ${MediaQuery.of(context).size.width}");
+    // print("height : ${MediaQuery.of(context).size.height} ");
+    // print("width : ${MediaQuery.of(context).size.width}");
     return Theme(
       data: HotelAppTheme.buildLightTheme(),
       child: Container(
