@@ -46,8 +46,8 @@
   "change-value": "Change Language",
 
   "search": "Search",
-  "searchField": "Search (Field Name, Owner's Name)",
-  "searchPlanting": "Search (Field, Planting, Owner's Name)",
+  "searchField": "Search (Field Code, Field Name, Owner's Name, Address)",
+  "searchPlanting": "Search (Field Code, Field Name, Planting Code, Planting Name, Owner's Name, Address)",
   "search-more": "Search More",
   "welcome-to-munbot-label": "Welcome to MunSurvey",
   "have-a-good-day-label": "Have a good day",
