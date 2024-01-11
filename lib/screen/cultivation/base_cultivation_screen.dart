@@ -714,6 +714,22 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
           initialDate: startDate,
           firstDate: DateTime(1900),
           lastDate: endDate,
+          // builder: (context, child) {
+          //   return SingleChildScrollView(
+          //     child: Column(
+          //       children: <Widget>[
+          //         Padding(
+          //           padding: const EdgeInsets.only(top: 10.0),
+          //           child: Container(
+          //             height: 700,
+          //             width: 700,
+          //             child: child,
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   );
+          // }
         );
         if (newDate == null) return;
         setState(() {
@@ -732,14 +748,17 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
           fontSize: sizeWidth(14, context)),
       decoration: InputDecoration(
         border: InputBorder.none,
-        contentPadding: EdgeInsets.only(top: sizeHeight(14, context)),
+        contentPadding: SizeConfig.screenWidth! < 500
+            ? EdgeInsets.only(top: sizeHeight(14, context))
+            : EdgeInsets.only(left: sizeWidth(14, context)),
         prefixIcon: Icon(
           Icons.calendar_today_rounded,
           color: Colors.white,
           size: sizeHeight(25, context),
         ),
         hintText: 'pick-start-date'.i18n(),
-        hintStyle: kHintTextStyle,
+        hintStyle:
+            TextStyle(color: Colors.white, fontSize: sizeHeight(16, context)),
       ),
     );
 
@@ -770,18 +789,24 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
           fontSize: sizeWidth(14, context)),
       decoration: InputDecoration(
         border: InputBorder.none,
-        contentPadding: EdgeInsets.only(top: sizeHeight(14, context)),
+        contentPadding: SizeConfig.screenWidth! < 500
+            ? EdgeInsets.only(top: sizeHeight(14, context))
+            : EdgeInsets.only(left: sizeWidth(14, context)),
         prefixIcon: Icon(
           Icons.calendar_today_rounded,
           color: Colors.white,
         ),
         hintText: 'pick-end-date'.i18n(),
-        hintStyle: kHintTextStyle,
+        hintStyle:
+            TextStyle(color: Colors.white, fontSize: sizeHeight(16, context)),
       ),
     );
 
     return Column(
       children: [
+        SizedBox(
+          height: sizeHeight(8, context),
+        ),
         ListTile(
           title: Text(
             'search-more'.i18n(),
@@ -991,7 +1016,10 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                           style: TextStyle(fontSize: sizeHeight(20, context)),
                         ),
                         SizedBox(width: sizeWidth(5, context)),
-                        Icon(Icons.search),
+                        Icon(
+                          Icons.search,
+                          size: sizeWidth(25, context),
+                        ),
                       ],
                     ),
                   ),

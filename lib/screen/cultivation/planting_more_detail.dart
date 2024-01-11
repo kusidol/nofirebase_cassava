@@ -177,54 +177,60 @@ class _PlantingMoreDetailScreen extends State<PlantingMoreDetailScreen>
                 showModalBottomSheet(
                     context: context,
                     builder: (context) {
-                      return Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          ListTile(
-                            leading: new Icon(
-                              Icons.edit,
-                              color:
-                                  HotelAppTheme.buildLightTheme().shadowColor,
-                            ),
-                            title: new Text(
-                              "Edit".i18n(),
-                              style: TextStyle(
-                                fontSize: sizeHeight(17, context),
-                                fontWeight: kPoppinsRegular.fontWeight,
+                      return Container(
+                        height: sizeHeight(150, context),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            ListTile(
+                              leading: new Icon(
+                                Icons.edit,
                                 color:
                                     HotelAppTheme.buildLightTheme().shadowColor,
                               ),
+                              title: new Text(
+                                "Edit".i18n(),
+                                style: TextStyle(
+                                  fontSize: sizeHeight(17, context),
+                                  fontWeight: kPoppinsRegular.fontWeight,
+                                  color: HotelAppTheme.buildLightTheme()
+                                      .shadowColor,
+                                ),
+                              ),
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      maintainState: false,
+                                      builder: (context) =>
+                                          NewCultivationScreen(
+                                              0,
+                                              widget.plantings,
+                                              widget.provider),
+                                    ));
+                              },
                             ),
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    maintainState: false,
-                                    builder: (context) => NewCultivationScreen(
-                                        0, widget.plantings, widget.provider),
-                                  ));
-                            },
-                          ),
-                          ListTile(
-                            leading: new Icon(
-                              Icons.delete,
-                              color:
-                                  HotelAppTheme.buildLightTheme().shadowColor,
-                            ),
-                            title: new Text(
-                              "Delete".i18n(),
-                              style: TextStyle(
-                                fontSize: sizeHeight(17, context),
-                                fontWeight: kPoppinsRegular.fontWeight,
+                            ListTile(
+                              leading: new Icon(
+                                Icons.delete,
                                 color:
                                     HotelAppTheme.buildLightTheme().shadowColor,
                               ),
+                              title: new Text(
+                                "Delete".i18n(),
+                                style: TextStyle(
+                                  fontSize: sizeHeight(17, context),
+                                  fontWeight: kPoppinsRegular.fontWeight,
+                                  color: HotelAppTheme.buildLightTheme()
+                                      .shadowColor,
+                                ),
+                              ),
+                              onTap: () {
+                                _deleteConfirmation();
+                              },
                             ),
-                            onTap: () {
-                              _deleteConfirmation();
-                            },
-                          ),
-                        ],
+                          ],
+                        ),
                       );
                     });
               },
@@ -1288,7 +1294,8 @@ class _PlantingMoreDetailScreen extends State<PlantingMoreDetailScreen>
                             ChangeDateTime(
                                 widget.plantings.primaryPlantPlantingDate),
                             "havest-date-label".i18n(),
-                            ChangeDateTime(widget.plantings.primaryPlantHarvestDate) == "01-01-1970"
+                            ChangeDateTime(widget.plantings.primaryPlantHarvestDate) ==
+                                    "01-01-1970"
                                 ? "no-specified".i18n()
                                 : ChangeDateTime(
                                     widget.plantings.primaryPlantHarvestDate),
@@ -1303,12 +1310,14 @@ class _PlantingMoreDetailScreen extends State<PlantingMoreDetailScreen>
                                 : widget.plantings.secondaryPlantVariety
                                     .toString(),
                             "planting-date-label".i18n(),
-                            ChangeDateTime(widget.plantings.secondaryPlantPlantingDate) == "01-01-1970"
+                            ChangeDateTime(widget.plantings.secondaryPlantPlantingDate) ==
+                                    "01-01-1970"
                                 ? "no-specified".i18n()
                                 : ChangeDateTime(widget
                                     .plantings.secondaryPlantPlantingDate),
                             "havest-date-label".i18n(),
-                            ChangeDateTime(widget.plantings.secondaryPlantHarvestDate) == "01-01-1970"
+                            ChangeDateTime(widget.plantings.secondaryPlantHarvestDate) ==
+                                    "01-01-1970"
                                 ? "no-specified".i18n()
                                 : ChangeDateTime(
                                     widget.plantings.secondaryPlantHarvestDate),
@@ -1322,14 +1331,16 @@ class _PlantingMoreDetailScreen extends State<PlantingMoreDetailScreen>
                             "soaking-stem-chemical-label".i18n(),
                             widget.plantings.soakingStemChemical.toString(),
                             "filling-temp-1-label".i18n(),
-                            ChangeDateTime(widget.plantings.fertilizerDate1) == "01-01-1970"
+                            ChangeDateTime(widget.plantings.fertilizerDate1) ==
+                                    "01-01-1970"
                                 ? "no-specified".i18n()
                                 : ChangeDateTime(
                                     widget.plantings.fertilizerDate1),
                             "filling-soil-label".i18n(),
                             widget.plantings.fertilizerFormular1.toString() == ""
                                 ? "no-specified".i18n()
-                                : widget.plantings.fertilizerFormular1.toString()),
+                                : widget.plantings.fertilizerFormular1
+                                    .toString()),
                         _buildTextTwo(
                           "filling-temp-2-label".i18n(),
                           ChangeDateTime(widget.plantings.fertilizerDate2) ==
@@ -1458,7 +1469,7 @@ class _PlantingMoreDetailScreen extends State<PlantingMoreDetailScreen>
                         ),
                       ),
                       width: SizeConfig.screenWidth,
-                      height: MediaQuery.of(context).size.height * 0.88,
+                      height: MediaQuery.of(context).size.height * 0.92,
                       child: CardPlantingMoreDetail(
                           widget.plantings, widget.provider),
                     ),
@@ -1505,7 +1516,10 @@ class _PlantingMoreDetailScreen extends State<PlantingMoreDetailScreen>
                   },
                   child: Padding(
                     padding: EdgeInsets.all(sizeHeight(8, context)),
-                    child: Icon(Icons.arrow_back),
+                    child: Icon(
+                      Icons.arrow_back,
+                      size: sizeWidth(25, context),
+                    ),
                   ),
                 ),
               ),

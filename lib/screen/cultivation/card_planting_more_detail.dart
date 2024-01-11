@@ -248,58 +248,63 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
                         showModalBottomSheet(
                           context: context,
                           builder: (context) {
-                            return Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                ListTile(
-                                  leading: new Icon(
-                                    Icons.edit,
-                                    color: HotelAppTheme.buildLightTheme()
-                                        .shadowColor,
-                                  ),
-                                  title: new Text(
-                                    "Edit".i18n(),
-                                    style: TextStyle(
-                                      fontSize: sizeHeight(17, context),
-                                      fontWeight: kPoppinsRegular.fontWeight,
+                            return Container(
+                              height: sizeHeight(150, context),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  ListTile(
+                                    leading: new Icon(
+                                      Icons.edit,
                                       color: HotelAppTheme.buildLightTheme()
                                           .shadowColor,
+                                      size: sizeWidth(25, context),
                                     ),
+                                    title: new Text(
+                                      "Edit".i18n(),
+                                      style: TextStyle(
+                                        fontSize: sizeHeight(17, context),
+                                        fontWeight: kPoppinsRegular.fontWeight,
+                                        color: HotelAppTheme.buildLightTheme()
+                                            .shadowColor,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            maintainState: false,
+                                            builder: (context) =>
+                                                NewCultivationScreen(
+                                                    0,
+                                                    widget.planting,
+                                                    widget.plantingProvider),
+                                          ));
+                                    },
                                   ),
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          maintainState: false,
-                                          builder: (context) =>
-                                              NewCultivationScreen(
-                                                  0,
-                                                  widget.planting,
-                                                  widget.plantingProvider),
-                                        ));
-                                  },
-                                ),
-                                ListTile(
-                                  leading: new Icon(
-                                    Icons.delete,
-                                    color: HotelAppTheme.buildLightTheme()
-                                        .shadowColor,
-                                  ),
-                                  title: new Text(
-                                    "Delete".i18n(),
-                                    style: TextStyle(
-                                      fontSize: sizeHeight(17, context),
-                                      fontWeight: kPoppinsRegular.fontWeight,
+                                  ListTile(
+                                    leading: new Icon(
+                                      Icons.delete,
                                       color: HotelAppTheme.buildLightTheme()
                                           .shadowColor,
+                                      size: sizeWidth(25, context),
                                     ),
+                                    title: new Text(
+                                      "Delete".i18n(),
+                                      style: TextStyle(
+                                        fontSize: sizeHeight(17, context),
+                                        fontWeight: kPoppinsRegular.fontWeight,
+                                        color: HotelAppTheme.buildLightTheme()
+                                            .shadowColor,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      // _deleteConfirmation();
+                                      _deleteConfirmation(context);
+                                    },
                                   ),
-                                  onTap: () {
-                                    // _deleteConfirmation();
-                                    _deleteConfirmation(context);
-                                  },
-                                ),
-                              ],
+                                ],
+                              ),
                             );
                           },
                         );

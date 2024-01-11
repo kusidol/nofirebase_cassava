@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mun_bot/env.dart';
+import 'package:mun_bot/util/size_config.dart';
 
 const Color kWhite = Color(0xffffffff);
 const Color kLightWhite = Color(0xfffafafa);
