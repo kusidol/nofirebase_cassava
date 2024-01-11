@@ -678,7 +678,7 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
           ),
         ),
         width: SizeConfig.screenWidth,
-        height: sizeHeight(653, context),
+        height: SizeConfig.screenHeight! * 0.92,
         child: _buildListView());
   }
 
@@ -865,21 +865,15 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) =>
-                                                NewFieldScreen(
-                                                    widget.fields.fieldID,
-                                                    widget.fields,
-                                                    widget.owner,
-                                                    widget.fieldData,
-                                                    widget.fieldProviders)),
-                                      );
-                                    },
-                                  ),
-                                  ListTile(
-                                    leading: new Icon(
-                                      Icons.people,
-                                      color: HotelAppTheme.buildLightTheme()
-                                          .shadowColor,
+                                              builder: (context) =>
+                                                  NewFieldScreen(
+                                                      widget.fields.fieldID,
+                                                      widget.fields,
+                                                      widget.owner,
+                                                      widget.fieldData,
+                                                      widget.fieldProviders)),
+                                        );
+                                      },
                                     ),
                                     SizedBox(
                                       height: sizeHeight(10, context),
