@@ -612,12 +612,11 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                       //             NewCultivationScreen(0, null)),
                       //   ),
                       // );
-
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => NewFieldScreen(
-                                0, null, null, "", fieldProviders)),
+                                0, null, null, null, fieldProviders)),
                       );
 
                       //print("GO TO PAGE => CREATE FIELDS");
@@ -1042,11 +1041,16 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                                                                       builder: (context) => FieldMoreDetailScreen(
                                                                           field,
                                                                           owner,
-                                                                          location,
+                                                                          fieldProvder
+                                                                              .fieldData[index],
                                                                           image,
                                                                           fieldProvder)),
                                                                 );
                                                               },
+                                                              fieldData:
+                                                                  fieldProvder
+                                                                          .fieldData[
+                                                                      index],
                                                               field: field,
                                                               owner: owner,
                                                               location:

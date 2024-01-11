@@ -7,20 +7,20 @@ class InputCodeValidator {
       RegExp regex = new RegExp(r'^[0-9]*$');
       if (!regex.hasMatch(input) || input.length >= 11) {
         if (!regex.hasMatch(input)) {
-          return 'กรุณาใส่เพียงตัวเลข';
+          return 'enter-only-number'.i18n();
         } else
-          return 'กรุณาใส่เพียงตัวเลขไม่เกิน11ตัว';
+          return 'enter-only-11-number'.i18n();
       } else
         return null;
     }
-    return value == null || value.isEmpty ? "กรุณากรอกรหัส" : null;
+    return value == null || value.isEmpty ? 'enter-only-code'.i18n() : null;
   }
 
   static String? validateFieldName(String? value, String input) {
     if (input != "") {
       RegExp regex = new RegExp(r"^[\p{L} ,.'-]*$");
       if (!regex.hasMatch(input) && input.length >= 50) {
-        return 'กรุณาใส่ตัวอักษรและตัวเลขไม่เกิน50ตัว';
+        return 'enter-number-char-50'.i18n();
       } else
         return null;
     }
@@ -33,7 +33,6 @@ class InputCodeValidator {
     } else {
       return null;
     }
-    return value == null || value.isEmpty ? 'please-insert-info'.i18n() : null;
   }
 
   static String? validateFieldSize(String? value, String input) {
@@ -41,18 +40,18 @@ class InputCodeValidator {
     if (input != "") {
       RegExp regex = new RegExp(r"[0-9]+[.[0-9]+]?");
       if (!regex.hasMatch(input.toString())) {
-        return 'กรุณาใส่เพียงตัวเลข';
+        return 'enter-only-number'.i18n();
       } else
         return null;
     }
-    return value == null || value.isEmpty ? "กรุณากรอกตัวเลข" : null;
+    return value == null || value.isEmpty ? 'enter-only-number'.i18n() : null;
   }
 
   static String? validatePlantVariety(String? value, String input) {
     if (input != "") {
       RegExp regex = new RegExp(r"^[\p{L} ,.'-]*$");
       if (!regex.hasMatch(input) && input.length >= 30) {
-        return 'กรุณาใส่ตัวอักษรและตัวเลขไม่เกิน30ตัว';
+        return 'enter-number-char-30'.i18n();
       } else
         return null;
     }
@@ -63,7 +62,7 @@ class InputCodeValidator {
     if (input != "") {
       RegExp regex = new RegExp(r"^[\p{L} ,.'-]*$");
       if (!regex.hasMatch(input) && input.length >= 20) {
-        return 'กรุณาใส่ตัวอักษรและตัวเลขไม่เกิน20ตัว';
+        return 'enter-number-char-20'.i18n();
       } else
         return null;
     }
@@ -74,7 +73,7 @@ class InputCodeValidator {
     if (input != "") {
       RegExp regex = new RegExp(r"^[\p{L} ,.'-]*$");
       if (!regex.hasMatch(input) && input.length >= 20) {
-        return 'กรุณาใส่ตัวอักษรและตัวเลขไม่เกิน20ตัว';
+        return 'enter-number-char-20'.i18n();
       } else
         return null;
     }
@@ -99,15 +98,9 @@ class InputCodeValidator {
 
   static String? validateNotSpecialCharacter(String? value, String input) {
     if (input != "") {
-      RegExp regex = new RegExp(r'^[a-zA-Z0-9ก-๙]+$');
+      RegExp regex = new RegExp(r'^([a-zA-Z0-9ก-๙ ]{1,25})([\S])$');
       if (!regex.hasMatch(input)) {
-        if (!regex.hasMatch(input)) {
-          return 'กรุณาใส่เพียงตัวเลขไม่เกิน 25 ตัว';
-        }
-      } else if (input.length < 2) {
-        return 'ต้องมีความยาวตั้งแต่ 2-25 ตัวอักษร, ห้ามเว้นว่าง';
-      } else if (input.length >= 25) {
-        return 'กรุณาใส่เพียงตัวเลขไม่เกิน 25 ตัว';
+        return 'validate-not-special-character'.i18n();
       } else
         return null;
     }
@@ -124,14 +117,14 @@ class InputCodeValidator {
           if (!regex.hasMatch(value)) {
             double valueDouble = double.parse(value);
             if (valueDouble < 0) {
-              return 'ค่าข้อมูลไม่สามารถติดลบได้';
+              return 'non-negative-data'.i18n();
             } else {
               return 'please-insert-numerical'.i18n();
             }
           } else {
             double valueDouble = double.parse(input);
             if (valueDouble > 1000000) {
-              return 'ค่าข้อมูลไม่สามารถเกินล้านได้';
+              return 'non-exceed-a-million'.i18n();
             }
             return null;
           }
@@ -146,14 +139,14 @@ class InputCodeValidator {
         if (!regex.hasMatch(value)) {
           double valueDouble = double.parse(value);
           if (valueDouble < 0) {
-            return 'ค่าข้อมูลไม่สามารถติดลบได้';
+            return 'non-negative-data'.i18n();
           } else {
             return 'please-insert-numerical'.i18n();
           }
         } else {
           double valueDouble = double.parse(input);
           if (valueDouble > 1000000) {
-            return 'ค่าข้อมูลไม่สามารถเกินล้านได้';
+            return 'non-exceed-a-million'.i18n();
           }
           return null;
         }
@@ -165,14 +158,14 @@ class InputCodeValidator {
         if (!regex.hasMatch(value)) {
           double valueDouble = double.parse(value);
           if (valueDouble < 0) {
-            return 'ค่าข้อมูลไม่สามารถติดลบได้';
+            return 'non-negative-data'.i18n();
           } else {
             return 'please-insert-numerical'.i18n();
           }
         } else {
           double valueDouble = double.parse(input);
           if (valueDouble > 1000000) {
-            return 'ค่าข้อมูลไม่สามารถเกินล้านได้';
+            return 'non-exceed-a-million'.i18n();
           }
           return null;
         }
@@ -192,14 +185,14 @@ class InputCodeValidator {
           if (!regex.hasMatch(value)) {
             double valueDouble = double.parse(value);
             if (valueDouble < -100) {
-              return 'ค่าข้อมูลไม่สามารถติดลบเกิน 100 ได้';
+              return 'cannot-be-negative-more-than-100'.i18n();
             } else {
               return null;
             }
           } else {
             double valueDouble = double.parse(input);
             if (valueDouble > 100) {
-              return 'ค่าข้อมูลไม่สามารถเกินร้อยได้';
+              return 'non-exceed-a-hundred'.i18n();
             }
             return null;
           }
@@ -214,14 +207,14 @@ class InputCodeValidator {
         if (!regex.hasMatch(value)) {
           double valueDouble = double.parse(value);
           if (valueDouble < -100) {
-            return 'ค่าข้อมูลไม่สามารถติดลบเกิน 100 ได้';
+            return 'cannot-be-negative-more-than-100'.i18n();
           } else {
             return null;
           }
         } else {
           double valueDouble = double.parse(input);
           if (valueDouble > 100) {
-            return 'ค่าข้อมูลไม่สามารถเกินร้อยได้';
+            return 'non-exceed-a-hundred'.i18n();
           }
           return null;
         }
@@ -233,14 +226,14 @@ class InputCodeValidator {
         if (!regex.hasMatch(value)) {
           double valueDouble = double.parse(value);
           if (valueDouble < -100) {
-            return 'ค่าข้อมูลไม่สามารถติดลบเกิน 100 ได้';
+            return 'cannot-be-negative-more-than-100'.i18n();
           } else {
             return null;
           }
         } else {
           double valueDouble = double.parse(input);
           if (valueDouble > 100) {
-            return 'ค่าข้อมูลไม่สามารถเกินร้อยได้';
+            return 'non-exceed-a-hundred'.i18n();
           }
           return null;
         }
@@ -260,14 +253,14 @@ class InputCodeValidator {
           if (!regex.hasMatch(value)) {
             double valueDouble = double.parse(value);
             if (valueDouble < 0) {
-              return 'ค่าข้อมูลไม่สามารถติดลบได้';
+              return 'non-negative-data'.i18n();
             } else {
               return 'please-insert-numerical'.i18n();
             }
           } else {
             double valueDouble = double.parse(input);
             if (valueDouble > 100) {
-              return 'ค่าข้อมูลไม่สามารถเกินร้อยได้';
+              return 'non-exceed-a-hundred'.i18n();
             }
             return null;
           }
@@ -282,14 +275,14 @@ class InputCodeValidator {
         if (!regex.hasMatch(value)) {
           double valueDouble = double.parse(value);
           if (valueDouble < 0) {
-            return 'ค่าข้อมูลไม่สามารถติดลบได้';
+            return 'non-negative-data'.i18n();
           } else {
             return 'please-insert-numerical'.i18n();
           }
         } else {
           double valueDouble = double.parse(input);
           if (valueDouble > 100) {
-            return 'ค่าข้อมูลไม่สามารถเกินร้อยได้';
+            return 'non-exceed-a-hundred'.i18n();
           }
           return null;
         }
@@ -301,14 +294,14 @@ class InputCodeValidator {
         if (!regex.hasMatch(value)) {
           double valueDouble = double.parse(value);
           if (valueDouble < 0) {
-            return 'ค่าข้อมูลไม่สามารถติดลบได้';
+            return 'non-negative-data'.i18n();
           } else {
             return 'please-insert-numerical'.i18n();
           }
         } else {
           double valueDouble = double.parse(input);
           if (valueDouble > 100) {
-            return 'ค่าข้อมูลไม่สามารถเกินร้อยได้';
+            return 'non-exceed-a-hundred'.i18n();
           }
           return null;
         }
@@ -341,6 +334,21 @@ class InputCodeValidator {
       return 'please-select-option'.i18n();
     } else if (value == null || value.isEmpty) {
       return 'please-select-option'.i18n();
+    }
+    return null;
+  }
+
+  static String? validateLatitudeAndLongitude(
+      String? value, String displayValue) {
+    RegExp regex = new RegExp(r'^(-?)([0-9]+)(.?)([0-9]*)$');
+    if (value != null) {
+      if (value.isEmpty) {
+        value = displayValue;
+        return null;
+      }
+      if (!regex.hasMatch(value)) {
+        return 'please-insert-numerical'.i18n();
+      }
     }
     return null;
   }

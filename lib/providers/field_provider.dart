@@ -47,6 +47,14 @@ class FieldProviders with ChangeNotifier {
     _page = 1;
   }
 
+  void setLocation(int fieldId, String location) {
+    for (int i = 0; i < fieldData.length; i++) {
+      if (fieldData[i].field.fieldID == fieldId) {
+        fieldData[i].location = location;
+      }
+    }
+  }
+
   void _doSearchField(List fields, int index) async {
     String none = "";
     FieldService fieldService = FieldService();
@@ -278,9 +286,7 @@ class FieldProviders with ChangeNotifier {
     String? token = tokenFromLogin?.token;
 
     int index = 0;
-    await fieldService
-        .searchFilter(data, token.toString())
-        .then((value)  {
+    await fieldService.searchFilter(data, token.toString()).then((value) {
       if (value != null) {
         _doSearchField(value, 0);
       }
@@ -363,7 +369,8 @@ class FieldProviders with ChangeNotifier {
 
     int index = 0;
     await fieldService
-        .searchFilter(data, token.toString(), page:  _page,  value:  _value).then((value) async {
+        .searchFilter(data, token.toString(), page: _page, value: _value)
+        .then((value) async {
       if (value != null) {
         for (Field data in value) {
           int fieldID = data.fieldID;

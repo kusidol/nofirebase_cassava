@@ -46,8 +46,8 @@
   "change-value": "Change Language",
 
   "search": "Search",
-  "searchField": "Search (Field Name, Owner's Name)",
-  "searchPlanting": "Search (Field, Planting, Owner's Name)",
+  "searchField": "Search (Field Code, Field Name, Owner's Name, Address)",
+  "searchPlanting": "Search (Field Code, Field Name, Planting Code, Planting Name, Owner's Name, Address)",
   "search-more": "Search More",
   "welcome-to-munbot-label": "Welcome to MunSurvey",
   "have-a-good-day-label": "Have a good day",
@@ -206,6 +206,7 @@
   "plant-start-date": "Plant Start Date",
   "survey-end-date": "Survey End Date",
   "survey-start-date": "Survey Start Date",
+  "validate-not-special-character": "Must be 2-25 characters long, the last character cannot be blank.",
 
   "comfirm": "Comfirm",
   "cancle": "Cancel",
@@ -387,5 +388,22 @@
   "please-insert-info": "Please insert in information",
   "insert-chemical-used": "Insert the chemicals used",
   "insert-fertilizer-used": "Insert the fertilizer used",
-  "select-all": "Select all"
+  "select-all": "Select all",
+  "name-planting-label": "Planting Name",
+  "non-negative-data": "Non-negative data values",
+  "non-exceed-a-million": "The data value cannot exceed a million",
+  "cannot-be-negative-more-than-100": "The data value cannot be negative more than 100",
+  "non-exceed-a-hundred": "The data value cannot exceed a hundred",
+  "enter-only-number": "Please enter only numbers",
+  "enter-only-11-number": "Please enter only 11 numbers or less",
+  "enter-number-char-50": "Please enter no more than 50 letters and numbers",
+  "enter-number-char-30": "Please enter no more than 30 letters and numbers",
+  "enter-number-char-20": "Please enter no more than 20 letters and numbers",
+  "enter-only-code": "Please enter only code",
+  "insert-other-previous-plant": "Insert in previously planted plants",
+  "insert-other-beside-plant": "Insert in the type of neighboring plants",
+  "insert-other-soil-amendments": "Insert in the use of soil improvement materials",
+  "insert-beside-plant": "Insert in the type of plants in the adjacent plot",
+  "insert-weed": "Insert the main weeds found",
+  "insert-soil-type": "Insert in the soil type"
 }

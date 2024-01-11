@@ -664,7 +664,7 @@ class _EditSurveyTarget extends State<EditSurveyTarget> {
                 ? 'beside-plant-label'.i18n()
                 : widget.surveyFromPassPage.besidePlant,
             successText: "",
-            inputIcon: Icon(Icons.person),
+            inputIcon: Icon(Icons.eco_sharp),
           ),
           SizedBox(
             height: SizeConfig.screenHeight! * 0.015,
@@ -696,7 +696,7 @@ class _EditSurveyTarget extends State<EditSurveyTarget> {
                 ? 'primary-weed-label'.i18n()
                 : widget.surveyFromPassPage.weed,
             successText: "",
-            inputIcon: Icon(Icons.person),
+            inputIcon: Icon(Icons.eco_sharp),
           ),
           SizedBox(
             height: SizeConfig.screenHeight! * 0.015,
@@ -728,7 +728,7 @@ class _EditSurveyTarget extends State<EditSurveyTarget> {
                 ? 'soil-type'.i18n()
                 : widget.surveyFromPassPage.soilType,
             successText: "",
-            inputIcon: Icon(Icons.person),
+            inputIcon: Icon(Icons.landscape_rounded),
           ),
           SizedBox(
             height: SizeConfig.screenHeight! * 0.015,
@@ -760,7 +760,7 @@ class _EditSurveyTarget extends State<EditSurveyTarget> {
                 ? 'chemical-damage'.i18n()
                 : widget.surveyFromPassPage.percentDamageFromHerbicide,
             successText: "",
-            inputIcon: Icon(Icons.person),
+            inputIcon: Icon(Icons.science_outlined),
           ),
           SizedBox(
             height: SizeConfig.screenHeight! * 0.015,
@@ -824,7 +824,7 @@ class _EditSurveyTarget extends State<EditSurveyTarget> {
                 ? 'photographer'.i18n()
                 : widget.surveyFromPassPage.imgPhotographer.toString(),
             successText: "",
-            inputIcon: Icon(Icons.person),
+            inputIcon: Icon(Icons.camera_alt_outlined),
           ),
           const SizedBox(height: 18),
           Container(

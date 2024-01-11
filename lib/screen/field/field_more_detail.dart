@@ -33,11 +33,11 @@ enum SampleItem { itemOne, itemTwo, itemThree }
 class FieldMoreDetailScreen extends StatefulWidget {
   final Field fields;
   final User owner;
-  final String location;
+  final FieldData fieldData;
   final ImageData? image;
   FieldProviders fieldProviders;
   FieldMoreDetailScreen(
-      this.fields, this.owner, this.location, this.image, this.fieldProviders);
+      this.fields, this.owner, this.fieldData, this.image, this.fieldProviders);
 
   @override
   State<StatefulWidget> createState() => _FieldMoreDetailScreen();
@@ -56,7 +56,6 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
   int page = 1;
   int check = 0;
   SampleItem? selectedMenu;
-
   // editable
   bool editable = false;
 
@@ -65,6 +64,9 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
 
   // Subdistrict ID
   int? subdistrictID;
+
+  // location
+  String location = "";
 
   // SETTING DEFAULT
   String? token = tokenFromLogin?.token;
@@ -260,7 +262,7 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
         return Container(
           padding: EdgeInsets.all(sizeWidth(10, context)),
           width: SizeConfig.screenWidth,
-          height: SizeConfig.screenHeight,
+          height: SizeConfig.screenHeight! * 1.10,
           child: GestureDetector(
             onTap: () {},
             child: AspectRatio(
@@ -287,11 +289,8 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
                       ),
                       buildReadOnlyOwner(
                           "owner".i18n(), widget.owner, Icons.person),
-                      SizedBox(
-                        height: sizeHeight(10, context),
-                      ),
-                      buildReadOnlyAddress("Address".i18n(), widget.location,
-                          Icons.location_on_sharp),
+                      buildReadOnlyAddress("Address".i18n(),
+                          widget.fieldData.location, Icons.location_on_sharp),
                       SizedBox(
                         height: sizeHeight(10, context),
                       ),
@@ -307,7 +306,7 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
                             color: theme_color4.withOpacity(0.9),
                             child: Container(
                               height: sizeHeight(114, context),
-                              width: sizeWidth(165, context),
+                              width: sizeWidth(160, context),
                               padding: EdgeInsets.all(sizeWidth(15, context)),
                               child: Column(
                                 children: [
@@ -345,7 +344,7 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
                             color: Colors.amber,
                             child: Container(
                               height: sizeHeight(114, context),
-                              width: sizeWidth(165, context),
+                              width: sizeWidth(160, context),
                               padding: EdgeInsets.all(sizeWidth(15, context)),
                               child: Column(
                                 children: [
@@ -393,7 +392,7 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
                             elevation: 8,
                             child: Container(
                               height: sizeHeight(114, context),
-                              width: sizeWidth(165, context),
+                              width: sizeWidth(160, context),
                               padding: EdgeInsets.all(sizeWidth(15, context)),
                               child: Column(
                                 children: [
@@ -435,7 +434,7 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
                             color: Colors.blue,
                             child: Container(
                               height: sizeHeight(114, context),
-                              width: sizeWidth(165, context),
+                              width: sizeWidth(160, context),
                               padding: EdgeInsets.all(sizeWidth(15, context)),
                               child: Column(
                                 children: [
@@ -666,23 +665,21 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
   }
 
   Widget _buildDetailField() {
-    return SingleChildScrollView(
-      child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.grey.withOpacity(0.1),
-                theme_color3.withOpacity(.4),
-                theme_color4.withOpacity(0.6),
-              ],
-            ),
+    return Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.grey.withOpacity(0.1),
+              theme_color3.withOpacity(.4),
+              theme_color4.withOpacity(0.6),
+            ],
           ),
-          width: SizeConfig.screenWidth,
-          height: SizeConfig.screenHeight! * 0.92,
-          child: _buildListView()),
-    );
+        ),
+        width: SizeConfig.screenWidth,
+        height: sizeHeight(653, context),
+        child: _buildListView());
   }
 
   Widget _buildUpdateGPSBtn() {
@@ -736,8 +733,8 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
 
   @override
   Widget build(BuildContext context) {
-    print("height : ${MediaQuery.of(context).size.height} ");
-    print("width : ${MediaQuery.of(context).size.width}");
+    // print("height : ${MediaQuery.of(context).size.height} ");
+    // print("width : ${MediaQuery.of(context).size.width}");
     return Theme(
       data: HotelAppTheme.buildLightTheme(),
       child: Container(
@@ -870,15 +867,19 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 NewFieldScreen(
-                                              widget.fields.fieldID,
-                                              widget.fields,
-                                              widget.owner,
-                                              widget.location,
-                                              widget.fieldProviders,
-                                            ),
-                                          ),
-                                        );
-                                      },
+                                                    widget.fields.fieldID,
+                                                    widget.fields,
+                                                    widget.owner,
+                                                    widget.fieldData,
+                                                    widget.fieldProviders)),
+                                      );
+                                    },
+                                  ),
+                                  ListTile(
+                                    leading: new Icon(
+                                      Icons.people,
+                                      color: HotelAppTheme.buildLightTheme()
+                                          .shadowColor,
                                     ),
                                     SizedBox(
                                       height: sizeHeight(10, context),

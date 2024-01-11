@@ -973,7 +973,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                             InputCodeValidator.validateNotSpecialCharacter(
                                 value, planting.previousPlantOther.toString()),
                         labelText: planting.previousPlantOther == ""
-                            ? "Other_previousPlant"
+                            ? 'insert-other-previous-plant'.i18n()
                             : planting.previousPlantOther,
                         successText: "",
                         inputIcon: Icon(Icons.eco_sharp),
@@ -1046,7 +1046,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                             InputCodeValidator.validateNotSpecialCharacter(
                                 value, planting.besidePlantOther.toString()),
                         labelText: planting.besidePlantOther == ""
-                            ? "Other_besidePlant"
+                            ? 'insert-other-beside-plant'.i18n()
                             : planting.besidePlantOther,
                         successText: "",
                         inputIcon: Icon(Icons.eco_sharp),
@@ -1559,7 +1559,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                         ? "insert-fertilizer-used".i18n()
                         : planting.fertilizerFormular1,
                     successText: "",
-                    inputIcon: Icon(Icons.person),
+                    inputIcon: Icon(Icons.landscape_sharp),
                   ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   _dateFertilizer2("pick-date".i18n()),
@@ -1588,7 +1588,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                         ? "insert-fertilizer-used".i18n()
                         : planting.fertilizerFormular2,
                     successText: "",
-                    inputIcon: Icon(Icons.person),
+                    inputIcon: Icon(Icons.landscape_sharp),
                   ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   _dateFertilizer3("pick-date".i18n()),
@@ -1617,7 +1617,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                         ? "insert-fertilizer-used".i18n()
                         : planting.fertilizerFormular3,
                     successText: "",
-                    inputIcon: Icon(Icons.person),
+                    inputIcon: Icon(Icons.landscape_sharp),
                   ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                 ],
@@ -1763,7 +1763,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                         ? "insert-chemical-used".i18n()
                         : planting.weedingChemicalOther1,
                     successText: "",
-                    inputIcon: Icon(Icons.person),
+                    inputIcon: Icon(Icons.science_outlined),
                   )
                 : Container(),
             SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
@@ -1896,7 +1896,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                         ? "insert-chemical-used".i18n()
                         : planting.weedingChemicalOther2,
                     successText: "",
-                    inputIcon: Icon(Icons.person),
+                    inputIcon: Icon(Icons.science_outlined),
                   )
                 : Container(),
             SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
@@ -2027,7 +2027,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                         ? "insert-chemical-used".i18n()
                         : planting.weedingChemicalOther3,
                     successText: "",
-                    inputIcon: Icon(Icons.person),
+                    inputIcon: Icon(Icons.science_outlined),
                   )
                 : Container(),
             SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
@@ -2051,7 +2051,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
               labelText:
                   planting.note == "" ? "note-label".i18n() : planting.note,
               successText: "",
-              inputIcon: Icon(Icons.person),
+              inputIcon: Icon(Icons.event_note_sharp),
             ),
           ],
         ));
@@ -2306,7 +2306,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                 ? "insert-secondary-plant".i18n()
                 : planting.secondaryPlantType,
             successText: "",
-            inputIcon: Icon(Icons.person),
+            inputIcon: Icon(Icons.eco_sharp),
           ),
           SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
           Container(
@@ -2332,7 +2332,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                 ? "insert-secondary-species".i18n()
                 : planting.secondaryPlantVariety,
             successText: "",
-            inputIcon: Icon(Icons.person),
+            inputIcon: Icon(Icons.eco_sharp),
           ),
 
           SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
@@ -2966,7 +2966,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                             InputCodeValidator.validateNotSpecialCharacter(
                                 value, planting.soilAmendmentsOther.toString()),
                         labelText: planting.soilAmendmentsOther == ""
-                            ? "Other_soilAmendmentsOther"
+                            ? 'insert-other-soil-amendments'.i18n()
                             : planting.soilAmendmentsOther,
                         successText: "",
                         inputIcon: Icon(Icons.landscape_sharp),
