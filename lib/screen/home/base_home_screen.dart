@@ -662,7 +662,14 @@ class _BaseHomeScreen extends State<BaseHomeScreen>
                 }
               }),
               calendarStyle: CalendarStyle(
-                weekendTextStyle: TextStyle(color: Colors.red),
+                todayTextStyle: TextStyle(fontSize: sizeHeight(16, context)),
+                outsideTextStyle: TextStyle(
+                  fontSize: sizeHeight(16, context),
+                  color: Colors.grey,
+                ),
+                defaultTextStyle: TextStyle(fontSize: sizeHeight(16, context)),
+                weekendTextStyle: TextStyle(
+                    color: Colors.red, fontSize: sizeHeight(16, context)),
               ),
               onHeaderTapped: (e) async {
                 final DateTime? selected = await showDatePicker(
@@ -710,162 +717,6 @@ class _BaseHomeScreen extends State<BaseHomeScreen>
               }),
         ],
       ),
-    );
-  }
-
-  Widget _buildTabBar() {
-    return DefaultTabController(
-      length: 3,
-      child: Column(children: [
-        Container(
-          height: sizeHeight(40, context),
-          width: MediaQuery.of(context).size.width - sizeWidth(100, context),
-          decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(sizeWidth(25, context))),
-          child: TabBar(
-            isScrollable: true,
-            labelPadding:
-                EdgeInsets.symmetric(horizontal: sizeWidth(10, context)),
-            indicator: BoxDecoration(
-                color: theme_color, borderRadius: BorderRadius.circular(25.0)),
-            labelColor: Colors.white,
-            unselectedLabelColor: Colors.black,
-            labelStyle: TextStyle(
-              color: Colors.grey,
-              fontWeight: FontWeight.w500,
-              fontSize: sizeHeight(16, context),
-            ),
-            tabs: [
-              Tab(
-                text: 'Disease'.i18n(),
-              ),
-              Tab(
-                text: 'NaturalEnermies'.i18n(),
-              ),
-              Tab(
-                text: 'PestPhase'.i18n(),
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-            child: TabBarView(
-          children: [
-            Container(
-              padding: EdgeInsets.all(sizeHeight(5, context)),
-              child:
-                  ListView(physics: const BouncingScrollPhysics(), children: [
-                Container(
-                  padding: EdgeInsets.all(sizeHeight(16, context)),
-                  child: Column(
-                    children: [],
-                  ),
-                ),
-              ]),
-            ),
-            Container(
-              padding: EdgeInsets.all(sizeHeight(5, context)),
-              child:
-                  ListView(physics: const BouncingScrollPhysics(), children: [
-                Container(
-                  padding: EdgeInsets.all(sizeHeight(16, context)),
-                  child: Column(
-                    children: [],
-                  ),
-                ),
-              ]),
-            ),
-            Container(
-              padding: EdgeInsets.all(sizeWidth(5, context)),
-              child:
-                  ListView(physics: const BouncingScrollPhysics(), children: [
-                Container(
-                  padding: EdgeInsets.all(sizeHeight(16, context)),
-                  child: Column(
-                    children: [],
-                  ),
-                ),
-              ]),
-            ),
-          ],
-        )),
-      ]),
-    );
-  }
-
-  Widget _buildListOrGridView() {
-    Widget _selectPopup() => PopupMenuButton<int>(
-          itemBuilder: (context) => [
-            PopupMenuItem(
-                value: 1,
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.image,
-                    ),
-                    Text("planting-label".i18n())
-                  ],
-                )),
-            PopupMenuItem(
-              value: 2,
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.description,
-                  ),
-                  Text("survey-label".i18n())
-                ],
-              ),
-            ),
-          ],
-          initialValue: 0,
-          onCanceled: () {
-            //print("You have canceled the menu.");
-          },
-          onSelected: (value) {
-            setState(() {
-              _selectedView = value;
-            });
-          },
-          icon: _selectedView == 1
-              ? Row(
-                  children: [
-                    Icon(
-                      Icons.image,
-                    ),
-                    Text("planting-label".i18n())
-                  ],
-                )
-              : Row(
-                  children: [
-                    Icon(
-                      Icons.description,
-                    ),
-                    Text("survey-label".i18n())
-                  ],
-                ),
-          offset: Offset(0, 65),
-        );
-
-    return Positioned(
-      //top: SizeConfig.screenHeight!*0.075,
-      right: 0,
-
-      child: Container(
-          height: sizeHeight(34.2, context),
-          width: SizeConfig.screenWidth! * 0.28,
-          child: Card(child: _selectPopup())),
-    );
-  }
-
-  Widget _buildSelectDate() {
-    return Container(
-      // color: Colors.green,
-      padding: EdgeInsets.only(top: sizeHeight(20, context)),
-      width: SizeConfig.screenWidth,
-      height: sizeHeight(624, context), //แก้เพราะเพิ่มconatainer text survay
-      child: _selectedView == 1 ? _buildPlanting() : _buildSurvey(),
     );
   }
 
@@ -1132,7 +983,10 @@ class _BaseHomeScreen extends State<BaseHomeScreen>
                   },
                   child: Padding(
                     padding: EdgeInsets.all(sizeHeight(8, context)),
-                    child: Icon(Icons.arrow_back),
+                    child: Icon(
+                      Icons.arrow_back,
+                      size: sizeWidth(25, context),
+                    ),
                   ),
                 ),
               ),
@@ -1196,13 +1050,13 @@ class _BaseHomeScreen extends State<BaseHomeScreen>
       length: 3,
       child: Scaffold(
         appBar: PreferredSize(
-            preferredSize: Size.fromHeight(sizeHeight(67, context)),
+            preferredSize: Size.fromHeight(SizeConfig.screenHeight! * 0.08),
             child: getAppBarUI()),
         body: Column(
           children: <Widget>[
             // construct the profile details widget here
             SizedBox(
-              height: sizeHeight(350, context),
+              height: SizeConfig.screenHeight! * 0.42,
               child: Container(
                 height: SizeConfig.screenHeight,
                 child: ListView(
@@ -1213,7 +1067,7 @@ class _BaseHomeScreen extends State<BaseHomeScreen>
 
             // the tab bar with two items
             SizedBox(
-              height: sizeHeight(333, context),
+              height: SizeConfig.screenHeight! * 0.5,
               child: Column(
                 children: [
                   Padding(
@@ -1241,6 +1095,8 @@ class _BaseHomeScreen extends State<BaseHomeScreen>
                               child: TabBar(
                                 labelColor: Colors.white,
                                 unselectedLabelColor: Colors.black,
+                                labelStyle: TextStyle(
+                                    fontSize: sizeHeight(18, context)),
                                 indicator: BoxDecoration(
                                     borderRadius: BorderRadius.circular(
                                       sizeHeight(8, context),
@@ -1270,7 +1126,7 @@ class _BaseHomeScreen extends State<BaseHomeScreen>
 
                   // create widgets for each tab bar here
                   SizedBox(
-                    height: sizeHeight(280, context),
+                    height: SizeConfig.screenHeight! * 0.5,
                     child: TabBarView(
                       children: [
                         // first tab bar view widget

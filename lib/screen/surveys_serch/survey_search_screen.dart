@@ -142,7 +142,9 @@ class SearchSurveyFieldScreenState extends State<SearchSurveyFieldScreen> {
           TextStyle(color: Colors.black, fontFamily: 'OpenSans', fontSize: sizeWidth(14, context)),
       decoration: InputDecoration(
         border: InputBorder.none,
-        contentPadding: EdgeInsets.only(top: sizeHeight(14, context)),
+           contentPadding: SizeConfig.screenWidth! < 500
+            ? EdgeInsets.only(top: sizeHeight(14, context))
+            : EdgeInsets.only(left: sizeWidth(14, context)),
         prefixIcon: Icon(Icons.calendar_today_rounded, color: Colors.black),
         
         hintText: 'pick-start-date'.i18n(),
@@ -176,7 +178,9 @@ class SearchSurveyFieldScreenState extends State<SearchSurveyFieldScreen> {
           TextStyle(color: Colors.black, fontFamily: 'OpenSans', fontSize: sizeWidth(14, context)),
       decoration: InputDecoration(
         border: InputBorder.none,
-        contentPadding: EdgeInsets.only(top: sizeHeight(14, context)),
+           contentPadding: SizeConfig.screenWidth! < 500
+            ? EdgeInsets.only(top: sizeHeight(14, context))
+            : EdgeInsets.only(left: sizeWidth(14, context)),
         prefixIcon: Icon(
           Icons.calendar_today_rounded,
           color: Colors.black,
@@ -212,7 +216,9 @@ class SearchSurveyFieldScreenState extends State<SearchSurveyFieldScreen> {
           TextStyle(color: Colors.black, fontFamily: 'OpenSans', fontSize: sizeWidth(14, context)),
       decoration: InputDecoration(
         border: InputBorder.none,
-        contentPadding: EdgeInsets.only(top: sizeHeight(14, context)),
+           contentPadding: SizeConfig.screenWidth! < 500
+            ? EdgeInsets.only(top: sizeHeight(14, context))
+            : EdgeInsets.only(left: sizeWidth(14, context)),
         prefixIcon: Icon(Icons.calendar_today_rounded, color: Colors.black),
         hintText: 'pick-start-date'.i18n(),
         hintStyle: kHintTextStyle,
@@ -245,7 +251,9 @@ class SearchSurveyFieldScreenState extends State<SearchSurveyFieldScreen> {
           TextStyle(color: Colors.black, fontFamily: 'OpenSans', fontSize: sizeWidth(14, context)),
       decoration: InputDecoration(
         border: InputBorder.none,
-        contentPadding: EdgeInsets.only(top: sizeHeight(14, context)),
+           contentPadding: SizeConfig.screenWidth! < 500
+            ? EdgeInsets.only(top: sizeHeight(14, context))
+            : EdgeInsets.only(left: sizeWidth(14, context)),
         prefixIcon: Icon(Icons.calendar_today_rounded, color: Colors.black),
         hintText: 'pick-end-date'.i18n(),
         hintStyle: kHintTextStyle,
@@ -267,6 +275,10 @@ class SearchSurveyFieldScreenState extends State<SearchSurveyFieldScreen> {
                         controller: codeNameController,
                         decoration: InputDecoration(
                           labelText: 'field-address'.i18n(),
+                          labelStyle:
+                              TextStyle(fontSize: sizeHeight(18, context)),
+                          contentPadding:
+                              EdgeInsets.all(sizeHeight(16, context)),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(sizeHeight(10, context)),
                           ),
@@ -280,8 +292,13 @@ class SearchSurveyFieldScreenState extends State<SearchSurveyFieldScreen> {
                       SizedBox(height: sizeHeight(16, context)),
                       TextFormField(
                         controller: ownerController,
+                        
                         decoration: InputDecoration(
                           labelText: 'name-field-label'.i18n(),
+                          labelStyle:
+                              TextStyle(fontSize: sizeHeight(18, context)),
+                          contentPadding:
+                              EdgeInsets.all(sizeHeight(16, context)),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(sizeHeight(10, context)),
                           ),
@@ -297,6 +314,10 @@ class SearchSurveyFieldScreenState extends State<SearchSurveyFieldScreen> {
                         controller: locationController,
                         decoration: InputDecoration(
                           labelText: 'owner'.i18n(),
+                          labelStyle:
+                              TextStyle(fontSize: sizeHeight(18, context)),
+                          contentPadding:
+                              EdgeInsets.all(sizeHeight(16, context)),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(sizeHeight(10, context)),
                           ),
@@ -312,6 +333,10 @@ class SearchSurveyFieldScreenState extends State<SearchSurveyFieldScreen> {
                         controller: cultivationController,
                         decoration: InputDecoration(
                           labelText: 'name-planting-label'.i18n(),
+                          labelStyle:
+                              TextStyle(fontSize: sizeHeight(18, context)),
+                          contentPadding:
+                              EdgeInsets.all(sizeHeight(16, context)),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(sizeHeight(10, context)),
                           ),
@@ -482,7 +507,7 @@ class SearchSurveyFieldScreenState extends State<SearchSurveyFieldScreen> {
                           style: TextStyle(fontSize: sizeHeight(20, context)),
                         ),
                         SizedBox(width: sizeWidth(5, context)),
-                        Icon(Icons.search),
+                        Icon(Icons.search,size: sizeWidth(25, context),),
                       ],
                     ),
                   ),
