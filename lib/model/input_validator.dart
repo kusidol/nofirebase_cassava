@@ -337,4 +337,19 @@ class InputCodeValidator {
     }
     return null;
   }
+
+  static String? validateLatitudeAndLongitude(
+      String? value, String displayValue) {
+    RegExp regex = new RegExp(r'^(-?)([0-9]+)(.?)([0-9]*)$');
+    if (value != null) {
+      if (value.isEmpty) {
+        value = displayValue;
+        return null;
+      }
+      if (!regex.hasMatch(value)) {
+        return 'please-insert-numerical'.i18n();
+      }
+    }
+    return null;
+  }
 }

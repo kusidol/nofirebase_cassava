@@ -373,7 +373,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
         save_MetresAboveSeaLv = field.metresAboveSeaLv.toString();
         setState(() => _currentStep += 1);
       } else {
-        //print("in valid");
+        // print("in valid");
       }
     } else {
       setState(() => _currentStep += 1);
@@ -417,38 +417,44 @@ class _NewFieldScreenState extends State<NewFieldScreen>
   // Function for submit to create and update Field
   submitFunction() async {
     if (_isPassValueFromPage) {
-      // for update
-      var updateData = {
-        "fieldId": field.fieldID,
-        "code": field.code,
-        "name": field.name,
-        "address": field.address,
-        "road": field.road,
-        "moo": field.moo,
-        "landmark": field.landmark,
-        "latitude": field.latitude,
-        "longitude": field.longtitude,
-        "subdistrict": selectedSubistrictId,
-        "metresAboveSeaLv": field.metresAboveSeaLv,
-        "size": field.size,
-        "status": field.status,
-        "userinfields": widget.user!.userID,
-        "imgPath": field.imgPath,
-      };
-      int statusUpdateField =
-          await fieldService.updateField(token.toString(), updateData);
-      if (statusUpdateField == 200) {
-        widget.fieldData!.location = selectedDistrict_value +
-            ',' +
-            selectedSubdistrict_value +
-            ',' +
-            selectedProvince_value;
-        Navigator.pop(context);
-        Navigator.pop(context);
-        CustomLoading.showSuccess();
+      // Validate for edit latitude and longitude
+      if (_formKeyPage3.currentState!.validate()) {
+        // VALID Validate
+        // for update
+        var updateData = {
+          "fieldId": field.fieldID,
+          "code": field.code,
+          "name": field.name,
+          "address": field.address,
+          "road": field.road,
+          "moo": field.moo,
+          "landmark": field.landmark,
+          "latitude": field.latitude,
+          "longitude": field.longtitude,
+          "subdistrict": selectedSubistrictId,
+          "metresAboveSeaLv": field.metresAboveSeaLv,
+          "size": field.size,
+          "status": field.status,
+          "userinfields": widget.user!.userID,
+          "imgPath": field.imgPath,
+        };
+        int statusUpdateField =
+            await fieldService.updateField(token.toString(), updateData);
+        if (statusUpdateField == 200) {
+          widget.fieldData!.location = selectedDistrict_value +
+              ',' +
+              selectedSubdistrict_value +
+              ',' +
+              selectedProvince_value;
+          Navigator.pop(context);
+          Navigator.pop(context);
+          CustomLoading.showSuccess();
+        } else {
+          CustomLoading.showError(
+              context, 'Something went wrong. Please try again later.');
+        }
       } else {
-        CustomLoading.showError(
-            context, 'Something went wrong. Please try again later.');
+        print("IN VALID");
       }
     } else {
       // for create
@@ -1253,6 +1259,9 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                               }
                             });
                           },
+                          validator: (value) =>
+                              InputCodeValidator.validateLatitudeAndLongitude(
+                                  value, field.latitude.toString()),
                         )
                       : AnimTFF(
                           (text) => {
@@ -1322,6 +1331,9 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                               }
                             });
                           },
+                          validator: (value) =>
+                              InputCodeValidator.validateLatitudeAndLongitude(
+                                  value, field.longtitude.toString()),
                         )
                       : AnimTFF(
                           (text) => {
