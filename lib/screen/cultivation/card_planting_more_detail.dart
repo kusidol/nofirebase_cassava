@@ -160,10 +160,12 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
           child: Row(
             children: [
               CircleAvatar(
+                  radius: sizeHeight(25, context),
                   backgroundColor: HotelAppTheme.buildLightTheme().primaryColor,
                   child: Icon(
                     IconData,
                     color: Colors.white,
+                    size: sizeHeight(25, context),
                   )),
               Container(
                 margin: EdgeInsets.only(left: sizeWidth(10, context)),
@@ -243,6 +245,7 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
                       icon: Icon(
                         Icons.more_horiz,
                         color: Colors.grey,
+                        size: sizeHeight(25, context),
                       ),
                       onPressed: () {
                         showModalBottomSheet(
@@ -343,10 +346,12 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
           child: Row(
             children: [
               CircleAvatar(
+                  radius: sizeHeight(25, context),
                   backgroundColor: HotelAppTheme.buildLightTheme().primaryColor,
                   child: Icon(
                     IconData,
                     color: Colors.white,
+                    size: sizeHeight(25, context),
                   )),
               Container(
                 width: sizeWidth(150, context),
@@ -479,10 +484,12 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
           child: Row(
             children: [
               CircleAvatar(
+                  radius: sizeHeight(25, context),
                   backgroundColor: HotelAppTheme.buildLightTheme().primaryColor,
                   child: Icon(
                     IconData,
                     color: Colors.white,
+                    size: sizeHeight(25, context),
                   )),
               Container(
                 width: sizeWidth(150, context),
@@ -625,10 +632,12 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
           child: Row(
             children: [
               CircleAvatar(
+                  radius: sizeHeight(25, context),
                   backgroundColor: HotelAppTheme.buildLightTheme().primaryColor,
                   child: Icon(
                     IconData,
                     color: Colors.white,
+                    size: sizeHeight(25, context),
                   )),
               Container(
                 margin: EdgeInsets.only(left: sizeWidth(10, context)),
@@ -704,10 +713,12 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
           child: Row(
             children: [
               CircleAvatar(
+                  radius: sizeHeight(25, context),
                   backgroundColor: HotelAppTheme.buildLightTheme().primaryColor,
                   child: Icon(
                     IconData,
                     color: Colors.white,
+                    size: sizeHeight(25, context),
                   )),
               Container(
                 margin: EdgeInsets.only(left: sizeWidth(10, context)),
@@ -875,10 +886,12 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
           child: Row(
             children: [
               CircleAvatar(
+                  radius: sizeHeight(25, context),
                   backgroundColor: HotelAppTheme.buildLightTheme().primaryColor,
                   child: Icon(
                     IconData,
                     color: Colors.white,
+                    size: sizeHeight(25, context),
                   )),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -1095,10 +1108,12 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
           child: Row(
             children: [
               CircleAvatar(
+                  radius: sizeHeight(25, context),
                   backgroundColor: HotelAppTheme.buildLightTheme().primaryColor,
                   child: Icon(
                     IconData,
                     color: Colors.white,
+                    size: sizeHeight(25, context),
                   )),
               Container(
                 margin: EdgeInsets.only(left: sizeWidth(10, context)),
@@ -1261,10 +1276,12 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
           child: Row(
             children: [
               CircleAvatar(
+                  radius: sizeHeight(25, context),
                   backgroundColor: HotelAppTheme.buildLightTheme().primaryColor,
                   child: Icon(
                     IconData,
                     color: Colors.white,
+                    size: sizeHeight(25, context),
                   )),
               Container(
                 margin: EdgeInsets.only(left: sizeWidth(10, context)),

@@ -964,9 +964,10 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                 ),
                 _selectPreviousPlant == "อื่นๆ"
                     ? Column(
-                      children: [
-                        SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
-                        AnimTFF(
+                        children: [
+                          SizedBox(
+                              height: SizeConfig.screenHeight! * 0.02194644482),
+                          AnimTFF(
                             (text) => {
                               setState(() {
                                 planting.previousPlantOther = text;
@@ -974,15 +975,16 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                             },
                             validator1: (value) =>
                                 InputCodeValidator.validateNotSpecialCharacter(
-                                    value, planting.previousPlantOther.toString()),
+                                    value,
+                                    planting.previousPlantOther.toString()),
                             labelText: planting.previousPlantOther == ""
                                 ? 'insert-other-previous-plant'.i18n()
                                 : planting.previousPlantOther,
                             successText: "",
                             inputIcon: Icon(Icons.eco_sharp),
                           ),
-                      ],
-                    )
+                        ],
+                      )
                     : Container(),
                 SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                 Container(
@@ -1042,9 +1044,10 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                 ),
                 selectBesidePlant == "อื่นๆ"
                     ? Column(
-                      children: [
-                        SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
-                        AnimTFF(
+                        children: [
+                          SizedBox(
+                              height: SizeConfig.screenHeight! * 0.02194644482),
+                          AnimTFF(
                             (text) => {
                               setState(() {
                                 planting.besidePlantOther = text;
@@ -1052,15 +1055,16 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                             },
                             validator1: (value) =>
                                 InputCodeValidator.validateNotSpecialCharacter(
-                                    value, planting.besidePlantOther.toString()),
+                                    value,
+                                    planting.besidePlantOther.toString()),
                             labelText: planting.besidePlantOther == ""
                                 ? 'insert-other-beside-plant'.i18n()
                                 : planting.besidePlantOther,
                             successText: "",
                             inputIcon: Icon(Icons.eco_sharp),
                           ),
-                      ],
-                    )
+                        ],
+                      )
                     : Container(),
               ],
             ),
@@ -1761,9 +1765,10 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
             ),
             _selectChemical1 == "อื่นๆ"
                 ? Column(
-                  children: [
-                    SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
-                    AnimTFF(
+                    children: [
+                      SizedBox(
+                          height: SizeConfig.screenHeight! * 0.02194644482),
+                      AnimTFF(
                         (text) => {
                           setState(() {
                             planting.weedingChemicalOther1 = text;
@@ -1778,8 +1783,8 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                         successText: "",
                         inputIcon: Icon(Icons.science_outlined),
                       ),
-                  ],
-                )
+                    ],
+                  )
                 : Container(),
             SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
             Container(
@@ -1899,9 +1904,10 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
             ),
             _selectChemical2 == "อื่นๆ"
                 ? Column(
-                  children: [
-                    SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
-                    AnimTFF(
+                    children: [
+                      SizedBox(
+                          height: SizeConfig.screenHeight! * 0.02194644482),
+                      AnimTFF(
                         (text) => {
                           setState(() {
                             planting.weedingChemicalOther2 = text;
@@ -1916,8 +1922,8 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                         successText: "",
                         inputIcon: Icon(Icons.science_outlined),
                       ),
-                  ],
-                )
+                    ],
+                  )
                 : Container(),
             SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
             Container(
@@ -2035,9 +2041,10 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
             ),
             _selectChemical3 == "อื่นๆ"
                 ? Column(
-                  children: [
-                    SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
-                    AnimTFF(
+                    children: [
+                      SizedBox(
+                          height: SizeConfig.screenHeight! * 0.02194644482),
+                      AnimTFF(
                         (text) => {
                           setState(() {
                             planting.weedingChemicalOther3 = text;
@@ -2052,8 +2059,8 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                         successText: "",
                         inputIcon: Icon(Icons.science_outlined),
                       ),
-                  ],
-                )
+                    ],
+                  )
                 : Container(),
             SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
             Container(
@@ -2399,8 +2406,13 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                             ? Column(
                                 children: [
                                   Container(
-                                    child: Text("selected-field".i18n() +
-                                        " ${fieldNameByPassingValue}"),
+                                    child: Text(
+                                      "selected-field".i18n() +
+                                          " ${fieldNameByPassingValue}",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: sizeHeight(14, context)),
+                                    ),
                                   ),
                                   Container(
                                     child: ExpansionTile(
@@ -2421,18 +2433,36 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                                         ListTile(
                                             visualDensity: VisualDensity(
                                                 horizontal: 0, vertical: -4),
-                                            title: Text(selectedfieldOwner +
-                                                " : ${ownerFieldByPassingValue}")),
+                                            title: Text(
+                                              selectedfieldOwner +
+                                                  " : ${ownerFieldByPassingValue}",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize:
+                                                      sizeHeight(18, context)),
+                                            )),
                                         ListTile(
                                             visualDensity: VisualDensity(
                                                 horizontal: 0, vertical: -4),
-                                            title: Text(selectedfieldName +
-                                                " : ${fieldNameByPassingValue}")),
+                                            title: Text(
+                                              selectedfieldName +
+                                                  " : ${fieldNameByPassingValue}",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize:
+                                                      sizeHeight(18, context)),
+                                            )),
                                         ListTile(
                                             visualDensity: VisualDensity(
                                                 horizontal: 0, vertical: -4),
-                                            title: Text(selectedfieldLocation +
-                                                " :  ${locationByPassingValue}")),
+                                            title: Text(
+                                              selectedfieldLocation +
+                                                  " :  ${locationByPassingValue}",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize:
+                                                      sizeHeight(18, context)),
+                                            )),
                                       ],
                                     ),
                                   ),
@@ -2515,7 +2545,9 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                                 hint: Center(
                                     child: Text(
                                   'please-select-field'.i18n(),
-                                  style: TextStyle(color: Colors.black),
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: sizeHeight(14, context)),
                                 )),
                                 // Hide the default underline
                                 // underline: Container(),
@@ -2606,18 +2638,33 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                               ListTile(
                                   visualDensity: VisualDensity(
                                       horizontal: 0, vertical: -4),
-                                  title: Text(selectedfieldOwner +
-                                      " : ${dropdownfield.user?.title} ${dropdownfield.user?.firstName} ${dropdownfield.user?.lastName}")),
+                                  title: Text(
+                                    selectedfieldOwner +
+                                        " : ${dropdownfield.user?.title} ${dropdownfield.user?.firstName} ${dropdownfield.user?.lastName}",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: sizeHeight(18, context)),
+                                  )),
                               ListTile(
                                   visualDensity: VisualDensity(
                                       horizontal: 0, vertical: -4),
-                                  title: Text(selectedfieldName +
-                                      " : ${dropdownfield.field?.name}")),
+                                  title: Text(
+                                    selectedfieldName +
+                                        " : ${dropdownfield.field?.name}",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: sizeHeight(18, context)),
+                                  )),
                               ListTile(
                                   visualDensity: VisualDensity(
                                       horizontal: 0, vertical: -4),
-                                  title: Text(selectedfieldLocation +
-                                      " :  ${dropdownfield.location}")),
+                                  title: Text(
+                                    selectedfieldLocation +
+                                        " :  ${dropdownfield.location}",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: sizeHeight(18, context)),
+                                  )),
                             ],
                           ),
                         ),
@@ -2982,9 +3029,10 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                 ),
                 _selectSoilAmendments == "อื่นๆ"
                     ? Column(
-                      children: [
-                        SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
-                        AnimTFF(
+                        children: [
+                          SizedBox(
+                              height: SizeConfig.screenHeight! * 0.02194644482),
+                          AnimTFF(
                             (text) => {
                               setState(() {
                                 planting.soilAmendmentsOther = text;
@@ -2992,15 +3040,16 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                             },
                             validator1: (value) =>
                                 InputCodeValidator.validateNotSpecialCharacter(
-                                    value, planting.soilAmendmentsOther.toString()),
+                                    value,
+                                    planting.soilAmendmentsOther.toString()),
                             labelText: planting.soilAmendmentsOther == ""
                                 ? 'insert-other-soil-amendments'.i18n()
                                 : planting.soilAmendmentsOther,
                             successText: "",
                             inputIcon: Icon(Icons.landscape_sharp),
                           ),
-                      ],
-                    )
+                        ],
+                      )
                     : Container(),
                 SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                 // กำจัดแมลง
@@ -3153,177 +3202,215 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                                   secondary: Colors.green,
                                 ),
                           ),
-                          child: Stepper(
-                            physics: ScrollPhysics(),
-                            type: stepperType,
-                            currentStep: _currentStep,
-                            onStepTapped: (step) => tapped(step),
-                            onStepContinue: continued,
-                            onStepCancel: cancel,
-                            controlsBuilder: (context,
-                                {onStepCancel, onStepContinue}) {
-                              return Row(
-                                children: [
-                                  Expanded(
-                                      child: ElevatedButton(
-                                    child: Text('previous-label'.i18n()),
-                                    onPressed: cancel,
-                                  )),
-                                  SizedBox(
-                                    width: sizeWidth(12, context),
+                          child: Container(
+                            width: sizeWidth(SizeConfig.screenWidth!, context),
+                            height:
+                                sizeHeight(SizeConfig.screenHeight!, context),
+                            child: SizedBox(
+                              width: sizeWidth(100, context),
+                              height: sizeHeight(100, context),
+                              child: Stepper(
+                                physics: ScrollPhysics(),
+                                type: stepperType,
+                                currentStep: _currentStep,
+                                onStepTapped: (step) => tapped(step),
+                                onStepContinue: continued,
+                                onStepCancel: cancel,
+                                controlsBuilder: (context,
+                                    {onStepCancel, onStepContinue}) {
+                                  return Row(
+                                    children: [
+                                      Expanded(
+                                          child: Container(
+                                        width: sizeWidth(25, context),
+                                        height: sizeHeight(35, context),
+                                        child: ElevatedButton(
+                                          child: Text(
+                                            'previous-label'.i18n(),
+                                            style: TextStyle(
+                                                fontSize:
+                                                    sizeHeight(16, context)),
+                                          ),
+                                          onPressed: cancel,
+                                        ),
+                                      )),
+                                      SizedBox(
+                                        width: sizeWidth(20, context),
+                                      ),
+                                      Expanded(
+                                          child: Container(
+                                        width: sizeWidth(25, context),
+                                        height: sizeHeight(35, context),
+                                        child: ElevatedButton(
+                                          child: isFinal()
+                                              ? _isPassValueFromPage
+                                                  ? Text(
+                                                      'confirm-edit-label'
+                                                          .i18n(),
+                                                      style: TextStyle(
+                                                          fontSize: sizeHeight(
+                                                              16, context)),
+                                                    )
+                                                  : Text(
+                                                      'create-new-cultivation-label'
+                                                          .i18n(),
+                                                      style: TextStyle(
+                                                          fontSize: sizeHeight(
+                                                              16, context)),
+                                                    )
+                                              : Text(
+                                                  'next-label'.i18n(),
+                                                  style: TextStyle(
+                                                      fontSize: sizeHeight(
+                                                          16, context)),
+                                                ),
+                                          onPressed: isFinal()
+                                              ? submitFunction
+                                              : continued,
+                                        ),
+                                      )),
+                                    ],
+                                  );
+                                },
+                                steps: [
+                                  Step(
+                                    title: GestureDetector(
+                                      child: new Text(''),
+                                      onTap: () {
+                                        setState(() {
+                                          _currentStep = 0;
+                                        });
+                                      },
+                                    ),
+                                    content: Column(
+                                      children: <Widget>[
+                                        _buildSelectedField(dropdownfield),
+                                        SizedBox(
+                                            height: SizeConfig.screenHeight! *
+                                                0.025),
+                                      ],
+                                    ),
+                                    isActive: _currentStep >= 0,
+                                    state: _currentStep >= 0
+                                        ? StepState.complete
+                                        : StepState.disabled,
                                   ),
-                                  Expanded(
-                                      child: ElevatedButton(
-                                    child: isFinal()
-                                        ? _isPassValueFromPage
-                                            ? Text('confirm-edit-label'.i18n())
-                                            : Text(
-                                                'create-new-cultivation-label'
-                                                    .i18n())
-                                        : Text('next-label'.i18n()),
-                                    onPressed:
-                                        isFinal() ? submitFunction : continued,
-                                  )),
+                                  Step(
+                                    title: GestureDetector(
+                                      child: new Text(''),
+                                      onTap: () {
+                                        setState(() {
+                                          _currentStep = 1;
+                                        });
+                                      },
+                                    ),
+                                    content: Column(
+                                      children: <Widget>[
+                                        _buildCultivationInfo(),
+                                        SizedBox(
+                                            height: SizeConfig.screenHeight! *
+                                                0.025),
+                                      ],
+                                    ),
+                                    isActive: _currentStep >= 0,
+                                    state: _currentStep >= 1
+                                        ? StepState.complete
+                                        : StepState.disabled,
+                                  ),
+                                  Step(
+                                    title: GestureDetector(
+                                      child: new Text(''),
+                                      onTap: () {
+                                        setState(() {
+                                          _currentStep = 2;
+                                        });
+                                      },
+                                    ),
+                                    content: Column(
+                                      children: <Widget>[
+                                        _buildPrimaryPlant(),
+                                        SizedBox(
+                                            height: SizeConfig.screenHeight! *
+                                                0.025),
+                                      ],
+                                    ),
+                                    isActive: _currentStep >= 0,
+                                    state: _currentStep >= 2
+                                        ? StepState.complete
+                                        : StepState.disabled,
+                                  ),
+                                  Step(
+                                    title: GestureDetector(
+                                      child: Text(""),
+                                      onTap: () {
+                                        setState(() {
+                                          _currentStep = 3;
+                                        });
+                                      },
+                                    ),
+                                    content: Column(
+                                      children: <Widget>[
+                                        _buildSecondaryPlant(),
+                                        SizedBox(
+                                            height: SizeConfig.screenHeight! *
+                                                0.025),
+                                      ],
+                                    ),
+                                    isActive: _currentStep >= 0,
+                                    state: _currentStep >= 3
+                                        ? StepState.complete
+                                        : StepState.disabled,
+                                  ),
+                                  Step(
+                                    title: GestureDetector(
+                                      child: Text(""),
+                                      onTap: () {
+                                        setState(() {
+                                          _currentStep = 4;
+                                        });
+                                      },
+                                    ),
+                                    content: Column(
+                                      children: <Widget>[
+                                        _buildDetailPlant(),
+                                        SizedBox(
+                                            height: SizeConfig.screenHeight! *
+                                                0.025),
+                                      ],
+                                    ),
+                                    isActive: _currentStep >= 0,
+                                    state: _currentStep >= 4
+                                        ? StepState.complete
+                                        : StepState.disabled,
+                                  ),
+                                  Step(
+                                    title: GestureDetector(
+                                      child: Text(""),
+                                      onTap: () {
+                                        setState(() {
+                                          _currentStep = 5;
+                                        });
+                                      },
+                                    ),
+                                    content: Column(
+                                      children: <Widget>[
+                                        //_buildCultivationInfo(),
+                                        //_buildSurveyDate(),
+                                        _buildfertilized(),
+                                        SizedBox(
+                                            height: SizeConfig.screenHeight! *
+                                                0.025),
+                                        //_buildPlantPeriod(),
+                                      ],
+                                    ),
+                                    isActive: _currentStep >= 0,
+                                    state: _currentStep >= 5
+                                        ? StepState.complete
+                                        : StepState.disabled,
+                                  )
                                 ],
-                              );
-                            },
-                            steps: [
-                              Step(
-                                title: GestureDetector(
-                                  child: new Text(''),
-                                  onTap: () {
-                                    setState(() {
-                                      _currentStep = 0;
-                                    });
-                                  },
-                                ),
-                                content: Column(
-                                  children: <Widget>[
-                                    _buildSelectedField(dropdownfield),
-                                    SizedBox(
-                                        height:
-                                            SizeConfig.screenHeight! * 0.025),
-                                  ],
-                                ),
-                                isActive: _currentStep >= 0,
-                                state: _currentStep >= 0
-                                    ? StepState.complete
-                                    : StepState.disabled,
                               ),
-                              Step(
-                                title: GestureDetector(
-                                  child: new Text(''),
-                                  onTap: () {
-                                    setState(() {
-                                      _currentStep = 1;
-                                    });
-                                  },
-                                ),
-                                content: Column(
-                                  children: <Widget>[
-                                    _buildCultivationInfo(),
-                                    SizedBox(
-                                        height:
-                                            SizeConfig.screenHeight! * 0.025),
-                                  ],
-                                ),
-                                isActive: _currentStep >= 0,
-                                state: _currentStep >= 1
-                                    ? StepState.complete
-                                    : StepState.disabled,
-                              ),
-                              Step(
-                                title: GestureDetector(
-                                  child: new Text(''),
-                                  onTap: () {
-                                    setState(() {
-                                      _currentStep = 2;
-                                    });
-                                  },
-                                ),
-                                content: Column(
-                                  children: <Widget>[
-                                    _buildPrimaryPlant(),
-                                    SizedBox(
-                                        height:
-                                            SizeConfig.screenHeight! * 0.025),
-                                  ],
-                                ),
-                                isActive: _currentStep >= 0,
-                                state: _currentStep >= 2
-                                    ? StepState.complete
-                                    : StepState.disabled,
-                              ),
-                              Step(
-                                title: GestureDetector(
-                                  child: Text(""),
-                                  onTap: () {
-                                    setState(() {
-                                      _currentStep = 3;
-                                    });
-                                  },
-                                ),
-                                content: Column(
-                                  children: <Widget>[
-                                    _buildSecondaryPlant(),
-                                    SizedBox(
-                                        height:
-                                            SizeConfig.screenHeight! * 0.025),
-                                  ],
-                                ),
-                                isActive: _currentStep >= 0,
-                                state: _currentStep >= 3
-                                    ? StepState.complete
-                                    : StepState.disabled,
-                              ),
-                              Step(
-                                title: GestureDetector(
-                                  child: Text(""),
-                                  onTap: () {
-                                    setState(() {
-                                      _currentStep = 4;
-                                    });
-                                  },
-                                ),
-                                content: Column(
-                                  children: <Widget>[
-                                    _buildDetailPlant(),
-                                    SizedBox(
-                                        height:
-                                            SizeConfig.screenHeight! * 0.025),
-                                  ],
-                                ),
-                                isActive: _currentStep >= 0,
-                                state: _currentStep >= 4
-                                    ? StepState.complete
-                                    : StepState.disabled,
-                              ),
-                              Step(
-                                title: GestureDetector(
-                                  child: Text(""),
-                                  onTap: () {
-                                    setState(() {
-                                      _currentStep = 5;
-                                    });
-                                  },
-                                ),
-                                content: Column(
-                                  children: <Widget>[
-                                    //_buildCultivationInfo(),
-                                    //_buildSurveyDate(),
-                                    _buildfertilized(),
-                                    SizedBox(
-                                        height:
-                                            SizeConfig.screenHeight! * 0.025),
-                                    //_buildPlantPeriod(),
-                                  ],
-                                ),
-                                isActive: _currentStep >= 0,
-                                state: _currentStep >= 5
-                                    ? StepState.complete
-                                    : StepState.disabled,
-                              )
-                            ],
+                            ),
                           )),
                     ),
                   ),
@@ -3356,8 +3443,8 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
               child: Material(
                 color: Colors.transparent,
                 child: InkWell(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(32.0),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(sizeWidth(32.0, context)),
                   ),
                   onTap: () {
                     resetValueEditNotFinish();
@@ -3365,7 +3452,10 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                   },
                   child: Padding(
                     padding: EdgeInsets.all(sizeWidth(8, context)),
-                    child: Icon(Icons.arrow_back),
+                    child: Icon(
+                      Icons.arrow_back,
+                      size: sizeHeight(25, context),
+                    ),
                   ),
                 ),
               ),
