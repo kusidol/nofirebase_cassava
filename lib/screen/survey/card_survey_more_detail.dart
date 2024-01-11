@@ -49,9 +49,9 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
   @override
   void initState() {
     super.initState();
-    // countDiseaseBySurveyId(widget.survey.surveyID);
-    // countNaturalEnemyBySurveyId(widget.survey.surveyID);
-    // countPestPhaseSurveyBySurveyId(widget.survey.surveyID);
+    countDiseaseBySurveyId(widget.survey.surveyID);
+    countNaturalEnemyBySurveyId(widget.survey.surveyID);
+    countPestPhaseSurveyBySurveyId(widget.survey.surveyID);
 
     _animationController = AnimationController(
       vsync:
@@ -66,7 +66,7 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
     super.dispose();
   }
 
-  /*Future<void> checkCountSurveyNull() async {
+  Future<void> checkCountSurveyNull() async {
     log("CountDis : ${countDis}, ${countNatural}, ${countPest}");
     if (countDis.toString() == '0' &&
         countNatural.toString() == '0' &&
@@ -81,9 +81,9 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
         IsCountNull = false;
       });
     }
-  }*/
+  }
 
-  /* Future<String?> countDiseaseBySurveyId(int id) async {
+  Future<String?> countDiseaseBySurveyId(int id) async {
     try {
       String? token = tokenFromLogin?.token;
       SurveyTargetPointService surveyTarget = SurveyTargetPointService();
@@ -101,9 +101,29 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
     } catch (e) {
       //print(e);
     }
-  }*/
+  }
 
-  /* Future<String?> countNaturalEnemyBySurveyId(int id) async {
+  Future<String?> countPestPhaseSurveyBySurveyId(int id) async {
+    try {
+      String? token = tokenFromLogin?.token;
+      SurveyTargetPointService surveyTarget = SurveyTargetPointService();
+      final countDiseases =
+          await surveyTarget.countPestPhaseSurvey(id, token.toString());
+      if (countDiseases != null) {
+        //print("infunction");
+        setState(() {
+          countDis = countDiseases["count"].toString();
+          checkCountSurveyNull();
+        });
+        return countDiseases["count"].toString();
+      }
+      return "0";
+    } catch (e) {
+      //print(e);
+    }
+  }
+
+  Future<String?> countNaturalEnemyBySurveyId(int id) async {
     try {
       String? token = tokenFromLogin?.token;
       SurveyTargetPointService surveyTarget = SurveyTargetPointService();
@@ -122,7 +142,7 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
     } catch (e) {
       //print(e);
     }
-  }*/
+  }
 
   showAlertDialog(context) => showCupertinoDialog<void>(
         context: context,
