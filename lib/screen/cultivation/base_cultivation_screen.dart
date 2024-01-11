@@ -810,7 +810,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
         ListTile(
           title: Text(
             'search-more'.i18n(),
-            style: TextStyle(fontSize: sizeHeight(18, context)),
+            style: TextStyle(fontSize: sizeHeight(20, context)),
           ),
           leading: Icon(
             Icons.perm_contact_calendar_outlined,

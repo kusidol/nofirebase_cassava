@@ -283,6 +283,7 @@ class _SurveyTable extends State<SurveyTable>
  
   Widget getAppBarUI() {
     return Container(
+      height: sizeHeight(85, context),
       decoration: BoxDecoration(
         color: const Color(0xFFFFFFFF),
         boxShadow: <BoxShadow>[
@@ -856,6 +857,7 @@ Widget getFilterBarUI(int numItemFounded) {
           initialDate: _startDatePlanting,
           firstDate: DateTime(1900),
           lastDate: _endDatePlanting,
+          
         );
         if (newStartDate == null) return;
         setState(() {
@@ -866,6 +868,7 @@ Widget getFilterBarUI(int numItemFounded) {
         startDatePlantingController.text =
             DateFormat("dd-MM-yyyy").format(_startDatePlanting);
       },
+      
       controller: startDatePlantingController,
       onChanged: (e) => _startDateTFToggle(e),
       keyboardType: TextInputType.datetime,
@@ -873,11 +876,13 @@ Widget getFilterBarUI(int numItemFounded) {
           TextStyle(color: Colors.white, fontFamily: 'OpenSans', fontSize: sizeWidth(14, context)),
       decoration: InputDecoration(
         border: InputBorder.none,
-        contentPadding: EdgeInsets.only(top: sizeHeight(14, context)),
+        contentPadding: SizeConfig.screenWidth! < 500
+            ? EdgeInsets.only(top: sizeHeight(14, context))
+            : EdgeInsets.only(left: sizeWidth(14, context)),
         prefixIcon: Icon(Icons.calendar_today_rounded, color: Colors.white),
         
         hintText: 'pick-start-date'.i18n(),
-        hintStyle: kHintTextStyle,
+        hintStyle: TextStyle(color: Colors.white, fontSize: sizeHeight(16, context)),
       ),
     );
 
@@ -907,13 +912,15 @@ Widget getFilterBarUI(int numItemFounded) {
           TextStyle(color: Colors.white, fontFamily: 'OpenSans', fontSize: sizeWidth(14, context)),
       decoration: InputDecoration(
         border: InputBorder.none,
-        contentPadding: EdgeInsets.only(top: sizeHeight(14, context)),
+      contentPadding: SizeConfig.screenWidth! < 500
+            ? EdgeInsets.only(top: sizeHeight(14, context))
+            : EdgeInsets.only(left: sizeWidth(14, context)),
         prefixIcon: Icon(
           Icons.calendar_today_rounded,
           color: Colors.white,
         ),
         hintText: 'pick-end-date'.i18n(),
-        hintStyle: kHintTextStyle,
+        hintStyle: TextStyle(color: Colors.white, fontSize: sizeHeight(16, context)),
       ),
     );
 
@@ -943,10 +950,12 @@ Widget getFilterBarUI(int numItemFounded) {
           TextStyle(color: Colors.white, fontFamily: 'OpenSans', fontSize: sizeWidth(14, context)),
       decoration: InputDecoration(
         border: InputBorder.none,
-        contentPadding: EdgeInsets.only(top: sizeHeight(14, context)),
+       contentPadding: SizeConfig.screenWidth! < 500
+            ? EdgeInsets.only(top: sizeHeight(14, context))
+            : EdgeInsets.only(left: sizeWidth(14, context)),
         prefixIcon: Icon(Icons.calendar_today_rounded, color: Colors.white),
         hintText: 'pick-start-date'.i18n(),
-        hintStyle: kHintTextStyle,
+        hintStyle: TextStyle(color: Colors.white, fontSize: sizeHeight(16, context)),
       ),
     );
 
@@ -976,17 +985,21 @@ Widget getFilterBarUI(int numItemFounded) {
           TextStyle(color: Colors.white, fontFamily: 'OpenSans', fontSize: sizeWidth(14, context)),
       decoration: InputDecoration(
         border: InputBorder.none,
-        contentPadding: EdgeInsets.only(top: sizeHeight(14, context)),
+        contentPadding: SizeConfig.screenWidth! < 500
+            ? EdgeInsets.only(top: sizeHeight(14, context))
+            : EdgeInsets.only(left: sizeWidth(14, context)),
         prefixIcon: Icon(Icons.calendar_today_rounded, color: Colors.white),
         hintText: 'pick-end-date'.i18n(),
-        hintStyle: kHintTextStyle,
+        hintStyle: TextStyle(color: Colors.white, fontSize: sizeHeight(16, context)),
       ),
     );
 
     return Column(
       children: [
+        SizedBox(height: sizeHeight(8, context),),
         ListTile(
-          title: Text('search-more'.i18n()),
+          title: Text('search-more'.i18n(),style: TextStyle(fontSize: sizeHeight(20, context)),),
+          
           leading: Icon(
             Icons.perm_contact_calendar_outlined,
             color: isShowbasicSearch == false ? theme_color2 : Colors.grey,
@@ -1020,6 +1033,10 @@ Widget getFilterBarUI(int numItemFounded) {
                         controller: codeNameController,
                         decoration: InputDecoration(
                           labelText: 'field-address'.i18n(),
+                          labelStyle:
+                              TextStyle(fontSize: sizeHeight(18, context)),
+                          contentPadding:
+                              EdgeInsets.all(sizeHeight(16, context)),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(sizeHeight(10, context)),
                           ),
@@ -1033,8 +1050,13 @@ Widget getFilterBarUI(int numItemFounded) {
                       SizedBox(height: sizeHeight(16, context)),
                       TextFormField(
                         controller: ownerController,
+                        
                         decoration: InputDecoration(
                           labelText: 'name-field-label'.i18n(),
+                          labelStyle:
+                              TextStyle(fontSize: sizeHeight(18, context)),
+                          contentPadding:
+                              EdgeInsets.all(sizeHeight(16, context)),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(sizeHeight(10, context)),
                           ),
@@ -1049,6 +1071,10 @@ Widget getFilterBarUI(int numItemFounded) {
                       TextFormField(
                         controller: locationController,
                         decoration: InputDecoration(
+                          labelStyle:
+                              TextStyle(fontSize: sizeHeight(18, context)),
+                          contentPadding:
+                              EdgeInsets.all(sizeHeight(16, context)),
                           labelText: 'owner'.i18n(),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(sizeHeight(10, context)),
@@ -1064,6 +1090,10 @@ Widget getFilterBarUI(int numItemFounded) {
                       TextFormField(
                         controller: cultivationController,
                         decoration: InputDecoration(
+                          labelStyle:
+                              TextStyle(fontSize: sizeHeight(18, context)),
+                          contentPadding:
+                              EdgeInsets.all(sizeHeight(16, context)),
                           labelText: 'name-planting-label'.i18n(),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(sizeHeight(10, context)),
@@ -1199,7 +1229,7 @@ Widget getFilterBarUI(int numItemFounded) {
                       left: sizeWidth(20, context),
                       right: sizeWidth(20, context),
                       bottom: sizeHeight(20, context)),
-                  height: 50.0,
+                  height: sizeHeight(50, context),
                   child: RaisedButton(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(sizeHeight(18, context)),
@@ -1227,7 +1257,7 @@ Widget getFilterBarUI(int numItemFounded) {
                           style: TextStyle(fontSize: sizeHeight(20, context)),
                         ),
                         SizedBox(width: sizeWidth(5, context)),
-                        Icon(Icons.search),
+                        Icon(Icons.search,size: sizeWidth(25, context),)
                       ],
                     ),
                   ),
@@ -1281,17 +1311,6 @@ Widget getFilterBarUI(int numItemFounded) {
         child:
        Consumer<SurveyProvider>(
          builder: (context, surveyProvider, index) {
-         //  List<Survey> surveyList = surveyProvider.surveys;
-        //List<Planting> plantings = surveyProvider.plantings;
-          /*  List<String> list_plantingName = surveyProvider.list_plantingName;
-            List<String> list_fieldName = surveyProvider.list_fieldName;
-            List<String> list_substrict = surveyProvider.list_substrict;
-            List<String> list_district = surveyProvider.list_district;
-            List<String> list_province = surveyProvider.list_province;
-            List<String> list_title = surveyProvider.list_title;
-            List<String> list_firstName = surveyProvider.list_firstName;
-            List<String> list_lastName = surveyProvider.list_lastName;
-            List<bool>list_check_target=surveyProvider.list_check_target;*/
            return WillPopScope(
                 onWillPop: () => onBackButtonPressed(context),
                   child: Scaffold(
@@ -1308,13 +1327,8 @@ Widget getFilterBarUI(int numItemFounded) {
                           },
                           child: Flex(
                             direction: Axis.vertical,
-
-
                               children: <Widget>[
-
-
                                 getAppBarUI(),
-
                                 Container(
                                   height:  isShowbasicSearch ? MediaQuery.of(context).size.height *0.175: MediaQuery.of(context).size.height * 0.475,
                                   child:
