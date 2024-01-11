@@ -244,7 +244,9 @@ class _AnimTFFState extends State<AnimTFF> {
                           // errorText: showError,
                           border: InputBorder.none,
                           labelText: lableText,
-                          labelStyle: TextStyle(color: labelColor),
+                          labelStyle: TextStyle(
+                              color: labelColor,
+                              fontSize: sizeHeight(20, context)),
                           contentPadding:
                               EdgeInsets.all(sizeHeight(10, context))),
                       validator: validator,
@@ -268,7 +270,9 @@ class _AnimTFFState extends State<AnimTFF> {
                           // errorText: showError,
                           border: InputBorder.none,
                           labelText: lableText,
-                          labelStyle: TextStyle(color: labelColor),
+                          labelStyle: TextStyle(
+                              color: labelColor,
+                              fontSize: sizeHeight(20, context)),
                           contentPadding:
                               EdgeInsets.all(sizeHeight(10, context))),
                       validator: validator,
