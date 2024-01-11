@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -29,7 +30,7 @@ class Gallery extends StatefulWidget {
 class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
   final ImageTagetpointService imageService = ImageTagetpointService();
 
-  bool _isStoragePermissionReady = false;
+  bool _isPhotosPermissionReady = false;
 
   bool _isCameraPermissionReady = false;
 
@@ -52,11 +53,11 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
   }
 
   Future<void> _checkPermission() async {
-    final storageGranted = await Permission.storage.isGranted;
+    final photosGranted = await Permission.photos.isGranted;
 
-    if (storageGranted) {
+    if (photosGranted) {
       setState(() {
-        _isStoragePermissionReady = true;
+        _isPhotosPermissionReady = true;
       });
     }
 
@@ -67,8 +68,6 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
         _isCameraPermissionReady = true;
       });
     }
-
-
   }
 
   @override
@@ -79,20 +78,18 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
 
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
-
-      if(_isCameraPermissionReady || _isStoragePermissionReady){
-         return ;
+      if (_isCameraPermissionReady || _isPhotosPermissionReady) {
+        return;
       }
 
       final camera_granted = await Permission.camera.isGranted;
-      final storage_granted = await Permission.storage.isGranted;
+      final photos_granted = await Permission.photos.isGranted;
       if (camera_granted) {
-        _isCameraPermissionReady = true ;
-     //   Navigator.of(context).pop();
+        _isCameraPermissionReady = true;
+        //   Navigator.of(context).pop();
       }
-      if (storage_granted) {
-        _isStoragePermissionReady = true ;
-
+      if (photos_granted) {
+        _isPhotosPermissionReady = true;
       }
       Navigator.of(context).pop();
     }
@@ -113,113 +110,98 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
 
   Future<void> _uploadImage(BuildContext context, ImageSource source) async {
     try {
-      final picker = ImagePicker();
-     // final storage_granted = await Permission.storage.isGranted;
-      final pickedFile = await picker.pickImage(source: source);
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(
+      source: source,
+      imageQuality: 100,
+      maxWidth: 1920,
+      maxHeight: 1080,
+    );
 
-     // print("PICKEDFILE :${_isCameraPermissionReady} ${pickedFile!.path}");
-      if (pickedFile != null) {
-        final shouldUpload = await showDialog(
-          context: context,
-          builder: (context) {
-            return CupertinoAlertDialog(
-              title: Text(
-                'confirm-upload'.i18n(),
-              ),
-              content: Column(
-                children: [
-                  Text(
-                    'Do-you-want-to-upload-this-picture'.i18n(),
-                    style: TextStyle(fontSize: 15, color: Colors.black),
-                  ),
-                ],
-              ),
-              actions: <CupertinoDialogAction>[
-                CupertinoDialogAction(
-                  onPressed: () {
-                    Navigator.of(context).pop(false);
-                  },
-                  child: Text(
-                    'cancel'.i18n(),
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-                CupertinoDialogAction(
-                  onPressed: () {
-                    Navigator.of(context).pop(true);
-                  },
-                  child: Text(
-                    'upload'.i18n(),
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
+    if (pickedFile != null) {
+      final shouldUpload = await showDialog(
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            title: Text(
+              'confirm-upload'.i18n(),
+            ),
+            content: Column(
+              children: [
+                Text(
+                  'Do-you-want-to-upload-this-picture'.i18n(),
+                  style: TextStyle(fontSize: 15, color: Colors.black),
                 ),
               ],
-            );
-          },
-        );
-
-        if (shouldUpload == true) {
-          ProgressDialog progressDialog = ProgressDialog(context);
-          progressDialog.style(
-            message: "uploading".i18n(),
-            progressWidget: Container(
-                padding: const EdgeInsets.all(12.0),
-                child: const CircularProgressIndicator(
-                  color: theme_color,
-                )),
-            maxProgress: 100.0,
-            progressTextStyle: TextStyle(
-                fontSize: 15, color: Colors.black, fontWeight: FontWeight.w400),
-            messageTextStyle: TextStyle(
-                fontSize: 15, color: Colors.black, fontWeight: FontWeight.w600),
+            ),
+            actions: <CupertinoDialogAction>[
+              CupertinoDialogAction(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+                child: Text(
+                  'cancel'.i18n(),
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+              CupertinoDialogAction(
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+                child: Text(
+                  'upload'.i18n(),
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+            ],
           );
-          progressDialog.show();
+        },
+      );
 
-          List<int> imageBytes = await pickedFile.readAsBytes();
-          String base64Image = base64Encode(imageBytes);
+      if (shouldUpload == true) {
+        ProgressDialog progressDialog = ProgressDialog(context);
+        progressDialog.style(
+          message: "uploading".i18n(),
+          progressWidget: Container(
+              padding: const EdgeInsets.all(12.0),
+              child: const CircularProgressIndicator(
+                color: theme_color,
+              )),
+          maxProgress: 100.0,
+          progressTextStyle: TextStyle(
+              fontSize: 15, color: Colors.black, fontWeight: FontWeight.w400),
+          messageTextStyle: TextStyle(
+              fontSize: 15, color: Colors.black, fontWeight: FontWeight.w600),
+        );
+        progressDialog.show();
 
-          //print(base64Image) ;
-          ImageData imageData = await imageService.uploadImage(
-            base64Image,
-            token.toString(),
-            widget.targetpointId,
-          ) as ImageData;
+        FormData formData = FormData.fromMap({
+          'file': await MultipartFile.fromFile(pickedFile.path, filename: 'image.png'),
+          'targetpointId': widget.targetpointId.toString(),
+        });
 
-          if(imageData != null){
+        ImageData imageData = await imageService.uploadImage(
+          formData,
+          token.toString(),
+          widget.targetpointId,
+        ) as ImageData;
 
-            setState(() {
-              images.add(imageData);
-            });
-          }
-
-         // bool serviceFinished = false;
-        //  var parsed = json.decode(resp);
-          //print("--> ${resp}");
-          //print("--> ${resp['message']}");
-         // EntityResponse.Response<ImageData> imageData =EntityResponse.Response<ImageData>.fromJson(
-            //  jsonDecode(resp), (body) => ImageData.fromJson(body));
-
-         /* while (!serviceFinished) {
-            await Future.delayed(Duration(seconds: 1));
-            if (resp.statusCode == 200) {
-              serviceFinished = true;
-            } else {
-              serviceFinished = false;
-            }
-          }*/
-
-          //_fetchImages();
-
-          progressDialog.hide();
+        if (imageData != null) {
+          setState(() {
+            images.add(imageData);
+          });
         }
+
+        progressDialog.hide();
       }
-    } catch (e) {
+    }
+  } catch (e) {
       if (source.toString() == "ImageSource.camera") {
         var statusCamera = await Permission.camera.status;
         if (statusCamera.isDenied) {
@@ -227,7 +209,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
         } else {
           //print("Exception !");
         }
-      } else {
+      } else if (source.toString() == "ImageSource.gallery") {
         var statusPhotos = await Permission.photos.status;
         if (statusPhotos.isDenied) {
           showAlertDialog_Photos(context);
@@ -452,6 +434,17 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
+    double aspectRatioMobile = 16 / 9;
+    double aspectRatioiPad = 4 / 3;
+
+    double desiredWidth =
+        screenWidth > 600 ? screenWidth * 0.8 : screenWidth * 0.9;
+
+    double desiredHeightMobile = desiredWidth / aspectRatioMobile;
+    double desiredHeightiPad = desiredWidth / aspectRatioiPad;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -499,8 +492,10 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
                           child: Stack(
                             children: [
                               Container(
-                                width: 400,
-                                height: 400,
+                                width: desiredWidth,
+                                height: screenWidth > 600
+                                    ? desiredHeightiPad
+                                    : desiredHeightMobile,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -585,9 +580,9 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
             label: 'Gallery'.i18n(),
             labelStyle: TextStyle(fontSize: 20, color: Colors.black),
             onTap: () {
-              if(_isStoragePermissionReady){
+              if (_isPhotosPermissionReady) {
                 _uploadImage(context, ImageSource.gallery);
-              }else{
+              } else {
                 showAlertDialog_Photos(context);
               }
             },
@@ -598,12 +593,11 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
             label: 'Camera'.i18n(),
             labelStyle: TextStyle(fontSize: 20, color: Colors.black),
             onTap: () {
-              if(_isCameraPermissionReady){
+              if (_isCameraPermissionReady) {
                 _uploadImage(context, ImageSource.camera);
-              }else{
-                showAlertDialog_Camera(context) ;
+              } else {
+                showAlertDialog_Camera(context);
               }
-
             },
           ),
         ],
@@ -626,5 +620,3 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
     );
   }
 }
-
-

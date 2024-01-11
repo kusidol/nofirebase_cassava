@@ -46,45 +46,33 @@ class ImageTagetpointService {
     }
   }
 
-  Future<ImageData?> uploadImage(
-      String imageFile, String token, int targetpointId) async {
-    final url = '$LOCAL_SERVER_IP_URL/survey/surveytargetpoint/$targetpointId/images';
-    //final url = '$LOCAL_SERVER_IP_URL/survey/uploadimage/$targetpointId';
-    //print(url);
-    final headers = {
-      'Authorization': 'Bearer $token',
-      'Content-Type': 'multipart/form-data',
-    };
+  Future<ImageData?> uploadImage(FormData formData, String token, int targetpointId) async {
+  final url = '$LOCAL_SERVER_IP_URL/survey/surveytargetpoint/$targetpointId/images';
 
-    Uint8List imageBytes = base64Decode(imageFile);
-    //print(imageBytes) ;
-    FormData formData = FormData.fromMap({
-      'file': MultipartFile.fromBytes(imageBytes, filename: 'image.jpg'),
-      'targetpointId': targetpointId.toString(),
-    });
+  final headers = {
+    'Authorization': 'Bearer $token',
+    'Content-Type': 'multipart/form-data',
+  };
 
-    try {
-      var response = await Dio()
-          .post(url, data: formData, options: Options(headers: headers));
-      //Map<String, dynamic> map  = json.decode(response.data);
-      //print(response.data);
-      if (response.statusCode == 200) {
-       // print("Image uploaded successfully"+ "${response}");
-        print(response.data);
-        Map apiResponse = response.data;
-        ImageData imageData = ImageData(imageId: apiResponse["body"]["imageId"], imgBase64: apiResponse["body"]["imgBase64"].toString());
+  try {
+    var response = await Dio().post(url, data: formData, options: Options(headers: headers));
 
+    if (response.statusCode == 200) {
+      Map apiResponse = response.data;
+      ImageData imageData = ImageData(
+        imageId: apiResponse["body"]["imageId"],
+        imgBase64: apiResponse["body"]["imgBase64"].toString(),
+      );
 
-        return imageData;
-      } else {
-        //print('Failed to upload image');
-        return null;
-      }
-    } catch (e) {
-      //print('Error uploading image: $e');
+      return imageData;
+    } else {
       return null;
     }
+  } catch (e) {
+    return null;
   }
+}
+
 
   Future<int?> deleteImageByID(int targetpointId,int id, String token) async {
    // final url = Uri.parse('$LOCAL_SERVER_IP_URL/survey/surveytargetpoint/$targetpointId/images');

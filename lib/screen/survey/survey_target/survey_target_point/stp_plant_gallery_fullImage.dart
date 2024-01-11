@@ -157,51 +157,53 @@ class _FullScreenImageState extends State<FullScreenImage> {
     }
 
     return Scaffold(
-      //extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            Navigator.of(context).pop(false);
-          },
-        ),
-        elevation: 0,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: deleteImage,
-          ),
-        ],
+  appBar: AppBar(
+    backgroundColor: Colors.black,
+    centerTitle: true,
+    leading: IconButton(
+      icon: const Icon(
+        Icons.arrow_back_ios,
+        color: Colors.white,
       ),
-      body: PhotoViewGallery.builder(
-        itemCount: widget.images.length,
-        builder: (BuildContext context, int index) {
-          return PhotoViewGalleryPageOptions(
-            imageProvider: MemoryImage(
-              base64Decode(widget.images[index].imgBase64),
-            ),
-            minScale: PhotoViewComputedScale.contained * 0.8,
-            maxScale: PhotoViewComputedScale.covered * 2,
-            initialScale: PhotoViewComputedScale.contained,
-            heroAttributes: PhotoViewHeroAttributes(tag: index),
-          );
-        },
-        scrollPhysics: const BouncingScrollPhysics(),
-        backgroundDecoration: BoxDecoration(
-          color: Colors.black,
-        ),
-        onPageChanged: (int index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
-        pageController: PageController(initialPage: currentIndex),
+      onPressed: () {
+        Navigator.of(context).pop(false);
+      },
+    ),
+    elevation: 0,
+    actions: [
+      IconButton(
+        icon: Icon(Icons.delete),
+        onPressed: deleteImage,
       ),
+    ],
+  ),
+  body: PhotoViewGallery.builder(
+  itemCount: widget.images.length,
+  builder: (BuildContext context, int index) {
+    return PhotoViewGalleryPageOptions(
+      imageProvider: MemoryImage(
+        base64Decode(widget.images[index].imgBase64),
+      ),
+      minScale: PhotoViewComputedScale.contained * 0.8,
+      maxScale: PhotoViewComputedScale.covered * 2,
+      initialScale: PhotoViewComputedScale.contained,
+      heroAttributes: PhotoViewHeroAttributes(tag: index),
+      filterQuality: FilterQuality.high,
     );
+  },
+  scrollPhysics: const BouncingScrollPhysics(),
+  backgroundDecoration: BoxDecoration(
+    color: Colors.black,
+  ),
+  onPageChanged: (int index) {
+    setState(() {
+      currentIndex = index;
+    });
+  },
+  pageController: PageController(initialPage: currentIndex),
+),
+
+);
+
   }
 }
