@@ -839,7 +839,8 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
                                 height: sizeHeight(
                                     150, context), // Set your desired height
                                 child: Column(
-                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
                                   children: <Widget>[
                                     ListTile(
                                       leading: Icon(
@@ -874,9 +875,6 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
                                                       widget.fieldProviders)),
                                         );
                                       },
-                                    ),
-                                    SizedBox(
-                                      height: sizeHeight(10, context),
                                     ),
                                     ListTile(
                                       leading: Icon(

@@ -40,12 +40,9 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
   void initState() {
     super.initState();
     //token = tokenFromLogin?.token;
-   // getAllsurveyStatus();
+    // getAllsurveyStatus();
     //reFreshstatus();
-
   }
-
-
 
   /*Future<void> asyncFunction() async {
     String? token = tokenFromLogin?.token;
@@ -130,7 +127,6 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
   }*/
 
   List<String> diseaseList = [];
-
 
   Future<String?> countDiseaseBySurveyId(int id) async {
     try {
@@ -225,6 +221,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
 
   Widget getAppBarUI() {
     return Container(
+      height: sizeHeight(110, context),
       decoration: BoxDecoration(
         color: const Color(0xFFFFFFFF),
         boxShadow: <BoxShadow>[
@@ -236,7 +233,9 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
       ),
       child: Padding(
         padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top, left: 8, right: 8),
+            top: MediaQuery.of(context).padding.top,
+            left: sizeWidth(8, context),
+            right: sizeHeight(8, context)),
         child: Row(
           children: <Widget>[
             Container(
@@ -246,15 +245,18 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
               child: Material(
                 color: Colors.transparent,
                 child: InkWell(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(32.0),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(sizeWidth(32, context)),
                   ),
                   onTap: () {
                     Navigator.pop(context);
                   },
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(Icons.arrow_back),
+                    padding: EdgeInsets.all(sizeWidth(8, context)),
+                    child: Icon(
+                      Icons.arrow_back,
+                      size: sizeHeight(25, context),
+                    ),
                   ),
                 ),
               ),
@@ -294,12 +296,12 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                   Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(32.0),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(sizeWidth(32, context)),
                       ),
                       onTap: () {},
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(sizeWidth(8, context)),
                         // child: Icon(Icons.map),
                       ),
                     ),
@@ -307,12 +309,12 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                   Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(32.0),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(sizeWidth(32, context)),
                       ),
                       onTap: () {},
                       child: Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(sizeWidth(8, context)),
                         // child: Icon(FontAwesomeIcons.per,color: Colors.grey),
                       ),
                     ),
@@ -337,62 +339,56 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
               FutureBuilder<String?>(
                 future: countDiseaseBySurveyId(widget.survey.surveyID),
                 builder: (context, snapshot) {
+                  String countData = '';
+                  countData =
+                      snapshot.data == null ? '' : snapshot.data.toString();
 
-                    String countData = '';
-                    countData =
-                        snapshot.data == null ? '' : snapshot.data.toString();
-
-                    return summaryBox(
-                        "Disease".i18n(),
-                        Icons.grass,
-                        countData,
-                        Colors.purple,
-                        Colors.purpleAccent,
-                        Colors.purpleAccent.shade100,
-                        100,
-                        diseaseList);
-
+                  return summaryBox(
+                      "Disease".i18n(),
+                      Icons.grass,
+                      countData,
+                      Colors.purple,
+                      Colors.purpleAccent,
+                      Colors.purpleAccent.shade100,
+                      sizeWidth(100, context),
+                      diseaseList);
                 },
               ),
               FutureBuilder<String?>(
                 future: countNaturalEnemyBySurveyId(widget.survey.surveyID),
                 builder: (context, snapshot) {
+                  String countData = '';
 
-                    String countData = '';
+                  countData =
+                      snapshot.data == null ? '' : snapshot.data.toString();
 
-                    countData =
-                        snapshot.data == null ? '' : snapshot.data.toString();
-
-                    return summaryBox(
-                        "NaturalEnermies".i18n(),
-                        Icons.bug_report,
-                        countData,
-                        Colors.orange,
-                        Colors.orangeAccent,
-                        Colors.orangeAccent.shade100,
-                        130,
-                        naturalEnemyList);
-
+                  return summaryBox(
+                      "NaturalEnermies".i18n(),
+                      Icons.bug_report,
+                      countData,
+                      Colors.orange,
+                      Colors.orangeAccent,
+                      Colors.orangeAccent.shade100,
+                      sizeWidth(130, context),
+                      naturalEnemyList);
                 },
               ),
               FutureBuilder<String?>(
                 future: countPestPhaseSurveyBySurveyId(widget.survey.surveyID),
                 builder: (context, snapshot) {
+                  String countData = '';
+                  countData =
+                      snapshot.data == null ? '' : snapshot.data.toString();
 
-                    String countData = '';
-                    countData =
-                        snapshot.data == null ? '' : snapshot.data.toString();
-
-                    return summaryBox(
-                        "PestPhase".i18n(),
-                        Icons.bug_report_outlined,
-                        countData,
-                        Colors.blue,
-                        Colors.blueAccent,
-                        Colors.blueAccent.shade100,
-                        100,
-                        pestPhaseList);
-
+                  return summaryBox(
+                      "PestPhase".i18n(),
+                      Icons.bug_report_outlined,
+                      countData,
+                      Colors.blue,
+                      Colors.blueAccent,
+                      Colors.blueAccent.shade100,
+                      sizeHeight(100, context),
+                      pestPhaseList);
                 },
               ),
             ],
@@ -447,7 +443,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
               borderRadius: BorderRadius.circular(5),
             ),
             width: width,
-            height: sizeHeight(70, context),
+            height: sizeHeight(80, context),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -546,16 +542,23 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                         color: Colors.white,
                       ),
                 textBuilder: (value) => value == false
-                    ? Center(child: Text('not-confirm-data'.i18n()))
-                    : Center(child: Text('confirm-data'.i18n())),
+                    ? Center(
+                        child: Text(
+                        'not-confirm-data'.i18n(),
+                        style: TextStyle(fontSize: sizeWidth(14, context)),
+                      ))
+                    : Center(
+                        child: Text(
+                        'confirm-data'.i18n(),
+                        style: TextStyle(fontSize: sizeWidth(14, context)),
+                      )),
               ),
             ),
           ],
         ));
   }
 
-  Widget surveyBoxSwitch(
-      int point, Widget switchWidget, bool status) {
+  Widget surveyBoxSwitch(int point, Widget switchWidget, bool status) {
     return Padding(
       padding: EdgeInsets.only(bottom: sizeHeight(8, context)),
       child: GestureDetector(
@@ -582,74 +585,81 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
               borderRadius: BorderRadius.circular(sizeHeight(15, context)),
             ),
             child: Container(
-              width: sizeWidth(MediaQuery.of(context).size.width * 0.925, context),
-              height: sizeHeight(MediaQuery.of(context).size.height * 0.125 , context),
+              width:
+                  sizeWidth(MediaQuery.of(context).size.width * 0.925, context),
+              height: sizeHeight(
+                  MediaQuery.of(context).size.height * 0.125, context),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-
                   Row(
                     children: [
                       Padding(
-
-                        padding: EdgeInsets.only(left: sizeWidth(MediaQuery.of(context).size.width * 0.045, context)),
+                        padding: EdgeInsets.only(
+                            left: sizeWidth(
+                                MediaQuery.of(context).size.width * 0.045,
+                                context)),
                         child: Text(
                           status == true
                               ? "point".i18n() + " " + (point + 1).toString()
-                              : "point".i18n() +
-                              " " +
-                              (point + 1).toString(),
+                              : "point".i18n() + " " + (point + 1).toString(),
                           style: TextStyle(fontSize: sizeHeight(19, context)),
                         ),
                       ),
-
                       Padding(
-                        padding: EdgeInsets.only(left: sizeWidth(MediaQuery.of(context).size.width * 0.295, context)),
+                        padding: EdgeInsets.only(
+                            left: sizeWidth(
+                                MediaQuery.of(context).size.width * 0.25,
+                                context)),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(4),
+                        padding: EdgeInsets.only(
+                            right: sizeWidth(32, context),
+                            top: sizeHeight(8, context)),
                         child: switchWidget,
                       ),
                     ],
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   //Divider(indent: 0, thickness: 1,),
 
                   Row(
                     children: [
                       Padding(
-                          padding: EdgeInsets.only(left: sizeWidth(MediaQuery.of(context).size.width * 0.045, context)),
-                      child:Text(
-                        "status".i18n() + ":",
-                        style: TextStyle(fontSize: sizeHeight(16, context) ,fontWeight: FontWeight.bold),
-                       )
-                      ),
+                          padding: EdgeInsets.only(
+                              left: sizeWidth(
+                                  MediaQuery.of(context).size.width * 0.045,
+                                  context)),
+                          child: Text(
+                            "status".i18n() + ":",
+                            style: TextStyle(
+                                fontSize: sizeWidth(16, context),
+                                fontWeight: FontWeight.bold),
+                          )),
                       Padding(
-
-                        padding: EdgeInsets.only(left: sizeWidth(MediaQuery.of(context).size.width * 0.025, context)),
-
+                        padding: EdgeInsets.only(
+                            left: sizeWidth(
+                                MediaQuery.of(context).size.width * 0.025,
+                                context)),
                         child: Text(
                           !status
                               ? "adding-data".i18n()
-                              : "adding-complete".i18n() ,
-                          style: TextStyle(fontSize: sizeHeight(15, context)),
+                              : "adding-complete".i18n(),
+                          style: TextStyle(fontSize: sizeHeight(16, context)),
                         ),
                       ),
                     ],
                   )
 
-
                   // switchWidget
-
-
                 ],
               ),
             ),
-          )
-      ),
+          )),
     );
   }
-
 
   /*bool switchValue(point, bool valuep) {
     if (surveyPointList.isNotEmpty) {
@@ -695,7 +705,12 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                   ),
                   child: ListTile(
                     title: Row(
-                      children: [Text(showList[i])],
+                      children: [
+                        Text(
+                          showList[i],
+                          style: TextStyle(fontSize: sizeWidth(16, context)),
+                        )
+                      ],
                     ),
                     onTap: () {
                       // Handle tile tap here
@@ -711,53 +726,56 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
   //List<String> txtList = ["","","","",""];
   //final List<bool> _selectedStatus = <bool>[true, false];
 
-
-
-  final List<String> _statusList = ["Editing","Complete"];
+  final List<String> _statusList = ["Editing", "Complete"];
 
   List<Widget> getCompleteBox(SurveyPointProvider surveyPointProvider) {
-
     List<Widget> completeBoxes = [];
     for (int i = 0; i < 5; i++) {
-      completeBoxes.add(
-
-          surveyBoxSwitch(
+      completeBoxes.add(surveyBoxSwitch(
           i,
-              ToggleButtons(
-                isSelected: surveyPointProvider.selectedStatus[i],
-                children: [
-                  Icon(Icons.edit_outlined,),
-                  Icon(Icons.task_alt_outlined),
-                //  Container(width: (MediaQuery.of(context).size.width - 22)/2.25, child: new Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[new Icon(Icons.edit,size: 16.0,color: Colors.red,),new SizedBox(width: 4.0,), Text('adding-data'.i18n(),style: TextStyle(color: Colors.red),)],)),
-                //  Container(width: (MediaQuery.of(context).size.width - 22)/2.25, child: new Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[new Icon(Icons.task_alt_outlined,size: 16.0,color: Colors.green[800],),new SizedBox(width: 4.0,), Text('adding-complete'.i18n(),)],)),
-                ],
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
-                selectedBorderColor: !surveyPointProvider.pointStatus[i] ? Colors.amber[400] : Colors.green[400] ,
-                selectedColor: Colors.white,
-                fillColor: surveyPointProvider.pointStatus[i] ? Colors.green[400] : Colors.amber[400] ,
-                color: !surveyPointProvider.pointStatus[i] ? Colors.green[400] : Colors.amber[400] ,
-                onPressed: (int index)  async {
-                  setState(()  {
-                    // The button that is tapped is set to true, and the others to false.
-                    for (int j = 0; j < surveyPointProvider.selectedStatus[i].length; j++) {
-                      surveyPointProvider.setSelectedStatus(i, j, j  == index) ;
-                    }
+          ToggleButtons(
+            isSelected: surveyPointProvider.selectedStatus[i],
+            children: [
+              Icon(
+                Icons.edit_outlined,
+              ),
+              Icon(Icons.task_alt_outlined),
+              //  Container(width: (MediaQuery.of(context).size.width - 22)/2.25, child: new Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[new Icon(Icons.edit,size: 16.0,color: Colors.red,),new SizedBox(width: 4.0,), Text('adding-data'.i18n(),style: TextStyle(color: Colors.red),)],)),
+              //  Container(width: (MediaQuery.of(context).size.width - 22)/2.25, child: new Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[new Icon(Icons.task_alt_outlined,size: 16.0,color: Colors.green[800],),new SizedBox(width: 4.0,), Text('adding-complete'.i18n(),)],)),
+            ],
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
+            selectedBorderColor: !surveyPointProvider.pointStatus[i]
+                ? Colors.amber[400]
+                : Colors.green[400],
+            selectedColor: Colors.white,
+            fillColor: surveyPointProvider.pointStatus[i]
+                ? Colors.green[400]
+                : Colors.amber[400],
+            color: !surveyPointProvider.pointStatus[i]
+                ? Colors.green[400]
+                : Colors.amber[400],
+            onPressed: (int index) async {
+              setState(() {
+                // The button that is tapped is set to true, and the others to false.
+                for (int j = 0;
+                    j < surveyPointProvider.selectedStatus[i].length;
+                    j++) {
+                  surveyPointProvider.setSelectedStatus(i, j, j == index);
+                }
+              });
 
+              await surveyPointProvider
+                  .updateSelectedStatus(widget.survey.surveyID, i, index)
+                  .then((value) {
+                if (value) {
+                  // isInit = true ;
+                  surveyPointProvider.fetchData(widget.survey.surveyID);
+                }
+              });
+              //surveyPointProvider.pointStatus[]
+              //pointStatus[i] = !pointStatus[i] ;
 
-                  });
-
-                  await surveyPointProvider.updateSelectedStatus(widget.survey.surveyID, i, index).then((value) {
-
-                    if(value){
-                     // isInit = true ;
-                      surveyPointProvider.fetchData(widget.survey.surveyID);
-                    }
-
-                  });
-                  //surveyPointProvider.pointStatus[]
-                  //pointStatus[i] = !pointStatus[i] ;
-
-                  /*showDialog(
+              /*showDialog(
                     context: context,
                     barrierDismissible: false,
                     builder: (context) => LoadingWidget(
@@ -765,7 +783,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                     ),
                   );*/
 
-                  /*await putPointStatus(widget.survey.surveyID, i, _statusList[index])
+              /*await putPointStatus(widget.survey.surveyID, i, _statusList[index])
                       .then((value) {
                     ////print(value);
 
@@ -780,12 +798,12 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                   await Future.delayed(Duration(milliseconds: 500));
 
                   Navigator.pop(context);*/
-                },
-                constraints: const BoxConstraints(
-                  minHeight: 40.0,
-                  minWidth: 80.0,
-                ),
-              ),
+            },
+            constraints: BoxConstraints(
+              minHeight: sizeHeight(40, context),
+              minWidth: sizeWidth(80, context),
+            ),
+          ),
           /*AnimatedToggleSwitch<bool>.dual(
             current: pointStatus[i],
             first: false,
@@ -843,103 +861,84 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                 ? Center(child: Text('adding-data'.i18n()))
                 : Center(child: Text('adding-complete'.i18n())),
           ),*/
-              surveyPointProvider.pointStatus[i]));
+          surveyPointProvider.pointStatus[i]));
     }
     return completeBoxes;
   }
 
   Widget allSurveyBoxSwitch(surveyPointProvider) {
     return SingleChildScrollView(
-      child:
-
-      Column(
-
-        children: getCompleteBox(surveyPointProvider)
-      ));
+        child: Column(children: getCompleteBox(surveyPointProvider)));
   }
 
-  bool isInit = true ;
+  bool isInit = true;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Theme( data: HotelAppTheme.buildLightTheme(),
+    return Theme(
+        data: HotelAppTheme.buildLightTheme(),
+        child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize:
+                Size.fromHeight(MediaQuery.of(context).size.height * 0.085),
+            child: getAppBarUI(),
+          ),
+          body: Container(
+            child: MultiProvider(
+              providers: [
+                ChangeNotifierProvider(
+                  create: (context) {
+                    return SurveyPointProvider();
+                  },
+                ),
+              ],
+              child: Consumer<SurveyPointProvider>(
+                  builder: (context, surveyProvider, index) {
+                if (isInit) {
+                  isInit = !isInit;
+                  surveyProvider.fetchData(widget.survey.surveyID);
+                }
 
-                child: Scaffold(
-                    appBar: PreferredSize(
-                      preferredSize:
-                      Size.fromHeight(MediaQuery.of(context).size.height * 0.085),
-                      child: getAppBarUI(),
-                    ),
-                    body: Container(
-                      child: MultiProvider(
-
-                        providers: [
-                          ChangeNotifierProvider(
-                            create: (context) {
-                              return SurveyPointProvider();
-                            },
+                return Container(
+                  child: ListView(
+                    children: [
+                      Container(
+                          height: MediaQuery.of(context).size.height * 0.915,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.white,
+                                theme_color3.withOpacity(.4),
+                                theme_color4.withOpacity(1),
+                              ],
+                            ),
                           ),
-                        ],
-
-                        child: Consumer<SurveyPointProvider>(
-                        builder: (context, surveyProvider, index) {
-                          if(isInit){
-                            isInit = !isInit ;
-                            surveyProvider.fetchData(widget.survey.surveyID);
-                          }
-
-                          return Container(
-                            child: ListView(
-                              children: [
-                                Container(
-                                    height: MediaQuery.of(context).size.height * 0.915,
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topCenter,
-                                        end: Alignment.bottomCenter,
-                                        colors: [
-                                          Colors.white,
-                                          theme_color3.withOpacity(.4),
-                                          theme_color4.withOpacity(1),
-                                        ],
-                                      ),
-                                    ),
-                                    child: Column(children: [
-                                      allSummaryBox(),
-                                      showEnemy(),
-                                      surveySwitch(),
-                                      SizedBox(
-                                        height: sizeHeight(16, context),
-                                      ),
-                                      Container(
-                                        height: MediaQuery.of(context).size.height * 0.55,
-                                        child: allSurveyBoxSwitch(surveyProvider),
-                                      )
-                                    ])
-                                  /*: Center(
+                          child: Column(children: [
+                            allSummaryBox(),
+                            showEnemy(),
+                            surveySwitch(),
+                            SizedBox(
+                              height: sizeHeight(16, context),
+                            ),
+                            Container(
+                              height: MediaQuery.of(context).size.height * 0.65,
+                              child: allSurveyBoxSwitch(surveyProvider),
+                            )
+                          ])
+                          /*: Center(
                             child: CircularProgressIndicator(
                               valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                             ),
                           ),*/
-                                )
-                              ],
-                            ),
-                          ) ;
-                        })
-
-
-                         ,
-
-                      ),
-                    ),
-
-                    )
-
-
-      ) ;
-
-
-
-
+                          )
+                    ],
+                  ),
+                );
+              }),
+            ),
+          ),
+        ));
   }
 }

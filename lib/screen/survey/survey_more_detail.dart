@@ -170,7 +170,7 @@ class _SurveyMoreDetailScreen extends State<SurveyMoreDetailScreen>
                           ),
                         ),
                         width: SizeConfig.screenWidth,
-                        height: MediaQuery.of(context).size.height * 0.88,
+                        height: MediaQuery.of(context).size.height * 0.92,
                         child: CardSurveyMoreDetail(widget.surveys,
                             widget.plantingCode, widget.surveyProvider),
                       ),
@@ -191,57 +191,57 @@ class _SurveyMoreDetailScreen extends State<SurveyMoreDetailScreen>
 
     bool isDeleted = await widget.surveyProvider.deleteSurvey(widget.surveys);
     if (isDeleted) {
-
       Navigator.of(context).pop();
       Navigator.of(context).pop();
     } else {}
   }
 
   _deleteConfirmation(context) => showCupertinoDialog<void>(
-    context: context,
-    barrierDismissible: false,
-    builder: (BuildContext context) => CupertinoAlertDialog(
-      title: Text("confirm-delete".i18n()),
-      content: Column(
-        children: [
-          Text(
-            'Do-you-want-to-delete-this-survey'.i18n(),
-            style: TextStyle(fontSize: 15, color: Colors.black),
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: Text("confirm-delete".i18n()),
+          content: Column(
+            children: [
+              Text(
+                'Do-you-want-to-delete-this-survey'.i18n(),
+                style: TextStyle(fontSize: 15, color: Colors.black),
+              ),
+            ],
           ),
-        ],
-      ),
-      actions: <CupertinoDialogAction>[
-        CupertinoDialogAction(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text(
-            'no'.i18n(),
-            style: TextStyle(
-              color: Colors.blue,
-              fontWeight: FontWeight.w400,
+          actions: <CupertinoDialogAction>[
+            CupertinoDialogAction(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'no'.i18n(),
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
             ),
-          ),
-        ),
-        CupertinoDialogAction(
-          onPressed: () {
-            _handleDeletion();
-            Navigator.of(context).pop();
-          },
-          child: Text(
-            'yes'.i18n(),
-            style: TextStyle(
-              color: Colors.red,
-              fontWeight: FontWeight.w400,
+            CupertinoDialogAction(
+              onPressed: () {
+                _handleDeletion();
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'yes'.i18n(),
+                style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
             ),
-          ),
+          ],
         ),
-      ],
-    ),
-  );
+      );
 
   Widget getAppBarUI() {
     return Container(
+      height: sizeHeight(85, context),
       decoration: BoxDecoration(
         color: const Color(0xFFFFFFFF),
         boxShadow: <BoxShadow>[
@@ -273,7 +273,10 @@ class _SurveyMoreDetailScreen extends State<SurveyMoreDetailScreen>
                   },
                   child: Padding(
                     padding: EdgeInsets.all(sizeWidth(8, context)),
-                    child: Icon(Icons.arrow_back),
+                    child: Icon(
+                      Icons.arrow_back,
+                      size: sizeWidth(25, context),
+                    ),
                   ),
                 ),
               ),
@@ -306,89 +309,99 @@ class _SurveyMoreDetailScreen extends State<SurveyMoreDetailScreen>
                         showModalBottomSheet(
                           context: context,
                           builder: (context) {
-                            return Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                ListTile(
-                                  leading: new Icon(
-                                    Icons.edit,
-                                    color: HotelAppTheme.buildLightTheme()
-                                        .shadowColor,
-                                  ),
-                                  title: new Text(
-                                    "Edit-general".i18n(),
-                                    style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: kPoppinsRegular.fontWeight,
+                            return Container(
+                              height: sizeHeight(200, context),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  ListTile(
+                                    leading: new Icon(
+                                      Icons.edit,
                                       color: HotelAppTheme.buildLightTheme()
                                           .shadowColor,
+                                      size: sizeWidth(25, context),
                                     ),
+                                    title: new Text(
+                                      "Edit-general".i18n(),
+                                      style: TextStyle(
+                                        fontSize: sizeHeight(18, context),
+                                        fontWeight: kPoppinsRegular.fontWeight,
+                                        color: HotelAppTheme.buildLightTheme()
+                                            .shadowColor,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            maintainState: false,
+                                            builder: (context) =>
+                                                new NewSurveyScreen(
+                                                    widget.surveys,
+                                                    widget.surveyProvider)),
+                                      );
+                                    },
                                   ),
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          maintainState: false,
-                                          builder: (context) =>
-                                              new NewSurveyScreen(
-                                                  widget.surveys,
-                                                  widget.surveyProvider)),
-                                    );
-                                  },
-                                ),
-                                ListTile(
-                                  leading: new Icon(
-                                    Icons.edit_location_alt_rounded,
-                                    color: HotelAppTheme.buildLightTheme()
-                                        .shadowColor,
-                                  ),
-                                  title: new Text(
-                                    "Edit-survey".i18n(),
-                                    style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: kPoppinsRegular.fontWeight,
+                                  ListTile(
+                                    leading: new Icon(
+                                      Icons.edit_location_alt_rounded,
                                       color: HotelAppTheme.buildLightTheme()
                                           .shadowColor,
+                                      size: sizeWidth(25, context),
                                     ),
+                                    title: new Text(
+                                      "Edit-survey".i18n(),
+                                      style: TextStyle(
+                                        fontSize: sizeHeight(18, context),
+                                        fontWeight: kPoppinsRegular.fontWeight,
+                                        color: HotelAppTheme.buildLightTheme()
+                                            .shadowColor,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            maintainState: false,
+                                            builder: (context) =>
+                                                new BaseSurveyDetailInfo(
+                                                    widget.surveys, false)),
+                                      );
+                                    },
                                   ),
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          maintainState: false,
-                                          builder: (context) =>
-                                              new BaseSurveyDetailInfo(
-                                                  widget.surveys, false)),
-                                    );
-                                  },
-                                ),
-                                ListTile(
-                                  leading: new Icon(
-                                    Icons.delete,
-                                    color: HotelAppTheme.buildLightTheme()
-                                        .shadowColor,
-                                  ),
-                                  title: new Text(
-                                    "Delete".i18n(),
-                                    style: TextStyle(
-                                      fontSize: sizeHeight(17, context),
-                                      fontWeight: kPoppinsRegular.fontWeight,
+                                  ListTile(
+                                    leading: new Icon(
+                                      Icons.delete,
                                       color: HotelAppTheme.buildLightTheme()
                                           .shadowColor,
+                                      size: sizeWidth(25, context),
                                     ),
+                                    title: new Text(
+                                      "Delete".i18n(),
+                                      style: TextStyle(
+                                        fontSize: sizeHeight(18, context),
+                                        fontWeight: kPoppinsRegular.fontWeight,
+                                        color: HotelAppTheme.buildLightTheme()
+                                            .shadowColor,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      _deleteConfirmation(context);
+                                    },
                                   ),
-                                  onTap: () {
-                                    _deleteConfirmation(context);
-                                  },
-                                ),
-                              ],
+                                ],
+                              ),
                             );
                           },
                         );
                       },
                       child: Padding(
                         padding: EdgeInsets.all(sizeWidth(8, context)),
-                        child: Icon(Icons.edit),
+                        child: Icon(
+                          Icons.edit,
+                          size: sizeWidth(25, context),
+                        ),
                       ),
                     ),
                   ),

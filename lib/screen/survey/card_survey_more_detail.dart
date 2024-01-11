@@ -153,11 +153,13 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
             children: [
               Text(
                 'survey-point-create1'.i18n(),
-                style: TextStyle(fontSize: 15, color: Colors.black),
+                style: TextStyle(
+                    fontSize: sizeWidth(15, context), color: Colors.black),
               ),
               Text(
                 'survey-point-create2'.i18n(),
-                style: TextStyle(fontSize: 15, color: Colors.black),
+                style: TextStyle(
+                    fontSize: sizeWidth(15, context), color: Colors.black),
               ),
             ],
           ),
@@ -200,10 +202,10 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
   Widget _buildSurveyBtn() {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30.0),
+        borderRadius: BorderRadius.circular(sizeWidth(30, context)),
         border: Border.all(
           color: theme_color, // Replace with your desired border color
-          width: 4, // Adjust the border width as needed
+          width: sizeWidth(4, context), // Adjust the border width as needed
         ),
       ),
       padding: EdgeInsets.symmetric(horizontal: sizeWidth(0, context)),
@@ -223,10 +225,10 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
             showAlertDialog(context);
           }
         },
-        padding: EdgeInsets.all(10.0),
+        padding: EdgeInsets.all(sizeWidth(10, context)),
         color: Colors.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(sizeWidth(25, context)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -364,23 +366,28 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
       IconData) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius:
-            BorderRadius.circular(10.0), // Adjust the radius value as needed
+        borderRadius: BorderRadius.circular(
+            sizeWidth(10, context)), // Adjust the radius value as needed
       ),
       elevation: 8,
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
         child: Row(
           children: [
-            CircleAvatar(
-              backgroundColor: HotelAppTheme.buildLightTheme().primaryColor,
-              child: Icon(
-                IconData,
-                color: Colors.white,
+            Container(
+              height: sizeHeight(50, context),
+              width: sizeWidth(50, context),
+              child: CircleAvatar(
+                backgroundColor: HotelAppTheme.buildLightTheme().primaryColor,
+                child: Icon(
+                  IconData,
+                  color: Colors.white,
+                  size: sizeHeight(25, context),
+                ),
               ),
             ),
             Container(
-              margin: EdgeInsets.only(left: 5),
+              margin: EdgeInsets.only(left: sizeWidth(10, context)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -425,6 +432,13 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
                 ],
               ),
             ),
+            SizeConfig.screenWidth! > 500
+                ? SizedBox(
+                    width: sizeWidth(70, context),
+                  )
+                : SizedBox(
+                    width: sizeWidth(10, context),
+                  ),
             Container(
               margin: EdgeInsets.only(left: 10),
               child: Column(
@@ -484,23 +498,28 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
       String value2, String label3, String value3, IconData) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius:
-            BorderRadius.circular(10.0), // Adjust the radius value as needed
+        borderRadius: BorderRadius.circular(
+            sizeWidth(10, context)), // Adjust the radius value as needed
       ),
       elevation: 8,
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
         child: Row(
           children: [
-            CircleAvatar(
-              backgroundColor: HotelAppTheme.buildLightTheme().primaryColor,
-              child: Icon(
-                IconData,
-                color: Colors.white,
+            Container(
+              height: sizeHeight(50, context),
+              width: sizeWidth(50, context),
+              child: CircleAvatar(
+                backgroundColor: HotelAppTheme.buildLightTheme().primaryColor,
+                child: Icon(
+                  IconData,
+                  color: Colors.white,
+                  size: sizeHeight(25, context),
+                ),
               ),
             ),
             Container(
-              margin: EdgeInsets.only(left: 10),
+              margin: EdgeInsets.only(left: sizeWidth(10, context)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -616,11 +635,16 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
         padding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
         child: Row(
           children: [
-            CircleAvatar(
-              backgroundColor: HotelAppTheme.buildLightTheme().primaryColor,
-              child: Icon(
-                IconData,
-                color: Colors.white,
+            Container(
+              height: sizeHeight(50, context),
+              width: sizeWidth(50, context),
+              child: CircleAvatar(
+                backgroundColor: HotelAppTheme.buildLightTheme().primaryColor,
+                child: Icon(
+                  IconData,
+                  color: Colors.white,
+                  size: sizeHeight(25, context),
+                ),
               ),
             ),
             Container(

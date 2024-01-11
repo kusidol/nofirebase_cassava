@@ -254,7 +254,8 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
                             return Container(
                               height: sizeHeight(150, context),
                               child: Column(
-                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: <Widget>[
                                   ListTile(
                                     leading: new Icon(
