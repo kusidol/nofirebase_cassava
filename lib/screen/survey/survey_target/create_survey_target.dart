@@ -89,7 +89,7 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
   int _currentStep = 0;
 
   final _formKey = GlobalKey<FormState>();
-
+  double tabletBreakpointWidth = 1080.0;
   StepperType stepperType = StepperType.vertical;
   bool _isLoading = true;
   bool _isLoadingPlanting = false;
@@ -510,7 +510,7 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
                 //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   SizedBox(
-                    width: sizeWidth(32, context),
+                    width: sizeWidth(30, context),
                   ),
                   _tabIndex > 0
                       ? SizedBox(
@@ -546,29 +546,34 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
                   _tabIndex <= 1
                       ? SizedBox(
                           width: _tabIndex == 0
-                              ? sizeWidth(350, context)
-                              : sizeWidth(170, context),
+                              ? SizeConfig.screenWidth! * 0.9
+                              : sizeWidth(180, context),
                           height: sizeHeight(50, context),
-                          child: FloatingActionButton(
-                            backgroundColor: theme_color2,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  sizeHeight(18, context)),
+                          child: Padding(
+                            padding: _tabIndex == 0
+                                ? EdgeInsets.only(right: 50.0,left: 40.0)
+                                : EdgeInsets.only(right: 0.0),
+                            child: FloatingActionButton(
+                              backgroundColor: theme_color2,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    sizeHeight(18, context)),
+                              ),
+                              mini: true,
+                              onPressed: () => {_toggleTab()},
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "next-label".i18n(),
+                                    style: TextStyle(
+                                        fontSize: sizeHeight(18, context)),
+                                  ),
+                                  Icon(Icons.navigate_next),
+                                ],
+                              ),
+                              heroTag: "fab3",
                             ),
-                            mini: true,
-                            onPressed: () => {_toggleTab()},
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "next-label".i18n(),
-                                  style: TextStyle(
-                                      fontSize: sizeHeight(18, context)),
-                                ),
-                                Icon(Icons.navigate_next),
-                              ],
-                            ),
-                            heroTag: "fab3",
                           ),
                         )
                       : SizedBox(
@@ -652,40 +657,44 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
       Row(
         children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width - 380,
+            width: sizeWidth(10, context),
           ),
           Container(
+            height: sizeHeight(20, context),
             child: Text(
               "select-all".i18n(),
               style: TextStyle(
                   color: _userNameColor,
                   fontWeight: FontWeight.normal,
                   fontFamily: 'OpenSans',
-                  fontSize: 18),
+                  fontSize: sizeHeight(14, context)),
             ),
           ),
           // SizedBox(
           //   width: MediaQuery.of(context).size.width - 212,
           // ),
-          Switch(
-            activeColor: Colors.greenAccent,
-            value: checkBoxAllDisease,
-            // visualDensity:
-            //     const VisualDensity(horizontal: -4.0, vertical: -4.0),
-            onChanged: (newBool) {
-              setState(() {
-                checkBoxAllDisease = newBool;
+          Padding(
+            padding: EdgeInsets.only(right: 20.0),
+            child: Switch(
+              activeColor: Colors.greenAccent,
+              value: checkBoxAllDisease,
+              // visualDensity:
+              //     const VisualDensity(horizontal: -4.0, vertical: -4.0),
+              onChanged: (newBool) {
+                setState(() {
+                  checkBoxAllDisease = newBool;
 
-                if (newBool == true) {
-                  _checkBoxDiseaseAll = [];
-                  for (int i = 0; i < listDisease.length; i++) {
-                    _checkBoxDiseaseAll.add(listDisease[i].targetOfSurveyId);
+                  if (newBool == true) {
+                    _checkBoxDiseaseAll = [];
+                    for (int i = 0; i < listDisease.length; i++) {
+                      _checkBoxDiseaseAll.add(listDisease[i].targetOfSurveyId);
+                    }
+                  } else {
+                    _checkBoxDiseaseAll = [];
                   }
-                } else {
-                  _checkBoxDiseaseAll = [];
-                }
-              });
-            },
+                });
+              },
+            ),
           )
         ],
       ),
@@ -761,41 +770,45 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
       Row(
         children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width - 380,
+            width: sizeWidth(10, context),
           ),
           Container(
+            height: sizeHeight(20, context),
             child: Text(
               "select-all".i18n(),
               style: TextStyle(
                   color: _userNameColor,
                   fontWeight: FontWeight.normal,
                   fontFamily: 'OpenSans',
-                  fontSize: 18),
+                  fontSize: sizeHeight(14, context)),
             ),
           ),
           // SizedBox(
           //   width: MediaQuery.of(context).size.width - 212,
           // ),
-          Switch(
-            activeColor: Colors.greenAccent,
-            value: checkBoxAllNatural,
-            // visualDensity:
-            //     const VisualDensity(horizontal: -4.0, vertical: -4.0),
-            onChanged: (newBool) {
-              setState(() {
-                checkBoxAllNatural = newBool;
+          Padding(
+            padding: EdgeInsets.only(right: 20.0),
+            child: Switch(
+              activeColor: Colors.greenAccent,
+              value: checkBoxAllNatural,
+              // visualDensity:
+              //     const VisualDensity(horizontal: -4.0, vertical: -4.0),
+              onChanged: (newBool) {
+                setState(() {
+                  checkBoxAllNatural = newBool;
 
-                if (newBool == true) {
-                  _checkBoxNaturalAll = [];
-                  for (int i = 0; i < listNaturalEnermy.length; i++) {
-                    _checkBoxNaturalAll
-                        .add(listNaturalEnermy[i].targetOfSurveyId);
+                  if (newBool == true) {
+                    _checkBoxNaturalAll = [];
+                    for (int i = 0; i < listNaturalEnermy.length; i++) {
+                      _checkBoxNaturalAll
+                          .add(listNaturalEnermy[i].targetOfSurveyId);
+                    }
+                  } else {
+                    _checkBoxNaturalAll = [];
                   }
-                } else {
-                  _checkBoxNaturalAll = [];
-                }
-              });
-            },
+                });
+              },
+            ),
           )
         ],
       ),
@@ -874,42 +887,48 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
       Row(
         children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width - 380,
+            width: sizeWidth(10, context),
           ),
           Container(
+            height: sizeHeight(20, context),
             child: Text(
               "select-all".i18n(),
               style: TextStyle(
                   color: _userNameColor,
                   fontWeight: FontWeight.normal,
                   fontFamily: 'OpenSans',
-                  fontSize: 18),
+                  fontSize: sizeHeight(14, context)),
             ),
           ),
           // SizedBox(
           //   width: MediaQuery.of(context).size.width - 212,
           // ),
-          Switch(
-            activeColor: Colors.greenAccent,
-            value: checkBoxAllPestPhase,
-            // visualDensity:
-            //     const VisualDensity(horizontal: -4.0, vertical: -4.0),
-            onChanged: (newBool) {
-              setState(() {
-                checkBoxAllPestPhase = newBool;
+          Container(
+            child: Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: Switch(
+                activeColor: Colors.greenAccent,
+                value: checkBoxAllPestPhase,
+                // visualDensity:
+                //     const VisualDensity(horizontal: -4.0, vertical: -4.0),
+                onChanged: (newBool) {
+                  setState(() {
+                    checkBoxAllPestPhase = newBool;
 
-                if (newBool == true) {
-                  _checkBoxPestPhaseAll = [];
-                  for (int i = 0; i < listPestPhaseSurvey.length; i++) {
-                    _checkBoxPestPhaseAll
-                        .add(listPestPhaseSurvey[i].targetOfSurveyId);
-                  }
-                } else {
-                  _checkBoxPestPhaseAll = [];
-                }
-                //print(_checkBoxPestPhaseAll);
-              });
-            },
+                    if (newBool == true) {
+                      _checkBoxPestPhaseAll = [];
+                      for (int i = 0; i < listPestPhaseSurvey.length; i++) {
+                        _checkBoxPestPhaseAll
+                            .add(listPestPhaseSurvey[i].targetOfSurveyId);
+                      }
+                    } else {
+                      _checkBoxPestPhaseAll = [];
+                    }
+                    //print(_checkBoxPestPhaseAll);
+                  });
+                },
+              ),
+            ),
           )
         ],
       ),
