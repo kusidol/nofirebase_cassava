@@ -1211,18 +1211,20 @@ Shimmer mockShimmer(BuildContext context) {
                                         0.4), // Change the button color here
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(sizeWidth(
-                                          50,
+                                          sizeHeight(50, context),
                                           context)), // Set the border radius here
                                     ),
+                                    minimumSize: Size(sizeHeight(80, context),
+                                        sizeHeight(50, context)),
                                   ),
                                   onPressed: () {
                                     // Button press logic goes here
                                     //print('Button Pressed');
                                   },
                                   child: Icon(
-                                    Icons.info_outline_rounded,
+                                    Icons.remove_red_eye_rounded,
                                     color: Colors.white,
-                                    size: sizeHeight(20, context),
+                                    size: sizeHeight(25, context),
                                   ),
                                 ),
                               )

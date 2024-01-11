@@ -1383,13 +1383,16 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                                           0.4), // Change the button color here
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(
-                                            50.0), // Set the border radius here
+                                            sizeHeight(50,
+                                                context)), // Set the border radius here
                                       ),
+                                      minimumSize: Size(sizeHeight(80, context),
+                                          sizeHeight(50, context)),
                                     ),
                                     onPressed: () {
                                       //  print('Button Pressed');
                                     },
-                                    child: Icon(Icons.info_outline_rounded,
+                                    child: Icon(Icons.remove_red_eye_rounded,
                                         color: Colors.white,
                                         size: sizeHeight(25, context)),
                                   ),

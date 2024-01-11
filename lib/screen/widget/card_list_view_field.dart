@@ -160,28 +160,28 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                             theme_color2, // Change the button color here
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
-                                              50.0), // Set the border radius here
+                                              sizeHeight(50,
+                                                  context)), // Set the border radius here
                                         ),
+                                        minimumSize: Size(
+                                            sizeHeight(80, context),
+                                            sizeHeight(50, context)),
                                       ),
-                                      onPressed: () {
-                                        // Button press logic goes here
-                                        //print('Button Pressed');
-                                      },
-                                      child: IconButton(
-                                        icon: Icon(Icons.info_outline_rounded),
+                                      onPressed: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                FieldMoreDetailScreen(
+                                                    widget.field,
+                                                    widget.owner,
+                                                    widget.fieldData,
+                                                    widget.image,
+                                                    widget.fieldProviders)),
+                                      ),
+                                      child: Icon(
+                                        Icons.remove_red_eye_rounded,
                                         color: Colors.white,
-                                        iconSize: sizeHeight(20, context),
-                                        onPressed: () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  FieldMoreDetailScreen(
-                                                      widget.field,
-                                                      widget.owner,
-                                                      widget.fieldData,
-                                                      widget.image,
-                                                      widget.fieldProviders)),
-                                        ),
+                                        size: sizeHeight(25, context),
                                       ),
                                     ),
                                   )

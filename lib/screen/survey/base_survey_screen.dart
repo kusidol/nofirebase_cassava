@@ -1656,6 +1656,9 @@ Widget getFilterBarUI(int numItemFounded) {
                                         borderRadius: BorderRadius.circular(
                                             sizeHeight(50, context)), // Set the border radius here
                                       ),
+                                      minimumSize: Size(
+                                            sizeHeight(80, context),
+                                            sizeHeight(50, context)),
                                     ),
                                     onPressed: () {
                                       // Button press logic goes here

@@ -1723,8 +1723,12 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                             theme_color2, // Change the button color here
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
-                                              50.0), // Set the border radius here
+                                              sizeHeight(50,
+                                                  context)), // Set the border radius here
                                         ),
+                                        minimumSize: Size(
+                                            sizeHeight(80, context),
+                                            sizeHeight(50, context)),
                                       ),
                                       onPressed: widget.callback2,
                                       child: Icon(
@@ -1984,8 +1988,12 @@ class _AnimatedListItemState_Planting extends State<AnimatedListItem_Planting> {
                                             theme_color2, // Change the button color here
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
-                                              50.0), // Set the border radius here
+                                              sizeHeight(50,
+                                                  context)), // Set the border radius here
                                         ),
+                                        minimumSize: Size(
+                                            sizeHeight(80, context),
+                                            sizeHeight(50, context)),
                                       ),
                                       onPressed: widget.callback2,
                                       child: Icon(
