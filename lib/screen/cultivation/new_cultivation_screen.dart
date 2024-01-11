@@ -963,21 +963,26 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                       value, "select-previous-plant".i18n()),
                 ),
                 _selectPreviousPlant == "อื่นๆ"
-                    ? AnimTFF(
-                        (text) => {
-                          setState(() {
-                            planting.previousPlantOther = text;
-                          }),
-                        },
-                        validator1: (value) =>
-                            InputCodeValidator.validateNotSpecialCharacter(
-                                value, planting.previousPlantOther.toString()),
-                        labelText: planting.previousPlantOther == ""
-                            ? 'insert-other-previous-plant'.i18n()
-                            : planting.previousPlantOther,
-                        successText: "",
-                        inputIcon: Icon(Icons.eco_sharp),
-                      )
+                    ? Column(
+                      children: [
+                        SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
+                        AnimTFF(
+                            (text) => {
+                              setState(() {
+                                planting.previousPlantOther = text;
+                              }),
+                            },
+                            validator1: (value) =>
+                                InputCodeValidator.validateNotSpecialCharacter(
+                                    value, planting.previousPlantOther.toString()),
+                            labelText: planting.previousPlantOther == ""
+                                ? 'insert-other-previous-plant'.i18n()
+                                : planting.previousPlantOther,
+                            successText: "",
+                            inputIcon: Icon(Icons.eco_sharp),
+                          ),
+                      ],
+                    )
                     : Container(),
                 SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                 Container(
@@ -1036,21 +1041,26 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                       value, "select-beside-plant-label".i18n()),
                 ),
                 selectBesidePlant == "อื่นๆ"
-                    ? AnimTFF(
-                        (text) => {
-                          setState(() {
-                            planting.besidePlantOther = text;
-                          }),
-                        },
-                        validator1: (value) =>
-                            InputCodeValidator.validateNotSpecialCharacter(
-                                value, planting.besidePlantOther.toString()),
-                        labelText: planting.besidePlantOther == ""
-                            ? 'insert-other-beside-plant'.i18n()
-                            : planting.besidePlantOther,
-                        successText: "",
-                        inputIcon: Icon(Icons.eco_sharp),
-                      )
+                    ? Column(
+                      children: [
+                        SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
+                        AnimTFF(
+                            (text) => {
+                              setState(() {
+                                planting.besidePlantOther = text;
+                              }),
+                            },
+                            validator1: (value) =>
+                                InputCodeValidator.validateNotSpecialCharacter(
+                                    value, planting.besidePlantOther.toString()),
+                            labelText: planting.besidePlantOther == ""
+                                ? 'insert-other-beside-plant'.i18n()
+                                : planting.besidePlantOther,
+                            successText: "",
+                            inputIcon: Icon(Icons.eco_sharp),
+                          ),
+                      ],
+                    )
                     : Container(),
               ],
             ),
@@ -1750,21 +1760,26 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
               },
             ),
             _selectChemical1 == "อื่นๆ"
-                ? AnimTFF(
-                    (text) => {
-                      setState(() {
-                        planting.weedingChemicalOther1 = text;
-                      }),
-                    },
-                    // validator1: (value) =>
-                    //     InputCodeValidator.validateFertilizerFormular(
-                    //         value, planting.fertilizerFormular2),
-                    labelText: planting.weedingChemicalOther1 == ""
-                        ? "insert-chemical-used".i18n()
-                        : planting.weedingChemicalOther1,
-                    successText: "",
-                    inputIcon: Icon(Icons.science_outlined),
-                  )
+                ? Column(
+                  children: [
+                    SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
+                    AnimTFF(
+                        (text) => {
+                          setState(() {
+                            planting.weedingChemicalOther1 = text;
+                          }),
+                        },
+                        // validator1: (value) =>
+                        //     InputCodeValidator.validateFertilizerFormular(
+                        //         value, planting.fertilizerFormular2),
+                        labelText: planting.weedingChemicalOther1 == ""
+                            ? "insert-chemical-used".i18n()
+                            : planting.weedingChemicalOther1,
+                        successText: "",
+                        inputIcon: Icon(Icons.science_outlined),
+                      ),
+                  ],
+                )
                 : Container(),
             SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
             Container(
@@ -1883,21 +1898,26 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
               },
             ),
             _selectChemical2 == "อื่นๆ"
-                ? AnimTFF(
-                    (text) => {
-                      setState(() {
-                        planting.weedingChemicalOther2 = text;
-                      }),
-                    },
-                    // validator1: (value) =>
-                    //     InputCodeValidator.validateFertilizerFormular(
-                    //         value, planting.fertilizerFormular2),
-                    labelText: planting.weedingChemicalOther2 == ""
-                        ? "insert-chemical-used".i18n()
-                        : planting.weedingChemicalOther2,
-                    successText: "",
-                    inputIcon: Icon(Icons.science_outlined),
-                  )
+                ? Column(
+                  children: [
+                    SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
+                    AnimTFF(
+                        (text) => {
+                          setState(() {
+                            planting.weedingChemicalOther2 = text;
+                          }),
+                        },
+                        // validator1: (value) =>
+                        //     InputCodeValidator.validateFertilizerFormular(
+                        //         value, planting.fertilizerFormular2),
+                        labelText: planting.weedingChemicalOther2 == ""
+                            ? "insert-chemical-used".i18n()
+                            : planting.weedingChemicalOther2,
+                        successText: "",
+                        inputIcon: Icon(Icons.science_outlined),
+                      ),
+                  ],
+                )
                 : Container(),
             SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
             Container(
@@ -2014,21 +2034,26 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
               },
             ),
             _selectChemical3 == "อื่นๆ"
-                ? AnimTFF(
-                    (text) => {
-                      setState(() {
-                        planting.weedingChemicalOther3 = text;
-                      }),
-                    },
-                    // validator1: (value) =>
-                    //     InputCodeValidator.validateFertilizerFormular(
-                    //         value, planting.fertilizerFormular2),
-                    labelText: planting.weedingChemicalOther3 == ""
-                        ? "insert-chemical-used".i18n()
-                        : planting.weedingChemicalOther3,
-                    successText: "",
-                    inputIcon: Icon(Icons.science_outlined),
-                  )
+                ? Column(
+                  children: [
+                    SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
+                    AnimTFF(
+                        (text) => {
+                          setState(() {
+                            planting.weedingChemicalOther3 = text;
+                          }),
+                        },
+                        // validator1: (value) =>
+                        //     InputCodeValidator.validateFertilizerFormular(
+                        //         value, planting.fertilizerFormular2),
+                        labelText: planting.weedingChemicalOther3 == ""
+                            ? "insert-chemical-used".i18n()
+                            : planting.weedingChemicalOther3,
+                        successText: "",
+                        inputIcon: Icon(Icons.science_outlined),
+                      ),
+                  ],
+                )
                 : Container(),
             SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
             Container(
@@ -2956,21 +2981,26 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                       value, "select-soil-amendments".i18n()),
                 ),
                 _selectSoilAmendments == "อื่นๆ"
-                    ? AnimTFF(
-                        (text) => {
-                          setState(() {
-                            planting.soilAmendmentsOther = text;
-                          }),
-                        },
-                        validator1: (value) =>
-                            InputCodeValidator.validateNotSpecialCharacter(
-                                value, planting.soilAmendmentsOther.toString()),
-                        labelText: planting.soilAmendmentsOther == ""
-                            ? 'insert-other-soil-amendments'.i18n()
-                            : planting.soilAmendmentsOther,
-                        successText: "",
-                        inputIcon: Icon(Icons.landscape_sharp),
-                      )
+                    ? Column(
+                      children: [
+                        SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
+                        AnimTFF(
+                            (text) => {
+                              setState(() {
+                                planting.soilAmendmentsOther = text;
+                              }),
+                            },
+                            validator1: (value) =>
+                                InputCodeValidator.validateNotSpecialCharacter(
+                                    value, planting.soilAmendmentsOther.toString()),
+                            labelText: planting.soilAmendmentsOther == ""
+                                ? 'insert-other-soil-amendments'.i18n()
+                                : planting.soilAmendmentsOther,
+                            successText: "",
+                            inputIcon: Icon(Icons.landscape_sharp),
+                          ),
+                      ],
+                    )
                     : Container(),
                 SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                 // กำจัดแมลง
