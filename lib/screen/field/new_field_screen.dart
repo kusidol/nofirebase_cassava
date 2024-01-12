@@ -518,8 +518,8 @@ class _NewFieldScreenState extends State<NewFieldScreen>
               child: Material(
                 color: Colors.transparent,
                 child: InkWell(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(32.0),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(sizeWidth(32, context)),
                   ),
                   onTap: () {
                     resetValueEditNotFinish();
@@ -527,7 +527,10 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   },
                   child: Padding(
                     padding: EdgeInsets.all(sizeWidth(8, context)),
-                    child: Icon(Icons.arrow_back),
+                    child: Icon(
+                      Icons.arrow_back,
+                      size: sizeWidth(25, context),
+                    ),
                   ),
                 ),
               ),
@@ -686,6 +689,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   !_isPassValueFromPage
                       ? Container(
+                          height: sizeHeight(50, context),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
@@ -757,7 +761,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                               "please-select-owner".i18n(),
                               style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: sizeHeight(25, context)),
+                                  fontSize: sizeHeight(20, context)),
                             )),
                             // Hide the default underline
                             // underline: Container(),
@@ -1072,7 +1076,11 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                         )
                       : Container(
                           child: Center(
-                            child: Text("must-select-province-first".i18n()),
+                            child: Text(
+                              "must-select-province-first".i18n(),
+                              style:
+                                  TextStyle(fontSize: sizeHeight(20, context)),
+                            ),
                           ),
                         ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
@@ -1136,7 +1144,9 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                         )
                       : Container(
                           child: Center(
-                            child: Text("must-select-district-first".i18n()),
+                            child: Text("must-select-district-first".i18n(),
+                                style: TextStyle(
+                                    fontSize: sizeHeight(20, context))),
                           ),
                         ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
@@ -1593,132 +1603,149 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                                 ),
                           ),
                           child: Container(
-                            width: SizeConfig.screenWidth,
-                            child: Stepper(
-                              physics: ScrollPhysics(),
-                              type: stepperType,
-                              currentStep: _currentStep,
-                              onStepTapped: (step) => tapped(step),
-                              onStepContinue: continued,
-                              onStepCancel: cancel,
-                              controlsBuilder: (context,
-                                  {onStepCancel, onStepContinue}) {
-                                return Row(
-                                  children: [
-                                    Expanded(
-                                      child: ElevatedButton(
-                                        child: Text(
-                                          'previous-label'.i18n(),
-                                          style: TextStyle(
-                                              fontSize:
-                                                  sizeHeight(16, context)),
+                            width: sizeWidth(SizeConfig.screenWidth!, context),
+                            height:
+                                sizeHeight(SizeConfig.screenHeight!, context),
+                            child: SizedBox(
+                              width: sizeWidth(100, context),
+                              height: sizeHeight(100, context),
+                              child: Stepper(
+                                physics: ScrollPhysics(),
+                                type: stepperType,
+                                currentStep: _currentStep,
+                                onStepTapped: (step) => tapped(step),
+                                onStepContinue: continued,
+                                onStepCancel: cancel,
+                                controlsBuilder: (context,
+                                    {onStepCancel, onStepContinue}) {
+                                  return Row(
+                                    children: [
+                                      Expanded(
+                                        child: Container(
+                                          width: sizeWidth(25, context),
+                                          height: sizeHeight(35, context),
+                                          child: ElevatedButton(
+                                            child: Text(
+                                              'previous-label'.i18n(),
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      sizeHeight(16, context)),
+                                            ),
+                                            onPressed: cancel,
+                                          ),
                                         ),
-                                        onPressed: cancel,
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: sizeWidth(12, context),
-                                    ),
-                                    Expanded(
-                                      child: ElevatedButton(
-                                        child: isFinal()
-                                            ? _isPassValueFromPage
-                                                ? Text(
-                                                    'confirm-edit-label'.i18n(),
-                                                    style: TextStyle(
-                                                        fontSize: sizeHeight(
-                                                            16, context)),
-                                                  )
+                                      SizedBox(
+                                        width: sizeWidth(20, context),
+                                      ),
+                                      Expanded(
+                                        child: Container(
+                                          width: sizeWidth(25, context),
+                                          height: sizeHeight(35, context),
+                                          child: ElevatedButton(
+                                            child: isFinal()
+                                                ? _isPassValueFromPage
+                                                    ? Text(
+                                                        'confirm-edit-label'
+                                                            .i18n(),
+                                                        style: TextStyle(
+                                                            fontSize:
+                                                                sizeHeight(16,
+                                                                    context)),
+                                                      )
+                                                    : Text(
+                                                        'create-new-field-label'
+                                                            .i18n(),
+                                                        style: TextStyle(
+                                                            fontSize:
+                                                                sizeHeight(16,
+                                                                    context)),
+                                                      )
                                                 : Text(
-                                                    'create-new-field-label'
-                                                        .i18n(),
+                                                    'next-label'.i18n(),
                                                     style: TextStyle(
                                                         fontSize: sizeHeight(
                                                             16, context)),
-                                                  )
-                                            : Text(
-                                                'next-label'.i18n(),
-                                                style: TextStyle(
-                                                    fontSize: sizeHeight(
-                                                        16, context)),
-                                              ),
-                                        onPressed: isFinal()
-                                            ? submitFunction
-                                            : continued,
+                                                  ),
+                                            onPressed: isFinal()
+                                                ? submitFunction
+                                                : continued,
+                                          ),
+                                        ),
                                       ),
+                                    ],
+                                  );
+                                },
+                                steps: [
+                                  Step(
+                                    title: GestureDetector(
+                                      child: new Text(''),
+                                      onTap: () {
+                                        setState(() {
+                                          _currentStep = 0;
+                                        });
+                                      },
                                     ),
-                                  ],
-                                );
-                              },
-                              steps: [
-                                Step(
-                                  title: GestureDetector(
-                                    child: new Text(''),
-                                    onTap: () {
-                                      setState(() {
-                                        _currentStep = 0;
-                                      });
-                                    },
+                                    content: Column(
+                                      children: <Widget>[
+                                        _buildCreateFieldFirstPage(
+                                            dropdownFarmer),
+                                        SizedBox(
+                                            height: SizeConfig.screenHeight! *
+                                                0.025),
+                                      ],
+                                    ),
+                                    isActive: _currentStep >= 0,
+                                    state: _currentStep >= 0
+                                        ? StepState.complete
+                                        : StepState.disabled,
                                   ),
-                                  content: Column(
-                                    children: <Widget>[
-                                      _buildCreateFieldFirstPage(
-                                          dropdownFarmer),
-                                      SizedBox(
-                                          height:
-                                              SizeConfig.screenHeight! * 0.025),
-                                    ],
+                                  Step(
+                                    title: GestureDetector(
+                                      child: new Text(''),
+                                      onTap: () {
+                                        setState(() {
+                                          _currentStep = 1;
+                                        });
+                                      },
+                                    ),
+                                    content: Column(
+                                      children: <Widget>[
+                                        _buildCreateFieldSecondPage(),
+                                        SizedBox(
+                                            height: SizeConfig.screenHeight! *
+                                                0.025),
+                                      ],
+                                    ),
+                                    isActive: _currentStep >= 0,
+                                    state: _currentStep >= 1
+                                        ? StepState.complete
+                                        : StepState.disabled,
                                   ),
-                                  isActive: _currentStep >= 0,
-                                  state: _currentStep >= 0
-                                      ? StepState.complete
-                                      : StepState.disabled,
-                                ),
-                                Step(
-                                  title: GestureDetector(
-                                    child: new Text(''),
-                                    onTap: () {
-                                      setState(() {
-                                        _currentStep = 1;
-                                      });
-                                    },
+                                  Step(
+                                    title: GestureDetector(
+                                      child: new Text(''),
+                                      onTap: () {
+                                        setState(() {
+                                          _currentStep = 2;
+                                        });
+                                      },
+                                    ),
+                                    content: Column(
+                                      children: <Widget>[
+                                        _buildCreateFieldThirdPage(),
+                                        SizedBox(
+                                            height: SizeConfig.screenHeight! *
+                                                0.025),
+                                      ],
+                                    ),
+                                    isActive: _currentStep >= 0,
+                                    state: _currentStep >= 2
+                                        ? StepState.complete
+                                        : StepState.disabled,
                                   ),
-                                  content: Column(
-                                    children: <Widget>[
-                                      _buildCreateFieldSecondPage(),
-                                      SizedBox(
-                                          height:
-                                              SizeConfig.screenHeight! * 0.025),
-                                    ],
-                                  ),
-                                  isActive: _currentStep >= 0,
-                                  state: _currentStep >= 1
-                                      ? StepState.complete
-                                      : StepState.disabled,
-                                ),
-                                Step(
-                                  title: GestureDetector(
-                                    child: new Text(''),
-                                    onTap: () {
-                                      setState(() {
-                                        _currentStep = 2;
-                                      });
-                                    },
-                                  ),
-                                  content: Column(
-                                    children: <Widget>[
-                                      _buildCreateFieldThirdPage(),
-                                      SizedBox(
-                                          height:
-                                              SizeConfig.screenHeight! * 0.025),
-                                    ],
-                                  ),
-                                  isActive: _currentStep >= 0,
-                                  state: _currentStep >= 2
-                                      ? StepState.complete
-                                      : StepState.disabled,
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
