@@ -89,7 +89,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
   // FOR GPS
   Position? _currentPosition;
   final Location location = Location();
-
+  bool gps_permission = false ;
   // Saving Value
   String tempField = "";
   // PAGE 1
@@ -130,8 +130,8 @@ class _NewFieldScreenState extends State<NewFieldScreen>
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
       final location_granted = await Permission.location.isGranted;
-      if (location_granted) {
-        // //print("Resume with Location");
+      if (location_granted && !gps_permission) {
+        gps_permission = location_granted ;
       }
     }
   }
@@ -1484,8 +1484,10 @@ class _NewFieldScreenState extends State<NewFieldScreen>
         elevation: 10,
         onPressed: () async {
           bool openGPS = await checkingOpenGPS();
-          if (openGPS) {
+          if (openGPS && gps_permission) {
             await submitUpdateGPS();
+          }else{
+            showAlertDialog_Location(context);
           }
           // setState(() {
           //   loadingGPS = false;
