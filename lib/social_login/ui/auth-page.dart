@@ -18,6 +18,7 @@ import '../../main.dart';
 import '../apple.dart';
 import '../auth-data.dart';
 import '../google.dart';
+import '../server_down_screen.dart';
 import 'utils.dart';
 import 'package:mun_bot/env.dart';
 
@@ -270,6 +271,10 @@ class AuthPage extends StatelessWidget {
             );
           },
         );
+        // 408 => Server Down
+      } else if (response.statusCode == 408) {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ServerDownScreen()));
       }
 
       //loggedUser
