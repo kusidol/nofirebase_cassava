@@ -17,9 +17,19 @@ class ServerDownScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                  width: 400,
-                  height: 400,
-                  child: Image.asset("assets/images/server_error.png")),
+                  width: sizeWidth(300, context),
+                  height: sizeHeight(300, context),
+                  child: Image.asset("assets/images/server_down.png")),
+              SizedBox(
+                width: SizeConfig.screenWidth! * 0.9,
+                child: Text(
+                  'ไม่สามารถเชื่อมต่อกับเซิฟเวอร์ได้ในขณะนี้ กรุณาลองใหม่ในภายหลัง',
+                  style: TextStyle(fontSize: sizeHeight(20, context)),
+                ),
+              ),
+              SizedBox(
+                height: sizeHeight(50, context),
+              ),
               // Text("TESTING SERVER DOWN"),
               InkWell(
                 splashColor: Colors.yellow, // Customize the splash color

@@ -1,4 +1,3 @@
-
 import 'package:flutter/rendering.dart';
 import 'package:localization/src/localization_extension.dart';
 
@@ -32,10 +31,9 @@ class BaseSurveySubPointEnemy extends StatefulWidget {
   BaseSurveySubPointEnemy(this.survey, this.surveyPoint);
   @override
   State<StatefulWidget> createState() => _BaseSurveySubPointEnemy();
-
 }
-class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
 
+class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
   String? status;
 
   int _selectedView = 1;
@@ -46,10 +44,8 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
 
   @override
   initState() {
-
     super.initState();
     clearParameter();
-
   }
 
   bool isSelected = false;
@@ -155,24 +151,24 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
       child: Column(
         children: [
           Padding(padding: EdgeInsets.only(top: sizeHeight(3, context))),
-          for (int i = 0; i < 4; i++) surveySubPointExpansionTile(i,targetPointProvider),
+          for (int i = 0; i < 4; i++)
+            surveySubPointExpansionTile(i, targetPointProvider),
         ],
       ),
     );
   }
 
-  List<Widget> surveyTileList(int point,targetPointProvider) {
+  List<Widget> surveyTileList(int point, targetPointProvider) {
     List<Widget> surveyList = [];
 
     for (int i = 0; i < 5; i++) {
-      surveyList.add(surveyListTile(point, i,targetPointProvider));
+      surveyList.add(surveyListTile(point, i, targetPointProvider));
     }
     return surveyList;
   }
 
-
   bool expansion = false;
-  Widget surveySubPointExpansionTile(int spotIndex,targetPointProvider) {
+  Widget surveySubPointExpansionTile(int spotIndex, targetPointProvider) {
     return Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(sizeHeight(10, context)),
@@ -187,6 +183,7 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                 child: Row(
                   children: [
                     CircleAvatar(
+                      radius: sizeHeight(20, context),
                       backgroundColor:
                           HotelAppTheme.buildLightTheme().primaryColor,
                       child: Icon(
@@ -197,11 +194,15 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                     ),
                     Spacer(),
                     Text(
-                      (targetPointProvider.isSpotComplete(spotIndex) ? "not-found-point-plant-label".i18n()  : "found-point-plant-label".i18n())
-                      ,style: TextStyle( fontSize: 18,color: targetPointProvider.isPointComplete(spotIndex) ? Colors.grey[400]: Colors.black
+                      (targetPointProvider.isSpotComplete(spotIndex)
+                          ? "not-found-point-plant-label".i18n()
+                          : "found-point-plant-label".i18n()),
+                      style: TextStyle(
+                          fontSize: sizeHeight(18, context),
+                          color: targetPointProvider.isPointComplete(spotIndex)
+                              ? Colors.grey[400]
+                              : Colors.black),
                     ),
-                    )
-                    ,
                     Spacer(),
                     Spacer(),
                     Spacer(),
@@ -211,21 +212,29 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                     Spacer(),
                     Spacer(),
                     Spacer(),
+                    ToggleButtons(
+                        children: [
+                          Icon(
+                            Icons.delete,
+                            size: sizeHeight(25, context),
+                          ),
 
-                    ToggleButtons(children: [
-                      Icon(Icons.delete  ,),
-
-                    //  Icon(Icons.task_alt_outlined),
-                    ], isSelected: targetPointProvider.spots[spotIndex] ,
-                      borderRadius: const BorderRadius.all(Radius.circular(8)),
-                      borderColor: Colors.red,
-                      selectedBorderColor: Colors.white,
-                      selectedColor: Colors.grey[300],
-
-                      fillColor: Colors.white,
-                      color: Colors.red,
-                      onPressed: (int index) => _spotAlert(context,targetPointProvider,widget.surveyPoint,spotIndex,index)
-                    )
+                          //  Icon(Icons.task_alt_outlined),
+                        ],
+                        isSelected: targetPointProvider.spots[spotIndex],
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(sizeWidth(8, context))),
+                        borderColor: Colors.red,
+                        selectedBorderColor: Colors.white,
+                        selectedColor: Colors.grey[300],
+                        fillColor: Colors.white,
+                        color: Colors.red,
+                        onPressed: (int index) => _spotAlert(
+                            context,
+                            targetPointProvider,
+                            widget.surveyPoint,
+                            spotIndex,
+                            index))
                   ],
                 ),
               ),
@@ -251,14 +260,15 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                             fontWeight: FontWeight.w700),
                       ),
                     ),
-                    children: surveyTileList(spotIndex,targetPointProvider)),
+                    children: surveyTileList(spotIndex, targetPointProvider)),
               ),
             ],
           ),
         ));
   }
 
-  _pointAlert(BuildContext context, targetPointProvider ,int surveyPoint, int spotIndex,int pointIndex,index) =>
+  _pointAlert(BuildContext context, targetPointProvider, int surveyPoint,
+          int spotIndex, int pointIndex, index) =>
       showCupertinoDialog<void>(
         context: context,
         barrierDismissible: false,
@@ -289,12 +299,11 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
             ),
             CupertinoDialogAction(
               onPressed: () {
-
                 setState(() {
-                  if(!targetPointProvider.isPointComplete(spotIndex * 5 + pointIndex)){
-                    targetPointProvider.deletePointAt(widget.surveyPoint,spotIndex,pointIndex,index);
-
-
+                  if (!targetPointProvider
+                      .isPointComplete(spotIndex * 5 + pointIndex)) {
+                    targetPointProvider.deletePointAt(
+                        widget.surveyPoint, spotIndex, pointIndex, index);
                   }
                 });
                 Navigator.of(context).pop(true);
@@ -311,7 +320,8 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
         ),
       );
 
-  _spotAlert(BuildContext context, targetPointProvider ,int surveyPoint, int spotIndex,int index) =>
+  _spotAlert(BuildContext context, targetPointProvider, int surveyPoint,
+          int spotIndex, int index) =>
       showCupertinoDialog<void>(
         context: context,
         barrierDismissible: false,
@@ -342,10 +352,10 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
             ),
             CupertinoDialogAction(
               onPressed: () {
-
                 setState(() {
-                  if(!targetPointProvider.isSpotComplete(spotIndex)){
-                    targetPointProvider.deleteSpotAt(widget.surveyPoint,spotIndex,index);
+                  if (!targetPointProvider.isSpotComplete(spotIndex)) {
+                    targetPointProvider.deleteSpotAt(
+                        widget.surveyPoint, spotIndex, index);
                   }
                 });
 
@@ -363,14 +373,11 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
         ),
       );
 
-
-
-  Widget surveyListTile(int spotIndex, int pointIndex,TargetPointProvider targetPointProvider) {
-
+  Widget surveyListTile(
+      int spotIndex, int pointIndex, TargetPointProvider targetPointProvider) {
     return GestureDetector(
         onTap: () {
-
-         // print("${spotIndex}  +  ${pointIndex} ${targetPointProvider.getPointAt(spotIndex, pointIndex).}");
+          // print("${spotIndex}  +  ${pointIndex} ${targetPointProvider.getPointAt(spotIndex, pointIndex).}");
 
           Navigator.push(
               context,
@@ -378,8 +385,10 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                   builder: (context) => BaseSurveyScreenEnemy(
                       widget.surveyPoint,
                       spotIndex * 5 + pointIndex,
-                      widget.survey.surveyID,targetPointProvider.diseaseSize,targetPointProvider.enemySize,targetPointProvider.pestSize))).then((value) {
-
+                      widget.survey.surveyID,
+                      targetPointProvider.diseaseSize,
+                      targetPointProvider.enemySize,
+                      targetPointProvider.pestSize))).then((value) {
             if (value == true) {
               Navigator.pushReplacement(
                   context,
@@ -414,7 +423,8 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                               left: SizeConfig.screenHeight! * 0.01,
                             ),
                             child: Text(
-                                "tree".i18n() + " ${spotIndex * 5 + pointIndex + 1}",
+                                "tree".i18n() +
+                                    " ${spotIndex * 5 + pointIndex + 1}",
                                 style: TextStyle(
                                     fontSize: sizeHeight(20, context))),
                           ),
@@ -423,34 +433,50 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                               left: SizeConfig.screenHeight! * 0.01,
                             ),
                             child: Text(
-                                (targetPointProvider.isPointComplete(spotIndex * 5 + pointIndex) ? "not-found-point-plant-label".i18n()  : "found-point-plant-label".i18n())
-                                ,style: TextStyle( fontSize: 16, color: targetPointProvider.isPointComplete(spotIndex * 5 + pointIndex) ? Colors.grey[400]: Colors.black
-                            )),
+                                (targetPointProvider.isPointComplete(
+                                        spotIndex * 5 + pointIndex)
+                                    ? "not-found-point-plant-label".i18n()
+                                    : "found-point-plant-label".i18n()),
+                                style: TextStyle(
+                                    fontSize: sizeHeight(16, context),
+                                    color: targetPointProvider.isPointComplete(
+                                            spotIndex * 5 + pointIndex)
+                                        ? Colors.grey[400]
+                                        : Colors.black)),
                           )
-
                         ],
                       ),
                       Spacer(),
-                     Container(
-
-                       child:  ToggleButtons(children: [
-                         Icon(Icons.delete   ,),
-
-                         //  Icon(Icons.task_alt_outlined),
-                       ], isSelected: targetPointProvider.surveyPointData.targetPoints[spotIndex * 5 + pointIndex].points,
-                           //isSelected: targetPointProvider.spots[spotIndex] ,
-                           borderRadius: const BorderRadius.all(Radius.circular(8)),
-                           borderColor: Colors.red,
-                           selectedBorderColor: Colors.white,
-                           selectedColor: Colors.grey[300],
-
-                           fillColor: Colors.white,
-                           color: Colors.red,
-                           onPressed: (int index)  => _pointAlert(context,targetPointProvider, widget.surveyPoint, spotIndex, pointIndex,index)
-                      )
-                     ) ,
                       Container(
-                              height: sizeHeight(20, context)),
+                          child: ToggleButtons(
+                              children: [
+                            Icon(
+                              Icons.delete,
+                              size: sizeWidth(20, context),
+                            ),
+
+                            //  Icon(Icons.task_alt_outlined),
+                          ],
+                              isSelected: targetPointProvider
+                                  .surveyPointData
+                                  .targetPoints[spotIndex * 5 + pointIndex]
+                                  .points,
+                              //isSelected: targetPointProvider.spots[spotIndex] ,
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(sizeWidth(8, context))),
+                              borderColor: Colors.red,
+                              selectedBorderColor: Colors.white,
+                              selectedColor: Colors.grey[300],
+                              fillColor: Colors.white,
+                              color: Colors.red,
+                              onPressed: (int index) => _pointAlert(
+                                  context,
+                                  targetPointProvider,
+                                  widget.surveyPoint,
+                                  spotIndex,
+                                  pointIndex,
+                                  index))),
+                      Container(height: sizeHeight(20, context)),
                     ],
                   ),
                 ),
@@ -470,114 +496,126 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                         padding: EdgeInsets.only(
                           left: SizeConfig.screenHeight! * 0.01,
                         ),
-                        child:  Container(
+                        child: Container(
                             height: 40.0,
                             width: 40.0,
                             child: new GestureDetector(
-                              onTap: () {
-
-                              },
+                              onTap: () {},
                               child: new Stack(
                                 children: <Widget>[
                                   Transform.scale(
                                     scale: 1.55,
-                                    child:IconButton(icon: ImageIcon(
-                                      AssetImage("assets/images/noun-cassava.png"),
-                                      color: Colors.pink,
-                                    ), onPressed: () {  } ,
-                                    ) ,
+                                    child: IconButton(
+                                      icon: ImageIcon(
+                                        AssetImage(
+                                            "assets/images/noun-cassava.png"),
+                                        color: Colors.pink,
+                                      ),
+                                      onPressed: () {},
+                                    ),
                                   ),
                                 ],
                               ),
-                            )
-                        ),
+                            )),
                       ),
-
                       SizedBox(
-
-                        width: sizeWidth(65, context),
-                        child: Row(
-                          children: [
-                            Text(targetPointProvider.surveyPointData.targetPoints[spotIndex * 5 + pointIndex].diseases.toString() ),
-                            Text( "/${targetPointProvider.diseaseSize}",style: TextStyle(fontSize: 12), ),
-                          ],
-                        )
-                      ),
-
+                          width: sizeWidth(65, context),
+                          child: Row(
+                            children: [
+                              Text(targetPointProvider
+                                  .surveyPointData
+                                  .targetPoints[spotIndex * 5 + pointIndex]
+                                  .diseases
+                                  .toString()),
+                              Text(
+                                "/${targetPointProvider.diseaseSize}",
+                                style: TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          )),
                       Padding(
                         padding: EdgeInsets.only(
                           left: SizeConfig.screenHeight! * 0.01,
                         ),
-                        child:  Container(
+                        child: Container(
                             height: 40.0,
                             width: 40.0,
                             child: new GestureDetector(
-                              onTap: () {
-
-                              },
+                              onTap: () {},
                               child: new Stack(
                                 children: <Widget>[
                                   Transform.scale(
                                     scale: 1.65,
-                                    child:IconButton(icon: ImageIcon(
-                                      AssetImage("assets/images/noun-bettle.png"),
-                                      color: Colors.amber,
-                                    ), onPressed: () {  } ,
-                                    ) ,
+                                    child: IconButton(
+                                      icon: ImageIcon(
+                                        AssetImage(
+                                            "assets/images/noun-bettle.png"),
+                                        color: Colors.amber,
+                                      ),
+                                      onPressed: () {},
+                                    ),
                                   ),
                                 ],
                               ),
-                            )
-                        ),
+                            )),
                       ),
-
                       SizedBox(
-                        width: sizeWidth(65, context),
+                          width: sizeWidth(65, context),
                           child: Row(
                             children: [
-                              Text(targetPointProvider.surveyPointData.targetPoints[spotIndex * 5 + pointIndex].enemies.toString() ),
-                              Text( "/${targetPointProvider.enemySize}",style: TextStyle(fontSize: 12), ),
+                              Text(targetPointProvider
+                                  .surveyPointData
+                                  .targetPoints[spotIndex * 5 + pointIndex]
+                                  .enemies
+                                  .toString()),
+                              Text(
+                                "/${targetPointProvider.enemySize}",
+                                style: TextStyle(fontSize: 12),
+                              ),
                             ],
-                          )
-                      ),
+                          )),
                       Spacer(),
                       Padding(
                         padding: EdgeInsets.only(
                           left: SizeConfig.screenHeight! * 0.01,
                         ),
-                        child:  Container(
+                        child: Container(
                             height: 40.0,
                             width: 40.0,
                             child: new GestureDetector(
-                              onTap: () {
-
-                              },
+                              onTap: () {},
                               child: new Stack(
                                 children: <Widget>[
                                   Transform.scale(
                                     scale: 1.55,
-                                    child:IconButton(icon: ImageIcon(
-                                      AssetImage("assets/images/noun-insect.png"),
-                                      color: Colors.blueAccent,
-                                    ), onPressed: () {  } ,
-                                    ) ,
-
+                                    child: IconButton(
+                                      icon: ImageIcon(
+                                        AssetImage(
+                                            "assets/images/noun-insect.png"),
+                                        color: Colors.blueAccent,
+                                      ),
+                                      onPressed: () {},
+                                    ),
                                   ),
-
                                 ],
                               ),
-                            )
-                        ),
+                            )),
                       ),
                       SizedBox(
-                        width: sizeWidth(65, context),
+                          width: sizeWidth(65, context),
                           child: Row(
                             children: [
-                              Text(targetPointProvider.surveyPointData.targetPoints[spotIndex * 5 + pointIndex].pests.toString() ),
-                              Text( "/${targetPointProvider.pestSize}",style: TextStyle(fontSize: 12), ),
+                              Text(targetPointProvider
+                                  .surveyPointData
+                                  .targetPoints[spotIndex * 5 + pointIndex]
+                                  .pests
+                                  .toString()),
+                              Text(
+                                "/${targetPointProvider.pestSize}",
+                                style: TextStyle(fontSize: 12),
+                              ),
                             ],
-                          )
-                      ),
+                          )),
                     ],
                   ),
                 ),
@@ -590,39 +628,34 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                       ),
                       child: Icon(
                         Icons.image,
-                        color:
-                        HotelAppTheme.buildLightTheme().primaryColor,
+                        color: HotelAppTheme.buildLightTheme().primaryColor,
                       ),
                     ),
-                    Text(" : ${targetPointProvider.surveyPointData.targetPoints[spotIndex * 5 + pointIndex].amountOfImage}  รูป",
-                        style:
-                        TextStyle(fontSize: sizeHeight(18, context))),
+                    Text(
+                        " : ${targetPointProvider.surveyPointData.targetPoints[spotIndex * 5 + pointIndex].amountOfImage}  รูป",
+                        style: TextStyle(fontSize: sizeHeight(18, context))),
                     SizedBox(
                       width: sizeWidth(20, context),
                     ),
                     GestureDetector(
                         child: CircleAvatar(
-                          backgroundColor:
+                      backgroundColor:
                           HotelAppTheme.buildLightTheme().primaryColor,
-                          child: Icon(
-
-                            Icons.navigate_next,
-                            size: sizeHeight(20, context),
-                            color: Colors.white,
-                          ),
-                        ))
+                      child: Icon(
+                        Icons.navigate_next,
+                        size: sizeHeight(20, context),
+                        color: Colors.white,
+                      ),
+                    ))
                   ],
                 ),
-
-
-
               ],
             ),
           ),
         ));
   }
 
-  bool isInit = false ;
+  bool isInit = false;
 
   @override
   Widget build(BuildContext context) {
@@ -655,26 +688,22 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                 ),
               ],
               child: Consumer<TargetPointProvider>(
-                builder: (context, targetPointProvider, index) {
-
-                  if(!isInit){
-                    targetPointProvider.fetchData(widget.survey.surveyID, widget.surveyPoint);
-                    isInit = true ;
-                  }
-
-
-                  return Container(
-                    child: ListView(
-                      scrollDirection: Axis.vertical,
-                      children: [
-
-                            allSurveySubPointExpansionTile(targetPointProvider)
-
-                      ],
-                    ),
-                  );
+                  builder: (context, targetPointProvider, index) {
+                if (!isInit) {
+                  targetPointProvider.fetchData(
+                      widget.survey.surveyID, widget.surveyPoint);
+                  isInit = true;
                 }
-              ),
+
+                return Container(
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    children: [
+                      allSurveySubPointExpansionTile(targetPointProvider)
+                    ],
+                  ),
+                );
+              }),
             ),
           )),
     );
