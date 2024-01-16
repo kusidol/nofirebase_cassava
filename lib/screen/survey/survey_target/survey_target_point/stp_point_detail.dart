@@ -77,15 +77,18 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
               child: Material(
                 color: Colors.transparent,
                 child: InkWell(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(32.0),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(sizeHeight(32, context)),
                   ),
                   onTap: () {
                     Navigator.pop(context);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Icon(Icons.arrow_back),
+                    child: Icon(
+                      Icons.arrow_back,
+                      size: sizeWidth(20, context),
+                    ),
                   ),
                 ),
               ),
@@ -114,12 +117,12 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                   Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(32.0),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(sizeHeight(32, context)),
                       ),
                       onTap: () {},
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(sizeHeight(8, context)),
                         // child: Icon(Icons.map),
                       ),
                     ),
@@ -127,12 +130,12 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                   Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(32.0),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(sizeHeight(32, context)),
                       ),
                       onTap: () {},
                       child: Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(sizeHeight(8, context)),
                         // child: Icon(FontAwesomeIcons.per,color: Colors.grey),
                       ),
                     ),
@@ -497,8 +500,8 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                           left: SizeConfig.screenHeight! * 0.01,
                         ),
                         child: Container(
-                            height: 40.0,
-                            width: 40.0,
+                            height: sizeHeight(40, context),
+                            width: sizeWidth(40, context),
                             child: new GestureDetector(
                               onTap: () {},
                               child: new Stack(
@@ -510,6 +513,7 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                                         AssetImage(
                                             "assets/images/noun-cassava.png"),
                                         color: Colors.pink,
+                                        size: sizeWidth(25, context),
                                       ),
                                       onPressed: () {},
                                     ),
@@ -522,14 +526,18 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                           width: sizeWidth(65, context),
                           child: Row(
                             children: [
-                              Text(targetPointProvider
-                                  .surveyPointData
-                                  .targetPoints[spotIndex * 5 + pointIndex]
-                                  .diseases
-                                  .toString()),
+                              Text(
+                                  targetPointProvider
+                                      .surveyPointData
+                                      .targetPoints[spotIndex * 5 + pointIndex]
+                                      .diseases
+                                      .toString(),
+                                  style: TextStyle(
+                                      fontSize: sizeWidth(12, context))),
                               Text(
                                 "/${targetPointProvider.diseaseSize}",
-                                style: TextStyle(fontSize: 12),
+                                style:
+                                    TextStyle(fontSize: sizeWidth(12, context)),
                               ),
                             ],
                           )),
@@ -538,8 +546,8 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                           left: SizeConfig.screenHeight! * 0.01,
                         ),
                         child: Container(
-                            height: 40.0,
-                            width: 40.0,
+                            height: sizeHeight(40, context),
+                            width: sizeWidth(40, context),
                             child: new GestureDetector(
                               onTap: () {},
                               child: new Stack(
@@ -551,6 +559,7 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                                         AssetImage(
                                             "assets/images/noun-bettle.png"),
                                         color: Colors.amber,
+                                        size: sizeWidth(25, context),
                                       ),
                                       onPressed: () {},
                                     ),
@@ -563,15 +572,17 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                           width: sizeWidth(65, context),
                           child: Row(
                             children: [
-                              Text(targetPointProvider
-                                  .surveyPointData
-                                  .targetPoints[spotIndex * 5 + pointIndex]
-                                  .enemies
-                                  .toString()),
                               Text(
-                                "/${targetPointProvider.enemySize}",
-                                style: TextStyle(fontSize: 12),
-                              ),
+                                  targetPointProvider
+                                      .surveyPointData
+                                      .targetPoints[spotIndex * 5 + pointIndex]
+                                      .enemies
+                                      .toString(),
+                                  style: TextStyle(
+                                      fontSize: sizeWidth(12, context))),
+                              Text("/${targetPointProvider.enemySize}",
+                                  style: TextStyle(
+                                      fontSize: sizeWidth(12, context))),
                             ],
                           )),
                       Spacer(),
@@ -580,8 +591,8 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                           left: SizeConfig.screenHeight! * 0.01,
                         ),
                         child: Container(
-                            height: 40.0,
-                            width: 40.0,
+                            height: sizeHeight(40, context),
+                            width: sizeWidth(40, context),
                             child: new GestureDetector(
                               onTap: () {},
                               child: new Stack(
@@ -593,6 +604,7 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                                         AssetImage(
                                             "assets/images/noun-insect.png"),
                                         color: Colors.blueAccent,
+                                        size: sizeWidth(25, context),
                                       ),
                                       onPressed: () {},
                                     ),
@@ -605,14 +617,19 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                           width: sizeWidth(65, context),
                           child: Row(
                             children: [
-                              Text(targetPointProvider
-                                  .surveyPointData
-                                  .targetPoints[spotIndex * 5 + pointIndex]
-                                  .pests
-                                  .toString()),
+                              Text(
+                                targetPointProvider
+                                    .surveyPointData
+                                    .targetPoints[spotIndex * 5 + pointIndex]
+                                    .pests
+                                    .toString(),
+                                style:
+                                    TextStyle(fontSize: sizeWidth(12, context)),
+                              ),
                               Text(
                                 "/${targetPointProvider.pestSize}",
-                                style: TextStyle(fontSize: 12),
+                                style:
+                                    TextStyle(fontSize: sizeWidth(12, context)),
                               ),
                             ],
                           )),
@@ -628,6 +645,7 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                       ),
                       child: Icon(
                         Icons.image,
+                        size: sizeWidth(25, context),
                         color: HotelAppTheme.buildLightTheme().primaryColor,
                       ),
                     ),
@@ -639,11 +657,12 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                     ),
                     GestureDetector(
                         child: CircleAvatar(
+                      radius: sizeHeight(15, context),
                       backgroundColor:
                           HotelAppTheme.buildLightTheme().primaryColor,
                       child: Icon(
                         Icons.navigate_next,
-                        size: sizeHeight(20, context),
+                        size: sizeHeight(25, context),
                         color: Colors.white,
                       ),
                     ))

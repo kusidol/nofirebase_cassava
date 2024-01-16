@@ -450,7 +450,11 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Icon(icon, color: Colors.white),
+                    Icon(
+                      icon,
+                      color: Colors.white,
+                      size: sizeWidth(25, context),
+                    ),
                     Text(
                       "$count",
                       style: TextStyle(
@@ -608,9 +612,13 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                       ),
                       Padding(
                         padding: EdgeInsets.only(
-                            left: sizeWidth(
-                                MediaQuery.of(context).size.width * 0.25,
-                                context)),
+                            left: SizeConfig.screenWidth! < 500
+                                ? sizeWidth(
+                                    MediaQuery.of(context).size.width * 0.25,
+                                    context)
+                                : sizeWidth(
+                                    MediaQuery.of(context).size.width * 0.12,
+                                    context)),
                       ),
                       Padding(
                         padding: EdgeInsets.only(
@@ -621,7 +629,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                     ],
                   ),
                   SizedBox(
-                    height: 10,
+                    height: sizeHeight(10, context),
                   ),
                   //Divider(indent: 0, thickness: 1,),
 
