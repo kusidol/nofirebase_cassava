@@ -687,20 +687,55 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                     ),
                   ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
-                  !_isPassValueFromPage
-                      ? Container(
-                          height: sizeHeight(50, context),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              color: theme_color,
-                              width: sizeWidth(2, context),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(18),
+                      border: Border.all(
+                        color: theme_color4,
+                        width: sizeWidth(2, context),
+                      ),
+                    ),
+                    child: _isPassValueFromPage
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text(
+                              widget.user!.title.toString() +
+                                  " " +
+                                  widget.user!.firstName.toString() +
+                                  " " +
+                                  widget.user!.lastName.toString(),
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: 'OpenSans',
+                                  fontSize: sizeHeight(20, context)),
                             ),
-                          ),
-                          child: DropdownButtonFormField<String>(
+                          )
+                        : DropdownButtonFormField<String>(
                             validator: (value) =>
                                 InputCodeValidator.validateDropdownProvider(
                                     value),
+                            decoration: InputDecoration(
+                              errorStyle: TextStyle(
+                                color: Colors.red,
+                                fontSize: sizeHeight(20, context),
+                              ),
+                              hintText: "please-select-owner".i18n(),
+                              hintStyle: TextStyle(
+                                fontSize: sizeHeight(20, context),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: sizeHeight(10, context),
+                                horizontal: sizeWidth(12, context),
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.transparent),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.transparent),
+                              ),
+                            ),
                             value: selectedValue,
                             onChanged: (value) {
                               if (value == 'add-new-agriculture'.i18n()) {
@@ -756,24 +791,11 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                                 });
                               }
                             },
-                            hint: Center(
-                                child: Text(
-                              "please-select-owner".i18n(),
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: sizeHeight(20, context)),
-                            )),
-                            // Hide the default underline
-                            // underline: Container(),
-                            // set the color of the dropdown menu
                             dropdownColor: Colors.white,
-                            icon: Padding(
-                              padding: EdgeInsets.all(sizeHeight(8, context)),
-                              child: Icon(
-                                Icons.arrow_downward,
-                                color: Colors.black,
-                                size: sizeHeight(25, context),
-                              ),
+                            icon: Icon(
+                              Icons.arrow_downward,
+                              color: Colors.black,
+                              size: sizeHeight(25, context),
                             ),
                             isExpanded: true,
 
@@ -828,21 +850,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                                         ))
                                     .toList(),
                           ),
-                        )
-                      : Container(
-                          alignment: Alignment.center,
-                          child: Text(
-                            widget.user!.title.toString() +
-                                " " +
-                                widget.user!.firstName.toString() +
-                                " " +
-                                widget.user!.lastName.toString(),
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'OpenSans',
-                                fontSize: sizeHeight(20, context)),
-                          ),
-                        ),
+                  ),
                   SizedBox(height: SizeConfig.screenHeight! * 0.02194644482),
                   Container(
                     alignment: Alignment.topLeft,
