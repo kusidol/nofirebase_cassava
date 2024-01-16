@@ -38,7 +38,7 @@ class InputCodeValidator {
   static String? validateFieldSize(String? value, String input) {
     print("input" + input);
     if (input != "") {
-      RegExp regex = new RegExp(r"[0-9]+[.[0-9]+]?");
+      RegExp regex = new RegExp(r"^[0-9]+[.]?[0-9]*$");
       if (!regex.hasMatch(input.toString())) {
         return 'enter-only-number'.i18n();
       } else

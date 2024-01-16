@@ -893,6 +893,9 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                       RegExp regex =
                           new RegExp(r'(^[0-9]*)([.]{0,1})([0-9]*$)');
                       if (regex.hasMatch(text.toString())) {
+                        if (text.isEmpty) {
+                          text = "0.0";
+                        }
                         planting.size = double.parse(text);
                       }
                     }),

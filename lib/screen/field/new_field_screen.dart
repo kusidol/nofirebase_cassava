@@ -89,7 +89,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
   // FOR GPS
   Position? _currentPosition;
   final Location location = Location();
-  bool gps_permission = false ;
+  bool gps_permission = false;
   // Saving Value
   String tempField = "";
   // PAGE 1
@@ -131,7 +131,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
     if (state == AppLifecycleState.resumed) {
       final location_granted = await Permission.location.isGranted;
       if (location_granted && !gps_permission) {
-        gps_permission = location_granted ;
+        gps_permission = location_granted;
       }
     }
   }
@@ -1175,7 +1175,13 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                         }
                       }),
                       if (text.isEmpty || (text == null) || (text == ""))
-                        {field.size = double.parse(save_Size)}
+                        {
+                          if (save_Size.isEmpty)
+                            {
+                              save_Size = "0.0",
+                            },
+                          field.size = double.parse(save_Size)
+                        }
                     },
                     validator1: (value) => InputCodeValidator.validateFieldSize(
                         value, field.size.toString()),
@@ -1486,7 +1492,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
           bool openGPS = await checkingOpenGPS();
           if (openGPS && gps_permission) {
             await submitUpdateGPS();
-          }else{
+          } else {
             showAlertDialog_Location(context);
           }
           // setState(() {

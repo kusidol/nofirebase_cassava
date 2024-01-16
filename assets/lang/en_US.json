@@ -394,7 +394,7 @@
   "non-exceed-a-million": "The data value cannot exceed a million",
   "cannot-be-negative-more-than-100": "The data value cannot be negative more than 100",
   "non-exceed-a-hundred": "The data value cannot exceed a hundred",
-  "enter-only-number": "Please enter only numbers",
+  "enter-only-number": "Please enter only numbers, number is positive",
   "enter-only-11-number": "Please enter only 11 numbers or less",
   "enter-number-char-50": "Please enter no more than 50 letters and numbers",
   "enter-number-char-30": "Please enter no more than 30 letters and numbers",
