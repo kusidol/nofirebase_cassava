@@ -346,12 +346,12 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
                       child: Column(
                         children: [
                           Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 25.0),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: sizeWidth(25, context)),
                             child: Column(
                               children: [
                                 SizedBox(
-                                  height: 10,
+                                  height: sizeHeight(10, context),
                                 ),
                                 Container(
                                   child: Column(
@@ -366,9 +366,11 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
                                             children: [
                                               Container(
                                                 child: IconButton(
-                                                  icon: const Icon(
+                                                  icon: Icon(
                                                     Icons.arrow_back_ios,
                                                     color: Colors.black,
+                                                    size:
+                                                        sizeWidth(20, context),
                                                   ),
                                                   onPressed: () {
                                                     Navigator.of(context).pop();
@@ -400,7 +402,9 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
                                         children: [
                                           Column(
                                             children: [
-                                              const SizedBox(height: 15),
+                                              SizedBox(
+                                                  height:
+                                                      sizeHeight(15, context)),
                                               Container(
                                                 // height: 80,
                                                 // width: MediaQuery.of(context).size.width,
@@ -408,7 +412,8 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
                                                     color: Colors.transparent,
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            35.0)),
+                                                            sizeWidth(
+                                                                25, context))),
                                                 child: TabBar(
                                                   onTap: (value) {
                                                     setState(() {
@@ -420,12 +425,16 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
                                                   },
                                                   controller: _tabController,
                                                   isScrollable: true,
+
+                                                  indicatorSize:
+                                                      TabBarIndicatorSize.tab,
                                                   // labelPadding: EdgeInsets.symmetric(horizontal: 10.0),
                                                   indicator: BoxDecoration(
                                                     color: Colors.white,
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            25.0),
+                                                            sizeHeight(
+                                                                25, context)),
                                                   ),
                                                   labelColor: Colors.black,
                                                   unselectedLabelColor:
@@ -433,28 +442,46 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
                                                   labelStyle: TextStyle(
                                                     color: Colors.grey,
                                                     fontWeight: FontWeight.w500,
-                                                    fontSize: 16,
+                                                    fontSize:
+                                                        sizeWidth(14, context),
                                                   ),
                                                   tabs: [
                                                     Tab(
                                                       text: 'Disease'.i18n(),
-                                                      icon: Icon(Icons.grass),
+                                                      icon: Icon(
+                                                        Icons.grass,
+                                                        size: sizeWidth(
+                                                            25, context),
+                                                      ),
                                                     ),
                                                     Tab(
                                                       text: 'NaturalEnermies'
                                                           .i18n(),
                                                       icon: Icon(
-                                                          Icons.bug_report),
+                                                        Icons.bug_report,
+                                                        size: sizeWidth(
+                                                            25, context),
+                                                      ),
                                                     ),
                                                     Tab(
                                                       text: 'PestPhase'.i18n(),
-                                                      icon: Icon(Icons
-                                                          .bug_report_outlined),
+                                                      icon: Icon(
+                                                        Icons
+                                                            .bug_report_outlined,
+                                                        size: sizeWidth(
+                                                            25, context),
+                                                      ),
                                                     ),
                                                   ],
                                                 ),
                                               ),
-                                              const SizedBox(height: 15),
+                                              SizedBox(
+                                                  height: SizeConfig
+                                                              .screenWidth! <
+                                                          500
+                                                      ? sizeHeight(20, context)
+                                                      : sizeHeight(
+                                                          30, context)),
                                             ],
                                           ),
                                         ],
@@ -467,8 +494,8 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
                           ),
                           ClipRRect(
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(35),
-                              topRight: Radius.circular(35),
+                              topLeft: Radius.circular(sizeWidth(35, context)),
+                              topRight: Radius.circular(sizeWidth(35, context)),
                             ),
                             child: Container(
                                 width: MediaQuery.of(context).size.width,
@@ -482,15 +509,18 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
                                         controller: _tabController,
                                         children: [
                                           Container(
-                                            padding: EdgeInsets.all(15),
+                                            padding: EdgeInsets.all(
+                                                sizeWidth(15, context)),
                                             child: _diseaseSelectBox(),
                                           ),
                                           Container(
-                                            padding: EdgeInsets.all(15),
+                                            padding: EdgeInsets.all(
+                                                sizeWidth(15, context)),
                                             child: _naturalSelectBox(),
                                           ),
                                           Container(
-                                            padding: EdgeInsets.all(15),
+                                            padding: EdgeInsets.all(
+                                                sizeWidth(15, context)),
                                             child: _pestSelectBox(),
                                           ),
                                         ],
@@ -527,7 +557,10 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.navigate_before),
+                                Icon(
+                                  Icons.navigate_before,
+                                  size: sizeWidth(20, context),
+                                ),
                                 Text(
                                   "previous-label".i18n(),
                                   style: TextStyle(
@@ -551,7 +584,7 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
                           height: sizeHeight(50, context),
                           child: Padding(
                             padding: _tabIndex == 0
-                                ? EdgeInsets.only(right: 50.0,left: 40.0)
+                                ? EdgeInsets.only(right: 50.0, left: 40.0)
                                 : EdgeInsets.only(right: 0.0),
                             child: FloatingActionButton(
                               backgroundColor: theme_color2,
@@ -569,7 +602,10 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
                                     style: TextStyle(
                                         fontSize: sizeHeight(18, context)),
                                   ),
-                                  Icon(Icons.navigate_next),
+                                  Icon(
+                                    Icons.navigate_next,
+                                    size: sizeWidth(20, context),
+                                  ),
                                 ],
                               ),
                               heroTag: "fab3",
@@ -590,7 +626,10 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.check_box),
+                                Icon(
+                                  Icons.check_box,
+                                  size: sizeWidth(20, context),
+                                ),
                                 Text(
                                   "save".i18n(),
                                   style: TextStyle(

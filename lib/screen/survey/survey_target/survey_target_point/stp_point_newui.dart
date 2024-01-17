@@ -591,8 +591,11 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
             child: Container(
               width:
                   sizeWidth(MediaQuery.of(context).size.width * 0.925, context),
-              height: sizeHeight(
-                  MediaQuery.of(context).size.height * 0.125, context),
+              height: SizeConfig.screenWidth! < 500
+                  ? sizeHeight(
+                      MediaQuery.of(context).size.height * 0.125, context)
+                  : sizeHeight(
+                      MediaQuery.of(context).size.height * 0.08, context),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -617,7 +620,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                                     MediaQuery.of(context).size.width * 0.25,
                                     context)
                                 : sizeWidth(
-                                    MediaQuery.of(context).size.width * 0.12,
+                                    MediaQuery.of(context).size.width * 0.10,
                                     context)),
                       ),
                       Padding(
@@ -932,7 +935,10 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                             ),
                             Container(
                               height: MediaQuery.of(context).size.height * 0.65,
-                              child: allSurveyBoxSwitch(surveyProvider),
+                              child: Padding(
+                                padding: EdgeInsets.all(sizeWidth(8, context)),
+                                child: allSurveyBoxSwitch(surveyProvider),
+                              ),
                             )
                           ])
                           /*: Center(
