@@ -38,28 +38,39 @@ class _ChangeLanguage extends State<ChangeLanguage> {
           border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.circular(0),
         ),
-        child: ListTile(
-          leading: Text(
-            (i + 1).toString(),
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: MediaQuery.of(context).size.width * 0.05),
-          ),
-          trailing: Icon(
-            Icons.check,
-            color: colors[i],
-          ),
-          title: Text(
-            lang[i],
-            style:
-                TextStyle(fontSize: MediaQuery.of(context).size.width * 0.05),
-          ),
-          onTap: () {
-            setState(() {
-              _selectedLanguage(i);
-              //colors[i] = Colors.black ;
-            });
-          },
+        child: Column(
+          children: [
+            SizedBox(
+              height: sizeHeight(15, context),
+            ),
+            ListTile(
+              leading: Text(
+                (i + 1).toString(),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: MediaQuery.of(context).size.width * 0.05),
+              ),
+              trailing: Icon(
+                Icons.check,
+                size: sizeWidth(25, context),
+                color: colors[i],
+              ),
+              title: Text(
+                lang[i],
+                style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.05),
+              ),
+              onTap: () {
+                setState(() {
+                  _selectedLanguage(i);
+                  //colors[i] = Colors.black ;
+                });
+              },
+            ),
+            SizedBox(
+              height: sizeHeight(15, context),
+            ),
+          ],
         ),
       ));
     }
@@ -77,8 +88,9 @@ class _ChangeLanguage extends State<ChangeLanguage> {
 
   Widget getAppBarUI() {
     return Container(
+      height: sizeHeight(85, context),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFFFFF),
+        color: Color(0xFFFFFFFF),
         boxShadow: <BoxShadow>[
           BoxShadow(
               color: Colors.grey.withOpacity(0.2),
@@ -106,9 +118,12 @@ class _ChangeLanguage extends State<ChangeLanguage> {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Icon(Icons.arrow_back),
+                  child: Padding(
+                    padding: EdgeInsets.all(sizeWidth(8, context)),
+                    child: Icon(
+                      Icons.arrow_back,
+                      size: sizeWidth(25, context),
+                    ),
                   ),
                 ),
               ),
@@ -133,12 +148,12 @@ class _ChangeLanguage extends State<ChangeLanguage> {
                   Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(32.0),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(sizeWidth(32, context)),
                       ),
                       onTap: () {},
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
+                      child: Padding(
+                        padding: EdgeInsets.all(sizeWidth(8, context)),
                         // child: Icon(Icons.map),
                       ),
                     ),
@@ -146,12 +161,12 @@ class _ChangeLanguage extends State<ChangeLanguage> {
                   Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(32.0),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(sizeWidth(32, context)),
                       ),
                       onTap: () {},
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(sizeWidth(8, context)),
                         // child: Icon(FontAwesomeIcons.per,color: Colors.grey),
                       ),
                     ),
@@ -168,6 +183,10 @@ class _ChangeLanguage extends State<ChangeLanguage> {
   Widget button() {
     return ElevatedButton(
       style: ButtonStyle(
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18.0),
+        )),
         backgroundColor: MaterialStateProperty.all<Color>(theme_color),
       ),
       onPressed: () {
@@ -187,9 +206,12 @@ class _ChangeLanguage extends State<ChangeLanguage> {
         });
         Navigator.pop(context);
       },
-      child: Text(
-        'Apply-lable'.i18n(),
-        style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.05),
+      child: Padding(
+        padding: EdgeInsets.all(sizeWidth(16, context)),
+        child: Text(
+          'Apply-lable'.i18n(),
+          style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.05),
+        ),
       ),
     );
   }
@@ -202,7 +224,7 @@ class _ChangeLanguage extends State<ChangeLanguage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             getAppBarUI(),
-            Padding(padding: EdgeInsets.all(10)),
+            Padding(padding: EdgeInsets.all(sizeWidth(10, context))),
             // Container(
             //     width: MediaQuery.of(context).size.width * 0.9,
             //     child: Text(
@@ -210,7 +232,7 @@ class _ChangeLanguage extends State<ChangeLanguage> {
             //       style: TextStyle(
             //           fontSize: MediaQuery.of(context).size.width * 0.04),
             //     )),
-            Padding(padding: EdgeInsets.all(10)),
+            Padding(padding: EdgeInsets.all(sizeWidth(10, context))),
             _ChangeLan(),
             button()
           ],

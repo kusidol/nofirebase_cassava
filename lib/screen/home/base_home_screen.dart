@@ -952,6 +952,7 @@ class _BaseHomeScreen extends State<BaseHomeScreen>
 
   Widget getAppBarUI() {
     return Container(
+      height: sizeHeight(85, context),
       decoration: BoxDecoration(
         color: const Color(0xFFFFFFFF),
         boxShadow: <BoxShadow>[

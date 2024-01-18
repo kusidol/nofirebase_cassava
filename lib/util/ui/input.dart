@@ -215,7 +215,7 @@ class _AnimTFFState extends State<AnimTFF> {
     return Container(
       decoration: BoxDecoration(
         color: widget.backgroundColor,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(sizeWidth(20, context)),
         border: border =
             Border.all(width: sizeWidth(2, context), color: theme_color4),
       ),
@@ -309,7 +309,7 @@ class _AnimTFFState extends State<AnimTFF> {
 
   Widget buildIcon(bool shouldAnimate, Color color, Icon icon,
       [Curve curve = Curves.fastOutSlowIn]) {
-    final double animVal = shouldAnimate ? 0 : -50;
+    final double animVal = shouldAnimate ? 0 : -sizeWidth(50, context);
     return AnimatedPositioned(
       duration: Duration(milliseconds: 500),
       right: widget.suffix ? animVal : null,
