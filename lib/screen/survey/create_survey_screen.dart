@@ -922,13 +922,38 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
           child: Column(
             children: [
               Container(
+                  child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "planting-label".i18n() + " *",
+                  style: TextStyle(
+                      color: _userNameColor,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'OpenSans',
+                      fontSize: sizeHeight(20, context)),
+                ),
+              )),
+              SizedBox(height: SizeConfig.screenHeight! * 0.02),
+              Container(
                 child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18),
+                    border: Border.all(
+                      color: theme_color4,
+                      width: sizeWidth(2, context),
+                    ),
+                  ),
                   child: _isPassValueFromPage
                       ? Column(
                           children: [
                             Container(
-                              child: Text("selected-planting-label".i18n() +
-                                  plantingNameByPassingValue),
+                              child: Text(
+                                "selected-planting-label".i18n() +
+                                    plantingNameByPassingValue,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: sizeHeight(18, context)),
+                              ),
                             ),
                             Container(
                               child: ExpansionTile(
@@ -939,7 +964,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                                         ", " +
                                         selectedfieldSubdistrict,
                                     style: TextStyle(
-                                        fontSize: 14,
+                                        fontSize: sizeHeight(14, context),
                                         color: Colors.grey.withOpacity(0.8))),
                                 title: buildTitle(
                                     "data-cultivation-label".i18n(),
@@ -948,252 +973,253 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                                   ListTile(
                                       visualDensity: VisualDensity(
                                           horizontal: 0, vertical: -4),
-                                      title: Text(selectedfieldOwner +
-                                          " : ${ownerFieldByPassingValue}")),
+                                      title: Text(
+                                        selectedfieldOwner +
+                                            " : ${ownerFieldByPassingValue}",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: sizeHeight(18, context)),
+                                      )),
                                   ListTile(
                                       visualDensity: VisualDensity(
                                           horizontal: 0, vertical: -4),
-                                      title: Text(selectedfieldName +
-                                          " : ${plantingNameByPassingValue}")),
+                                      title: Text(
+                                        selectedfieldName +
+                                            " : ${plantingNameByPassingValue}",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: sizeHeight(18, context)),
+                                      )),
                                   ListTile(
                                       visualDensity: VisualDensity(
                                           horizontal: 0, vertical: -4),
-                                      title: Text(selectedfieldSubdistrict +
-                                          " :  ${locationByPassingValue}")),
+                                      title: Text(
+                                        selectedfieldSubdistrict +
+                                            " :  ${locationByPassingValue}",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: sizeHeight(18, context)),
+                                      )),
                                 ],
                               ),
                             ),
                           ],
                         )
-                      : Column(
-                          children: [
-                            Container(
-                                child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "planting-label".i18n() + " *",
-                                style: TextStyle(
-                                    color: _userNameColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'OpenSans',
-                                    fontSize: sizeHeight(20, context)),
-                              ),
-                            )),
-                            SizedBox(height: SizeConfig.screenHeight! * 0.02),
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  color: theme_color,
-                                  width: sizeWidth(2, context),
+                      : DropdownButtonFormField<String>(
+                          validator: (value) =>
+                              InputCodeValidator.validateDropdownProvider(
+                                  value),
+                          decoration: InputDecoration(
+                            errorStyle: TextStyle(
+                              color: Colors.red,
+                              fontSize: sizeHeight(20, context),
+                            ),
+                            hintText: "select-planting-label".i18n(),
+                            hintStyle: TextStyle(
+                              fontSize: sizeHeight(20, context),
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: sizeHeight(10, context),
+                              horizontal: sizeWidth(12, context),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent),
+                            ),
+                          ),
+                          value: selectedValue,
+                          onChanged: (value) {
+                            if (value == "other".i18n()) {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) => Provider(
+                                    create: (context) => dropdownplanting,
+                                    builder: (context, child) =>
+                                        DropdownForPlanting(
+                                      (value) {
+                                        bool duplicate = false;
+                                        List<String> temp =
+                                            dropdownplanting.plantingString;
+                                        for (int i = 0; i < temp.length; i++) {
+                                          if (value['nameField'] == temp[i]) {
+                                            duplicate = true;
+                                            break;
+                                          }
+                                        }
+                                        if (!duplicate) {
+                                          dropdownplanting
+                                              .addItem(value['nameField']);
+                                        }
+                                        setState(() {
+                                          selectedValue = value['nameField'];
+                                          selectedField =
+                                              value['id'].toString();
+                                          selectPlanting = value['id'];
+                                          isSelectfieldID = true;
+                                          // updatePlantingItem(
+                                          //     value['id'], 1, 20);
+                                          _selectPlantingDropdrown =
+                                              "select-planting-label".i18n() +
+                                                  ": " +
+                                                  "${selectedValue}";
+                                          fieldIdFromDropdown = value['id'];
+
+                                          dropdownplanting
+                                              .getPlantingAndUserByfieldId(
+                                                  fieldIdFromDropdown);
+                                        });
+                                      },
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              child: DropdownButtonFormField<String>(
-                                validator: (value) =>
-                                    InputCodeValidator.validateDropdownProvider(
-                                        value),
-                                value: selectedValue,
-                                onChanged: (value) {
-                                  if (value == "other".i18n()) {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            Provider(
-                                          create: (context) => dropdownplanting,
-                                          builder: (context, child) =>
-                                              DropdownForPlanting(
-                                            (value) {
-                                              bool duplicate = false;
-                                              List<String> temp =
-                                                  dropdownplanting
-                                                      .plantingString;
-                                              for (int i = 0;
-                                                  i < temp.length;
-                                                  i++) {
-                                                if (value['nameField'] ==
-                                                    temp[i]) {
-                                                  duplicate = true;
-                                                  break;
-                                                }
-                                              }
-                                              if (!duplicate) {
-                                                dropdownplanting.addItem(
-                                                    value['nameField']);
-                                              }
-                                              setState(() {
-                                                selectedValue =
-                                                    value['nameField'];
-                                                selectedField =
-                                                    value['id'].toString();
-                                                selectPlanting = value['id'];
-                                                isSelectfieldID = true;
-                                                // updatePlantingItem(
-                                                //     value['id'], 1, 20);
-                                                _selectPlantingDropdrown =
-                                                    "select-planting-label"
-                                                            .i18n() +
-                                                        ": " +
-                                                        "${selectedValue}";
-                                                fieldIdFromDropdown =
-                                                    value['id'];
+                              );
+                            } else {
+                              int id = 0;
+                              for (int i = 0;
+                                  i < dropdownplanting.items.length;
+                                  i++) {
+                                if (dropdownplanting.items[i].name == value) {
+                                  id = dropdownplanting.items[i].id;
+                                  selectPlanting = id;
+                                  break;
+                                }
+                              }
+                              setState(() {
+                                selectedValue = value.toString();
+                                isSelectfieldID = true;
+                                // updatePlantingItem(id, 1, 20);
+                                _selectPlantingDropdrown =
+                                    "select-planting-label".i18n() +
+                                        ": ${selectedValue}";
+                                fieldIdFromDropdown = id;
+                                selectedField = id.toString();
 
-                                                dropdownplanting
-                                                    .getPlantingAndUserByfieldId(
-                                                        fieldIdFromDropdown);
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  } else {
-                                    int id = 0;
-                                    for (int i = 0;
-                                        i < dropdownplanting.items.length;
-                                        i++) {
-                                      if (dropdownplanting.items[i].name ==
-                                          value) {
-                                        id = dropdownplanting.items[i].id;
-                                        selectPlanting = id;
-                                        break;
-                                      }
-                                    }
-                                    setState(() {
-                                      selectedValue = value.toString();
-                                      isSelectfieldID = true;
-                                      // updatePlantingItem(id, 1, 20);
-                                      _selectPlantingDropdrown =
-                                          "select-planting-label".i18n() +
-                                              ": ${selectedValue}";
-                                      fieldIdFromDropdown = id;
-                                      selectedField = id.toString();
+                                dropdownplanting.getPlantingAndUserByfieldId(
+                                    fieldIdFromDropdown);
+                              });
+                            }
+                          },
+                          // Hide the default underline
+                          // underline: Container(),
+                          // set the color of the dropdown menu
+                          dropdownColor: Colors.white,
+                          icon: Icon(
+                            Icons.arrow_downward,
+                            color: Colors.black,
+                            size: sizeHeight(25, context),
+                          ),
+                          isExpanded: true,
 
-                                      dropdownplanting
-                                          .getPlantingAndUserByfieldId(
-                                              fieldIdFromDropdown);
-                                    });
-                                  }
-                                },
-                                hint: Center(
-                                    child: Text(
-                                  "select-planting-label".i18n(),
-                                  style: TextStyle(color: Colors.black),
-                                )),
-                                // Hide the default underline
-                                // underline: Container(),
-                                // set the color of the dropdown menu
-                                dropdownColor: Colors.white,
-                                icon: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: const Icon(Icons.arrow_downward,
-                                      color: Colors.black),
-                                ),
-                                isExpanded: true,
-
-                                // The list of options
-                                items: dropdownForShow
-                                    .map((e) => DropdownMenuItem(
-                                          value: e,
-                                          child: Container(
-                                            alignment: Alignment.centerLeft,
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  'plantings-label'.i18n() +
-                                                      " ",
-                                                  style: TextStyle(
-                                                    fontSize:
-                                                        sizeHeight(18, context),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  child: Text(
-                                                    e,
-                                                    maxLines: 1,
-                                                    overflow: TextOverflow.fade,
-                                                    softWrap: false,
-                                                    style: const TextStyle(
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        fontStyle:
-                                                            FontStyle.italic),
-                                                  ),
-                                                ),
-                                              ],
+                          // The list of options
+                          items: dropdownForShow
+                              .map((e) => DropdownMenuItem(
+                                    value: e,
+                                    child: Container(
+                                      alignment: Alignment.centerLeft,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            'plantings-label'.i18n() + " ",
+                                            style: TextStyle(
+                                              fontSize: sizeHeight(18, context),
                                             ),
                                           ),
-                                        ))
-                                    .toList(),
-
-                                // Customize the selected item
-                                selectedItemBuilder: (BuildContext context) =>
-                                    dropdownForShow
-                                        .map((e) => Center(
-                                              child: Text(
-                                                "select-planting-label".i18n() +
-                                                    ": ${e}",
-                                                style: const TextStyle(
-                                                    fontSize: 18,
-                                                    color: Colors.black,
-                                                    fontStyle: FontStyle.italic,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ))
-                                        .toList(),
-                              ),
-                            ),
-                            SizedBox(height: SizeConfig.screenHeight! * 0.02),
-                            isSelectfieldID
-                                ? Column(
-                                    children: [
-                                      Container(
-                                        child: ExpansionTile(
-                                          subtitle: Text(
-                                              selectedfieldOwner +
-                                                  ", " +
-                                                  selectedfieldName +
-                                                  ", " +
-                                                  selectedfieldSubdistrict,
+                                          Expanded(
+                                            child: Text(
+                                              e,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.fade,
+                                              softWrap: false,
                                               style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.grey
-                                                      .withOpacity(0.8))),
-                                          title: buildTitle(
-                                              "data-cultivation-label".i18n(),
-                                              " ${dropdownplanting.planting?.name}"),
-                                          children: [
-                                            ListTile(
-                                                visualDensity: VisualDensity(
-                                                    horizontal: 0,
-                                                    vertical: -4),
-                                                title: Text(selectedfieldOwner +
-                                                    " :  ${dropdownplanting.user?.title} ${dropdownplanting.user?.firstName} ${dropdownplanting.user?.lastName}")),
-                                            ListTile(
-                                                visualDensity: VisualDensity(
-                                                    horizontal: 0,
-                                                    vertical: -4),
-                                                title: Text(selectedfieldName +
-                                                    " : ${dropdownplanting.planting?.name}")),
-                                            ListTile(
-                                                visualDensity: VisualDensity(
-                                                    horizontal: 0,
-                                                    vertical: -4),
-                                                title: Text(
-                                                    selectedfieldSubdistrict +
-                                                        " : ${dropdownplanting.location}")),
-                                          ],
-                                        ),
+                                                  fontSize:
+                                                      sizeHeight(18, context),
+                                                  fontWeight: FontWeight.w700,
+                                                  fontStyle: FontStyle.italic),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  )
-                                : Container(),
-                            SizedBox(height: SizeConfig.screenHeight! * 0.02),
-                          ],
+                                    ),
+                                  ))
+                              .toList(),
+
+                          // Customize the selected item
+                          selectedItemBuilder: (BuildContext context) =>
+                              dropdownForShow
+                                  .map((e) => Positioned(
+                                        top: -sizeHeight(5, context),
+                                        child: Center(
+                                          child: Text(
+                                            "select-planting-label".i18n() +
+                                                " : ${e}",
+                                            style: TextStyle(
+                                              fontSize: sizeHeight(18, context),
+                                              color: Colors.black,
+                                              fontStyle: FontStyle.italic,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ))
+                                  .toList(),
                         ),
                 ),
               ),
+              isSelectfieldID
+                  ? Column(
+                      children: [
+                        Container(
+                          child: ExpansionTile(
+                            subtitle: Text(
+                                selectedfieldOwner +
+                                    ", " +
+                                    selectedfieldName +
+                                    ", " +
+                                    selectedfieldSubdistrict,
+                                style: TextStyle(
+                                    fontSize: sizeHeight(14, context),
+                                    color: Colors.grey.withOpacity(0.8))),
+                            title: buildTitle("data-cultivation-label".i18n(),
+                                " ${dropdownplanting.planting?.name}"),
+                            children: [
+                              ListTile(
+                                  visualDensity: VisualDensity(
+                                      horizontal: 0, vertical: -4),
+                                  title: Text(
+                                    selectedfieldOwner +
+                                        " :  ${dropdownplanting.user?.title} ${dropdownplanting.user?.firstName} ${dropdownplanting.user?.lastName}",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: sizeHeight(18, context)),
+                                  )),
+                              ListTile(
+                                  visualDensity: VisualDensity(
+                                      horizontal: 0, vertical: -4),
+                                  title: Text(
+                                    selectedfieldName +
+                                        " : ${dropdownplanting.planting?.name}",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: sizeHeight(18, context)),
+                                  )),
+                              ListTile(
+                                  visualDensity: VisualDensity(
+                                      horizontal: 0, vertical: -4),
+                                  title: Text(
+                                    selectedfieldSubdistrict +
+                                        " : ${dropdownplanting.location}",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: sizeHeight(18, context)),
+                                  )),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  : Container(),
               SizedBox(height: SizeConfig.screenHeight! * 0.02),
               _buildSurveyDate(),
               SizedBox(height: SizeConfig.screenHeight! * 0.02),
@@ -2238,19 +2264,49 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                               return Row(
                                 children: [
                                   Expanded(
-                                      child: ElevatedButton(
-                                    child: Text('previous-label'.i18n()),
-                                    onPressed: onStepCancel,
+                                      child: Container(
+                                    width: sizeWidth(25, context),
+                                    height: sizeHeight(35, context),
+                                    child: ElevatedButton(
+                                      child: Text(
+                                        'previous-label'.i18n(),
+                                        style: TextStyle(
+                                            fontSize: sizeHeight(16, context)),
+                                      ),
+                                      onPressed: cancel,
+                                    ),
                                   )),
                                   SizedBox(
-                                    width: 12,
+                                    width: sizeWidth(20, context),
                                   ),
                                   Expanded(
-                                      child: ElevatedButton(
-                                    child: Text(_currentStep == 3
-                                        ? 'confirm'.i18n()
-                                        : 'next-label'.i18n()),
-                                    onPressed: continued,
+                                      child: Container(
+                                    width: sizeWidth(25, context),
+                                    height: sizeHeight(35, context),
+                                    child: ElevatedButton(
+                                      child: isFinal()
+                                          ? _isPassValueFromPage
+                                              ? Text(
+                                                  'confirm-edit-label'.i18n(),
+                                                  style: TextStyle(
+                                                      fontSize: sizeHeight(
+                                                          16, context)),
+                                                )
+                                              : Text(
+                                                  'create-new-cultivation-label'
+                                                      .i18n(),
+                                                  style: TextStyle(
+                                                      fontSize: sizeHeight(
+                                                          16, context)),
+                                                )
+                                          : Text(
+                                              'next-label'.i18n(),
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      sizeHeight(16, context)),
+                                            ),
+                                      onPressed: continued,
+                                    ),
                                   )),
                                 ],
                               );
@@ -2386,7 +2442,10 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                   },
                   child: Padding(
                     padding: EdgeInsets.all(sizeWidth(8, context)),
-                    child: Icon(Icons.arrow_back),
+                    child: Icon(
+                      Icons.arrow_back,
+                      size: sizeHeight(25, context),
+                    ),
                   ),
                 ),
               ),

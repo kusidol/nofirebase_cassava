@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:mun_bot/controller/field_service.dart';
 import 'package:mun_bot/controller/planting_service.dart';
 import 'package:mun_bot/controller/user_service.dart';
@@ -2399,9 +2400,9 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                       )
                     : Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(18),
                           border: Border.all(
-                            color: theme_color,
+                            color: theme_color4,
                             width: sizeWidth(2, context),
                           ),
                         ),
@@ -2475,6 +2476,28 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                                 validator: (value) =>
                                     InputCodeValidator.validateDropdownProvider(
                                         value),
+                                decoration: InputDecoration(
+                                  errorStyle: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: sizeHeight(20, context),
+                                  ),
+                                  hintText: 'please-select-field'.i18n(),
+                                  hintStyle: TextStyle(
+                                    fontSize: sizeHeight(20, context),
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(
+                                    vertical: sizeHeight(10, context),
+                                    horizontal: sizeWidth(12, context),
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.transparent),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.transparent),
+                                  ),
+                                ),
                                 value: selectedValue,
                                 onChanged: (value) {
                                   if (value == "other".i18n()) {
@@ -2545,22 +2568,14 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                                     });
                                   }
                                 },
-                                hint: Center(
-                                    child: Text(
-                                  'please-select-field'.i18n(),
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: sizeHeight(14, context)),
-                                )),
                                 // Hide the default underline
                                 // underline: Container(),
                                 // set the color of the dropdown menu
                                 dropdownColor: Colors.white,
-                                icon: Padding(
-                                  padding:
-                                      EdgeInsets.all(sizeHeight(8, context)),
-                                  child: const Icon(Icons.arrow_downward,
-                                      color: Colors.black),
+                                icon: Icon(
+                                  Icons.arrow_downward,
+                                  color: Colors.black,
+                                  size: sizeHeight(25, context),
                                 ),
                                 isExpanded: true,
 
@@ -2604,17 +2619,20 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                                 // Customize the selected item
                                 selectedItemBuilder: (BuildContext context) =>
                                     dropdownForShow
-                                        .map((e) => Center(
-                                              child: Text(
-                                                'selected-field'.i18n() +
-                                                    " : ${e}",
-                                                style: TextStyle(
+                                        .map((e) => Positioned(
+                                              top: -sizeHeight(5, context),
+                                              child: Center(
+                                                child: Text(
+                                                  'selected-field'.i18n() +
+                                                      " : ${e}",
+                                                  style: TextStyle(
                                                     fontSize:
                                                         sizeHeight(18, context),
                                                     color: Colors.black,
                                                     fontStyle: FontStyle.italic,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
                                               ),
                                             ))
                                         .toList(),

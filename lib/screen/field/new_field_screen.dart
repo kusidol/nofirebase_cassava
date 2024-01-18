@@ -833,19 +833,22 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                                       ),
                                     ))
                                 .toList(),
-
                             // Customize the selected item
                             selectedItemBuilder: (BuildContext context) =>
                                 dropdownForShow
-                                    .map((e) => Center(
-                                          child: Text(
-                                            'owner'.i18n() + " : ${e}",
-                                            style: TextStyle(
+                                    .map((e) => Positioned(
+                                          top: -sizeHeight(5, context),
+                                          child: Center(
+                                            child: Text(
+                                              'owner'.i18n() + " : ${e}",
+                                              style: TextStyle(
                                                 fontSize:
                                                     sizeHeight(18, context),
                                                 color: Colors.black,
                                                 fontStyle: FontStyle.italic,
-                                                fontWeight: FontWeight.bold),
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
                                           ),
                                         ))
                                     .toList(),
