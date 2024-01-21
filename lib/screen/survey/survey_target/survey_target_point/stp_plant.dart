@@ -230,7 +230,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                                                             .center,
                                                     children: [
                                                       Text(
-                                                        "สิ่งสำรวจ",
+                                                        "survey-thing".i18n(),
                                                         style: TextStyle(
                                                             fontSize:
                                                                 sizeHeight(25,
@@ -280,7 +280,9 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                                                           unselectedLabelColor:
                                                               Colors.white,
                                                           labelStyle: TextStyle(
-                                                              fontSize: 18,
+                                                              fontSize:
+                                                                  sizeWidth(18,
+                                                                      context),
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w400,
@@ -489,7 +491,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                                         backgroundColor: theme_color2,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
-                                              sizeHeight(18, context)),
+                                              sizeHeight(16, context)),
                                         ),
                                         mini: true,
                                         onPressed: () => {_toggleTabBack()},
@@ -630,7 +632,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                           Text(
                             "${surveyTargetPointProvider.diseases[i].stp.surveyTargetName}",
                             style: TextStyle(
-                                fontSize: 18,
+                                fontSize: sizeWidth(16, context),
                                 fontWeight: FontWeight.w400,
                                 // fontStyle: FontStyle.normal,
                                 color: Colors.black),
@@ -649,12 +651,12 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                             width: MediaQuery.of(context).size.width / 30,
                           ),
                           Container(
-                            height: 40,
-                            width: 40,
+                            height: sizeHeight(40, context),
+                            width: sizeWidth(40, context),
                             child: InkWell(
                               child: Icon(
                                 Icons.image,
-                                size: 35,
+                                size: sizeWidth(30, context),
                                 color: theme_color2,
                               ),
                               onTap: () {
@@ -829,7 +831,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                     child: Text(
                       "${surverTargetpoints[i].stp.surveyTargetName}",
                       style: TextStyle(
-                          fontSize: 18,
+                          fontSize: sizeWidth(16, context),
                           fontWeight: FontWeight.w400,
                           color: Colors.black),
                     ),

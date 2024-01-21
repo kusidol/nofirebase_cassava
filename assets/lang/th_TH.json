@@ -76,6 +76,7 @@
   "Id": "รหัส",
   "Name": "ชื่อ",
   "Address": "ที่อยู่",
+  "survey-thing": "สิ่งสำรวจ",
 
   "detail-cultivation-label": "รายละเอียดการปลูก",
   "env-cultivation-label": "สภาพแวดล้อม",

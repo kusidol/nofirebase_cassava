@@ -44,6 +44,7 @@
   "exit-label": "Exit",
   "event-label": "Event",
   "change-value": "Change Language",
+  "survey-thing": "Survey",
 
   "search": "Search",
   "searchField": "Search (Field Code, Field Name, Owner's Name, Address)",

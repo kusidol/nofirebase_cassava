@@ -110,98 +110,102 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
 
   Future<void> _uploadImage(BuildContext context, ImageSource source) async {
     try {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(
-      source: source,
-      imageQuality: 100,
-      maxWidth: 1920,
-      maxHeight: 1080,
-    );
-
-    if (pickedFile != null) {
-      final shouldUpload = await showDialog(
-        context: context,
-        builder: (context) {
-          return CupertinoAlertDialog(
-            title: Text(
-              'confirm-upload'.i18n(),
-            ),
-            content: Column(
-              children: [
-                Text(
-                  'Do-you-want-to-upload-this-picture'.i18n(),
-                  style: TextStyle(fontSize: 15, color: Colors.black),
-                ),
-              ],
-            ),
-            actions: <CupertinoDialogAction>[
-              CupertinoDialogAction(
-                onPressed: () {
-                  Navigator.of(context).pop(false);
-                },
-                child: Text(
-                  'cancel'.i18n(),
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-              CupertinoDialogAction(
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                },
-                child: Text(
-                  'upload'.i18n(),
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-            ],
-          );
-        },
+      final picker = ImagePicker();
+      final pickedFile = await picker.pickImage(
+        source: source,
+        imageQuality: 100,
+        maxWidth: 1920,
+        maxHeight: 1080,
       );
 
-      if (shouldUpload == true) {
-        ProgressDialog progressDialog = ProgressDialog(context);
-        progressDialog.style(
-          message: "uploading".i18n(),
-          progressWidget: Container(
-              padding: const EdgeInsets.all(12.0),
-              child: const CircularProgressIndicator(
-                color: theme_color,
-              )),
-          maxProgress: 100.0,
-          progressTextStyle: TextStyle(
-              fontSize: 15, color: Colors.black, fontWeight: FontWeight.w400),
-          messageTextStyle: TextStyle(
-              fontSize: 15, color: Colors.black, fontWeight: FontWeight.w600),
+      if (pickedFile != null) {
+        final shouldUpload = await showDialog(
+          context: context,
+          builder: (context) {
+            return CupertinoAlertDialog(
+              title: Text(
+                'confirm-upload'.i18n(),
+                style: TextStyle(fontSize: sizeWidth(15, context), color: Colors.black),
+              ),
+              content: Column(
+                children: [
+                  Text(
+                    'Do-you-want-to-upload-this-picture'.i18n(),
+                    style: TextStyle(fontSize: sizeWidth(15, context), color: Colors.black),
+                  ),
+                ],
+              ),
+              actions: <CupertinoDialogAction>[
+                CupertinoDialogAction(
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  child: Text(
+                    'cancel'.i18n(),
+                    style: TextStyle(
+                      fontSize: sizeWidth(15, context),
+                      color: Colors.red,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+                CupertinoDialogAction(
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  },
+                  child: Text(
+                    'upload'.i18n(),
+                    style: TextStyle(
+                      fontSize: sizeWidth(15, context),
+                      color: Colors.blue,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
         );
-        progressDialog.show();
 
-        FormData formData = FormData.fromMap({
-          'file': await MultipartFile.fromFile(pickedFile.path, filename: 'image.png'),
-          'targetpointId': widget.targetpointId.toString(),
-        });
+        if (shouldUpload == true) {
+          ProgressDialog progressDialog = ProgressDialog(context);
+          progressDialog.style(
+            message: "uploading".i18n(),
+            progressWidget: Container(
+                padding: const EdgeInsets.all(12.0),
+                child: const CircularProgressIndicator(
+                  color: theme_color,
+                )),
+            maxProgress: 100.0,
+            progressTextStyle: TextStyle(
+               fontSize: sizeWidth(15, context), color: Colors.black, fontWeight: FontWeight.w400),
+            messageTextStyle: TextStyle(
+                fontSize: sizeWidth(15, context), color: Colors.black, fontWeight: FontWeight.w600),
+          );
+          progressDialog.show();
 
-        ImageData imageData = await imageService.uploadImage(
-          formData,
-          token.toString(),
-          widget.targetpointId,
-        ) as ImageData;
-
-        if (imageData != null) {
-          setState(() {
-            images.add(imageData);
+          FormData formData = FormData.fromMap({
+            'file': await MultipartFile.fromFile(pickedFile.path,
+                filename: 'image.png'),
+            'targetpointId': widget.targetpointId.toString(),
           });
-        }
 
-        progressDialog.hide();
+          ImageData imageData = await imageService.uploadImage(
+            formData,
+            token.toString(),
+            widget.targetpointId,
+          ) as ImageData;
+
+          if (imageData != null) {
+            setState(() {
+              images.add(imageData);
+            });
+          }
+
+          progressDialog.hide();
+        }
       }
-    }
-  } catch (e) {
+    } catch (e) {
       if (source.toString() == "ImageSource.camera") {
         var statusCamera = await Permission.camera.status;
         if (statusCamera.isDenied) {
@@ -269,11 +273,11 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
         return CupertinoAlertDialog(
           title: Text(
             'confirm-delete'.i18n(),
-            style: TextStyle(fontSize: 15, color: Colors.black),
+            style: TextStyle(fontSize: sizeWidth(15, context), color: Colors.black),
           ),
           content: Text(
             'Do-you-want-to-delete-this-image'.i18n(),
-            style: TextStyle(fontSize: 15, color: Colors.black),
+            style: TextStyle(fontSize: sizeWidth(15, context), color: Colors.black),
           ),
           actions: [
             TextButton(
@@ -282,7 +286,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
               },
               child: Text(
                 'cancel'.i18n(),
-                style: TextStyle(fontSize: 15, color: Colors.blue),
+                style: TextStyle(fontSize: sizeWidth(15, context), color: Colors.blue),
               ),
             ),
             TextButton(
@@ -292,7 +296,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
               },
               child: Text(
                 'deleted'.i18n(),
-                style: TextStyle(fontSize: 15, color: Colors.red),
+                style: TextStyle(fontSize: sizeWidth(15, context), color: Colors.red),
               ),
             ),
           ],
@@ -313,9 +317,9 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
             )),
         maxProgress: 100.0,
         progressTextStyle: TextStyle(
-            fontSize: 15, color: Colors.black, fontWeight: FontWeight.w400),
+            fontSize: sizeWidth(15, context), color: Colors.black, fontWeight: FontWeight.w400),
         messageTextStyle: TextStyle(
-            fontSize: 15, color: Colors.black, fontWeight: FontWeight.w600),
+            fontSize: sizeWidth(15, context), color: Colors.black, fontWeight: FontWeight.w600),
       );
       progressDialog.show();
 
@@ -361,11 +365,11 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
         return CupertinoAlertDialog(
           title: Text(
             'Confirm-deletion-of-all-data'.i18n(),
-            style: TextStyle(fontSize: 15, color: Colors.black),
+            style: TextStyle(fontSize: sizeWidth(15, context), color: Colors.black),
           ),
           content: Text(
             'Do-you-want-to-delete-all-photos'.i18n(),
-            style: TextStyle(fontSize: 15, color: Colors.black),
+            style: TextStyle(fontSize: sizeWidth(15, context), color: Colors.black),
           ),
           actions: [
             TextButton(
@@ -374,7 +378,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
               },
               child: Text(
                 'cancel'.i18n(),
-                style: TextStyle(fontSize: 15, color: Colors.black),
+                style: TextStyle(fontSize: sizeWidth(15, context), color: Colors.black),
               ),
             ),
             TextButton(
@@ -384,7 +388,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
               },
               child: Text(
                 'Delete-all'.i18n(),
-                style: TextStyle(fontSize: 15, color: Colors.red),
+                style: TextStyle(fontSize: sizeWidth(15, context), color: Colors.red),
               ),
             ),
           ],
@@ -409,9 +413,9 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
             )),
         maxProgress: 100.0,
         progressTextStyle: TextStyle(
-            fontSize: 15, color: Colors.black, fontWeight: FontWeight.w400),
+            fontSize: sizeWidth(15, context), color: Colors.black, fontWeight: FontWeight.w400),
         messageTextStyle: TextStyle(
-            fontSize: 15, color: Colors.black, fontWeight: FontWeight.w600),
+            fontSize: sizeWidth(15, context), color: Colors.black, fontWeight: FontWeight.w600),
       );
       progressDialog.show();
 
@@ -449,7 +453,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
       appBar: AppBar(
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios,
             color: Colors.black,
           ),
@@ -460,7 +464,9 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
         title: Text(
           'Gallery'.i18n(),
           style: TextStyle(
-              fontSize: 25, fontWeight: FontWeight.w700, color: Colors.black),
+              fontSize: sizeWidth(22, context),
+              fontWeight: FontWeight.w700,
+              color: Colors.black),
         ),
         backgroundColor: Colors.white,
       ),
@@ -523,11 +529,11 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
                                         onTap: () {
                                           _deleteImage(index);
                                         },
-                                        child: const Padding(
+                                        child: Padding(
                                           padding: EdgeInsets.all(1.0),
                                           child: Icon(
                                             Icons.delete_forever,
-                                            size: 25.0,
+                                            size: sizeWidth(25, context),
                                             color: Colors.red,
                                           ),
                                         ),
@@ -578,7 +584,8 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
             ),
             backgroundColor: theme_color4,
             label: 'Gallery'.i18n(),
-            labelStyle: TextStyle(fontSize: 20, color: Colors.black),
+            labelStyle: TextStyle(
+                fontSize: sizeWidth(20, context), color: Colors.black),
             onTap: () {
               if (_isPhotosPermissionReady) {
                 _uploadImage(context, ImageSource.gallery);
@@ -591,7 +598,7 @@ class _GalleryPage extends State<Gallery> with WidgetsBindingObserver {
             child: Icon(Icons.camera_alt, color: Colors.white),
             backgroundColor: theme_color4,
             label: 'Camera'.i18n(),
-            labelStyle: TextStyle(fontSize: 20, color: Colors.black),
+            labelStyle: TextStyle(fontSize: sizeWidth(20, context), color: Colors.black),
             onTap: () {
               if (_isCameraPermissionReady) {
                 _uploadImage(context, ImageSource.camera);
