@@ -215,6 +215,7 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
       //     return MainScreen();
       //   },
       // ));
+      Navigator.pop(context);
       CustomLoading.showSuccess();
     } else {
       CustomLoading.showError(
