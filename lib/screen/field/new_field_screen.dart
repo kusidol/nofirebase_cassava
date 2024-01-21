@@ -1314,7 +1314,13 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                               }
                             }),
                             if (text.isEmpty || (text == null) || (text == ""))
-                              {field.latitude = double.parse(save_Latitude)}
+                              {
+                                if (save_Latitude.isEmpty)
+                                  {
+                                    save_Latitude = "0.0",
+                                  },
+                                field.latitude = double.parse(save_Latitude)
+                              }
                           },
                           validator1: (value) =>
                               InputCodeValidator.validateNumber(
@@ -1386,7 +1392,13 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                               }
                             }),
                             if (text.isEmpty || (text == null) || (text == ""))
-                              {field.longtitude = double.parse(save_Longtitude)}
+                              {
+                                if (save_Longtitude.isEmpty)
+                                  {
+                                    save_Longtitude = "0.0",
+                                  },
+                                field.longtitude = double.parse(save_Longtitude)
+                              }
                           },
                           validator1: (value) =>
                               InputCodeValidator.validateNumber(
@@ -1427,6 +1439,10 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                       }),
                       if (text.isEmpty || (text == null) || (text == ""))
                         {
+                          if (save_MetresAboveSeaLv.isEmpty)
+                            {
+                              save_MetresAboveSeaLv = "0.0",
+                            },
                           field.metresAboveSeaLv =
                               double.parse(save_MetresAboveSeaLv)
                         }
