@@ -1529,57 +1529,7 @@ Widget getFilterBarUI(int numItemFounded) {
                                                        itemOwnerLastName:
                                                        "${lastName}",
                                                        date: ChangeDateTime(surveyProvider.surveyData[index].survey.date),);
-                                                     // FadeTransition(opacity: animation)
-                                                     /*CardItemWithOutImage(
-                                                            callback: () {
-                                                             if (surveyProvider.surveyData[index].checkTarget == false) {
-                                                              //alert(surveyList[index]);
-                                                                  } else {
-                                                                    Navigator.push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                        builder: (context) =>
-                                                                            BaseSurveyPoint(surveyProvider.surveyData[index].survey, surveyProvider.surveyData[index].code),
-                                                                      ),
-                                                                    );
-                                                                  }
-                                                            },
-                                                            callback2: () {
-
-                                                                 Navigator.push(
-                                                                  context,
-                                                                      MaterialPageRoute(
-                                                                          maintainState: false,
-                                                                          builder: (context) =>
-                                                                              SurveyMoreDetailScreen( surveyProvider.surveyData[index].survey,
-                                                                                  surveyProvider.surveyData[index].code, surveyProvider))).then((value) {
-                                                                    if (value == true) {
-                                                                      asyncFunction();
-                                                                      ////print("value${value}");
-
-                                                                    }
-                                                                  });
-
-                                                              },
-
-                                                            itemName: plantingName,
-                                                            itemID:
-                                                                "${surveyProvider.surveyData[index].code}",
-                                                            city: "อ." +
-                                                                "${district}," +
-                                                                " จ." +
-                                                                "${province}",
-                                                            district:
-                                                                "ต." + "${substrict}",
-                                                            itemOwnerName:
-                                                                "${title} ${firstName}",
-                                                            itemOwnerLastName:
-                                                                "${lastName}",
-                                                            animation: animation,
-                                                            animationController:
-                                                                animationController!,
-                                                            date: ChangeDateTime(surveyProvider.surveyData[index].survey.date),
-                                                          );*/
+                                                     
                                                    },
                                                  ):   !surveyProvider.isSearch ? Container() : NoData().showNoData(context),
                                                )

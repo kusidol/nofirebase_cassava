@@ -494,6 +494,7 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                 SizedBox(
                   height: sizeHeight(60, context),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Padding(
                         padding: EdgeInsets.only(
@@ -585,7 +586,6 @@ class _BaseSurveySubPointEnemy extends State<BaseSurveySubPointEnemy> {
                                       fontSize: sizeWidth(12, context))),
                             ],
                           )),
-                      Spacer(),
                       Padding(
                         padding: EdgeInsets.only(
                           left: SizeConfig.screenHeight! * 0.01,

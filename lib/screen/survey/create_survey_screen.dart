@@ -897,13 +897,16 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                 SizeConfig.screenHeight! * 0.02304469273743016732955432102619,
           ),
         ),
-        Text(
-          text2,
-          style: TextStyle(
-            color: theme_color2,
-            fontWeight: FontWeight.bold,
-            fontSize:
-                SizeConfig.screenHeight! * 0.02304469273743016732955432102619,
+        SizedBox(
+          width: SizeConfig.screenWidth! < 500 ? sizeWidth(150, context) : null,
+          child: Text(
+            text2,
+            style: TextStyle(
+              color: theme_color2,
+              fontWeight: FontWeight.bold,
+              fontSize:
+                  SizeConfig.screenHeight! * 0.02304469273743016732955432102619,
+            ),
           ),
         )
       ],
@@ -1182,7 +1185,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                                     fontSize: sizeHeight(14, context),
                                     color: Colors.grey.withOpacity(0.8))),
                             title: buildTitle("data-cultivation-label".i18n(),
-                                " ${dropdownplanting.planting?.name}"),
+                                "${dropdownplanting.planting?.name}"),
                             children: [
                               ListTile(
                                   visualDensity: VisualDensity(

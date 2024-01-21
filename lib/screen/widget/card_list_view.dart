@@ -473,12 +473,18 @@ class CardItemWithOutImage_Planting_Calendar extends StatelessWidget {
                                           ),
                                         ),
                                         Spacer(),
-                                        Text(
-                                          ' ${itemOwnerName} ${itemOwnerLastName}',
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: sizeHeight(14, context),
+                                        SizedBox(
+                                          width: sizeWidth(230, context),
+                                          child: ExpandableText(
+                                            ' ${itemOwnerName} ${itemOwnerLastName}',
+                                            expandText: '${itemOwnerName}',
+                                            collapseText: 'show less',
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: sizeHeight(14, context),
+                                            ),
+                                            textAlign: TextAlign.right,
                                           ),
                                         ),
                                       ],
@@ -933,7 +939,7 @@ class CardItemWithOutImage_Calendar extends StatelessWidget {
                                           ),
                                         ),
                                         SizedBox(
-                                          width: sizeWidth(170, context),
+                                          width: sizeWidth(230, context),
                                           child: ExpandableText(
                                             '${itemName} ($itemNameShow)',
                                             expandText: '${itemName}',
@@ -980,12 +986,18 @@ class CardItemWithOutImage_Calendar extends StatelessWidget {
                                           ),
                                         ),
                                         Spacer(),
-                                        Text(
-                                          ' ${itemOwnerName} ${itemOwnerLastName}',
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: sizeHeight(14, context),
+                                        SizedBox(
+                                          width: sizeWidth(170, context),
+                                          child: ExpandableText(
+                                            ' ${itemOwnerName} ${itemOwnerLastName}',
+                                            expandText: '${itemOwnerName}',
+                                            collapseText: 'show less',
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: sizeHeight(14, context),
+                                            ),
+                                            textAlign: TextAlign.right,
                                           ),
                                         ),
                                       ],
@@ -1813,12 +1825,18 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                       ),
                                     ),
                                     Spacer(),
-                                    Text(
-                                      ' ${widget.itemOwnerName} ${widget.itemOwnerLastName}',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: sizeHeight(14, context),
+                                    SizedBox(
+                                      width: sizeWidth(170, context),
+                                      child: ExpandableText(
+                                        ' ${widget.itemOwnerName} ${widget.itemOwnerLastName}',
+                                        expandText: '${widget.itemOwnerName}',
+                                        collapseText: 'show less',
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: sizeHeight(14, context),
+                                        ),
+                                        textAlign: TextAlign.right,
                                       ),
                                     ),
                                   ],
@@ -1970,12 +1988,22 @@ class _AnimatedListItemState_Planting extends State<AnimatedListItem_Planting> {
                                     size: sizeHeight(25, context),
                                   ),
                                   Text(
-                                    '  ' +
-                                        'plantings-label'.i18n() +
-                                        ' : ${widget.itemID}',
+                                    '  ' + 'plantings-label'.i18n() + ' : ',
                                     style: TextStyle(
                                         fontSize: sizeHeight(16, context),
                                         fontWeight: FontWeight.w600),
+                                  ),
+                                  SizedBox(
+                                    width: sizeWidth(120, context),
+                                    child: ExpandableText(
+                                      widget.itemID.toString(),
+                                      expandText: '${widget.itemID}',
+                                      collapseText: 'show less',
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                          fontSize: sizeHeight(18, context),
+                                          fontWeight: FontWeight.w600),
+                                    ),
                                   ),
                                   Spacer(),
                                   Padding(
@@ -2078,12 +2106,18 @@ class _AnimatedListItemState_Planting extends State<AnimatedListItem_Planting> {
                                       ),
                                     ),
                                     Spacer(),
-                                    Text(
-                                      ' ${widget.itemOwnerName} ${widget.itemOwnerLastName}',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: sizeHeight(14, context),
+                                    SizedBox(
+                                      width: sizeWidth(170, context),
+                                      child: ExpandableText(
+                                        ' ${widget.itemOwnerName} ${widget.itemOwnerLastName}',
+                                        expandText: '${widget.itemOwnerName}',
+                                        collapseText: 'show less',
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: sizeHeight(14, context),
+                                        ),
+                                        textAlign: TextAlign.right,
                                       ),
                                     ),
                                   ],

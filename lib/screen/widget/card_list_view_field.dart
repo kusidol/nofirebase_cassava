@@ -144,10 +144,23 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                     size: sizeHeight(25, context),
                                   ),
                                   Text(
-                                    '  ${widget.itemName}',
+                                    " " + "field-label".i18n() + " : ",
                                     style: TextStyle(
                                         fontSize: sizeHeight(18, context),
                                         fontWeight: FontWeight.w600),
+                                  ),
+                                  SizedBox(
+                                    width: sizeWidth(170, context),
+                                    child: ExpandableText(
+                                      widget.itemName.toString(),
+                                      expandText:
+                                          '${widget.itemName.toString().substring(0, 7)}',
+                                      collapseText: 'show less',
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                          fontSize: sizeHeight(18, context),
+                                          fontWeight: FontWeight.w600),
+                                    ),
                                   ),
                                   Spacer(),
                                   Padding(
@@ -216,7 +229,8 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                       width: sizeWidth(170, context),
                                       child: ExpandableText(
                                         '$itemNameShow',
-                                        expandText: '${widget.itemName}',
+                                        expandText:
+                                            '${itemNameShow.substring(0, 3)}',
                                         collapseText: 'show less',
                                         maxLines: 1,
                                         style: TextStyle(
@@ -261,12 +275,18 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                       ),
                                     ),
                                     Spacer(),
-                                    Text(
-                                      ' ${widget.itemOwnerName} ${widget.itemOwnerLastName}',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: sizeHeight(14, context),
+                                    SizedBox(
+                                      width: sizeWidth(170, context),
+                                      child: ExpandableText(
+                                        ' ${widget.itemOwnerName} ${widget.itemOwnerLastName}',
+                                        expandText: '${widget.itemOwnerName}',
+                                        collapseText: 'show less',
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: sizeHeight(14, context),
+                                        ),
+                                        textAlign: TextAlign.right,
                                       ),
                                     ),
                                   ],

@@ -595,7 +595,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                   ? sizeHeight(
                       MediaQuery.of(context).size.height * 0.125, context)
                   : sizeHeight(
-                      MediaQuery.of(context).size.height * 0.08, context),
+                      MediaQuery.of(context).size.height * 0.09, context),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -617,7 +617,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                         padding: EdgeInsets.only(
                             left: SizeConfig.screenWidth! < 500
                                 ? sizeWidth(
-                                    MediaQuery.of(context).size.width * 0.25,
+                                    MediaQuery.of(context).size.width * 0.20,
                                     context)
                                 : sizeWidth(
                                     MediaQuery.of(context).size.width * 0.10,
