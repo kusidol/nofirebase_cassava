@@ -6,8 +6,7 @@ import 'package:localization/src/localization_extension.dart';
 import 'package:mun_bot/controller/field_service.dart';
 import 'package:mun_bot/entities/field.dart';
 
-import 'package:mun_bot/entities/survey.dart';
-import 'package:mun_bot/main.dart';
+
 import 'package:mun_bot/providers/field_provider.dart';
 import 'package:mun_bot/screen/field/field_more_detail.dart';
 
@@ -154,7 +153,7 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                     child: ExpandableText(
                                       widget.itemName.toString(),
                                       expandText:
-                                          '${widget.itemName.toString().substring(0, 7)}',
+                                          '${widget.itemName.toString().substring(0, widget.itemName.toString().length > 7 ? 7 : widget.itemName.toString().length)}',
                                       collapseText: 'show less',
                                       maxLines: 1,
                                       style: TextStyle(
@@ -230,7 +229,7 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                       child: ExpandableText(
                                         '$itemNameShow',
                                         expandText:
-                                            '${itemNameShow.substring(0, 3)}',
+                                            '${itemNameShow.substring(0, widget.itemName.toString().length > 3 ? 3 : widget.itemName.toString().length)}',
                                         collapseText: 'show less',
                                         maxLines: 1,
                                         style: TextStyle(
