@@ -262,7 +262,7 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
         return Container(
           padding: EdgeInsets.all(sizeWidth(10, context)),
           width: SizeConfig.screenWidth,
-          height: SizeConfig.screenHeight! * 1.10,
+          height: SizeConfig.screenHeight! *1.0,
           child: GestureDetector(
             onTap: () {},
             child: AspectRatio(
@@ -740,7 +740,7 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
       child: Container(
         child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: Size.fromHeight(SizeConfig.screenHeight! * 0.08),
+            preferredSize: Size.fromHeight(SizeConfig.screenHeight! * 0.05),
             child: getAppBarUI(),
           ),
           body: Stack(
