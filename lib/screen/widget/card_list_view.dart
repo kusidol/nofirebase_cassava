@@ -474,7 +474,7 @@ class CardItemWithOutImage_Planting_Calendar extends StatelessWidget {
                                         ),
                                         Spacer(),
                                         SizedBox(
-                                          width: sizeWidth(230, context),
+                                          width: sizeWidth(140, context),
                                           child: ExpandableText(
                                             ' ${itemOwnerName} ${itemOwnerLastName}',
                                             expandText: '${itemOwnerName}',
@@ -939,7 +939,7 @@ class CardItemWithOutImage_Calendar extends StatelessWidget {
                                           ),
                                         ),
                                         SizedBox(
-                                          width: sizeWidth(230, context),
+                                          width: sizeWidth(140, context),
                                           child: ExpandableText(
                                             '${itemName} ($itemNameShow)',
                                             expandText: '${itemName}',
@@ -1993,18 +1993,31 @@ class _AnimatedListItemState_Planting extends State<AnimatedListItem_Planting> {
                                         fontSize: sizeHeight(16, context),
                                         fontWeight: FontWeight.w600),
                                   ),
-                                  SizedBox(
-                                    width: sizeWidth(120, context),
-                                    child: ExpandableText(
-                                      widget.itemID.toString(),
-                                      expandText: '${widget.itemID}',
-                                      collapseText: 'show less',
-                                      maxLines: 1,
-                                      style: TextStyle(
-                                          fontSize: sizeHeight(18, context),
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
+                                  widget.itemID.toString().length < 10
+                                      ? SizedBox(
+                                          width: sizeWidth(120, context),
+                                          child: Text(
+                                            '${widget.itemID.toString()}',
+                                            style: TextStyle(
+                                                fontSize:
+                                                    sizeHeight(18, context),
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        )
+                                      : SizedBox(
+                                          width: sizeWidth(120, context),
+                                          child: ExpandableText(
+                                            widget.itemID.toString(),
+                                            expandText:
+                                                '${widget.itemID.toString().substring(0, 10)}',
+                                            collapseText: 'show less',
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                                fontSize:
+                                                    sizeHeight(18, context),
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
                                   Spacer(),
                                   Padding(
                                     padding: EdgeInsets.only(

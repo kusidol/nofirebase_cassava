@@ -6,7 +6,6 @@ import 'package:localization/src/localization_extension.dart';
 import 'package:mun_bot/controller/field_service.dart';
 import 'package:mun_bot/entities/field.dart';
 
-
 import 'package:mun_bot/providers/field_provider.dart';
 import 'package:mun_bot/screen/field/field_more_detail.dart';
 
@@ -148,19 +147,31 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                         fontSize: sizeHeight(18, context),
                                         fontWeight: FontWeight.w600),
                                   ),
-                                  SizedBox(
-                                    width: sizeWidth(170, context),
-                                    child: ExpandableText(
-                                      widget.itemName.toString(),
-                                      expandText:
-                                          '${widget.itemName.toString().substring(0, widget.itemName.toString().length > 7 ? 7 : widget.itemName.toString().length)}',
-                                      collapseText: 'show less',
-                                      maxLines: 1,
-                                      style: TextStyle(
-                                          fontSize: sizeHeight(18, context),
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
+                                  widget.itemName.toString().length < 14
+                                      ? SizedBox(
+                                          width: sizeWidth(170, context),
+                                          child: Text(
+                                            '${widget.itemName.toString()}',
+                                            style: TextStyle(
+                                                fontSize:
+                                                    sizeHeight(18, context),
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        )
+                                      : SizedBox(
+                                          width: sizeWidth(170, context),
+                                          child: ExpandableText(
+                                            widget.itemName.toString(),
+                                            expandText:
+                                                '${widget.itemName.toString().substring(0, 14)}',
+                                            collapseText: 'show less',
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                                fontSize:
+                                                    sizeHeight(18, context),
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
                                   Spacer(),
                                   Padding(
                                     padding: EdgeInsets.only(
@@ -224,22 +235,31 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                         fontSize: sizeHeight(14, context),
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: sizeWidth(165, context),
-                                      child: ExpandableText(
-                                        '$itemNameShow',
-                                        expandText:
-                                            '${itemNameShow.substring(0, widget.itemName.toString().length > 3 ? 3 : widget.itemName.toString().length)}',
-                                        collapseText: 'show less',
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                            fontSize: sizeHeight(16, context),
-                                            fontWeight: FontWeight.w700
-                                            //fontWeight: FontWeight.bold,
-                                            // color: Colors.grey
+                                    itemNameShow.toString().length < 7
+                                        ? SizedBox(
+                                            width: sizeWidth(170, context),
+                                            child: Text(
+                                              '${itemNameShow.toString()}',
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      sizeHeight(18, context),
+                                                  fontWeight: FontWeight.w600),
                                             ),
-                                      ),
-                                    ),
+                                          )
+                                        : SizedBox(
+                                            width: sizeWidth(170, context),
+                                            child: ExpandableText(
+                                              itemNameShow.toString(),
+                                              expandText:
+                                                  '${itemNameShow.toString().substring(0, 7)}',
+                                              collapseText: 'show less',
+                                              maxLines: 1,
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      sizeHeight(18, context),
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          ),
                                     Spacer(),
                                     Icon(
                                       Icons.person,

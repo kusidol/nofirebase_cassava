@@ -527,28 +527,36 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
                   Row(
                     children: [
                       Text(
-                        label1,
+                        label1 + " : ",
                         style: TextStyle(
                           fontSize: sizeHeight(16, context),
                           // fontWeight: FontWeight.bold,
                           // color: Colors.grey
                         ),
                       ),
-                      SizedBox(
-                        width: sizeWidth(170, context),
-                        child: ExpandableText(
-                          ' : ${value1}',
-                          expandText: '${value1}',
-                          collapseText: 'show less',
-                          maxLines: 1,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: sizeHeight(16, context),
-                            //fontWeight: FontWeight.bold,
-                            // color: Colors.grey
-                          ),
-                        ),
-                      ),
+                      value1.toString().length < 12
+                          ? SizedBox(
+                              width: sizeWidth(140, context),
+                              child: Text(
+                                '${value1.toString()}',
+                                style: TextStyle(
+                                    fontSize: sizeHeight(18, context),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            )
+                          : SizedBox(
+                              width: sizeWidth(140, context),
+                              child: ExpandableText(
+                                value1.toString(),
+                                expandText:
+                                    '${value1.toString().substring(0, 12)}',
+                                collapseText: 'show less',
+                                maxLines: 1,
+                                style: TextStyle(
+                                    fontSize: sizeHeight(18, context),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ),
                     ],
                   ),
                   SizedBox(
@@ -557,28 +565,36 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
                   Row(
                     children: [
                       Text(
-                        label2,
+                        label2 + " : ",
                         style: TextStyle(
                           fontSize: sizeHeight(16, context),
                           // fontWeight: FontWeight.bold,
                           // color: Colors.grey
                         ),
                       ),
-                      SizedBox(
-                        width: sizeWidth(170, context),
-                        child: ExpandableText(
-                          ' : ${value2}',
-                          expandText: '${value2}',
-                          collapseText: 'show less',
-                          maxLines: 1,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: sizeHeight(16, context),
-                            //fontWeight: FontWeight.bold,
-                            // color: Colors.grey
-                          ),
-                        ),
-                      ),
+                      value2.toString().length < 14
+                          ? SizedBox(
+                              width: sizeWidth(140, context),
+                              child: Text(
+                                '${value2.toString()}',
+                                style: TextStyle(
+                                    fontSize: sizeHeight(18, context),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            )
+                          : SizedBox(
+                              width: sizeWidth(140, context),
+                              child: ExpandableText(
+                                value2.toString(),
+                                expandText:
+                                    '${value2.toString().substring(0, 14)}',
+                                collapseText: 'show less',
+                                maxLines: 1,
+                                style: TextStyle(
+                                    fontSize: sizeHeight(18, context),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ),
                     ],
                   ),
                   SizedBox(
@@ -587,28 +603,36 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
                   Row(
                     children: [
                       Text(
-                        label3,
+                        label3 + " : ",
                         style: TextStyle(
                           fontSize: sizeHeight(16, context),
                           // fontWeight: FontWeight.bold,
                           // color: Colors.grey
                         ),
                       ),
-                      SizedBox(
-                        width: sizeWidth(170, context),
-                        child: ExpandableText(
-                          ' : ${value3}',
-                          expandText: '${value3}',
-                          collapseText: 'show less',
-                          maxLines: 1,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: sizeHeight(16, context),
-                            //fontWeight: FontWeight.bold,
-                            // color: Colors.grey
-                          ),
-                        ),
-                      ),
+                      value3.toString().length < 14
+                          ? SizedBox(
+                              width: sizeWidth(140, context),
+                              child: Text(
+                                '${value3.toString()}',
+                                style: TextStyle(
+                                    fontSize: sizeHeight(18, context),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            )
+                          : SizedBox(
+                              width: sizeWidth(140, context),
+                              child: ExpandableText(
+                                value3.toString(),
+                                expandText:
+                                    '${value3.toString().substring(0, 14)}',
+                                collapseText: 'show less',
+                                maxLines: 1,
+                                style: TextStyle(
+                                    fontSize: sizeHeight(18, context),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ),
                     ],
                   ),
                   SizedBox(
@@ -663,21 +687,29 @@ class _CardSurveyMoreDetailState extends State<CardSurveyMoreDetail>
                           // color: Colors.grey
                         ),
                       ),
-                      SizedBox(
-                        width: sizeWidth(110, context),
-                        child: ExpandableText(
-                          ' : ${value1}',
-                          expandText: '${value1}',
-                          collapseText: 'show less',
-                          maxLines: 1,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: sizeHeight(16, context),
-                            //fontWeight: FontWeight.bold,
-                            // color: Colors.grey
-                          ),
-                        ),
-                      ),
+                      value1.toString().length < 7
+                          ? SizedBox(
+                              width: sizeWidth(140, context),
+                              child: Text(
+                                '${value1.toString()}',
+                                style: TextStyle(
+                                    fontSize: sizeHeight(18, context),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            )
+                          : SizedBox(
+                              width: sizeWidth(140, context),
+                              child: ExpandableText(
+                                value1.toString(),
+                                expandText:
+                                    '${value1.toString().substring(0, 7)}',
+                                collapseText: 'show less',
+                                maxLines: 1,
+                                style: TextStyle(
+                                    fontSize: sizeHeight(18, context),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ),
                     ],
                   ),
                   SizedBox(

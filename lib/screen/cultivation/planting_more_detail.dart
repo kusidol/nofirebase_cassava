@@ -172,6 +172,7 @@ class _PlantingMoreDetailScreen extends State<PlantingMoreDetailScreen>
               icon: Icon(
                 Icons.more_horiz,
                 color: Colors.grey,
+                size: sizeWidth(25, context),
               ),
               onPressed: () {
                 showModalBottomSheet(

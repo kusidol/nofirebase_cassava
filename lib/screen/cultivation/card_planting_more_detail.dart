@@ -177,28 +177,36 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
                     Row(
                       children: [
                         Text(
-                          label1,
+                          label1 + " : ",
                           style: TextStyle(
                             fontSize: sizeHeight(16, context),
                             // fontWeight: FontWeight.bold,
                             // color: Colors.grey
                           ),
                         ),
-                        SizedBox(
-                          width: sizeWidth(110, context),
-                          child: ExpandableText(
-                            ' ${value1}',
-                            expandText: '${value1}',
-                            collapseText: 'show less',
-                            maxLines: 1,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: sizeHeight(16, context),
-                              //fontWeight: FontWeight.bold,
-                              // color: Colors.grey
-                            ),
-                          ),
-                        ),
+                        value1.toString().length < 14
+                            ? SizedBox(
+                                width: sizeWidth(120, context),
+                                child: Text(
+                                  '${value1.toString()}',
+                                  style: TextStyle(
+                                      fontSize: sizeHeight(18, context),
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              )
+                            : SizedBox(
+                                width: sizeWidth(120, context),
+                                child: ExpandableText(
+                                  value1.toString(),
+                                  expandText:
+                                      '${value1.toString().substring(0, 14)}',
+                                  collapseText: 'show less',
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      fontSize: sizeHeight(16, context),
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
                       ],
                     ),
                     SizedBox(
@@ -207,28 +215,36 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
                     Row(
                       children: [
                         Text(
-                          label2,
+                          label2 + " : ",
                           style: TextStyle(
                             fontSize: sizeHeight(16, context),
                             // fontWeight: FontWeight.bold,
                             // color: Colors.grey
                           ),
                         ),
-                        SizedBox(
-                          width: sizeWidth(110, context),
-                          child: ExpandableText(
-                            ' ${value2}',
-                            expandText: '${value2}',
-                            collapseText: 'show less',
-                            maxLines: 1,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: sizeHeight(16, context),
-                              //fontWeight: FontWeight.bold,
-                              // color: Colors.grey
-                            ),
-                          ),
-                        ),
+                        value2.toString().length < 14
+                            ? SizedBox(
+                                width: sizeWidth(120, context),
+                                child: Text(
+                                  '${value2.toString()}',
+                                  style: TextStyle(
+                                      fontSize: sizeHeight(18, context),
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              )
+                            : SizedBox(
+                                width: sizeWidth(120, context),
+                                child: ExpandableText(
+                                  value2.toString(),
+                                  expandText:
+                                      '${value2.toString().substring(0, 14)}',
+                                  collapseText: 'show less',
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      fontSize: sizeHeight(16, context),
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
                       ],
                     ),
                   ],
@@ -405,7 +421,7 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
                 ),
               ),
               SizedBox(
-                width: sizeWidth(20, context),
+                width: sizeWidth(10, context),
               ),
               SizedBox(
                 width: sizeWidth(140, context),
@@ -543,7 +559,7 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
                 ),
               ),
               SizedBox(
-                width: sizeWidth(20, context),
+                width: sizeWidth(10, context),
               ),
               SizedBox(
                 width: sizeWidth(140, context),

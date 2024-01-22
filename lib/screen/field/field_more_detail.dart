@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -651,12 +652,29 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
                             fontWeight: FontWeight.normal,
                             // color: Colors.grey
                           )),
-                      Text(value,
-                          style: TextStyle(
-                            fontSize: sizeHeight(14, context),
-                            fontWeight: FontWeight.w600,
-                            // color: Colors.grey
-                          )),
+                      value.toString().length < 18
+                          ? SizedBox(
+                              width: sizeWidth(170, context),
+                              child: Text(
+                                '${value.toString()}',
+                                style: TextStyle(
+                                    fontSize: sizeHeight(18, context),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            )
+                          : SizedBox(
+                              width: sizeWidth(250, context),
+                              child: ExpandableText(
+                                value.toString(),
+                                expandText:
+                                    '${value.toString().substring(0, 18)}',
+                                collapseText: 'show less',
+                                maxLines: 1,
+                                style: TextStyle(
+                                    fontSize: sizeHeight(14, context),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ),
                     ],
                   ),
                 )
