@@ -3484,9 +3484,11 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
             Expanded(
               child: Center(
                 child: Text(
-                  _isPassValueFromPage
-                      ? "update-planting-label".i18n()
-                      : "create-planting-label".i18n(),
+                  _isLoading
+                      ? ""
+                      : _isPassValueFromPage
+                          ? "update-planting-label".i18n()
+                          : "create-planting-label".i18n(),
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: sizeHeight(22, context),

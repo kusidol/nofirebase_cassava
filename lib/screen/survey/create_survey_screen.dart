@@ -2456,9 +2456,11 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
             Expanded(
               child: Center(
                 child: Text(
-                  _isPassValueFromPage
-                      ? "updateSurvey-label".i18n()
-                      : "createSurvey-label".i18n(),
+                  _isLoading
+                      ? ""
+                      : _isPassValueFromPage
+                          ? "updateSurvey-label".i18n()
+                          : "createSurvey-label".i18n(),
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: sizeHeight(22, context),
