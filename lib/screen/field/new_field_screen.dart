@@ -227,6 +227,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
     data_subdistricts = await subdistrictService.getAllSubdistrictsByDistrictId(
         token.toString(), selectedDistrictId!);
     subdistricts = createDropdown(data_subdistricts);
+    if(mounted)
     setState(() {
       subdistricts = subdistricts;
     });
@@ -538,6 +539,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
             Expanded(
               child: Center(
                 child: Text(
+                  _isLoading ? "" :
                   _isPassValueFromPage
                       ? "update-field-label".i18n()
                       : "create-field-label".i18n(),
