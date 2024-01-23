@@ -1850,7 +1850,7 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                 child: Row(
                                   children: [
                                     Text(
-                                      '     ${widget.city} ',
+                                      '${widget.city} ',
                                       style: TextStyle(
                                         fontSize: sizeHeight(14, context),
                                       ),

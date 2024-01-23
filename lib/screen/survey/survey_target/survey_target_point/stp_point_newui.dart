@@ -423,13 +423,13 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
         if (indexEnemy != 0) {
           setState(() {
             showList = list;
+            isShowEnemy = true;
             indexEnemy = int.parse(count);
             if (isShowEnemy == false) {
               showEnemyHeight = 0;
             } else {
               showEnemyHeight = 200;
             }
-            isShowEnemy = !isShowEnemy;
           });
         }
       },
@@ -690,47 +690,57 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
   List<String> showList = [];
   Widget showEnemy() {
     return Padding(
-      padding: EdgeInsets.only(
-          bottom: isShowEnemy == false ? sizeHeight(16, context) : 0),
-      child: AnimatedContainer(
-          duration: Duration(milliseconds: 500),
-          height: showEnemyHeight,
-          width: sizeWidth(343, context),
-          decoration: BoxDecoration(
-            color: Colors.white, // Set the background color
-            borderRadius: BorderRadius.circular(
-                sizeWidth(12, context)), // Adjust the radius as needed
-          ),
-          child: ListView(
-            children: [
-              for (int i = 0; i < indexEnemy; i++)
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Colors.grey, // Choose the color of the border
-                        width: sizeWidth(
-                            1, context), // Choose the width of the border
+      padding: EdgeInsets.only(bottom: sizeHeight(16, context)),
+      child: InkWell(
+        onTap: () {
+          setState(() {
+            isShowEnemy = false;
+            showEnemyHeight = 0;
+          });
+        },
+        child: AnimatedContainer(
+            duration: Duration(milliseconds: 300),
+            height: showEnemyHeight,
+            width: sizeWidth(343, context),
+            decoration: BoxDecoration(
+              color: Colors.white, // Set the background color
+              borderRadius: BorderRadius.circular(
+                  sizeWidth(12, context)), // Adjust the radius as needed
+            ),
+            child: ListView(
+              children: [
+                for (int i = 0; i < indexEnemy; i++)
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Colors.grey, // Choose the color of the border
+                          width: sizeWidth(
+                              1, context), // Choose the width of the border
+                        ),
                       ),
                     ),
-                  ),
-                  child: ListTile(
-                    title: Row(
-                      children: [
-                        Text(
-                          showList[i],
-                          style: TextStyle(fontSize: sizeWidth(16, context)),
-                        )
-                      ],
+                    child: ListTile(
+                      title: Row(
+                        children: [
+                          Text(
+                            "item-label".i18n() + " : " + showList[i],
+                            style: TextStyle(fontSize: sizeWidth(16, context)),
+                          ),
+                          Spacer(),
+                        ],
+                      ),
+                      onTap: () {
+                        setState(() {
+                          isShowEnemy = false;
+                          showEnemyHeight = 0;
+                        });
+                      },
                     ),
-                    onTap: () {
-                      // Handle tile tap here
-                      // For example, you can navigate to a new screen or perform an action.
-                    },
-                  ),
-                )
-            ],
-          )),
+                  )
+              ],
+            )),
+      ),
     );
   }
 
