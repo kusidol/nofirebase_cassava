@@ -227,10 +227,10 @@ class _NewFieldScreenState extends State<NewFieldScreen>
     data_subdistricts = await subdistrictService.getAllSubdistrictsByDistrictId(
         token.toString(), selectedDistrictId!);
     subdistricts = createDropdown(data_subdistricts);
-    if(mounted)
-    setState(() {
-      subdistricts = subdistricts;
-    });
+    if (mounted)
+      setState(() {
+        subdistricts = subdistricts;
+      });
   }
 
   onLoadFirstFunction() async {
@@ -539,10 +539,11 @@ class _NewFieldScreenState extends State<NewFieldScreen>
             Expanded(
               child: Center(
                 child: Text(
-                  _isLoading ? "" :
-                  _isPassValueFromPage
-                      ? "update-field-label".i18n()
-                      : "create-field-label".i18n(),
+                  _isLoading
+                      ? ""
+                      : _isPassValueFromPage
+                          ? "update-field-label".i18n()
+                          : "create-field-label".i18n(),
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: sizeHeight(22, context),
@@ -628,6 +629,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   AnimTFF(
                     (text) => {
                       setState(() {
+                        text = text.trim();
                         field.code = text;
                       }),
                       if (text.isEmpty || (text == null) || (text == ""))
@@ -660,6 +662,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   AnimTFF(
                     (text) => {
                       setState(() {
+                        text = text.trim();
                         field.name = text;
                       }),
                       if (text.isEmpty || (text == null) || (text == ""))
@@ -871,6 +874,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   AnimTFF(
                     (text) => {
                       setState(() {
+                        text = text.trim();
                         field.address = text;
                       }),
                       if (text.isEmpty || (text == null) || (text == ""))
@@ -900,6 +904,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   AnimTFF(
                     (text) => {
                       setState(() {
+                        text = text.trim();
                         field.moo = text;
                       }),
                       if (text.isEmpty || (text == null) || (text == ""))
@@ -925,6 +930,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   AnimTFF(
                     (text) => {
                       setState(() {
+                        text = text.trim();
                         field.road = text;
                       }),
                       if (text.isEmpty || (text == null) || (text == ""))
@@ -1219,6 +1225,7 @@ class _NewFieldScreenState extends State<NewFieldScreen>
                   AnimTFF(
                     (text) => {
                       setState(() {
+                        text = text.trim();
                         field.landmark = text;
                       }),
                       if (text.isEmpty || (text == null) || (text == ""))

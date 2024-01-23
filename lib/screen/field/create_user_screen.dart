@@ -349,6 +349,7 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                   AnimTFF(
                     (text) => {
                       setState(() {
+                        text = text.trim();
                         title = text;
                       }),
                       // if (text.isEmpty || (text == null) || (text == ""))
@@ -376,6 +377,7 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                   AnimTFF(
                     (text) => {
                       setState(() {
+                        text = text.trim();
                         firstname = text;
                       }),
                       // if (text.isEmpty || (text == null) || (text == ""))
@@ -404,6 +406,7 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                   AnimTFF(
                     (text) => {
                       setState(() {
+                        text = text.trim();
                         lastname = text;
                       }),
                       // if (text.isEmpty || (text == null) || (text == ""))
@@ -432,6 +435,7 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                   AnimTFF(
                     (text) => {
                       setState(() {
+                        text = text.trim();
                         address = text;
                       }),
                       // if (text.isEmpty || (text == null) || (text == ""))
@@ -689,6 +693,7 @@ class _CreateUserScrennState extends State<CreateUserScrenn> {
                   AnimTFF(
                     (text) => {
                       setState(() {
+                        text = text.trim();
                         telphone = text;
                       }),
                       // if (text.isEmpty || (text == null) || (text == ""))

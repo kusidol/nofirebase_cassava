@@ -974,6 +974,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                           AnimTFF(
                             (text) => {
                               setState(() {
+                                text = text.trim();
                                 planting.previousPlantOther = text;
                               }),
                             },
@@ -1054,6 +1055,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                           AnimTFF(
                             (text) => {
                               setState(() {
+                                text = text.trim();
                                 planting.besidePlantOther = text;
                               }),
                             },
@@ -1597,6 +1599,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                   AnimTFF(
                     (text) => {
                       setState(() {
+                        text = text.trim();
                         planting.fertilizerFormular1 = text;
                       }),
                     },
@@ -1626,6 +1629,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                   AnimTFF(
                     (text) => {
                       setState(() {
+                        text = text.trim();
                         planting.fertilizerFormular2 = text;
                       }),
                     },
@@ -1655,6 +1659,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                   AnimTFF(
                     (text) => {
                       setState(() {
+                        text = text.trim();
                         planting.fertilizerFormular3 = text;
                       }),
                     },
@@ -1805,6 +1810,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                       AnimTFF(
                         (text) => {
                           setState(() {
+                            text = text.trim();
                             planting.weedingChemicalOther1 = text;
                           }),
                         },
@@ -1944,6 +1950,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                       AnimTFF(
                         (text) => {
                           setState(() {
+                            text = text.trim();
                             planting.weedingChemicalOther2 = text;
                           }),
                         },
@@ -2081,6 +2088,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                       AnimTFF(
                         (text) => {
                           setState(() {
+                            text = text.trim();
                             planting.weedingChemicalOther3 = text;
                           }),
                         },
@@ -2111,6 +2119,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
             AnimTFF(
               (text) => {
                 setState(() {
+                  text = text.trim();
                   planting.note = text;
                 }),
               },
@@ -2392,6 +2401,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
           AnimTFF(
             (text) => {
               setState(() {
+                text = text.trim();
                 planting.secondaryPlantType = text;
               }),
             },
@@ -2419,6 +2429,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
           AnimTFF(
             (text) => {
               setState(() {
+                text = text.trim();
                 planting.secondaryPlantVariety = text;
               }),
             },
@@ -2770,6 +2781,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                   setState(() {
                     errorText['code'] = null;
                     //   print("resset");
+                    text = text.trim();
                     planting.code = text;
                   }),
                   if (text.isEmpty || (text == null) || (text == ""))
@@ -2801,6 +2813,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
               AnimTFF(
                 (text) => {
                   setState(() {
+                    text = text.trim();
                     planting.name = text;
                   }),
                   if (text.isEmpty || (text == null) || (text == ""))
@@ -3116,6 +3129,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                           AnimTFF(
                             (text) => {
                               setState(() {
+                                text = text.trim();
                                 planting.soilAmendmentsOther = text;
                               }),
                             },

@@ -1242,6 +1242,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
                 (text) => {
                   setState(() {
                     errorText['code'] = null;
+                    text = text.trim();
                     surveying.besidePlant = text;
                   }),
                 },
@@ -1471,6 +1472,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
       AnimTFF(
           (text) => {
                 setState(() {
+                  text = text.trim();
                   surveying.weed = text;
                 }),
               },
@@ -1524,6 +1526,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
           (text) => {
                 setState(() {
                   // plantNear = text;
+                  text = text.trim();
                   surveying.soilType = text;
                 }),
               },
