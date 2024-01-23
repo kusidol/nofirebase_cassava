@@ -13,26 +13,35 @@ import 'package:mun_bot/entities/user.dart';
 import 'package:mun_bot/main.dart';
 import 'package:mun_bot/screen/login/login_screen.dart';
 
-class SurveyData{
-
-  int id ;
+class SurveyData {
+  int id;
   String plantingName;
-  String fieldName ;
-  String substrict ;
-  String district ;
-  String province ;
-  String title ;
-  String firstName ;
-  String lastName ;
+  String fieldName;
+  String substrict;
+  String district;
+  String province;
+  String title;
+  String firstName;
+  String lastName;
   bool checkTarget = false;
-  String code ;
-  Survey survey ;
-  bool isLoading ;
-  SurveyData(this.id,this.plantingName,this.fieldName,this.substrict,this.district,this.province,this.title,this.firstName,this.lastName,this.checkTarget,this.code,this.survey,this.isLoading) ;
+  String code;
+  Survey survey;
+  bool isLoading;
+  SurveyData(
+      this.id,
+      this.plantingName,
+      this.fieldName,
+      this.substrict,
+      this.district,
+      this.province,
+      this.title,
+      this.firstName,
+      this.lastName,
+      this.checkTarget,
+      this.code,
+      this.survey,
+      this.isLoading);
 }
-
-
-
 
 class SurveyProvider with ChangeNotifier {
   bool isHavePlanting = false;
@@ -52,7 +61,7 @@ class SurveyProvider with ChangeNotifier {
   bool isSearch = false;
 // New Adding
 
-  List<SurveyData> surveyData = [] ;
+  List<SurveyData> surveyData = [];
 
   int numberAllSurveys = 0;
 
@@ -60,7 +69,7 @@ class SurveyProvider with ChangeNotifier {
     isLoading = false;
 
     //if(!isFetch()){
-      surveyData.clear();
+    surveyData.clear();
 
     //}
 
@@ -73,7 +82,7 @@ class SurveyProvider with ChangeNotifier {
   void resetPlantingID() {
     plantingId = -1;
     plantingName = "";
-   // surveyData.clear();
+    // surveyData.clear();
     //notifyListeners();
   }
   /*bool _fetch = false ;
@@ -87,102 +96,120 @@ class SurveyProvider with ChangeNotifier {
     //notifyListeners();
   }*/
 
-  int count = -1 ;
-
-
-
+  int count = -1;
 
   Future<void> fetchData() async {
-
     SurveyService surveyService = SurveyService();
     PlantingService plantingService = PlantingService();
-    SurveyTargetPointService surveyTargetPointService = SurveyTargetPointService();
+    SurveyTargetPointService surveyTargetPointService =
+        SurveyTargetPointService();
     String? token = tokenFromLogin?.token;
-    if(count == -1)
+    if (count == -1)
       count = await plantingService.countPlantings(token.toString());
 
     numberAllSurveys = await surveyService.countSurveys(token.toString());
 
-    if(numberAllSurveys == 0 || numberAllSurveys == surveyData.length || (surveyData.length > 0 && surveyData.last.isLoading)){
-
+    if (numberAllSurveys == 0 ||
+        numberAllSurveys == surveyData.length ||
+        (surveyData.length > 0 && surveyData.last.isLoading)) {
       //setFetch(false);
       notifyListeners();
-      return ;
+      return;
     }
 
-    _value = 20 ;
+    _value = 20;
 
     isLoading = false;
 
     notifyListeners();
 
-    _value = numberAllSurveys < _value ? numberAllSurveys : _value ;
+    _value = numberAllSurveys < _value ? numberAllSurveys : _value;
 
-    int index = ((_page-1) * _value) ;
+    int index = ((_page - 1) * _value);
 
+    String none = "";
 
+    Survey sv = Survey(
+        0,
+        0,
+        0,
+        none,
+        none,
+        0,
+        0,
+        none,
+        none,
+        none,
+        none,
+        none,
+        none,
+        none,
+        none,
+        0,
+        0,
+        0,
+        none,
+        0,
+        none,
+        none,
+        0,
+        0,
+        0,
+        0,
+        none,
+        none,
+        none);
 
-    String none = "" ;
+    int dummySize = surveyData.length + _value < numberAllSurveys
+        ? _value
+        : numberAllSurveys - surveyData.length;
 
-    Survey sv = Survey(0, 0, 0, none, none, 0, 0, none, none, none, none, none, none, none, none, 0, 0, 0, none, 0, none, none, 0, 0, 0, 0, none, none, none) ;
-
-    int dummySize = surveyData.length + _value < numberAllSurveys ? _value : numberAllSurveys - surveyData.length  ;
-
-    
     //print("Dummy ${dummySize}");
-    for(int i = 0 ; i < dummySize ; i++){
-      surveyData.add(SurveyData(0,none,none,none,none,none,none,none,none,false,none,sv,true));
+    for (int i = 0; i < dummySize; i++) {
+      surveyData.add(SurveyData(0, none, none, none, none, none, none, none,
+          none, false, none, sv, true));
     }
 
     notifyListeners();
 
-    await surveyService.getSurveysWithPlantingAndLocationAndOwner(
-        token.toString(), _page, _value).then((value) async {
+    await surveyService
+        .getSurveysWithPlantingAndLocationAndOwner(
+            token.toString(), _page, _value)
+        .then((value) async {
+      if (value != null) {
+        for (Map<String, dynamic> data in value) {
+          bool checkTarget = await surveyTargetPointService
+              .checkSurveyTargetBySurveyId(token.toString(), data['surveyId']);
 
+          Survey survey = await surveyService.getSurveyByID(
+              token.toString(), data['surveyId']) as Survey;
 
+          if (surveyData.isEmpty) return;
 
-          if(value != null){
+          surveyData[index].id = data['surveyId'];
+          surveyData[index].plantingName = data['plantingName'];
+          surveyData[index].fieldName = data['fieldName'];
+          surveyData[index].substrict = data['substrict'];
+          surveyData[index].district = data['district'];
+          surveyData[index].province = data['province'];
+          surveyData[index].title = data['title'];
+          surveyData[index].firstName = data['firstName'];
+          surveyData[index].lastName = data['lastName'];
+          surveyData[index].checkTarget = checkTarget;
+          surveyData[index].code = data['code'];
+          surveyData[index].survey = survey;
+          surveyData[index].isLoading = false;
 
-              for (Map<String, dynamic> data in value) {
+          notifyListeners();
 
-                bool checkTarget = await surveyTargetPointService
-                    .checkSurveyTargetBySurveyId(token.toString(), data['surveyId']) ;
+          new Future.delayed(const Duration(seconds: 2), () {});
 
-                Survey survey = await surveyService.getSurveyByID(token.toString(), data['surveyId']) as Survey;
+          index++;
+        }
+        _page = (surveyData.length ~/ _value) + 1;
 
-
-                if(surveyData.isEmpty)
-                  return ;
-
-                surveyData[index].id = data['surveyId'] ;
-                surveyData[index].plantingName = data['plantingName'] ;
-                surveyData[index].fieldName = data['fieldName'] ;
-                surveyData[index].substrict = data['substrict'] ;
-                surveyData[index].province = data['province'] ;
-                surveyData[index].title = data['title'] ;
-                surveyData[index].firstName = data['firstName'] ;
-                surveyData[index].lastName = data['lastName'] ;
-                surveyData[index].checkTarget = checkTarget ;
-                surveyData[index].code = data['code'] ;
-                surveyData[index].survey = survey ;
-                surveyData[index].isLoading = false;
-
-
-
-                notifyListeners();
-
-                new Future.delayed(const Duration(seconds: 2), () {
-
-                });
-
-                index++;
-
-              }
-              _page = (surveyData.length ~/ _value) + 1;
-
-             // setFetch(false);
-          }
-
+        // setFetch(false);
+      }
     });
 
     if (count > 0) {
@@ -196,86 +223,110 @@ class SurveyProvider with ChangeNotifier {
   }
 
   Future<void> fetchDataFromPlanting() async {
-
     SurveyService surveyService = SurveyService();
 
     PlantingService plantingService = PlantingService();
 
-    SurveyTargetPointService surveyTargetPointService = SurveyTargetPointService();
+    SurveyTargetPointService surveyTargetPointService =
+        SurveyTargetPointService();
 
     String? token = tokenFromLogin?.token;
 
     int count = await plantingService.countPlantings(token.toString());
 
-    numberAllSurveys = await surveyService.countSurveysByPlantingId(token.toString(), plantingId);
+    numberAllSurveys = await surveyService.countSurveysByPlantingId(
+        token.toString(), plantingId);
 
-    if(numberAllSurveys == 0 || numberAllSurveys == surveyData.length) {
+    if (numberAllSurveys == 0 || numberAllSurveys == surveyData.length) {
       //setFetch(false);
       notifyListeners();
-      return ;
+      return;
     }
 
-    _value = 20 ;
+    _value = 20;
 
     isLoading = false;
 
     notifyListeners();
 
-    _value = numberAllSurveys < _value ? numberAllSurveys : _value ;
+    _value = numberAllSurveys < _value ? numberAllSurveys : _value;
 
-    int index = ((_page-1)*_value) ;
+    int index = ((_page - 1) * _value);
 
-    String none = "" ;
+    String none = "";
 
-    Survey sv = Survey(0, 0, 0, none, none, 0, 0, none, none, none, none, none, none, none, none, 0, 0, 0, none, 0, none, none, 0, 0, 0, 0, none, none, none) ;
+    Survey sv = Survey(
+        0,
+        0,
+        0,
+        none,
+        none,
+        0,
+        0,
+        none,
+        none,
+        none,
+        none,
+        none,
+        none,
+        none,
+        none,
+        0,
+        0,
+        0,
+        none,
+        0,
+        none,
+        none,
+        0,
+        0,
+        0,
+        0,
+        none,
+        none,
+        none);
 
-    for(int i = 0 ; i < _value ; i++){
-      surveyData.add(SurveyData(0,none,none,none,none,none,none,none,none,false,none,sv,true));
+    for (int i = 0; i < _value; i++) {
+      surveyData.add(SurveyData(0, none, none, none, none, none, none, none,
+          none, false, none, sv, true));
     }
 
-
-    await surveyService.getSurveyByPlantingID(token.toString(), plantingId, _page, _value).then((value) async {
-
+    await surveyService
+        .getSurveyByPlantingID(token.toString(), plantingId, _page, _value)
+        .then((value) async {
       for (Map<String, dynamic> data in value) {
+        bool checkTarget = await surveyTargetPointService
+            .checkSurveyTargetBySurveyId(token.toString(), data['surveyId']);
 
-        bool checkTarget = await surveyTargetPointService.checkSurveyTargetBySurveyId(token.toString(), data['surveyId']) ;
+        Survey survey = await surveyService.getSurveyByID(
+            token.toString(), data['surveyId']) as Survey;
 
-        Survey survey = await surveyService.getSurveyByID(token.toString(), data['surveyId']) as Survey;
+        if (surveyData.isEmpty) return;
 
-        if(surveyData.isEmpty)
-          return ;
-
-        surveyData[index].id = data['surveyId'] ;
-        surveyData[index].plantingName = data['plantingName'] ;
-        surveyData[index].fieldName = data['fieldName'] ;
-        surveyData[index].substrict = data['substrict'] ;
-        surveyData[index].province = data['province'] ;
-        surveyData[index].title = data['title'] ;
-        surveyData[index].firstName = data['firstName'] ;
-        surveyData[index].lastName = data['lastName'] ;
-        surveyData[index].checkTarget = checkTarget ;
-        surveyData[index].code = data['code'] ;
-        surveyData[index].survey = survey ;
+        surveyData[index].id = data['surveyId'];
+        surveyData[index].plantingName = data['plantingName'];
+        surveyData[index].fieldName = data['fieldName'];
+        surveyData[index].substrict = data['substrict'];
+        surveyData[index].district = data['district'];
+        surveyData[index].province = data['province'];
+        surveyData[index].title = data['title'];
+        surveyData[index].firstName = data['firstName'];
+        surveyData[index].lastName = data['lastName'];
+        surveyData[index].checkTarget = checkTarget;
+        surveyData[index].code = data['code'];
+        surveyData[index].survey = survey;
         surveyData[index].isLoading = false;
-
 
         notifyListeners();
 
-        new Future.delayed(const Duration(seconds: 2), () {
-
-        });
+        new Future.delayed(const Duration(seconds: 2), () {});
 
         index++;
-
-
       }
 
       _page = (surveyData.length ~/ _value) + 1;
       //setFetch(false);
-
     });
-
-
 
     isLoading = true;
     if (count == 0) {
@@ -286,10 +337,10 @@ class SurveyProvider with ChangeNotifier {
     notifyListeners();
   }
 
-
-  Future<void> _doSearch(List<Map<String, dynamic>> surveys,index) async {
+  Future<void> _doSearch(List<Map<String, dynamic>> surveys, index) async {
     String? token = tokenFromLogin?.token;
-    SurveyTargetPointService surveyTargetPointService = SurveyTargetPointService();
+    SurveyTargetPointService surveyTargetPointService =
+        SurveyTargetPointService();
 
     PlantingService plantingService = PlantingService();
     FieldService fieldService = FieldService();
@@ -297,24 +348,54 @@ class SurveyProvider with ChangeNotifier {
     SurveyService surveyService = SurveyService();
     numberAllSurveys = surveys.length;
 
-    String none = "" ;
-    Survey sv = Survey(0, 0, 0, none, none, 0, 0, none, none, none, none, none, none, none, none, 0, 0, 0, none, 0, none, none, 0, 0, 0, 0, none, none, none) ;
+    String none = "";
+    Survey sv = Survey(
+        0,
+        0,
+        0,
+        none,
+        none,
+        0,
+        0,
+        none,
+        none,
+        none,
+        none,
+        none,
+        none,
+        none,
+        none,
+        0,
+        0,
+        0,
+        none,
+        0,
+        none,
+        none,
+        0,
+        0,
+        0,
+        0,
+        none,
+        none,
+        none);
 
-    for(int i = 0 ; i < numberAllSurveys ; i++){
-      surveyData.add(SurveyData(0,none,none,none,none,none,none,none,none,false,none,sv,true));
+    for (int i = 0; i < numberAllSurveys; i++) {
+      surveyData.add(SurveyData(0, none, none, none, none, none, none, none,
+          none, false, none, sv, true));
     }
 
     for (Map<String, dynamic> data in surveys) {
-
-    //for (int i = 0; i < surveys.length; i++) {
+      //for (int i = 0; i < surveys.length; i++) {
       //print("==========${surveys[i].date}========");
 
-      bool checkTarget = await surveyTargetPointService.checkSurveyTargetBySurveyId(
-          token.toString(), data['surveyId']);
+      bool checkTarget = await surveyTargetPointService
+          .checkSurveyTargetBySurveyId(token.toString(), data['surveyId']);
       //Planting planting = await plantingService.getPlantingFromSurveyID(
-       //   survey['surveyId'], token.toString()) as Planting;
+      //   survey['surveyId'], token.toString()) as Planting;
 
-      Survey s = await surveyService.getSurveyByID(token.toString(), data['surveyId']) as Survey;
+      Survey s = await surveyService.getSurveyByID(
+          token.toString(), data['surveyId']) as Survey;
       //Field field = await fieldService.getFieldByPlantingID(planting.plantingId, token.toString()) as Field;
 
       //String location = await fieldService.getLocationByFielID(field.fieldID, token.toString()) as String;
@@ -339,62 +420,55 @@ class SurveyProvider with ChangeNotifier {
             0,
             RequestInfoStatus.No) ;
       }*/
-      if(surveyData.isEmpty)
-        return ;
+      if (surveyData.isEmpty) return;
 
-      surveyData[index].id = data['surveyId'] ;
-      surveyData[index].plantingName = data['plantingName'] ;
-      surveyData[index].fieldName = data['fieldName'] ;
-      surveyData[index].substrict = data['substrict'] ;
-      surveyData[index].province = data['province'] ;
-      surveyData[index].title = data['title'] ;
-      surveyData[index].firstName = data['firstName'] ;
-      surveyData[index].lastName = data['lastName'] ;
-      surveyData[index].checkTarget = checkTarget ;
-      surveyData[index].code = data['code'] ;
-      surveyData[index].survey = s ;
+      surveyData[index].id = data['surveyId'];
+      surveyData[index].plantingName = data['plantingName'];
+      surveyData[index].fieldName = data['fieldName'];
+      surveyData[index].substrict = data['substrict'];
+      surveyData[index].district = data['district'];
+      surveyData[index].province = data['province'];
+      surveyData[index].title = data['title'];
+      surveyData[index].firstName = data['firstName'];
+      surveyData[index].lastName = data['lastName'];
+      surveyData[index].checkTarget = checkTarget;
+      surveyData[index].code = data['code'];
+      surveyData[index].survey = s;
       surveyData[index].isLoading = false;
-
-
 
       notifyListeners();
 
       new Future.delayed(const Duration(seconds: 2), () {
         // deleayed code here
-
       });
       //surveyData.add(SurveyData(data['surveyId'],data['plantingName'],data['fieldName'],data['substrict'],
       //    data['district'],data['province'],data['title'],data['firstName'],data['lastName'],checkTarget,data['code'],survey,false));
 
       index++;
 
-
       //SurveyData searchData = SurveyData(survey['surveyId'],survey['plantingName'],survey['fieldName'],survey['substrict'],survey['district'],survey['province'],survey['title'],survey['firstName'],survey['lastName'],checkTarget,survey['code'],s,false) ;
       //surveyData.add(surveyData[index]);
     }
     isLoading = true;
 
-    notifyListeners() ;
+    notifyListeners();
   }
 
   void search(Map<String, dynamic> data) async {
-
     reset();
     //notifyListeners();
     SurveyService surveyService = SurveyService();
     String? token = tokenFromLogin?.token;
 
-    if(plantingId != -1){
+    if (plantingId != -1) {
       data["plantingId"] = plantingId.toString();
     }
 
-    await surveyService.search( data,token.toString()).then((surveys) async {
-
-        if(surveys != null){
-          await _doSearch(surveys,0) ;
-        }
-
-      });
+    await surveyService.search(data, token.toString()).then((surveys) async {
+      if (surveys != null) {
+        await _doSearch(surveys, 0);
+      }
+    });
 
     isLoading = true;
     numberAllSurveys = surveyData.length;
@@ -402,26 +476,23 @@ class SurveyProvider with ChangeNotifier {
   }
 
   void searchByKey(Map<String, dynamic> data) async {
-
     reset();
     String? token = tokenFromLogin?.token;
-    SurveyTargetPointService surveyTargetPointService = SurveyTargetPointService();
+    SurveyTargetPointService surveyTargetPointService =
+        SurveyTargetPointService();
     SurveyService surveyService = SurveyService();
 
-
-    if(plantingId != -1){
+    if (plantingId != -1) {
       data["plantingId"] = plantingId.toString();
-
-
     }
 
-      await surveyService.searchSurveyByKey(data,token.toString()).then((surveys) async {
-        if(surveys != null){
-          await _doSearch(surveys,0);
-        }
-      });
-
-
+    await surveyService
+        .searchSurveyByKey(data, token.toString())
+        .then((surveys) async {
+      if (surveys != null) {
+        await _doSearch(surveys, 0);
+      }
+    });
 
     /*List<Survey> data2 = surveys;
     bool checkTarget = false;
@@ -508,18 +579,18 @@ class SurveyProvider with ChangeNotifier {
   }
 
   void addSurvey(Survey data) async {
-
     String? token = tokenFromLogin?.token;
     //bool checkTarget = false;
-    SurveyTargetPointService surveyTargetPointService = SurveyTargetPointService();
+    SurveyTargetPointService surveyTargetPointService =
+        SurveyTargetPointService();
     SurveyService surveyService = SurveyService();
-    bool checkTarget = await surveyTargetPointService.checkSurveyTargetBySurveyId(token.toString(), data.surveyID);
+    bool checkTarget = await surveyTargetPointService
+        .checkSurveyTargetBySurveyId(token.toString(), data.surveyID);
     //list_check_target.add(checkTarget);
 
     PlantingService plantingService = new PlantingService();
-    Planting? plantingData = await plantingService.getPlantingFromSurveyID(data.surveyID, token.toString());
-
-
+    Planting? plantingData = await plantingService.getPlantingFromSurveyID(
+        data.surveyID, token.toString());
 
     /*if (plantingData != null) {
       plantings.insert(0, plantingData);
@@ -528,30 +599,38 @@ class SurveyProvider with ChangeNotifier {
 
     //Field? field;
     FieldService fieldService = FieldService();
-    Field field =  await fieldService.getFieldByPlantingID(plantingData!.plantingId, token.toString()) as Field;
+    Field field = await fieldService.getFieldByPlantingID(
+        plantingData!.plantingId, token.toString()) as Field;
 
-    String location = await fieldService.getLocationByFielID(field.fieldID, token.toString()) as String;
+    String location = await fieldService.getLocationByFielID(
+        field.fieldID, token.toString()) as String;
 
-    List<String> parts =   location.split(",");
+    List<String> parts = location.split(",");
     UserService userService = UserService();
-    User user = await userService.getUserByFieldID(field.fieldID, token.toString()) as User ;
+    User user = await userService.getUserByFieldID(
+        field.fieldID, token.toString()) as User;
 
-    if(user == null){
-      user = User(
-          -1,
-          "undefined",
-          "undefined",
-          "undefined",
-          "undefined",
-          "undefined",
-          UserStatus.invalid,
-          0,
-          RequestInfoStatus.No) ;
+    if (user == null) {
+      user = User(-1, "undefined", "undefined", "undefined", "undefined",
+          "undefined", UserStatus.invalid, 0, RequestInfoStatus.No);
     }
 
-    SurveyData newSurveyData = SurveyData(data.surveyID,plantingData.name,field.name,parts[1],parts[0],parts[2],user.title,user.firstName,user.lastName,checkTarget,plantingData.code,data,false) ;
+    SurveyData newSurveyData = SurveyData(
+        data.surveyID,
+        plantingData.name,
+        field.name,
+        parts[1],
+        parts[0],
+        parts[2],
+        user.title,
+        user.firstName,
+        user.lastName,
+        checkTarget,
+        plantingData.code,
+        data,
+        false);
 
-    surveyData.insert(0,newSurveyData);
+    surveyData.insert(0, newSurveyData);
 
     /*Planting? planting = plantingData;
     int plantingID = planting?.plantingId ?? 0;
@@ -624,12 +703,12 @@ class SurveyProvider with ChangeNotifier {
     String? token = tokenFromLogin?.token;
     int statusCode = await surveyervice.deleteSurvey(token.toString(), survey);
 
-    if(statusCode == 200){
+    if (statusCode == 200) {
       for (int i = 0; i < surveyData.length; i++) {
         if (survey.surveyID == surveyData[i].id) {
           surveyData.removeAt(i);
           notifyListeners();
-          return true ;
+          return true;
         }
       }
     }

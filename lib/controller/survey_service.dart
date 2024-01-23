@@ -65,7 +65,6 @@ class SurveyService {
 
   Future<List<Map<String, dynamic>>> getSurveyPoint(
       String token, int surveyId) async {
-
     Service service = Service();
     var response = await service.doGet(
         "${LOCAL_SERVER_IP_URL}/survey/${surveyId}/surveypoints",
@@ -143,14 +142,15 @@ class SurveyService {
     if (response.statusCode == 200) {
       //print(">>${response.data}");
 
-      EntityResponse.Response<SurveyPointStatus> surveyPointStatus = EntityResponse.Response<SurveyPointStatus>.fromJson(
-          jsonDecode(response.data), (body) => SurveyPointStatus.fromJson(body)) ;
+      EntityResponse.Response<SurveyPointStatus> surveyPointStatus =
+          EntityResponse.Response<SurveyPointStatus>.fromJson(
+              jsonDecode(response.data),
+              (body) => SurveyPointStatus.fromJson(body));
 
-      return response.statusCode ;
-
+      return response.statusCode;
     }
 
-    return 400 ;
+    return 400;
   }
 
   Future<int> updateSurvey(String token, Survey surveying) async {
@@ -184,7 +184,8 @@ class SurveyService {
     return response.statusCode;
   }
 
-  Future<List<Map<String, dynamic>>> searchSurveyByKey(Map<String, dynamic> data, String token) async {
+  Future<List<Map<String, dynamic>>> searchSurveyByKey(
+      Map<String, dynamic> data, String token) async {
     List<Map<String, dynamic>> surveys = [];
     int page = 1;
     int value = 1000;
@@ -209,7 +210,8 @@ class SurveyService {
     return surveys;
   }
 
-  Future<List<Map<String, dynamic>>> search(Map<String, dynamic> data, String token) async {
+  Future<List<Map<String, dynamic>>> search(
+      Map<String, dynamic> data, String token) async {
     List<Map<String, dynamic>> surveys = [];
     int page = 1;
     int value = 1000;
@@ -249,6 +251,7 @@ class SurveyService {
       for (int i = 0; i < res['body'].length; i++) {
         Map<String, dynamic> item = res['body'][i];
         datas.add(item);
+        print(item);
       }
     } else if (response.statusCode == 401) {
       print('error statusCode 401');

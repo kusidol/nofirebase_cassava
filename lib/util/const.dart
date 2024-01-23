@@ -149,7 +149,7 @@ final kToday = DateTime.now();
 final kFirstDay = DateTime(kToday.year, kToday.month - 3, kToday.day);
 final kLastDay = DateTime(kToday.year + 1, kToday.month, kToday.day);
 final kHintTextStyle = TextStyle(
-  color: Colors.black87,
+  color: theme_color4,
   fontFamily: 'OpenSans',
 );
 

@@ -296,7 +296,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       // SizedBox(height: 30.0),
                       // _buildEmailTF(),
-
+                      JustLogIn(),
                       //_buildForgotPasswordBtn(),
                       //_buildRememberMeCheckbox(),
                       //_buildLoginBtn(),

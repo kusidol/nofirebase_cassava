@@ -294,6 +294,41 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
     }
   }
 
+  _editConfirmation(context) => showCupertinoDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: Text('confirm-edit-label'.i18n()),
+          actions: <CupertinoDialogAction>[
+            CupertinoDialogAction(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'no'.i18n(),
+                style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+            CupertinoDialogAction(
+              onPressed: () {
+                Navigator.of(context).pop();
+                submitFunction();
+              },
+              child: Text(
+                'yes'.i18n(),
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     String locale = Localizations.localeOf(context).languageCode;
@@ -622,7 +657,11 @@ class _BaseSurveyDetail extends State<BaseSurveyDetailInfo>
                                   sizeHeight(18, context)),
                             ),
                             mini: true,
-                            onPressed: () => {submitFunction()},
+                            onPressed: () => {
+                              widget.isCreate
+                                  ? submitFunction()
+                                  : _editConfirmation(context)
+                            },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [

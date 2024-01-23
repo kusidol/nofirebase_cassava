@@ -1214,6 +1214,16 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
         ),
         hintText: textHint,
         hintStyle: kHintTextStyle,
+        suffixIcon: GestureDetector(
+          onTap: () {
+            majorHavestDateController.text = "";
+            planting.primaryPlantHarvestDate = 0;
+          },
+          child: Icon(
+            Icons.clear_rounded,
+            color: Colors.black,
+          ),
+        ),
       ),
     );
     return Container(
@@ -1279,6 +1289,16 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
         ),
         hintText: textHint,
         hintStyle: kHintTextStyle,
+        suffixIcon: GestureDetector(
+          onTap: () {
+            cultivattionMinorDateController.text = "";
+            planting.secondaryPlantPlantingDate = 0;
+          },
+          child: Icon(
+            Icons.clear_rounded,
+            color: Colors.black,
+          ),
+        ),
       ),
     );
     return Container(
@@ -1340,6 +1360,16 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
         prefixIcon: Icon(
           Icons.calendar_today_rounded,
           color: Colors.black,
+        ),
+        suffixIcon: GestureDetector(
+          onTap: () {
+            minorHavestDateController.text = "";
+            planting.secondaryPlantHarvestDate = 0;
+          },
+          child: Icon(
+            Icons.clear_rounded,
+            color: Colors.black,
+          ),
         ),
         hintText: textHint,
         hintStyle: kHintTextStyle,
@@ -2126,6 +2156,16 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
         ),
         hintText: textHint,
         hintStyle: kHintTextStyle,
+        suffixIcon: GestureDetector(
+          onTap: () {
+            _conDateFertilizer1.text = "";
+            planting.fertilizerDate1 = 0;
+          },
+          child: Icon(
+            Icons.clear_rounded,
+            color: Colors.black,
+          ),
+        ),
       ),
     );
     return Container(
@@ -2198,6 +2238,16 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
         ),
         hintText: textHint,
         hintStyle: kHintTextStyle,
+        suffixIcon: GestureDetector(
+          onTap: () {
+            _conDateFertilizer2.text = "";
+            planting.fertilizerDate2 = 0;
+          },
+          child: Icon(
+            Icons.clear_rounded,
+            color: Colors.black,
+          ),
+        ),
       ),
     );
     return Container(
@@ -2261,6 +2311,16 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
         ),
         hintText: textHint,
         hintStyle: kHintTextStyle,
+        suffixIcon: GestureDetector(
+          onTap: () {
+            _conDateFertilizer3.text = "";
+            planting.fertilizerDate3 = 0;
+          },
+          child: Icon(
+            Icons.clear_rounded,
+            color: Colors.black,
+          ),
+        ),
       ),
     );
     return Container(
