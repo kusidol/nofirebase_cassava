@@ -61,7 +61,7 @@ class _AnimTFFState extends State<AnimTFF> {
 
   String? showError;
   String? get text => widget.labelText;
-
+  bool shouldValidate = true;
   @override
   void initState() {
     super.initState();
@@ -233,12 +233,18 @@ class _AnimTFFState extends State<AnimTFF> {
                       focusNode: focusNode,
                       onChanged: (text) {
                         widget.textInput(text);
-                      },
-                      onTap: () {
-                        fieldText.text = lableText.toString();
-                        if (validator(text) != null) {
+                        if (text.isEmpty) {
                           clearText();
                         }
+                      },
+                      onTap: () {
+                        if (lableText == null || lableText!.isEmpty) {
+                          shouldValidate = false;
+                          if (shouldValidate && validator(text) != null) {
+                            clearText();
+                          }
+                        }
+                        fieldText.text = lableText.toString();
                       },
                       decoration: InputDecoration(
                           // errorText: showError,
@@ -257,9 +263,13 @@ class _AnimTFFState extends State<AnimTFF> {
                       focusNode: focusNode,
                       onChanged: (text) {
                         widget.textInput(text);
+                        if (text.isEmpty) {
+                          clearText();
+                        }
                       },
                       onTap: () {
-                        if (validator(text) != null) {
+                        shouldValidate = false;
+                        if (shouldValidate && validator(text) != null) {
                           clearText();
                         }
                         if (!defaultLabel(text)) {
