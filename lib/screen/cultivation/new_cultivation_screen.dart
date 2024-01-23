@@ -689,6 +689,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
         }
       }
       var json_postData = jsonEncode(postData);
+      log(json_postData);
       int statuscode = await plantingService.updatePlanting(
           token.toString(), json_postData, planting.plantingId);
       CustomLoading.dismissLoading();
@@ -832,7 +833,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
         }
       }
       var json_postData = jsonEncode(postData);
-      // //   print("postData Json : ${json_postData}");
+      print("postData Json : ${json_postData}");
 
       Planting? newPlanting =
           await plantingService.createPlanting(token.toString(), json_postData);
@@ -1722,6 +1723,9 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                 onChanged: (value) {
                   setState(() {
                     _selectWeedingMonth1 = value;
+                    if (value == "ไม่เลือก") {
+                      value = "0";
+                    }
                     planting.weedingMonth1 = int.parse(value.toString());
                     // planting.weedingChemical1 = int.parse(value.toString());
                   });
@@ -1781,6 +1785,9 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                   //   print(_selectChemical1);
                   planting.herbicideByWeedingChemical1 = returnIndexFromList(
                       weedingChemicalName, value.toString());
+                  if (planting.herbicideByWeedingChemical1 == 9) {
+                    planting.herbicideByWeedingChemical1 = -1;
+                  }
                   if (_isPassValueFromPage) {
                     planting.herbicideByWeedingChemical1 =
                         planting.herbicideByWeedingChemical1 + 1;
@@ -1863,6 +1870,9 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                 onChanged: (value) {
                   setState(() {
                     _selectWeedingMonth2 = value;
+                    if (value == "ไม่เลือก") {
+                      value = "0";
+                    }
                     planting.weedingMonth2 = int.parse(value.toString());
                     // planting.weedingChemical1 = int.parse(value.toString());
                   });
@@ -1919,8 +1929,12 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
               onChanged: (value) {
                 setState(() {
                   _selectChemical2 = value;
+
                   planting.herbicideByWeedingChemical2 = returnIndexFromList(
                       weedingChemicalName, value.toString());
+                  if (planting.herbicideByWeedingChemical2 == 9) {
+                    planting.herbicideByWeedingChemical2 = -1;
+                  }
                   if (_isPassValueFromPage) {
                     planting.herbicideByWeedingChemical2 =
                         planting.herbicideByWeedingChemical2 + 1;
@@ -2003,6 +2017,9 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                 onChanged: (value) {
                   setState(() {
                     _selectWeedingMonth3 = value;
+                    if (value == "ไม่เลือก") {
+                      value = "0";
+                    }
                     planting.weedingMonth3 = int.parse(value.toString());
                     // planting.weedingChemical1 = int.parse(value.toString());
                   });
@@ -2057,8 +2074,12 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
               onChanged: (value) {
                 setState(() {
                   _selectChemical3 = value;
+
                   planting.herbicideByWeedingChemical3 = returnIndexFromList(
                       weedingChemicalName, value.toString());
+                  if (planting.herbicideByWeedingChemical3 == 9) {
+                    planting.herbicideByWeedingChemical3 = -1;
+                  }
                   if (_isPassValueFromPage) {
                     planting.herbicideByWeedingChemical3 =
                         planting.herbicideByWeedingChemical3 + 1;
@@ -3185,6 +3206,10 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                   onChanged: (value) {
                     setState(() {
                       _selectDisManangement = value;
+                      if (value == "ไม่เลือก") {
+                        value = "";
+                      }
+
                       planting.diseaseManagement = value.toString();
                     });
                   },
@@ -3242,6 +3267,9 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                   onChanged: (value) {
                     setState(() {
                       _selectPestManagement = value;
+                      if (value == "ไม่เลือก") {
+                        value = "";
+                      }
                       planting.pestManagement = value.toString();
                     });
                   },

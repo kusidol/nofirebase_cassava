@@ -44,14 +44,16 @@ List<String> diseaseManagement = [
   "ใช้สารเคมี",
   "ชีววิธี",
   "วิธีกล",
-  "ไม่จัดการ"
+  "ไม่จัดการ",
+  "ไม่เลือก"
 ];
 
 List<String> pestManagementName = [
   "ใช้สารเคมี",
   "ชีววิธี",
   "วิธีกล",
-  "ไม่จัดการ"
+  "ไม่จัดการ",
+  "ไม่เลือก"
 ];
 
 List<String> weedingMonthName = [
@@ -66,7 +68,8 @@ List<String> weedingMonthName = [
   "9",
   "10",
   "11",
-  "12"
+  "12",
+  "ไม่เลือก"
 ];
 List<String> weedingChemicalName = [
   "อะเซโทคลอร์",
@@ -78,6 +81,7 @@ List<String> weedingChemicalName = [
   "ไตยูรอน",
   "ใช้แรงงาน",
   "อื่นๆ",
+  "ไม่เลือก"
 ];
 
 @JsonSerializable()
