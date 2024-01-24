@@ -188,7 +188,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
 
   Widget getAppBarUI() {
     return Container(
-      height: sizeHeight(85, context),
+      height: sizeHeight(100, context),
       decoration: BoxDecoration(
         color: const Color(0xFFFFFFFF),
         boxShadow: <BoxShadow>[
@@ -1363,7 +1363,7 @@ class _BaseCultivationScreen extends State<BaseCultivationScreen>
                             child: Row(
                               children: [
                                 Icon(
-                                  Icons.grass_sharp,
+                                  Icons.image,
                                   color: Colors.white,
                                 ),
                                 Text(
