@@ -194,7 +194,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
 
   Widget getAppBarUI() {
     return Container(
-      height: sizeHeight(85, context),
+      height: sizeHeight(100, context),
       decoration: BoxDecoration(
         color: const Color(0xFFFFFFFF),
         boxShadow: <BoxShadow>[
@@ -239,7 +239,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      Icons.description,
+                      Icons.location_on_rounded,
                       size: sizeWidth(20, context),
                     ),
                     SizedBox(
@@ -1191,7 +1191,7 @@ Shimmer mockShimmer(BuildContext context) {
                           child: Row(
                             children: [
                               Icon(
-                                Icons.grass,
+                                Icons.location_on_rounded,
                                 color: Colors.white,
                               ),
                               Text(
