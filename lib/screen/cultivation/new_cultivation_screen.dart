@@ -833,7 +833,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
         }
       }
       var json_postData = jsonEncode(postData);
-      print("postData Json : ${json_postData}");
+      //print("postData Json : ${json_postData}");
 
       Planting? newPlanting =
           await plantingService.createPlanting(token.toString(), json_postData);
