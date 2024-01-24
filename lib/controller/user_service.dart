@@ -20,7 +20,7 @@ class UserService {
 
   static int timeout = 1500;
 
-  static Future<Dio> initSSL(String url) async{
+  /*static Future<Dio> initSSL(String url) async{
     BaseOptions baseOp = new BaseOptions(
         baseUrl: url,
         connectTimeout: timeout
@@ -58,6 +58,17 @@ class UserService {
       return httpClient;
     } ;
     return _dio ;
+  }*/
+
+  static Future<Dio> initSSL(String url) async{
+
+
+    BaseOptions baseOp = new BaseOptions(
+        baseUrl: url,
+        connectTimeout: timeout
+    );
+
+    return  Dio(baseOp);
   }
 
   Future<dynamic> loginSSO(String url,String userName, String token) async{
