@@ -362,10 +362,13 @@ class AuthPage extends StatelessWidget {
       case 'google':
         return googleAuth.visa!.authenticate(
             clientID:
-                '279975869260-pn1rkjjc74narl3gdkmc9fbeaischmlt.apps.googleusercontent.com',
+            //    '279975869260-pn1rkjjc74narl3gdkmc9fbeaischmlt.apps.googleusercontent.com',
+            '1079124009277-2jshda4k1o0uvgorhpcotllvmfn73g1k.apps.googleusercontent.com',
             //redirectUri: 'https://158.108.207.83.nip.io:8443/cassava/google/callback',
+            //redirectUri:
+            //    'https://cpeserver.eng.kps.ku.ac.th:8443/cassava/google/callback',
             redirectUri:
-                'https://cpeserver.eng.kps.ku.ac.th:8443/cassava/google/callback',
+                'https://www.munbot.org:8443/cassava/google/callback',
             newSession: true,
             state: 'googleAuth',
             scope: 'https://www.googleapis.com/auth/user.emails.read '
@@ -376,8 +379,10 @@ class AuthPage extends StatelessWidget {
         return apple.visa!.authenticate(
             clientID: 'org.munbot.cassava.apple.signin',
             //redirectUri: 'https://www.158.108.207.83.nip.io:8443/cassava/apple/callback',
+            //redirectUri:
+            //    'https://cpeserver.eng.kps.ku.ac.th:8443/cassava/apple/callback',
             redirectUri:
-                'https://cpeserver.eng.kps.ku.ac.th:8443/cassava/apple/callback',
+            'https://www.munbot.org:8443/cassava/apple/callback',
             newSession: true,
             scope: 'openid name email',
             state: "",
