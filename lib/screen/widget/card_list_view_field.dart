@@ -137,7 +137,7 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                               child: Row(
                                 children: [
                                   Icon(
-                                    Icons.grass,
+                                    Icons.location_on_rounded,
                                     color: theme_color2,
                                     size: sizeHeight(25, context),
                                   ),
