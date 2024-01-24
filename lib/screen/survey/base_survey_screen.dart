@@ -280,10 +280,10 @@ class _SurveyTable extends State<SurveyTable>
           ],
         ),
       );
- 
+
   Widget getAppBarUI() {
     return Container(
-      height: sizeHeight(85, context),
+      height: sizeHeight(100, context),
       decoration: BoxDecoration(
         color: const Color(0xFFFFFFFF),
         boxShadow: <BoxShadow>[
@@ -1485,6 +1485,7 @@ Widget getFilterBarUI(int numItemFounded) {
                                                      return surveyProvider.surveyData[index].isLoading &&  surveyProvider.surveyData[index].isLoading? mockShimmer():
 
                                                      AnimatedListItem( callback: () {
+
                                                        if (surveyProvider.surveyData[index].checkTarget == false) {
                                                          //alert(surveyList[index]);
                                                        } else {
