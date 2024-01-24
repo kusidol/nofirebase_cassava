@@ -238,7 +238,7 @@ class SurveyService {
 
   Future<List<Map<String, dynamic>>> getSurveysWithPlantingAndLocationAndOwner(
       String token, int page, int value) async {
-    List<Map<String, dynamic>> datas = [];
+    List<Map<String, dynamic>> data = [];
     Service service = new Service();
     int millisecondDate = DateTime.now().millisecondsSinceEpoch;
 
@@ -250,15 +250,15 @@ class SurveyService {
       Map<String, dynamic> res = jsonDecode(response.data);
       for (int i = 0; i < res['body'].length; i++) {
         Map<String, dynamic> item = res['body'][i];
-        datas.add(item);
-        print(item);
+        data.add(item);
+        //print(item);
       }
     } else if (response.statusCode == 401) {
       print('error statusCode 401');
     } else {
       print("error with out statusCode");
     }
-    return datas;
+    return data;
   }
 
   Future<List<Survey>> getSurveysByCreateDate(
