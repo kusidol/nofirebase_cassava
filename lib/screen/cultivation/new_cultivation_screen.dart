@@ -689,7 +689,7 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
         }
       }
       var json_postData = jsonEncode(postData);
-      log(json_postData);
+      // log(json_postData);
       int statuscode = await plantingService.updatePlanting(
           token.toString(), json_postData, planting.plantingId);
       CustomLoading.dismissLoading();
@@ -1789,8 +1789,10 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                     planting.herbicideByWeedingChemical1 = -1;
                   }
                   if (_isPassValueFromPage) {
-                    planting.herbicideByWeedingChemical1 =
-                        planting.herbicideByWeedingChemical1 + 1;
+                    if (planting.herbicideByWeedingChemical1 != -1) {
+                      planting.herbicideByWeedingChemical1 =
+                          planting.herbicideByWeedingChemical1 + 1;
+                    }
                   }
                 });
               },
@@ -1936,8 +1938,10 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                     planting.herbicideByWeedingChemical2 = -1;
                   }
                   if (_isPassValueFromPage) {
-                    planting.herbicideByWeedingChemical2 =
-                        planting.herbicideByWeedingChemical2 + 1;
+                    if (planting.herbicideByWeedingChemical2 != -1) {
+                      planting.herbicideByWeedingChemical2 =
+                          planting.herbicideByWeedingChemical2 + 1;
+                    }
                   }
                 });
               },
@@ -2081,8 +2085,10 @@ class _NewCultivationScreen extends State<NewCultivationScreen> {
                     planting.herbicideByWeedingChemical3 = -1;
                   }
                   if (_isPassValueFromPage) {
-                    planting.herbicideByWeedingChemical3 =
-                        planting.herbicideByWeedingChemical3 + 1;
+                    if (planting.herbicideByWeedingChemical3 != -1) {
+                      planting.herbicideByWeedingChemical3 =
+                          planting.herbicideByWeedingChemical3 + 1;
+                    }
                   }
                 });
               },
