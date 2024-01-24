@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 //const SSO_SERVER_IP_URL = 'https://158.108.207.83:8443/cassava/api';
 //const SSO_SERVER_IP_URL = 'https://www.158.108.207.83.nip.io:8443/cassava/api';
-const SSO_SERVER_IP_URL = 'https://cpeserver.eng.kps.ku.ac.th:8443/cassava/api';
-//const SSO_SERVER_IP_URL = 'http://www.munbot.org/cassava/api';
+//const SSO_SERVER_IP_URL = 'https://cpeserver.eng.kps.ku.ac.th:8443/cassava/api';
+const SSO_SERVER_IP_URL = 'https://www.munbot.org:8443/cassava/api';
 const LOCAL_SERVER_IP_URL = SSO_SERVER_IP_URL;
 
 const theme_color = Color(0xFF61F4BC);
