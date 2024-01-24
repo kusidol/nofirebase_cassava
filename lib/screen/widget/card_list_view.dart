@@ -1983,7 +1983,7 @@ class _AnimatedListItemState_Planting extends State<AnimatedListItem_Planting> {
                               child: Row(
                                 children: [
                                   Icon(
-                                    Icons.grass_sharp,
+                                    Icons.image,
                                     color: theme_color2,
                                     size: sizeHeight(25, context),
                                   ),
