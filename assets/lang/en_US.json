@@ -407,5 +407,6 @@
   "insert-other-soil-amendments": "Insert in the use of soil improvement materials",
   "insert-beside-plant": "Insert in the type of plants in the adjacent plot",
   "insert-weed": "Insert the main weeds found",
-  "insert-soil-type": "Insert in the soil type"
+  "insert-soil-type": "Insert in the soil type",
+  "%-0-100-label": "% must be between 0 - 100"
 }

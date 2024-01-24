@@ -317,7 +317,7 @@
   "third-page": "หน้าสาม",
   "insert-field-name": "กรอกชื่อแปลง",
   "insert-address": "กรอกที่อยู่",
-  "insert-field-code": "กรอก Code แปลง",
+  "insert-field-code": "กรอกโค้ดแปลง",
   "insert-field-address-label": "กรอกที่อยู่ของแปลง",
   "insert-field-moo": "กรอกหมู่ที่อยู่ของแปลง",
   "insert-field-road": "กรอกถนนที่อยู่ของแปลง",
@@ -410,5 +410,6 @@
   "insert-other-soil-amendments": "กรอกการใช้วัสดุปรับปรุงดิน",
   "insert-beside-plant": "กรอกชนิดพืชแปลงข้างเคียง",
   "insert-weed": "กรอกวัชพืชหลักที่พบ",
-  "insert-soil-type": "กรอกชนิดดิน"
+  "insert-soil-type": "กรอกชนิดดิน",
+  "%-0-100-label": "% ต้องมีค่าระหว่าง 0 - 100"
 }

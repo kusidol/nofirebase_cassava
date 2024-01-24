@@ -7,6 +7,7 @@ import 'package:localization/src/localization_extension.dart';
 import 'package:mun_bot/entities/stp_value.dart';
 
 import 'package:mun_bot/env.dart';
+import 'package:mun_bot/model/input_validator.dart';
 
 import 'package:mun_bot/providers/survey_targetpoint_provider.dart';
 
@@ -62,6 +63,12 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
 
   List<List<CheckBoxState>> twoDList = [];
 
+  //Adding validate
+  AutovalidateMode autovidateDisable = AutovalidateMode.disabled;
+
+  final _formKeyPage1 = GlobalKey<FormState>();
+  final _formKeyPage2 = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
@@ -85,13 +92,27 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
   }
 
   void _toggleTab() {
-    setState(() {
-      _tabIndex = _tabController!.index;
-      if (_tabIndex <= 1) {
-        _tabIndex = _tabController!.index + 1;
-        _tabController!.animateTo(_tabIndex);
+    if (_tabIndex == 1) {
+      if (_formKeyPage1.currentState!.validate()) {
+        setState(() {
+          _tabIndex = _tabController!.index;
+
+          if (_tabIndex <= 1) {
+            _tabIndex = _tabController!.index + 1;
+            _tabController!.animateTo(_tabIndex);
+          }
+        });
       }
-    });
+    } else {
+      setState(() {
+        _tabIndex = _tabController!.index;
+
+        if (_tabIndex <= 1) {
+          _tabIndex = _tabController!.index + 1;
+          _tabController!.animateTo(_tabIndex);
+        }
+      });
+    }
   }
 
   void _toggleTabBack() {
@@ -439,6 +460,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                                                                       _buildListViewNaturalAndPest(
                                                                           surveyTargetPointProvider,
                                                                           true)
+
                                                                   /*  : SizedBox(
                                                                     height: SizeConfig
                                                                         .screenHeight! *
@@ -557,18 +579,21 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                                         ),
                                         mini: true,
                                         onPressed: () {
-                                          surveyTargetPointProvider
-                                              .upDatesurveyTargetPoints(
-                                                  widget.point, widget.number)
-                                              .then((isCompleted) {
-                                            if (isCompleted) {
-                                              if (mounted) {
-                                                Navigator.of(context,
-                                                        rootNavigator: false)
-                                                    .pop(true);
+                                          if (_formKeyPage2.currentState!
+                                              .validate()) {
+                                            surveyTargetPointProvider
+                                                .upDatesurveyTargetPoints(
+                                                    widget.point, widget.number)
+                                                .then((isCompleted) {
+                                              if (isCompleted) {
+                                                if (mounted) {
+                                                  Navigator.of(context,
+                                                          rootNavigator: false)
+                                                      .pop(true);
+                                                }
                                               }
-                                            }
-                                          });
+                                            });
+                                          }
                                         },
                                         child: Row(
                                           mainAxisAlignment:
@@ -829,7 +854,7 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                         left: MediaQuery.of(context).size.width * 0.05),
                     width: MediaQuery.of(context).size.width * 0.52,
                     child: Text(
-                      "${surverTargetpoints[i].stp.surveyTargetName}",
+                      "${surverTargetpoints[i].stp.surveyTargetName} %",
                       style: TextStyle(
                           fontSize: sizeWidth(16, context),
                           fontWeight: FontWeight.w400,
@@ -854,6 +879,13 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
                           }
                         }),
                       },
+                      validator1: (value) => InputCodeValidator.validatePercent(
+                          value,
+                          surverTargetpoints[i]
+                              .stp
+                              .surveyTargetPoint
+                              .value
+                              .toString()),
                       labelText: surverTargetpoints[i]
                           .stp
                           .surveyTargetPoint
@@ -872,11 +904,15 @@ class _BaseSurveyScreenEnemy extends State<BaseSurveyScreenEnemy>
         ),
       );
     }
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: widgetForShow.isEmpty ? [] : widgetForShow,
+    return Form(
+      key: isPest ? _formKeyPage2 : _formKeyPage1,
+      autovalidateMode: autovidateDisable,
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: widgetForShow.isEmpty ? [] : widgetForShow,
+        ),
       ),
     );
   }

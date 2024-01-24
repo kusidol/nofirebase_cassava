@@ -352,4 +352,26 @@ class InputCodeValidator {
     }
     return null;
   }
+
+  static String? validatePercent(String? value, String display) {
+    if (value != null && value.isNotEmpty) {
+      // insert value
+      int valueToInt = double.parse(value).toInt();
+      // print("valueToInt : ${valueToInt}");
+      if (valueToInt >= 0 && valueToInt <= 100) {
+        return null;
+      } else {
+        return "%-0-100-label".i18n();
+      }
+    } else {
+      // don't insert value
+      // print("Value is empty, value : ${display}");
+      int valueToInt = double.parse(display).toInt();
+      if (valueToInt >= 0 && valueToInt <= 100) {
+        return null;
+      } else {
+        return "%-0-100-label".i18n();
+      }
+    }
+  }
 }
