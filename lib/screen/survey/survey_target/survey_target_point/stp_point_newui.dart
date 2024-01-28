@@ -428,7 +428,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
             if (isShowEnemy == false) {
               showEnemyHeight = 0;
             } else {
-              showEnemyHeight = 200;
+              showEnemyHeight = sizeHeight(250, context);
             }
           });
         }
@@ -707,37 +707,54 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
               borderRadius: BorderRadius.circular(
                   sizeWidth(12, context)), // Adjust the radius as needed
             ),
-            child: ListView(
+            child: Column(
               children: [
-                for (int i = 0; i < indexEnemy; i++)
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: Colors.grey, // Choose the color of the border
-                          width: sizeWidth(
-                              1, context), // Choose the width of the border
-                        ),
-                      ),
-                    ),
-                    child: ListTile(
-                      title: Row(
-                        children: [
-                          Text(
-                            "item-label".i18n() + " : " + showList[i],
-                            style: TextStyle(fontSize: sizeWidth(16, context)),
+                Container(
+                  height: sizeHeight(210, context),
+                  width: sizeWidth(343, context),
+                  child: ListView(
+                    children: [
+                      for (int i = 0; i < indexEnemy; i++)
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Colors
+                                    .grey, // Choose the color of the border
+                                width: sizeWidth(1,
+                                    context), // Choose the width of the border
+                              ),
+                            ),
                           ),
-                          Spacer(),
-                        ],
-                      ),
-                      onTap: () {
-                        setState(() {
-                          isShowEnemy = false;
-                          showEnemyHeight = 0;
-                        });
-                      },
-                    ),
-                  )
+                          child: ListTile(
+                            title: Row(
+                              children: [
+                                Text(
+                                  "item-label".i18n() + " : " + showList[i],
+                                  style: TextStyle(
+                                      fontSize: sizeWidth(16, context)),
+                                ),
+                                Spacer(),
+                              ],
+                            ),
+                            onTap: () {
+                              setState(() {
+                                isShowEnemy = false;
+                                showEnemyHeight = 0;
+                              });
+                            },
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Icon(
+                    Icons.keyboard_arrow_up,
+                    size: sizeWidth(30, context),
+                  ),
+                )
               ],
             )),
       ),
