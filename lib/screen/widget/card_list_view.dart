@@ -1777,8 +1777,7 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                         fontSize: sizeHeight(14, context),
                                       ),
                                     ),
-                                    widget.itemName.toString().length < 7 &&
-                                            itemNameShow.toString().length < 7
+                                    widget.itemName.toString().length < 7
                                         ? SizedBox(
                                             width: sizeWidth(150, context),
                                             child: Text(
@@ -2083,8 +2082,7 @@ class _AnimatedListItemState_Planting extends State<AnimatedListItem_Planting> {
                                         fontSize: sizeHeight(14, context),
                                       ),
                                     ),
-                                    widget.itemName.toString().length < 7 &&
-                                            itemNameShow.toString().length < 7
+                                    widget.itemName.toString().length < 7
                                         ? SizedBox(
                                             width: sizeWidth(150, context),
                                             child: Text(
