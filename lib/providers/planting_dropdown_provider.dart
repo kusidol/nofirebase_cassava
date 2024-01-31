@@ -95,7 +95,7 @@ class Dropdownplanting with ChangeNotifier {
       isAllItem = false;
     }
     pageService = (items.length ~/ _value) + 1;
-    print("===================Finish==================");
+    //print("===================Finish==================");
     notifyListeners();
   }
 
