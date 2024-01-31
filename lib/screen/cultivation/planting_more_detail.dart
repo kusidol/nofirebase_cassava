@@ -1272,7 +1272,7 @@ class _PlantingMoreDetailScreen extends State<PlantingMoreDetailScreen>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        testMain("code-planting-label".i18n() +
+                        /*testMain("code-planting-label".i18n() +
                             widget.plantings.plantingId.toString()),
                         _buildTextOne(
                             "name-planting-label".i18n(),
@@ -1420,7 +1420,7 @@ class _PlantingMoreDetailScreen extends State<PlantingMoreDetailScreen>
                           widget.plantings.note.toString() == ""
                               ? "no-specified".i18n()
                               : widget.plantings.note.toString(),
-                        ),
+                        ),*/
                       ],
                     ),
                   ),
@@ -1470,7 +1470,7 @@ class _PlantingMoreDetailScreen extends State<PlantingMoreDetailScreen>
                         ),
                       ),
                       width: SizeConfig.screenWidth,
-                      height: MediaQuery.of(context).size.height * 0.92,
+                      height: MediaQuery.of(context).size.height * 0.90,
                       child: CardPlantingMoreDetail(
                           widget.plantings, widget.provider),
                     ),
