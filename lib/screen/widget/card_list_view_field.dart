@@ -139,7 +139,7 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                   Icon(
                                     Icons.location_on_rounded,
                                     color: theme_color2,
-                                    size: sizeHeight(25, context),
+                                    size: sizeHeight(20, context),
                                   ),
                                   Text(
                                     " " + "field-label".i18n() + " : ",
@@ -237,7 +237,7 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                     ),
                                     itemNameShow.toString().length < 7
                                         ? SizedBox(
-                                            width: sizeWidth(170, context),
+                                            width: sizeWidth(160, context),
                                             child: Text(
                                               '${itemNameShow.toString()}',
                                               style: TextStyle(
@@ -247,7 +247,7 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                             ),
                                           )
                                         : SizedBox(
-                                            width: sizeWidth(170, context),
+                                            width: sizeWidth(165, context),
                                             child: ExpandableText(
                                               itemNameShow.toString(),
                                               expandText:
