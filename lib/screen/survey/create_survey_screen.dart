@@ -2243,7 +2243,7 @@ class _NewSurveyScreen extends State<NewSurveyScreen> {
             //height: SizeConfig.screenHeight,
 
             body: _isLoading == true
-                ? CircularProgressIndicator()
+                ? Container(alignment: Alignment.center,child:CircularProgressIndicator() ,)
                 : Container(
                     padding: EdgeInsets.all(SizeConfig.screenHeight! * 0.015),
                     child: Container(

@@ -139,7 +139,7 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                   Icon(
                                     Icons.location_on_rounded,
                                     color: theme_color2,
-                                    size: sizeHeight(25, context),
+                                    size: sizeHeight(20, context),
                                   ),
                                   Text(
                                     " " + "field-label".i18n() + " : ",

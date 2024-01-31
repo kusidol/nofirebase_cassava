@@ -133,7 +133,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
       String? token = tokenFromLogin?.token;
       SurveyTargetPointService surveyTarget = SurveyTargetPointService();
       final countDiseases =
-          await surveyTarget.countDiseaseBySurveyId(id, token.toString());
+      await surveyTarget.countDiseaseBySurveyId(id, token.toString());
       if (countDiseases != null) {
         List<dynamic> Name = countDiseases["disease"];
         diseaseList = Name.map((e) => e["name"].toString()).toList();
@@ -152,7 +152,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
       String? token = tokenFromLogin?.token;
       SurveyTargetPointService surveyTarget = SurveyTargetPointService();
       final countNaturalEnemy =
-          await surveyTarget.countNaturalEnemy(id, token.toString());
+      await surveyTarget.countNaturalEnemy(id, token.toString());
       if (countNaturalEnemy != null) {
         List<dynamic> naturalName = countNaturalEnemy["naturalEnemy"];
         naturalEnemyList =
@@ -172,7 +172,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
       String? token = tokenFromLogin?.token;
       SurveyTargetPointService surveyTarget = SurveyTargetPointService();
       final countPestPhaseSurvey =
-          await surveyTarget.countPestPhaseSurvey(id, token.toString());
+      await surveyTarget.countPestPhaseSurvey(id, token.toString());
       if (countPestPhaseSurvey != null) {
         List<dynamic> Name = countPestPhaseSurvey["pestphasesurvey"];
         pestPhaseList = Name.map((e) => e["name"].toString()).toList();
@@ -206,7 +206,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
       String? token = tokenFromLogin?.token;
       SurveyService surveyService = SurveyService();
       int statusCode =
-          await surveyService.updateSurvey(token.toString(), widget.survey);
+      await surveyService.updateSurvey(token.toString(), widget.survey);
       if (statusCode == 200) {
         return true;
         //print('Resource updated successfully.');
@@ -341,7 +341,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                 builder: (context, snapshot) {
                   String countData = '';
                   countData =
-                      snapshot.data == null ? '' : snapshot.data.toString();
+                  snapshot.data == null ? '' : snapshot.data.toString();
 
                   return summaryBox(
                       "Disease".i18n(),
@@ -360,7 +360,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                   String countData = '';
 
                   countData =
-                      snapshot.data == null ? '' : snapshot.data.toString();
+                  snapshot.data == null ? '' : snapshot.data.toString();
 
                   return summaryBox(
                       "NaturalEnermies".i18n(),
@@ -378,7 +378,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                 builder: (context, snapshot) {
                   String countData = '';
                   countData =
-                      snapshot.data == null ? '' : snapshot.data.toString();
+                  snapshot.data == null ? '' : snapshot.data.toString();
 
                   return summaryBox(
                       "PestPhase".i18n(),
@@ -535,27 +535,27 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                   Navigator.pop(context);
                 },
                 colorBuilder: (value) =>
-                    value == false ? Colors.red : Colors.green,
+                value == false ? Colors.red : Colors.green,
                 iconBuilder: (value) => value == false
                     ? Icon(
-                        Icons.cancel,
-                        color: Colors.white,
-                      )
+                  Icons.cancel,
+                  color: Colors.white,
+                )
                     : Icon(
-                        Icons.check_circle,
-                        color: Colors.white,
-                      ),
+                  Icons.check_circle,
+                  color: Colors.white,
+                ),
                 textBuilder: (value) => value == false
                     ? Center(
-                        child: Text(
-                        'not-confirm-data'.i18n(),
-                        style: TextStyle(fontSize: sizeWidth(14, context)),
-                      ))
+                    child: Text(
+                      'not-confirm-data'.i18n(),
+                      style: TextStyle(fontSize: sizeWidth(14, context)),
+                    ))
                     : Center(
-                        child: Text(
-                        'confirm-data'.i18n(),
-                        style: TextStyle(fontSize: sizeWidth(14, context)),
-                      )),
+                    child: Text(
+                      'confirm-data'.i18n(),
+                      style: TextStyle(fontSize: sizeWidth(14, context)),
+                    )),
               ),
             ),
           ],
@@ -568,10 +568,10 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
       child: GestureDetector(
           onTap: () {
             Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            BaseSurveySubPointEnemy(widget.survey, point)))
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        BaseSurveySubPointEnemy(widget.survey, point)))
                 .then((value2) {
               if (value2 == true) {
                 Navigator.pushReplacement(
@@ -590,12 +590,12 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
             ),
             child: Container(
               width:
-                  sizeWidth(MediaQuery.of(context).size.width * 0.925, context),
+              sizeWidth(MediaQuery.of(context).size.width * 0.925, context),
               height: SizeConfig.screenWidth! < 450
                   ? sizeHeight(
-                      MediaQuery.of(context).size.height * 0.15, context)
+                  MediaQuery.of(context).size.height * 0.15, context)
                   : sizeHeight(
-                      MediaQuery.of(context).size.height * 0.09, context),
+                  MediaQuery.of(context).size.height * 0.09, context),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -617,11 +617,11 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
                         padding: EdgeInsets.only(
                             left: SizeConfig.screenWidth! < 450
                                 ? sizeWidth(
-                                    MediaQuery.of(context).size.width * 0.25,
-                                    context)
+                                MediaQuery.of(context).size.width * 0.25,
+                                context)
                                 : sizeWidth(
-                                    MediaQuery.of(context).size.width * 0.10,
-                                    context)),
+                                MediaQuery.of(context).size.width * 0.10,
+                                context)),
                       ),
                       Padding(
                         padding: EdgeInsets.only(
@@ -796,8 +796,8 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
               setState(() {
                 // The button that is tapped is set to true, and the others to false.
                 for (int j = 0;
-                    j < surveyPointProvider.selectedStatus[i].length;
-                    j++) {
+                j < surveyPointProvider.selectedStatus[i].length;
+                j++) {
                   surveyPointProvider.setSelectedStatus(i, j, j == index);
                 }
               });
@@ -918,7 +918,7 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
         child: Scaffold(
           appBar: PreferredSize(
             preferredSize:
-                Size.fromHeight(MediaQuery.of(context).size.height * 0.085),
+            Size.fromHeight(MediaQuery.of(context).size.height * 0.085),
             child: getAppBarUI(),
           ),
           body: Container(
@@ -932,52 +932,52 @@ class _BaseSurveyPoint extends State<BaseSurveyPoint> {
               ],
               child: Consumer<SurveyPointProvider>(
                   builder: (context, surveyProvider, index) {
-                if (isInit) {
-                  isInit = !isInit;
-                  surveyProvider.fetchData(widget.survey.surveyID);
-                }
+                    if (isInit) {
+                      isInit = !isInit;
+                      surveyProvider.fetchData(widget.survey.surveyID);
+                    }
 
-                return Container(
-                  child: ListView(
-                    children: [
-                      Container(
-                          height: MediaQuery.of(context).size.height * 0.915,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.white,
-                                theme_color3.withOpacity(.4),
-                                theme_color4.withOpacity(1),
-                              ],
-                            ),
-                          ),
-                          child: Column(children: [
-                            allSummaryBox(),
-                            showEnemy(),
-                            surveySwitch(),
-                            SizedBox(
-                              height: sizeHeight(16, context),
-                            ),
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.65,
-                              child: Padding(
-                                padding: EdgeInsets.all(sizeWidth(8, context)),
-                                child: allSurveyBoxSwitch(surveyProvider),
+                    return Container(
+                      child: ListView(
+                        children: [
+                          Container(
+                              height: MediaQuery.of(context).size.height * 0.915,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    Colors.white,
+                                    theme_color3.withOpacity(.4),
+                                    theme_color4.withOpacity(1),
+                                  ],
+                                ),
                               ),
-                            )
-                          ])
-                          /*: Center(
+                              child: Column(children: [
+                                allSummaryBox(),
+                                showEnemy(),
+                                surveySwitch(),
+                                SizedBox(
+                                  height: sizeHeight(16, context),
+                                ),
+                                Container(
+                                  height: MediaQuery.of(context).size.height * 0.65,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(sizeWidth(8, context)),
+                                    child: allSurveyBoxSwitch(surveyProvider),
+                                  ),
+                                )
+                              ])
+                            /*: Center(
                             child: CircularProgressIndicator(
                               valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                             ),
                           ),*/
                           )
-                    ],
-                  ),
-                );
-              }),
+                        ],
+                      ),
+                    );
+                  }),
             ),
           ),
         ));

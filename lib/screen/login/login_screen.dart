@@ -135,19 +135,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 //bgColor: HexColor('#4D4D4D'),
                 bgColor: Colors.black.withOpacity(0.7),
                 mini: false,
-                fontScale: 0.025,
+                fontScale: 0.0225,
                 height: sizeHeight(65, context),
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
                       color: Colors.grey.shade400,
                       width: sizeWidth(3, context)),
-                  borderRadius: BorderRadius.circular(sizeWidth(15, context)),
+                  borderRadius: BorderRadius.circular(sizeWidth(30, context)),
                 ),
                 icon: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset('assets/images/google_new.png',
-                        width: sizeWidth(30, context)),
+                        width: sizeWidth(35, context)),
                   ],
                 ),
                 onPressed: () {
@@ -165,16 +165,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 //bgColor: HexColor('#4D4D4D'),
                 bgColor: Colors.black.withOpacity(0.7),
                 mini: false,
-                fontScale: 0.025,
+                fontScale: 0.0225,
                 height: sizeHeight(65, context),
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
                       color: Colors.grey.shade400,
                       width: sizeWidth(3, context)),
-                  borderRadius: BorderRadius.circular(sizeWidth(15, context)),
+                  borderRadius: BorderRadius.circular(sizeWidth(30, context)),
                 ),
                 icon: Image.asset('assets/images/apple.png',
-                    width: sizeWidth(30, context)),
+                    width: sizeWidth(35, context)),
                 onPressed: () {
                   Navigator.of(context).push(
                     FadeRoute1(AuthPage(
