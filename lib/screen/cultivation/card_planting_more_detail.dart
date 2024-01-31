@@ -169,7 +169,7 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
                   )),
               Container(
                 margin: EdgeInsets.only(left: sizeWidth(10, context)),
-                width: sizeWidth(250, context),
+                width: sizeWidth(240, context),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
@@ -184,9 +184,9 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
                             // color: Colors.grey
                           ),
                         ),
-                        value1.toString().length < 14
+                        value1.toString().length < 8
                             ? SizedBox(
-                                width: sizeWidth(120, context),
+                                width: sizeWidth(100, context),
                                 child: Text(
                                   '${value1.toString()}',
                                   style: TextStyle(
@@ -195,11 +195,11 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
                                 ),
                               )
                             : SizedBox(
-                                width: sizeWidth(120, context),
+                                width: sizeWidth(100, context),
                                 child: ExpandableText(
                                   value1.toString(),
                                   expandText:
-                                      '${value1.toString().substring(0, 14)}',
+                                      '${value1.toString().substring(0, 8)}',
                                   collapseText: 'show less',
                                   maxLines: 1,
                                   style: TextStyle(
@@ -222,9 +222,9 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
                             // color: Colors.grey
                           ),
                         ),
-                        value2.toString().length < 14
+                        value2.toString().length < 8
                             ? SizedBox(
-                                width: sizeWidth(120, context),
+                                width: sizeWidth(100, context),
                                 child: Text(
                                   '${value2.toString()}',
                                   style: TextStyle(
@@ -233,11 +233,11 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
                                 ),
                               )
                             : SizedBox(
-                                width: sizeWidth(120, context),
+                                width: sizeWidth(100, context),
                                 child: ExpandableText(
                                   value2.toString(),
                                   expandText:
-                                      '${value2.toString().substring(0, 14)}',
+                                      '${value2.toString().substring(0, 8)}',
                                   collapseText: 'show less',
                                   maxLines: 1,
                                   style: TextStyle(
@@ -252,7 +252,7 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
               ),
               Spacer(),
               Container(
-                margin: EdgeInsets.only(left: sizeWidth(10, context)),
+                margin: EdgeInsets.only(left: sizeWidth(0, context)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
@@ -371,7 +371,7 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
                     size: sizeHeight(25, context),
                   )),
               Container(
-                width: sizeWidth(150, context),
+                width: sizeWidth(140, context),
                 margin: EdgeInsets.only(left: sizeWidth(10, context)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -419,9 +419,6 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
                     ),
                   ],
                 ),
-              ),
-              SizedBox(
-                width: sizeWidth(10, context),
               ),
               SizedBox(
                 width: sizeWidth(140, context),
@@ -509,7 +506,7 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
                     size: sizeHeight(25, context),
                   )),
               Container(
-                width: sizeWidth(150, context),
+                width: sizeWidth(130, context),
                 margin: EdgeInsets.only(left: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1209,7 +1206,7 @@ class _CardPlantingMoreDetailState extends State<CardPlantingMoreDetail> {
                           ),
                         ),
                         SizedBox(
-                          width: sizeWidth(140, context),
+                          width: sizeWidth(130, context),
                           child: ExpandableText(
                             ' :${value3}',
                             expandText: '${value3}',

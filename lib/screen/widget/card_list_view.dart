@@ -1777,20 +1777,32 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                         fontSize: sizeHeight(14, context),
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: sizeWidth(163, context),
-                                      child: ExpandableText(
-                                        '${widget.itemName} (${itemNameShow})',
-                                        expandText: '${widget.itemName}',
-                                        collapseText: 'show less',
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                          fontSize: sizeHeight(16, context),
-                                          //fontWeight: FontWeight.bold,
-                                          // color: Colors.grey
-                                        ),
-                                      ),
-                                    ),
+                                    widget.itemName.toString().length < 7 &&
+                                            itemNameShow.toString().length < 7
+                                        ? SizedBox(
+                                            width: sizeWidth(150, context),
+                                            child: Text(
+                                              '${widget.itemName} (${itemNameShow})',
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      sizeHeight(18, context),
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          )
+                                        : SizedBox(
+                                            width: sizeWidth(150, context),
+                                            child: ExpandableText(
+                                              '${widget.itemName} (${itemNameShow})',
+                                              expandText:
+                                                  '${widget.itemName.toString().substring(0, 7)}',
+                                              collapseText: 'show less',
+                                              maxLines: 1,
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      sizeHeight(18, context),
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          ),
                                     Spacer(),
                                     Icon(
                                       Icons.person,
@@ -1993,9 +2005,9 @@ class _AnimatedListItemState_Planting extends State<AnimatedListItem_Planting> {
                                         fontSize: sizeHeight(16, context),
                                         fontWeight: FontWeight.w600),
                                   ),
-                                  widget.itemID.toString().length < 10
+                                  widget.itemID.toString().length < 7
                                       ? SizedBox(
-                                          width: sizeWidth(120, context),
+                                          width: sizeWidth(110, context),
                                           child: Text(
                                             '${widget.itemID.toString()}',
                                             style: TextStyle(
@@ -2005,11 +2017,11 @@ class _AnimatedListItemState_Planting extends State<AnimatedListItem_Planting> {
                                           ),
                                         )
                                       : SizedBox(
-                                          width: sizeWidth(120, context),
+                                          width: sizeWidth(110, context),
                                           child: ExpandableText(
                                             widget.itemID.toString(),
                                             expandText:
-                                                '${widget.itemID.toString().substring(0, 10)}',
+                                                '${widget.itemID.toString().substring(0, 7)}',
                                             collapseText: 'show less',
                                             maxLines: 1,
                                             style: TextStyle(
@@ -2071,20 +2083,32 @@ class _AnimatedListItemState_Planting extends State<AnimatedListItem_Planting> {
                                         fontSize: sizeHeight(14, context),
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: sizeWidth(170, context),
-                                      child: ExpandableText(
-                                        '${widget.itemName} (${itemNameShow})',
-                                        expandText: '${widget.itemName}',
-                                        collapseText: 'show less',
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                          fontSize: sizeHeight(16, context),
-                                          //fontWeight: FontWeight.bold,
-                                          // color: Colors.grey
-                                        ),
-                                      ),
-                                    ),
+                                    widget.itemName.toString().length < 7 &&
+                                            itemNameShow.toString().length < 7
+                                        ? SizedBox(
+                                            width: sizeWidth(150, context),
+                                            child: Text(
+                                              '${widget.itemName} (${itemNameShow})',
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      sizeHeight(18, context),
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          )
+                                        : SizedBox(
+                                            width: sizeWidth(150, context),
+                                            child: ExpandableText(
+                                              '${widget.itemName} (${itemNameShow})',
+                                              expandText:
+                                                  '${widget.itemName.toString().substring(0, 7)}',
+                                              collapseText: 'show less',
+                                              maxLines: 1,
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      sizeHeight(18, context),
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          ),
                                     Spacer(),
                                     Icon(
                                       Icons.person,

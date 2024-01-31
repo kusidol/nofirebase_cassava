@@ -892,6 +892,7 @@ class _BaseFieldScreen extends State<BaseFieldScreen>
                                       children: <Widget>[
                                         getSearchBarUI(context, fieldProvder),
                                         searchMore1(fieldProvder)
+
                                         // getTimeDateUI(),
                                       ],
                                     );

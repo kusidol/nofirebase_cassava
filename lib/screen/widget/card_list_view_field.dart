@@ -147,9 +147,9 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                         fontSize: sizeHeight(18, context),
                                         fontWeight: FontWeight.w600),
                                   ),
-                                  widget.itemName.toString().length < 14
+                                  widget.itemName.toString().length < 10
                                       ? SizedBox(
-                                          width: sizeWidth(170, context),
+                                          width: sizeWidth(130, context),
                                           child: Text(
                                             '${widget.itemName.toString()}',
                                             style: TextStyle(
@@ -159,11 +159,11 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                           ),
                                         )
                                       : SizedBox(
-                                          width: sizeWidth(170, context),
+                                          width: sizeWidth(130, context),
                                           child: ExpandableText(
                                             widget.itemName.toString(),
                                             expandText:
-                                                '${widget.itemName.toString().substring(0, 14)}',
+                                                '${widget.itemName.toString().substring(0, 10)}',
                                             collapseText: 'show less',
                                             maxLines: 1,
                                             style: TextStyle(
@@ -235,9 +235,9 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                         fontSize: sizeHeight(14, context),
                                       ),
                                     ),
-                                    itemNameShow.toString().length < 7
+                                    itemNameShow.toString().length < 5
                                         ? SizedBox(
-                                            width: sizeWidth(170, context),
+                                            width: sizeWidth(140, context),
                                             child: Text(
                                               '${itemNameShow.toString()}',
                                               style: TextStyle(
@@ -247,11 +247,11 @@ class _AnimatedListItemState extends State<AnimatedListItem> {
                                             ),
                                           )
                                         : SizedBox(
-                                            width: sizeWidth(170, context),
+                                            width: sizeWidth(140, context),
                                             child: ExpandableText(
                                               itemNameShow.toString(),
                                               expandText:
-                                                  '${itemNameShow.toString().substring(0, 7)}',
+                                                  '${itemNameShow.toString().substring(0, 6)}',
                                               collapseText: 'show less',
                                               maxLines: 1,
                                               style: TextStyle(

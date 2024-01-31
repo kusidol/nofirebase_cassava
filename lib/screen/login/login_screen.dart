@@ -147,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset('assets/images/google_new.png',
-                        width: sizeWidth(37, context)),
+                        width: sizeWidth(30, context)),
                   ],
                 ),
                 onPressed: () {
@@ -174,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   borderRadius: BorderRadius.circular(sizeWidth(15, context)),
                 ),
                 icon: Image.asset('assets/images/apple.png',
-                    width: sizeWidth(37, context)),
+                    width: sizeWidth(30, context)),
                 onPressed: () {
                   Navigator.of(context).push(
                     FadeRoute1(AuthPage(

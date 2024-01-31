@@ -263,7 +263,7 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
         return Container(
           padding: EdgeInsets.all(sizeWidth(10, context)),
           width: SizeConfig.screenWidth,
-          height: SizeConfig.screenHeight! * 0.9,
+          height: SizeConfig.screenHeight! * 0.87,
           child: GestureDetector(
             onTap: () {},
             child: AspectRatio(
@@ -696,7 +696,7 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
           ),
         ),
         width: SizeConfig.screenWidth,
-        height: SizeConfig.screenHeight! * 0.95,
+        height: SizeConfig.screenHeight! * 0.90,
         child: _buildListView());
   }
 
@@ -756,10 +756,9 @@ class _FieldMoreDetailScreen extends State<FieldMoreDetailScreen>
     return Theme(
       data: HotelAppTheme.buildLightTheme(),
       child: Container(
-
         child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: Size.fromHeight(SizeConfig.screenHeight! * 0.05),
+            preferredSize: Size.fromHeight(SizeConfig.screenHeight! * 0.10),
             child: getAppBarUI(),
           ),
           body: Stack(
