@@ -104,8 +104,10 @@ class SurveyProvider with ChangeNotifier {
     SurveyTargetPointService surveyTargetPointService =
         SurveyTargetPointService();
     String? token = tokenFromLogin?.token;
-    if (count == -1)
-      count = await plantingService.countPlantings(token.toString());
+    //if (count == -1)
+    count = await plantingService.countPlantings(token.toString());
+
+    //print(count);
 
     numberAllSurveys = await surveyService.countSurveys(token.toString());
 
@@ -113,6 +115,11 @@ class SurveyProvider with ChangeNotifier {
         numberAllSurveys == surveyData.length ||
         (surveyData.length > 0 && surveyData.last.isLoading)) {
       //setFetch(false);
+
+      if (count > 0) {
+        isHavePlanting = true;
+      }
+      isLoading = true;
       notifyListeners();
       return;
     }
