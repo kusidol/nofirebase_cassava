@@ -1985,7 +1985,7 @@ class _AnimatedListItemState_Planting extends State<AnimatedListItem_Planting> {
                                   Icon(
                                     Icons.image,
                                     color: theme_color2,
-                                    size: sizeHeight(25, context),
+                                    size: sizeHeight(20, context),
                                   ),
                                   Text(
                                     '  ' + 'plantings-label'.i18n() + ' : ',
