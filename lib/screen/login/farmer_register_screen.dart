@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:localization/src/localization_extension.dart';
 import 'package:mun_bot/controller/service.dart';
+import 'package:mun_bot/entities/token.dart';
 import 'package:mun_bot/env.dart';
 import 'package:mun_bot/screen/login/login_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:mun_bot/screen/main_screen.dart';
+import 'package:mun_bot/social_login/ui/auth-page.dart';
 import '../../main.dart';
 import 'app_styles.dart';
 
@@ -30,6 +32,10 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
   List<Map<String, dynamic>> districtItems = [];
   List<Map<String, dynamic>> subdistrictItems = [];
 
+
+  final nameController = TextEditingController();
+  final lastNameController = TextEditingController();
+
   String? provinceSelectedShow = '';
   String? districtSelectedShow = '';
   String? subdistrictSelectedShow = '';
@@ -37,7 +43,18 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
   void initState() {
     super.initState();
     _codeCompanyregister = widget.codeCompanyregister!;
-    //print(_codeCompanyregister);
+
+    setState(() {
+      if(loggedUser.firstName != null &&  loggedUser.firstName.length > 0 ){
+        nameCheck = true ;
+      }
+      if(loggedUser.lastName != null &&  loggedUser.lastName.length > 0 ){
+        surnameCheck = true ;
+      }
+      nameController.text = loggedUser.firstName ;
+      lastNameController.text = loggedUser.lastName ;
+    });
+
 
     getAllprovic();
   }
@@ -159,13 +176,24 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
     var responseBody = json.decode(response.data);
     if (responseBody['status'] == 200) {
       String messageCheck = responseBody['message'] as String;
+      bool isRegis = true ;
+      String showMS = "มีการใช้งาน E-mail นี้แล้ว";
+
       if (messageCheck == "Success") {
+        String showMS = "ลงทะเบียนเจ้าหน้าที่สำเร็จ";
+        isRegis = false ;
+        //showAlert(context, showMS,false);
+
+
+      }
+      showAlert(context, showMS ,isRegis);
+      /*if (messageCheck == "Success") {
         String showMS = "ลงทะเบียนเกษตรกรสำเร็จ";
         showAlert(context, showMS);
       } else {
         String showMS = "มีการใช้งาน E-mail นี้แล้ว";
         showAlert(context, showMS);
-      }
+      }*/
       //print(responseBody['body']);
       return true;
     } else {
@@ -173,13 +201,12 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
     }
   }
 
-  void showAlert(BuildContext context, String showMS) {
-    Color backgroundColor =
-        showMS == "มีการใช้งาน E-mail นี้แล้ว" ? Colors.red : Colors.green;
+  void showAlert(BuildContext context, String showMS,bool isRegis) {
 
-    if (showMS == "มีการใช้งาน E-mail นี้แล้ว") {
+
+    if (isRegis) {
       showMS = "emailalreadyinuse".i18n();
-    } else if (showMS == "ลงทะเบียนเกษตรกรสำเร็จ") {
+    } else   {
       showMS = "registerfarmerdone".i18n();
     }
 
@@ -209,16 +236,33 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                 fontWeight: FontWeight.w400,
               ),
             ),
-            onPressed: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (BuildContext context) {
-                  return LoginScreen();
-                }),
-                (r) {
-                  return false;
-                },
-              );
+            onPressed: ()async {
+
+              Navigator.of(context).pop();
+
+              if(isRegis){
+
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return LoginScreen();
+                  }),
+                      (r) {
+                    return false;
+                  },
+                ) ;
+              }else{
+                Token token = Token(loggedUser.token /*, t.body.user*/);
+
+                tokenFromLogin = token;
+
+                await save("current_user", loggedUser);
+                await removeNewUser("new_user", loggedUser);
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => MainScreen()));
+
+              }
+
             },
           ),
         ],
@@ -297,6 +341,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                               borderRadius: BorderRadius.circular(15),
                             ),
                             child: TextField(
+
                               style: TextStyle(
                                 fontSize: 16,
                               ),
@@ -379,6 +424,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                               borderRadius: BorderRadius.circular(15),
                             ),
                             child: TextField(
+                              controller: nameController ,
                               style: TextStyle(
                                 fontSize: 16,
                               ),
@@ -460,6 +506,7 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                               borderRadius: BorderRadius.circular(15),
                             ),
                             child: TextField(
+                              controller: lastNameController,
                               style: TextStyle(
                                 fontSize: 16,
                               ),
