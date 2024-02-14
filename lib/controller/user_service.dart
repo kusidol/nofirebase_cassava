@@ -189,9 +189,9 @@ class UserService {
     Service service = Service();
     var response = await service.doPost(
         "${LOCAL_SERVER_IP_URL}/oauth/refreshtoken", refreshToken);
-    print('call service authen');
+    //print('call service authen');
     if (response.statusCode == 200) {
-      print("can refresh token");
+      //print("can refresh token");
       Map<String, dynamic> responseBody = jsonDecode(response.data);
       t = EntityResponse.Response<Token>.fromJson(
           jsonDecode(response.data), (body) => Token.fromJson(body));
@@ -202,9 +202,9 @@ class UserService {
 
       loggedUser.token = t.body.token;
 
-      await save("user", loggedUser);
+      await save("current_user", loggedUser);
 
-      loggedUser = await readUser("user");
+      loggedUser = await readCurrentUser("current_user");
 
       return true;
 
