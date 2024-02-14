@@ -88,6 +88,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen>
       final responseBody = json.decode(response.data) as Map<String, dynamic>;
       ////print(responseBody);
 
+      //print(response.statusCode) ;
       if (response.statusCode == 200) {
         final body = responseBody['body'] as Map<String, dynamic>;
         showDialog<String>(
@@ -109,7 +110,9 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen>
                   // Show a loading dialog
 
                   await Future.delayed(Duration(seconds: 2));
+                  if(mounted)
                   Navigator.pop(context);
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -132,6 +135,8 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen>
         );
       } else if (response.statusCode == 400) {
         _showAlertDialog(context, "qrcode-invalid".i18n());
+      } else {
+        _showAlertDialog(context, "qrcode-invalid".i18n());
       }
 
       //registerCode = rest;
@@ -141,7 +146,8 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen>
       //nameCompany = body['organizationName'] as String;
 
     } catch (error) {
-      //showAlert(context);
+
+      _showAlertDialog(context, "qrcode-invalid".i18n());
       //return error;
     }
   }
@@ -270,8 +276,14 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen>
           child: GestureDetector(
             onTap: () {
               setState(() {
-                controller!.pauseCamera();
-                controller!.resumeCamera();
+                print(_permission) ;
+                if(!_permission){
+                  showAboutDialog(context);
+                }else{
+                  controller!.pauseCamera();
+                  controller!.resumeCamera();
+                }
+
               });
             },
             child: Container(
@@ -311,11 +323,11 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen>
         barrierDismissible: false,
         builder: (BuildContext context) => CupertinoAlertDialog(
           title: Text("Permission Denied"),
-          content: Text('Allow access to camera'),
+          content: Text('Allow access to camera for scanning registration code from QR code'),
           actions: <CupertinoDialogAction>[
             CupertinoDialogAction(
                 onPressed: () {
-                  Navigator.of(context).pop(false);
+
                   Navigator.of(context).pop(false);
                 },
                 child: Text('Cancel')),
@@ -331,22 +343,10 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen>
     //print("===========create==============");
     setState(() {
       this.controller = controller;
-      //this.controller!.resumeCamera();
     });
 
     controller.scannedDataStream.listen((scanData) {
-      // //print(scanData.code);
-      //if (scanData != null) {
-      //controller.pauseCamera();
 
-      //setState(() {
-
-      //doQR(scanData.code);
-      //controller.stopCamera();
-      //return ;
-      // registerCode = scanData.code;
-      //});
-      // }
     }).onData((data) async {
       controller.stopCamera();
 
@@ -364,7 +364,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen>
     try {
       pickedImageFile = await _picker.pickImage(source: ImageSource.gallery);
     } catch (e) {
-      //print(e);
+
     }
     if (pickedImageFile != null) {
       //String rest = await FlutterQrReader.imgScan(pickedImageFile.path);
