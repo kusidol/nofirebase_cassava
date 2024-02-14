@@ -9,6 +9,7 @@ import 'package:mun_bot/env.dart';
 import 'package:mun_bot/screen/login/login_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:mun_bot/screen/main_screen.dart';
+import 'package:mun_bot/social_login/ui/auth-page.dart';
 import '../../main.dart';
 import 'app_styles.dart';
 import 'dart:convert';
@@ -31,6 +32,9 @@ class StaffRegisterScreen extends StatefulWidget {
 class _StaffRegisterScreen extends State<StaffRegisterScreen> {
   late String _codeCompanyregister;
   late String _nameCompanyregister;
+
+  final nameController = TextEditingController();
+  final lastNameController = TextEditingController();
   //String? token;
   @override
   void initState() {
@@ -39,8 +43,22 @@ class _StaffRegisterScreen extends State<StaffRegisterScreen> {
     _nameCompanyregister = widget.nameCompanyregister!;
     //token = tokenFromLogin?.token;
     //print(widget.token);
-  }
+    //print(name = loggedUser.firstName)
+    // ;
+    setState(() {
+      if(loggedUser.firstName != null &&  loggedUser.firstName.length > 0 ){
+        nameCheck = true ;
+        name = loggedUser.firstName ;
+      }
+      if(loggedUser.lastName != null &&  loggedUser.lastName.length > 0 ){
+        surnameCheck = true ;
+        surname = loggedUser.lastName ;
+      }
+      nameController.text = loggedUser.firstName ;
+      lastNameController.text = loggedUser.lastName ;
+    });
 
+  }
   String prefix = "";
   bool prefixCheck = false;
   String name = "";
@@ -66,13 +84,17 @@ class _StaffRegisterScreen extends State<StaffRegisterScreen> {
     var responseBody = json.decode(response.data);
     if (responseBody['status'] == 200) {
       String messageCheck = responseBody['message'] as String;
+      bool isRegis = true ;
+      String showMS = "มีการใช้งาน E-mail นี้แล้ว";
+
       if (messageCheck == "Success") {
         String showMS = "ลงทะเบียนเจ้าหน้าที่สำเร็จ";
-        showAlert(context, showMS);
-      } else {
-        String showMS = "มีการใช้งาน E-mail นี้แล้ว";
-        showAlert(context, showMS);
+        isRegis = false ;
+        //showAlert(context, showMS,false);
+
+
       }
+      showAlert(context, showMS ,isRegis);
       ////print(responseBody['body']);
       return true;
     } else {
@@ -80,15 +102,20 @@ class _StaffRegisterScreen extends State<StaffRegisterScreen> {
     }
   }
 
-  void showAlert(BuildContext context, String showMS) {
-    Color backgroundColor =
-        showMS == "มีการใช้งาน E-mail นี้แล้ว" ? Colors.red : Colors.green;
-    if (showMS == "มีการใช้งาน E-mail นี้แล้ว") {
+  void showAlert(BuildContext context, String showMS, bool isRegis) {
+   // Color backgroundColor =
+    //     isRegis ? Colors.red : Colors.green;
+    if (isRegis) {
       showMS = "emailalreadyinuse".i18n();
-    } else if (showMS == "ลงทะเบียนเจ้าหน้าที่สำเร็จ") {
+    } else  {
       showMS = "registerstaffdone".i18n();
     }
+
+
+
     showCupertinoDialog<void>(
+      barrierDismissible: false,
+
       context: context,
       builder: (BuildContext context) => CupertinoAlertDialog(
         title: Text(
@@ -114,16 +141,36 @@ class _StaffRegisterScreen extends State<StaffRegisterScreen> {
                 fontWeight: FontWeight.w400,
               ),
             ),
-            onPressed: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (BuildContext context) {
-                  return LoginScreen();
-                }),
-                (r) {
-                  return false;
-                },
-              );
+            onPressed: () async {
+
+              Navigator.of(context).pop();
+
+              if(isRegis){
+
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return LoginScreen();
+                  }),
+                      (r) {
+                    return false;
+                  },
+                ) ;
+
+
+              }else{
+
+                Token token = Token(loggedUser.token /*, t.body.user*/);
+
+                tokenFromLogin = token;
+
+                await save("current_user", loggedUser);
+
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => MainScreen()));
+
+              }
+
             },
           ),
         ],
@@ -265,6 +312,7 @@ class _StaffRegisterScreen extends State<StaffRegisterScreen> {
                               borderRadius: BorderRadius.circular(15),
                             ),
                             child: TextField(
+                              controller: nameController,
                               style: TextStyle(
                                 fontSize: 16,
                               ),
@@ -346,6 +394,7 @@ class _StaffRegisterScreen extends State<StaffRegisterScreen> {
                               borderRadius: BorderRadius.circular(15),
                             ),
                             child: TextField(
+                              controller: lastNameController  ,
                               style: TextStyle(
                                 fontSize: 16,
                               ),
