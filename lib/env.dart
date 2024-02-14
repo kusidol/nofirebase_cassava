@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
 //const SSO_SERVER_IP_URL = 'https://158.108.207.83:8443/cassava/api';
-//const SSO_SERVER_IP_URL = 'https://www.158.108.207.83.nip.io:8443/cassava/api';
+//const SSO_SERVER_IP_URL = 'https://158.108.207.83.nip.io:8443/cassava/api';
 //const SSO_SERVER_IP_URL = 'https://cpeserver.eng.kps.ku.ac.th:8443/cassava/api';
 const SSO_SERVER_IP_URL = 'https://www.munbot.org:8443/cassava/api';
 const LOCAL_SERVER_IP_URL = SSO_SERVER_IP_URL;
+
+//const APPLE_REDIRECT_URI = 'https://www.158.108.207.83.nip.io:8443/cassava/apple/callback' ;
+const APPLE_REDIRECT_URI = 'https://www.munbot.org:8443/cassava/apple/callback' ;
+const GOOGLE_REDIRECT_URI = 'https://www.munbot.org:8443/cassava/google/callback' ;
 
 const theme_color = Color(0xFF61F4BC);
 const theme_color2 = Color(0xFf1DD1B8);
