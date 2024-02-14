@@ -59,11 +59,13 @@ class AppleAuth extends Visa {
 
   AuthData authData(Map<String, dynamic> profileJson, Map<String, String> oauthData) {
     final String accessToken = oauthData[OAuth.TOKEN_KEY] as String;
-
+    //print(oauthData['lastName']);
     return AuthData(
         clientID:   visa!.clientId,
         accessToken: oauthData['access_token'] as String,
-        email: oauthData['email']  as String );
+        email: oauthData['email']  as String,
+        firstName: oauthData['firstName']  as String,
+        lastName: oauthData['lastName']  as String);
   }
 
 
