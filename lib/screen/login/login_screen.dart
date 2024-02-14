@@ -18,13 +18,7 @@ import 'package:mun_bot/util/ui/survey_theme.dart';
 import '../../env.dart';
 import '../../main.dart';
 //import 'package:google_sign_in/google_sign_in.dart';
-import '../sidebar_menu.dart';
-import 'app_styles.dart';
-import 'qrcode_scren.dart';
-import 'package:jwt_decode/jwt_decode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:auth_buttons/auth_buttons.dart';
 import 'package:crypto/crypto.dart';
 import 'package:mun_bot/entities/response.dart' as EntityResponse;
 import 'package:flutter/cupertino.dart';
@@ -45,14 +39,14 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
-  Widget JustLogIn() {
+  /*Widget JustLogIn() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () async {
-          loggedUser = LoggedUser("sidol.sat@gmail.com", "", "", "");
+          loggedUser = LoggedUser("","","sidol.sat@gmail.com", "", "", "",false);
 
           UserService userService = UserService();
           var response = await userService.login(
@@ -74,9 +68,14 @@ class _LoginScreenState extends State<LoginScreen> {
           loggedUser.token = t.body.token;
           loggedUser.refresh_token = rft.body.refreshtoken;
 
+          //final String musicsString = await prefs.getString('musics_key');
+
+          //List<LoggedUser> users = LoggedUser.decode(loggedUsers)
+
+
           await save("user", loggedUser);
 
-          loggedUser = await readUser("user");
+
           ////print(ts);
           //await saveRefreshTokenToStorage(refreshToken.refreshtoken);
 
@@ -102,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-  }
+  }*/
 
   Widget _buildSignInWithText() {
     return Column(
@@ -348,9 +347,59 @@ class LoadingWidget extends StatelessWidget {
   }
 }
 
-save(String key, value) async {
+save(String key, value)  async {
+final prefs = await SharedPreferences.getInstance();
+prefs.setString(key, json.encode(value));
+}
+
+removeNewUser(String key,LoggedUser loggedUser) async{
   final prefs = await SharedPreferences.getInstance();
-  prefs.setString(key, json.encode(value));
+
+  List<LoggedUser> users = LoggedUser.decode(prefs.getString(key) as String);
+
+  if(users == null)
+     return ;
+
+  int index = -1 ;
+  bool isExist = false ;
+  for(int i = 0 ; i  < users.length ; i++) {
+    if(users[i].email == loggedUser.email)    {
+      index = 1 ;
+      break ;
+    }
+  }
+
+  users.removeAt(index);
+
+  prefs.setString(key, LoggedUser.encode(users));
+
+}
+
+
+saveNewUsers(String key,LoggedUser loggedUser) async {
+
+  final prefs = await SharedPreferences.getInstance();
+
+  String? data = prefs.getString(key) ;
+  List<LoggedUser> users = [] ;
+  if(data != null )
+    users = LoggedUser.decode(data);
+
+  if(users == null)
+    users = [] ;
+
+  bool isExist = false ;
+  for(int i = 0 ; i  < users.length ; i++) {
+    if(users[i].email == loggedUser.email)    {
+      users[i] = loggedUser ;
+      isExist = true ;
+      break ;
+    }
+  }
+  if(!isExist){
+    users.add(loggedUser);
+  }
+  prefs.setString(key, LoggedUser.encode(users));
 }
 
 loadSetting(String key) async {
@@ -363,13 +412,30 @@ loadSetting(String key) async {
   return AppSetting(js["local"], js['signIn']);
 }
 
-readUser(String key) async {
+readCurrentUser(String key) async {
   final prefs = await SharedPreferences.getInstance();
   var js = json.decode(prefs.getString(key) as String);
-  return LoggedUser(
+  return LoggedUser(js["firstName"],js["lastName"],
       js["email"], js['token'], js['refresh_token'], js['img_url']);
 }
 
+
+readNewUser(String key,String email) async {
+  final prefs = await SharedPreferences.getInstance();
+  String? data = prefs.getString(key) ;
+
+  if(data == null )
+    return null ;
+
+  List<LoggedUser> users = LoggedUser.decode(data);
+
+  for(int i = 0 ; i  < users.length ; i++) {
+     if(users[i].email == email)    {
+       return users[i] ;
+     }
+  }
+  return null ;
+}
 remove(String key) async {
   final prefs = await SharedPreferences.getInstance();
   prefs.remove(key);
