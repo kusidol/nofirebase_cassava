@@ -299,7 +299,7 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
           Container(
             height: sizeHeight(190, context),
             child: UserAccountsDrawerHeader(
-              accountName: Text(loggedUser.email,
+              accountName: Text("${loggedUser.firstName} ${loggedUser.lastName}",
                   style: TextStyle(fontSize: sizeHeight(15, context))),
               accountEmail: Text(loggedUser.email,
                   style: TextStyle(fontSize: sizeHeight(15, context))),
@@ -453,6 +453,7 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
                   ),
                   onTap: () {
                     showDialog<String>(
+                      barrierDismissible: false,
                       context: context,
                       builder: (context) => CupertinoAlertDialog(
                         title: const Text('Delete Account'),
@@ -561,7 +562,7 @@ class _NavBarState extends State<NavBar> with WidgetsBindingObserver {
                           await save("app_setting", appSetting);
                           //saveAutoLogInStatusToStorage(false);
 
-                          await remove("user");
+                          await remove("current_user");
 
                           await Future.delayed(Duration(seconds: 2));
 
