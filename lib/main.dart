@@ -182,7 +182,7 @@ class _SplashScreenState extends State<SplashScreen>
     appSetting = await loadSetting("app_setting");
 
     if (appSetting!.signIn) {
-      loggedUser = await readUser("user");
+      loggedUser = await readCurrentUser("current_user");
 
       tokenFromLogin = Token(loggedUser.token);
 
