@@ -23,30 +23,70 @@ import 'utils.dart';
 import 'package:mun_bot/env.dart';
 
 class LoggedUser {
+  String firstName;
+  String lastName;
   String email;
   String token;
   String refresh_token;
   String img_url;
 
-  LoggedUser(this.email, this.token, this.refresh_token, this.img_url);
+  LoggedUser(this.firstName,this.lastName,this.email, this.token, this.refresh_token, this.img_url);
 
   //LoggedUser();
 
-  LoggedUser.fromJson(Map<String, dynamic> json)
-      : email = json['email'],
+ /* LoggedUser.fromJson(Map<String, dynamic> json)
+      :
+        firstName = json['firstName'],
+        lastName = json['lastName'],
+        email = json['email'],
         token = json['token'],
         refresh_token = json['refresh_token'],
-        img_url = json['img_url'];
+        img_url = json['img_url'];*/
 
   Map<String, dynamic> toJson() => {
-        'email': email,
-        'token': token,
-        'refresh_token': refresh_token,
-        'img_url': img_url,
-      };
+    'firstName': firstName,
+    'lastName': lastName,
+    'email': email,
+    'token': token,
+    'refresh_token': refresh_token,
+    'img_url': img_url,
+  };
+
+  factory LoggedUser.fromJson(Map<String, dynamic> jsonData) {
+    return LoggedUser(
+       jsonData['firstName'],
+       jsonData['lastName'],
+       jsonData['email'],
+       jsonData['token'],
+       jsonData['refresh_token'],
+       jsonData['img_url']
+    );
+  }
+
+  static Map<String, dynamic> toMap(LoggedUser loggedUser) => {
+    'firstName': loggedUser.firstName,
+    'lastName': loggedUser.lastName,
+    'email': loggedUser.email,
+    'token': loggedUser.token,
+    'refresh_token': loggedUser.refresh_token,
+    'img_url': loggedUser.img_url,
+   // 'isSignUp': loggedUser.isSignUp,
+  };
+
+  static String encode(List<LoggedUser> loggedUsers) => json.encode( loggedUsers
+        .map<Map<String, dynamic>>((loggedUser) => LoggedUser.toMap(loggedUser))
+        .toList(),
+  );
+
+  static List<LoggedUser> decode(String loggedUsers) =>
+      (json.decode(loggedUsers) as List<dynamic>)
+          .map<LoggedUser>((item) => LoggedUser.fromJson(item))
+          .toList();
+
+
 }
 
-LoggedUser loggedUser = LoggedUser("", "", "", "");
+LoggedUser loggedUser = LoggedUser("","","", "", "", "");
 
 class AuthPage extends StatelessWidget {
   var context;
@@ -144,17 +184,18 @@ class AuthPage extends StatelessWidget {
       UserService userService = UserService();
 
       var response;
+      var firstName = authData.firstName as String;
+      var lastName = authData.lastName as String;
       var userName = authData.email as String;
+
       String profileImgUrl = await authData.profileImgUrl == null
           ? ""
           : await Utils.networkImageToBase64(authData.profileImgUrl as String)
               as String;
 
-      loggedUser = LoggedUser(
+      loggedUser = LoggedUser(firstName,lastName,
           userName, authData.accessToken as String, "", profileImgUrl);
-      //print(userName);
-      //print(authData.accessToken);
-      //print(authData. profileImgUrl);
+
       switch (this.thirdParty) {
         case 'google':
           response = await userService.loginSSO(
@@ -177,33 +218,6 @@ class AuthPage extends StatelessWidget {
       EntityResponse.Response<RefreshToken> rft;
 
       if (response.statusCode == 200) {
-        //Map<String, dynamic> responseBody = jsonDecode(response.data);
-        //String messageCheck = responseBody['message'] as String;
-
-        /*if (messageCheck == "Anonymous User") {
-          //messageCheckpermission = messageCheck;
-          t = EntityResponse.Response<Token>.fromJson(
-              jsonDecode(response.data), (body) => Token.fromJson(body));
-          Token token = Token(t.body.token /*, t.body.user*/);
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) => LoadingWidget(),
-          );
-          tokenFromLogin = token ;
-
-          await Future.delayed(Duration(seconds: 2));
-
-          await saveTokenToStorage(tokenFromLogin!.token);
-
-          rememberMe = true;
-
-          await saveRememberMeToStorage(rememberMe);
-
-
-       } else*/
-
-        //messageCheckpermission = messageCheck;
 
         t = EntityResponse.Response<Token>.fromJson(
             jsonDecode(response.data), (body) => Token.fromJson(body));
@@ -218,9 +232,12 @@ class AuthPage extends StatelessWidget {
         //await saveRefreshTokenToStorage(refreshToken.refreshtoken);
 
         loggedUser.token = t.body.token;
+
         loggedUser.refresh_token = rft.body.refreshtoken;
 
-        await save("user", loggedUser);
+       //LoggedUser existLoggedUser  = readUser("user",loggedUser.email) ;
+
+        await save("current_user", loggedUser);
 
         Navigator.of(context).pop();
 
@@ -230,6 +247,25 @@ class AuthPage extends StatelessWidget {
         t = EntityResponse.Response<Token>.fromJson(
             jsonDecode(response.data), (body) => Token.fromJson(body));
 
+        Token token = Token(t.body.token /*, t.body.user*/);
+
+        loggedUser.token = t.body.token;
+
+
+        var newUser = await readNewUser("new_user", loggedUser.email) ;
+
+        if(newUser == null){
+          await saveNewUsers("new_user", loggedUser) ;
+        }else{
+
+          if(loggedUser.firstName.length == 0 ){
+            loggedUser.firstName = newUser.firstName ;
+          }
+
+          if(loggedUser.lastName.length == 0 ){
+            loggedUser.lastName = newUser.lastName ;
+          }
+        }
         showDialog(
           context: context,
           barrierDismissible: false,
@@ -246,7 +282,9 @@ class AuthPage extends StatelessWidget {
                   onPressed: () {
                     //googleUser = null;
                     tokenFromLogin = null;
+
                     Navigator.of(context).pop();
+
                     Navigator.of(context).pop();
                   },
                 ),
@@ -367,8 +405,7 @@ class AuthPage extends StatelessWidget {
             //redirectUri: 'https://158.108.207.83.nip.io:8443/cassava/google/callback',
             //redirectUri:
             //    'https://cpeserver.eng.kps.ku.ac.th:8443/cassava/google/callback',
-            redirectUri:
-                'https://www.munbot.org:8443/cassava/google/callback',
+            redirectUri: GOOGLE_REDIRECT_URI,
             newSession: true,
             state: 'googleAuth',
             scope: 'https://www.googleapis.com/auth/user.emails.read '
@@ -378,13 +415,12 @@ class AuthPage extends StatelessWidget {
       case 'apple':
         return apple.visa!.authenticate(
             clientID: 'org.munbot.cassava.apple.signin',
-            //redirectUri: 'https://www.158.108.207.83.nip.io:8443/cassava/apple/callback',
+            redirectUri: APPLE_REDIRECT_URI,
             //redirectUri:
             //    'https://cpeserver.eng.kps.ku.ac.th:8443/cassava/apple/callback',
-            redirectUri:
-            'https://www.munbot.org:8443/cassava/apple/callback',
+           // redirectUri:'https://www.munbot.org:8443/cassava/apple/callback',
             newSession: true,
-            scope: 'openid name email',
+            scope: 'name email',
             state: "",
             responseType: 'code',
             onDone: done);
