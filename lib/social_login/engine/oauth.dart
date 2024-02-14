@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:mun_bot/env.dart';
 import 'package:mun_bot/screen/main_screen.dart';
 import 'debug.dart';
 //import 'package:webview_flutter/webview_flutter.dart';
@@ -83,7 +84,6 @@ class OAuth {
         '$otherParams';
 
     //if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
-    //print(authUrl) ;
 
     InAppWebView wv = InAppWebView(
 
@@ -117,6 +117,8 @@ class OAuth {
       //shouldOverrideUrlLoading: _getNavigationDelegate(webViewController,onDone),
     );
     //wv.setW
+
+
     return wv;
   }
 
@@ -140,9 +142,8 @@ class OAuth {
           var html = await controller.evaluateJavascript(
               source: "document.getElementById('dip').innerText;");
 
-          await controller!.loadUrl(urlRequest: URLRequest(url: Uri.parse("https://cpeserver.eng.kps.ku.ac.th:8443/cassava/google/callback")));
+          await controller!.loadUrl(urlRequest: URLRequest(url: Uri.parse(GOOGLE_REDIRECT_URI)));
 
-          //print(html);
           Map<String, dynamic> map = jsonDecode(html);
 
           Map<String, String> returnedData = HashMap();
@@ -150,6 +151,10 @@ class OAuth {
           returnedData[CLIENT_ID_KEY] = clientID ;
 
           returnedData[TOKEN_KEY] = map['id_token'] ;
+
+          returnedData['firstName'] = map['firstName']  == null ? "" :  map['firstName'] ;
+
+          returnedData['lastName'] = map['lastName'] == null ? "":  map['lastName'] ; ;
 
           returnedData['email'] = map['email'] ;
 
