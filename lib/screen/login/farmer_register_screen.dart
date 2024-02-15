@@ -1063,7 +1063,6 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                         padding: EdgeInsets.only(bottom: 20.0, top: 20.0),
                         child: Container(
                           margin: EdgeInsets.all(1),
-                          width: 500,
                           color: Colors.white,
                           child: Align(
                             alignment: Alignment.center,
@@ -1075,7 +1074,10 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(13),
                                 ),
-                                minimumSize: Size(355, 55),
+                                minimumSize: Size(
+            MediaQuery.of(context).size.width * 0.9, 
+            55,
+          ),
                               ),
                               onPressed: prefix != "" &&
                                       name != "" &&
@@ -1186,14 +1188,17 @@ class _FarmerRegisterScreen extends State<FarmerRegisterScreen> {
                                 });
                               },
                             ),
-                            Container(
-                              margin: EdgeInsets.only(left: 50, right: 50),
-                              child: Text(
-                                "registerforfarmer".i18n(),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
+                            Expanded(
+                              child: Container(
+                            margin: EdgeInsets.only( right: 55),   
+                             alignment: Alignment.center,
+                                child: Text(
+                                  "registerforfarmer".i18n(),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
                             ),
