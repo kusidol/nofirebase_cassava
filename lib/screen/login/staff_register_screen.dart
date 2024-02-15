@@ -699,7 +699,7 @@ class _StaffRegisterScreen extends State<StaffRegisterScreen> {
                         padding: EdgeInsets.only(bottom: 20.0, top: 20.0),
                         child: Container(
                           margin: EdgeInsets.all(1),
-                          width: 500,
+                        
                           color: Colors.white,
                           child: Align(
                             alignment: Alignment.center,
@@ -711,7 +711,10 @@ class _StaffRegisterScreen extends State<StaffRegisterScreen> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(13),
                                 ),
-                                minimumSize: Size(355, 55),
+                               minimumSize: Size(
+            MediaQuery.of(context).size.width * 0.9, 
+            55,
+          ),
                               ),
                               onPressed: prefix != "" &&
                                       name != "" &&
@@ -810,15 +813,17 @@ class _StaffRegisterScreen extends State<StaffRegisterScreen> {
                                 });
                               },
                             ),
-                            Container(
-                              margin: EdgeInsets.only(left: 65, right: 50),
-                              alignment: Alignment.center,
-                              child: Text(
-                                "registerforofficials".i18n(),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
+                            Expanded(
+                              child: Container(
+                                margin: EdgeInsets.only( right: 55),              
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "registerforofficials".i18n(),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
                             ),
